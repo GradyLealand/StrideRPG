@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Background Color of Splash here. -->
-    <item android:drawable="@color/colorPrimary" />
+    <item android:drawable="@drawable/splash_gradient" />
 
     <!-- Icon in middle of screen goes here, using the app launcher icon -->
     <item>
