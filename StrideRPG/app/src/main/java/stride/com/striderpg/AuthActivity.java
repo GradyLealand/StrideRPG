@@ -1,9 +1,9 @@
 package stride.com.striderpg;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -130,6 +130,10 @@ public class AuthActivity extends AppCompatActivity {
     private void checkUser(FirebaseUser user) {
         authProgressBar.setVisibility(View.INVISIBLE);
         if (user != null) {
+            // We now know that the user at least exists as part of the Firebase application.
+            // Now check if they already have an entry in the Firebase database as a user.
+
+
             startActivity(new Intent(AuthActivity.this, MainActivity.class));
             finish();
         } else {
