@@ -161,7 +161,6 @@ public class Player {
     public Integer getSteps() {
         return steps;
     }
-
     /**
      * Set a Players current steps amount.
      * @param steps New Player steps.

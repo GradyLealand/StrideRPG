@@ -8,33 +8,33 @@ public class Item {
     /**
      * Name of the Item.
      */
-    private String name = "test";
+    private String name;
 
     /**
      * Short description or flavour text to describe this Item.
      */
-    private String description = "desc";
+    private String description;
 
     /**
      * The power level this weapon represents. A short handed way to describe
      * how good an item is based on Players level and Skills.
      */
-    private Integer powerLevel = 13;
+    private Integer powerLevel;
 
     /**
      * Amount to boost a Players Vitality by when equipped.
      */
-    private Integer vitalityBoost = 8;
+    private Integer vitalityBoost;
 
     /**
      * Amount to boost a Players Strength by when equipped.
      */
-    private Integer strengthBoost = 9;
+    private Integer strengthBoost;
 
     /**
      * Amount to boost a Players Speed by when equipped.
      */
-    private Integer speedBoost = 2;
+    private Integer speedBoost;
 
     /**
      * Default constructor required for calls to

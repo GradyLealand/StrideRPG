@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import stride.com.striderpg.global.Globals;
 import stride.com.striderpg.models.Player.Player;
 
 /**
@@ -44,5 +45,9 @@ public class FirebaseDBUtil {
 
         // Append this new Player to the Database as a child of the "users" key.
         database.child(DBKeys.USERS_KEY).child(playerId).setValue(player);
+    }
+
+    public void pushActivePlayer(Player player) {
+        database.child(DBKeys.USERS_KEY).child(player.getUniqueId()).setValue(player);
     }
 }
