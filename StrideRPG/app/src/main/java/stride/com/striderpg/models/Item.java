@@ -44,7 +44,6 @@ public class Item {
 
     /**
      * Implementation of an Items toString method to print out the properties of an Item object.
-     *
      * @return Properties of the Item object.
      */
     @Override

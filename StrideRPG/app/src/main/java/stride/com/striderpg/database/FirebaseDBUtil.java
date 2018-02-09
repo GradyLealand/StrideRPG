@@ -5,7 +5,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import stride.com.striderpg.global.Globals;
 import stride.com.striderpg.models.Player.Player;
 
 /**
@@ -32,7 +31,6 @@ public class FirebaseDBUtil {
     /**
      * Add a Player directly to the Database with their UID as the key and their
      * relevant information as the child to that key.
-     *
      * @param user FirebaseUser that will be added to the Database as a new Player.
      */
     public void addPlayer(FirebaseUser user) {
@@ -47,6 +45,11 @@ public class FirebaseDBUtil {
         database.child(DBKeys.USERS_KEY).child(playerId).setValue(player);
     }
 
+    /**
+     * Push the ActivePlayer from the Globals class directly to the FirebaseDatabase. Any data
+     * that has been changed in this Player since the last push will be updated.
+     * @param player Globals.activePlayer Player object to Push to FirebaseDatabase.
+     */
     public void pushActivePlayer(Player player) {
         database.child(DBKeys.USERS_KEY).child(player.getUniqueId()).setValue(player);
     }

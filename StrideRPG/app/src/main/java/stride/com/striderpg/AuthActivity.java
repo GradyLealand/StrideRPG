@@ -33,15 +33,34 @@ import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.global.Globals;
 import stride.com.striderpg.models.Player.Player;
 
+/**
+ * Main Authentication activity that handles any logging in, resource gathering
+ * and database retrieval before moving onto the Main/Home Activity.
+ */
 public class AuthActivity extends AppCompatActivity {
-    // Logging tag.
+
+    /**
+     * AuthActivity Logging tag.
+     */
     private static final String TAG = "AuthActivity";
-    // Result int code.
+
+    /**
+     * Result code for Sign-in activity.
+     */
     private static final int RC_SIGN_IN = 9001;
 
+    /**
+     * FirebaseAuth Object for dealing with the Firebase Authentication functionality.
+     */
     private FirebaseAuth mAuth;
+
+    /**
+     * GoogleSignInClient Object for granting a user permission to the application and allowing
+     * them to sign in through the use of the Google API.
+     */
     private GoogleSignInClient mGoogleSignInClient;
 
+    // UI elements here.
     private ImageView logoImageView;
     private ProgressBar authProgressBar;
 
@@ -50,7 +69,6 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        // Widgets
         logoImageView = findViewById(R.id.logoImageView);
         authProgressBar = findViewById(R.id.authProgressBar);
 
@@ -80,7 +98,7 @@ public class AuthActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Google Sign In was successful, autheticate with Firebase.
+                // Google Sign In was successful, authenticate with Firebase.
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
