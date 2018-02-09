@@ -36,9 +36,13 @@ public class Skills {
     /**
      * Default constructor required for calls to
      * DataSnapshot.getValue(Skills.class).
-     * Will also set by default the skills to 0.
+     * Will also set by default all skills to 5.
      */
-    public Skills() { }
+    public Skills() {
+        vitality = 5;
+        strength = 5;
+        speed = 5;
+    }
 
     /**
      * Implementation of a Skills toString() method to print out properties of a Skills object.

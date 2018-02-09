@@ -185,4 +185,7 @@ public class Player {
         return inventory;
     }
 
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 }

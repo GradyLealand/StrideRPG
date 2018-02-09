@@ -43,6 +43,25 @@ public class Item {
     public Item() { }
 
     /**
+     * Custom constructor to build an item with specified properties.
+     * @param name Item name.
+     * @param description Item description or flavor text.
+     * @param powerLevel Item power level. Generally used to determine how powerful this item is.
+     * @param vitalityBoost Item vitality boost.
+     * @param strengthBoost Item strength boost.
+     * @param speedBoost Item speed boost.
+     */
+    public Item(String name, String description, Integer powerLevel, Integer vitalityBoost,
+                Integer strengthBoost, Integer speedBoost) {
+        this.name = name;
+        this.description = description;
+        this.powerLevel = powerLevel;
+        this.vitalityBoost = vitalityBoost;
+        this.strengthBoost = strengthBoost;
+        this.speedBoost = speedBoost;
+    }
+
+    /**
      * Implementation of an Items toString method to print out the properties of an Item object.
      * @return Properties of the Item object.
      */

@@ -1,7 +1,8 @@
 package stride.com.striderpg.models.Player;
 
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import stride.com.striderpg.models.Item;
 
@@ -11,10 +12,10 @@ import stride.com.striderpg.models.Item;
 public class Inventory {
 
     /**
-     * ArrayList of type Item to store the different Items inside
-     * of a Players Inventory.
+     * Map of type String, Item to store the different Items inside
+     * of a Players Inventory and use unique a String to identify them.
      */
-    private ArrayList<Item> items = new ArrayList<>();
+    private Map<String, Item> items = new HashMap<>();
 
     /**
      * Default constructor required for calls to
@@ -36,10 +37,10 @@ public class Inventory {
     }
 
     /**
-     * Get a Inventories items ArrayList property.
-     * @return items ArrayList property.
+     * Get an Inventories items Map property.
+     * @return items Map property.
      */
-    public ArrayList<Item> getItems() {
+    public Map<String, Item> getItems() {
         return items;
     }
 }

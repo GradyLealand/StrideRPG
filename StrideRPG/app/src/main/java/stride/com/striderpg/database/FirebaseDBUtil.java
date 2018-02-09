@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import stride.com.striderpg.global.Globals;
+import stride.com.striderpg.models.Item;
 import stride.com.striderpg.models.Player.Player;
 
 /**
@@ -48,9 +50,51 @@ public class FirebaseDBUtil {
     /**
      * Push the ActivePlayer from the Globals class directly to the FirebaseDatabase. Any data
      * that has been changed in this Player since the last push will be updated.
-     * @param player Globals.activePlayer Player object to Push to FirebaseDatabase.
      */
-    public void pushActivePlayer(Player player) {
-        database.child(DBKeys.USERS_KEY).child(player.getUniqueId()).setValue(player);
+    public void pushActivePlayer() {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .setValue(Globals.activePlayer);
+    }
+
+    /**
+     * Push the ActivePlayers Inventory from the Globals class directly to the FirebaseDatabase.
+     */
+    public void pushPlayerInventory() {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .setValue(DBKeys.INVENTORY_KEY, Globals.activePlayer.getInventory());
+    }
+
+    /**
+     * Push an Item directly to the ActivePlayers Inventory in the FirebaseDatabase.
+     */
+    public void pushItem(Item item) {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .child(DBKeys.INVENTORY_KEY)
+                .child(DBKeys.INVENTORY_ITEMS_KEY).push().setValue(item);
+    }
+
+    /**
+     * Push the ActivePlayers Skills from the Globals class directly to the FirebaseDatabase.
+     */
+    public void pushPlayerSkills() {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .child(DBKeys.SKILLS_KEY)
+                .setValue(DBKeys.SKILLS_KEY, Globals.activePlayer.getSkills());
+    }
+
+    /**
+     * Push a specified skill value to the FirebaseDatabase for the current activePlayer.
+     * @param KEY String representing the node to be updated.
+     * @param value New value for specified skill.
+     */
+    public void pushPlayerSkill(String KEY, Integer value) {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .child(DBKeys.SKILLS_KEY)
+                .child(KEY).setValue(value);
     }
 }
