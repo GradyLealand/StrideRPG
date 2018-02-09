@@ -22,6 +22,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import stride.com.striderpg.database.DBKeys;
+import stride.com.striderpg.database.FirebaseDBUtil;
+import stride.com.striderpg.global.Globals;
+import stride.com.striderpg.models.Player;
 
 public class AuthActivity extends AppCompatActivity {
     // Logging tag.
@@ -133,10 +143,34 @@ public class AuthActivity extends AppCompatActivity {
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
 
+            // Create a reference to the DatabaseReference at the users (USERS_KEY) parent node.
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DBKeys.USERS_KEY);
 
-            startActivity(new Intent(AuthActivity.this, MainActivity.class));
-            finish();
+            // Set a listener to check if active user currently exists in the FirebaseDatabase.
+            userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        // User exists, set active players information.
+                        Globals.activePlayer = dataSnapshot.getValue(Player.class);
+                    } else {
+                        // User doesn't exist, add to database and set new active information.
+                        FirebaseDBUtil db = new FirebaseDBUtil();
+                        db.addPlayer(mAuth.getCurrentUser());
+                        Globals.activePlayer = new Player(mAuth.getCurrentUser());
+                    }
+                    startActivity(new Intent(AuthActivity.this, MainActivity.class));
+                    finish();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         } else {
+            // If the user is null, get the player to log in to Google again.
+            // TODO: Make this into a button? Indefinite log in could be an issue.
             signIn();
         }
     }

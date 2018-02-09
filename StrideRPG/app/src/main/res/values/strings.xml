@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">StrideRPG</string>
+
+    <!-- Player property labels. -->
+    <string name="email_label">Email:</string>
+    <string name="username_label">Username:</string>
+    <string name="uid_label">UID:</string>
+    <string name="level_label">Level:</string>
+    <string name="exp_label">Exp:</string>
 </resources>
