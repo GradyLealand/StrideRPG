@@ -1,8 +1,12 @@
-package stride.com.striderpg.models;
+package stride.com.striderpg.models.Player;
 
 
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * A Player class to represent a Users account information and player information encapsulated
+ * in one Object.
+ */
 public class Player {
 
     /**
@@ -33,8 +37,23 @@ public class Player {
     private Integer experience;
 
     /**
+     * The total amount of steps this Player has taken.
+     */
+    private Integer steps;
+
+    /**
+     * Reference to this players skills object.
+     */
+    private Skills skills;
+
+    /**
+     * Reference to this players inventory object.
+     */
+    private Inventory inventory;
+
+    /**
      * Default constructor required for calls to
-     * DataSnapshot.getValue(User.class).
+     * DataSnapshot.getValue(Player.class).
      */
     public Player() { }
 
@@ -46,14 +65,19 @@ public class Player {
         this.uniqueId = user.getUid();
         this.email = user.getEmail();
         this.username = user.getDisplayName();
+
         this.level = 0;
         this.experience = 0;
+        this.steps = 0;
+
+        this.skills = new Skills();
+        this.inventory = new Inventory();
     }
 
     /**
-     * Implementation of a Players toString method to print out the properties of a Player.
+     * Implementation of a Players toString method to print out the properties of a Player object.
      *
-     * @return Properties of the Player.
+     * @return Properties of the Player object.
      */
     @Override
     public String toString() {
@@ -63,6 +87,9 @@ public class Player {
                 ", username='" + username + '\'' +
                 ", level=" + level +
                 ", experience=" + experience +
+                ", steps=" + steps +
+                ", skills=" + skills +
+                ", inventory=" + inventory +
                 '}';
     }
 
@@ -126,4 +153,37 @@ public class Player {
     public void setExperience(Integer experience) {
         this.experience = experience;
     }
+
+    /**
+     * Get a Players current steps amount.
+     * @return Player current steps.
+     */
+    public Integer getSteps() {
+        return steps;
+    }
+
+    /**
+     * Set a Players current steps amount.
+     * @param steps New Player steps.
+     */
+    public void setSteps(Integer steps) {
+        this.steps = steps;
+    }
+
+    /**
+     * Get a Players Skills object.
+     * @return Player Skills object.
+     */
+    public Skills getSkills() {
+        return skills;
+    }
+
+    /**
+     * Get a Players inventory.
+     * @return Player inventory.
+     */
+    public Inventory getInventory() {
+        return inventory;
+    }
+
 }

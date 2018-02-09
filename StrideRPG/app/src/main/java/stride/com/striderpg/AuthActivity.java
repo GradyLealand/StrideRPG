@@ -31,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.models.Player;
+import stride.com.striderpg.models.Player.Player;
 
 public class AuthActivity extends AppCompatActivity {
     // Logging tag.
