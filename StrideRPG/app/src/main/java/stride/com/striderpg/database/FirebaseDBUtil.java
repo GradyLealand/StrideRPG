@@ -40,11 +40,8 @@ public class FirebaseDBUtil {
         // the identifier for Player in memory as well as the player in the Database.
         String playerId = user.getUid();
 
-        // Construct a new Player object with the given FirebaseUser.
-        Player player = new Player(user);
-
-        // Append this new Player to the Database as a child of the "users" key.
-        database.child(DBKeys.USERS_KEY).child(playerId).setValue(player);
+        // Append a new Player to the Database as a child of the "users" key.
+        database.child(DBKeys.USERS_KEY).child(playerId).setValue(new Player(user));
     }
 
     /**
@@ -68,12 +65,15 @@ public class FirebaseDBUtil {
 
     /**
      * Push an Item directly to the ActivePlayers Inventory in the FirebaseDatabase.
+     * TODO: Is this needed? Can we control data in one spot (ActivePlayer) and just push
+     * TODO: every x amount of seconds to decrease database calls required.
      */
     public void pushItem(Item item) {
         database.child(DBKeys.USERS_KEY)
                 .child(Globals.activePlayer.getUniqueId())
                 .child(DBKeys.INVENTORY_KEY)
-                .child(DBKeys.INVENTORY_ITEMS_KEY).push().setValue(item);
+                .child(DBKeys.INVENTORY_ITEMS_KEY)
+                .setValue(Globals.activePlayer.getInventory().makeKey(), item);
     }
 
     /**
@@ -96,5 +96,32 @@ public class FirebaseDBUtil {
                 .child(Globals.activePlayer.getUniqueId())
                 .child(DBKeys.SKILLS_KEY)
                 .child(KEY).setValue(value);
+    }
+
+    /**
+     * Push the ActivePlayers current steps from the Globals class directly to the FirebaseDatabase.
+     */
+    public void pushPlayerSteps() {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .setValue(DBKeys.STEPS_KEY, Globals.activePlayer.getSteps());
+    }
+
+    /**
+     * Push the ActivePlayers current level from the Globals class directly to the FirebaseDatabase.
+     */
+    public void pushPlayerLevel() {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .setValue(DBKeys.LEVEL_KEY, Globals.activePlayer.getLevel());
+    }
+
+    /**
+     * Push the ActivePlayers current experience from the Globals class directly to the FirebaseDatabase.
+     */
+    public void pushPlayerExperience() {
+        database.child(DBKeys.USERS_KEY)
+                .child(Globals.activePlayer.getUniqueId())
+                .setValue(DBKeys.EXPERIENCE_KEY, Globals.activePlayer.getExperience());
     }
 }

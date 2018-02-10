@@ -1,6 +1,9 @@
 package stride.com.striderpg.models.Player;
 
 
+/**
+ * A Skills class to represent a Players skills or attributes in game.
+ */
 public class Skills {
 
     /**
@@ -46,7 +49,6 @@ public class Skills {
 
     /**
      * Implementation of a Skills toString() method to print out properties of a Skills object.
-     *
      * @return Properties of the Skills object.
      */
     @Override
@@ -91,7 +93,7 @@ public class Skills {
 
     /**
      * Get a Skills speed property.
-     * @return
+     * @return Skill speed property.
      */
     public Integer getSpeed() {
         return speed;

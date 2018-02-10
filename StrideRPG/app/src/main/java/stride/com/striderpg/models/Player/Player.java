@@ -58,7 +58,7 @@ public class Player {
     public Player() { }
 
     /**
-     * Construct a Player using a FirebaseUser object to create the player object.
+     * Construct a Player using a FirebaseUser object to create an empty (new) player object.
      * @param user FirebaseUser Object to retrieve information about the player.
      */
     public Player(FirebaseUser user) {
@@ -76,7 +76,6 @@ public class Player {
 
     /**
      * Implementation of a Players toString method to print out the properties of a Player object.
-     *
      * @return Properties of the Player object.
      */
     @Override
@@ -185,6 +184,10 @@ public class Player {
         return inventory;
     }
 
+    /**
+     * Set a Players inventory.
+     * @param inventory New Player inventory.
+     */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }

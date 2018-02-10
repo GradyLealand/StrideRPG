@@ -213,6 +213,12 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Using a DataSnapshot object, iterate through the Snapshot and grab each inventory child.
+     * Put each item into the HashMap items variable.
+     * @param snapshot DataSnapshot containing current player data.
+     * @return Inventory object with all present Item objects in it.
+     */
     private Inventory retrievePlayerInventory(DataSnapshot snapshot) {
         Inventory inventory = new Inventory();
         for (DataSnapshot s : snapshot.child(DBKeys.INVENTORY_KEY).child(DBKeys.INVENTORY_ITEMS_KEY).getChildren()) {
