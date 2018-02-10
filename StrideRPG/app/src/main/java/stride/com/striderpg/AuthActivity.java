@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -31,18 +32,40 @@ import com.google.firebase.database.ValueEventListener;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.models.Player;
+import stride.com.striderpg.models.Item;
+import stride.com.striderpg.models.Player.Inventory;
+import stride.com.striderpg.models.Player.Player;
 
+/**
+ * Main Authentication activity that handles any logging in, resource gathering
+ * and database retrieval before moving onto the Main/Home Activity.
+ */
 public class AuthActivity extends AppCompatActivity {
-    // Logging tag.
+
+    /**
+     * AuthActivity Logging tag.
+     */
     private static final String TAG = "AuthActivity";
-    // Result int code.
+
+    /**
+     * Result code for Sign-in activity.
+     */
     private static final int RC_SIGN_IN = 9001;
 
+    /**
+     * FirebaseAuth Object for dealing with the Firebase Authentication functionality.
+     */
     private FirebaseAuth mAuth;
+
+    /**
+     * GoogleSignInClient Object for granting a user permission to the application and allowing
+     * them to sign in through the use of the Google API.
+     */
     private GoogleSignInClient mGoogleSignInClient;
 
+    // UI elements here.
     private ImageView logoImageView;
+    private TextView authTask;
     private ProgressBar authProgressBar;
 
     @Override
@@ -50,9 +73,12 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        // Widgets
         logoImageView = findViewById(R.id.logoImageView);
+        authTask = findViewById(R.id.authTask);
         authProgressBar = findViewById(R.id.authProgressBar);
+
+        // Set current task to auth_init. Initializing...
+        authTask.setText(R.string.auth_init);
 
         // Configure Google Sign In Options.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -69,6 +95,7 @@ public class AuthActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check for a user signed in already.
+        authProgressBar.setVisibility(View.VISIBLE);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         checkUser(currentUser);
     }
@@ -80,7 +107,7 @@ public class AuthActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Google Sign In was successful, autheticate with Firebase.
+                // Google Sign In was successful, authenticate with Firebase.
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
@@ -99,7 +126,8 @@ public class AuthActivity extends AppCompatActivity {
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
-        authProgressBar.setVisibility(View.VISIBLE);
+
+        authTask.setText(R.string.auth_authenticate);
 
         // Begin credential check through Firebase.
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
@@ -117,7 +145,6 @@ public class AuthActivity extends AppCompatActivity {
                             Toast.makeText(AuthActivity.this, "Google Sign In Failed!", Toast.LENGTH_LONG).show();
                             checkUser(null);
                         }
-                        authProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
 
@@ -129,6 +156,7 @@ public class AuthActivity extends AppCompatActivity {
      */
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        authTask.setText(R.string.auth_signin);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -138,10 +166,11 @@ public class AuthActivity extends AppCompatActivity {
      * @param user FirebaseUser object.
      */
     private void checkUser(FirebaseUser user) {
-        authProgressBar.setVisibility(View.INVISIBLE);
         if (user != null) {
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
+
+            authTask.setText(R.string.auth_load);
 
             // Create a reference to the DatabaseReference at the users (USERS_KEY) parent node.
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DBKeys.USERS_KEY);
@@ -150,15 +179,24 @@ public class AuthActivity extends AppCompatActivity {
             userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    authTask.setText("");
+
                     if (dataSnapshot.getValue() != null) {
                         // User exists, set active players information.
                         Globals.activePlayer = dataSnapshot.getValue(Player.class);
+
+                        // Retrieve this users inventory.
+                        Globals.activePlayer.setInventory(retrievePlayerInventory(dataSnapshot));
                     } else {
                         // User doesn't exist, add to database and set new active information.
                         FirebaseDBUtil db = new FirebaseDBUtil();
                         db.addPlayer(mAuth.getCurrentUser());
                         Globals.activePlayer = new Player(mAuth.getCurrentUser());
                     }
+
+                    authProgressBar.setVisibility(View.INVISIBLE);
+
                     startActivity(new Intent(AuthActivity.this, MainActivity.class));
                     finish();
                 }
@@ -173,5 +211,19 @@ public class AuthActivity extends AppCompatActivity {
             // TODO: Make this into a button? Indefinite log in could be an issue.
             signIn();
         }
+    }
+
+    /**
+     * Using a DataSnapshot object, iterate through the Snapshot and grab each inventory child.
+     * Put each item into the HashMap items variable.
+     * @param snapshot DataSnapshot containing current player data.
+     * @return Inventory object with all present Item objects in it.
+     */
+    private Inventory retrievePlayerInventory(DataSnapshot snapshot) {
+        Inventory inventory = new Inventory();
+        for (DataSnapshot s : snapshot.child(DBKeys.INVENTORY_KEY).child(DBKeys.INVENTORY_ITEMS_KEY).getChildren()) {
+            inventory.getItems().put(s.getKey(), s.getValue(Item.class));
+        }
+        return inventory;
     }
 }

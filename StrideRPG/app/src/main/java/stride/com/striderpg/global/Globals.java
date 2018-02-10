@@ -1,7 +1,7 @@
 package stride.com.striderpg.global;
 
 
-import stride.com.striderpg.models.Player;
+import stride.com.striderpg.models.Player.Player;
 
 /**
  * Simple public class to hold and store any objects that should be accessible anywhere from the
