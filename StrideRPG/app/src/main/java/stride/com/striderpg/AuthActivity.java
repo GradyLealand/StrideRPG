@@ -94,8 +94,9 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check for a user signed in already.
+
         authProgressBar.setVisibility(View.VISIBLE);
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         checkUser(currentUser);
     }
@@ -125,9 +126,9 @@ public class AuthActivity extends AppCompatActivity {
      * @param account GoogleSignInAccount for current user.
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
-
         authTask.setText(R.string.auth_authenticate);
+
+        Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
 
         // Begin credential check through Firebase.
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
@@ -147,7 +148,6 @@ public class AuthActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     /**
@@ -155,8 +155,9 @@ public class AuthActivity extends AppCompatActivity {
      * choosing an account to authenticate with.
      */
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         authTask.setText(R.string.auth_signin);
+
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -169,9 +170,6 @@ public class AuthActivity extends AppCompatActivity {
         if (user != null) {
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
-
-            authTask.setText(R.string.auth_load);
-
             // Create a reference to the DatabaseReference at the users (USERS_KEY) parent node.
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DBKeys.USERS_KEY);
 
@@ -179,16 +177,17 @@ public class AuthActivity extends AppCompatActivity {
             userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    authTask.setText("");
-
                     if (dataSnapshot.getValue() != null) {
+                        authTask.setText(R.string.auth_load);
+
                         // User exists, set active players information.
                         Globals.activePlayer = dataSnapshot.getValue(Player.class);
 
                         // Retrieve this users inventory.
                         Globals.activePlayer.setInventory(retrievePlayerInventory(dataSnapshot));
                     } else {
+                        authTask.setText(R.string.auth_gen_new);
+
                         // User doesn't exist, add to database and set new active information.
                         FirebaseDBUtil db = new FirebaseDBUtil();
                         db.addPlayer(mAuth.getCurrentUser());

@@ -8,6 +8,7 @@
     <string name="auth_login">Logging In…</string>
     <string name="auth_signin">Google Sign In…</string>
     <string name="auth_load">Loading Player Data…</string>
+    <string name="auth_gen_new">Generating New Player Data…</string>
 
 
 </resources>
