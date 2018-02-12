@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_quests"
+        android:icon="@drawable/ic_bottomnav_challenges"
+        android:title="@string/navbar_quests" />
+    <item
+        android:id="@+id/navigation_inventory"
+        android:icon="@drawable/ic_navabar_inventory"
+        android:title="@string/navbar_inventory" />
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_home_bottomnav"
+        android:title="@string/title_dashboard" />
+    <item
+        android:id="@+id/navigation_bestiary"
+        android:icon="@drawable/ic_bottomnav_bestiary"
+        android:title="@string/navbar_bestiary" />
+    <item
+        android:id="@+id/navigation_leaderboards"
+        android:icon="@drawable/ic_bottomnav_leaderboards"
+        android:title="@string/navbar_leaderboard" />
+</menu>

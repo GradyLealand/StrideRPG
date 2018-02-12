@@ -196,7 +196,7 @@ public class AuthActivity extends AppCompatActivity {
 
                     authProgressBar.setVisibility(View.INVISIBLE);
 
-                    startActivity(new Intent(AuthActivity.this, MainActivity.class));
+                    startActivity(new Intent(AuthActivity.this, NavigationActivity.class));
                     finish();
                 }
 
