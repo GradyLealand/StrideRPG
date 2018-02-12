@@ -32,7 +32,7 @@ public class Enums {
         LEGENDARY;
 
         /**
-         * // TODO: SUBJECT TO CHANGE.
+         * TODO: SUBJECT TO CHANGE.
          * Custom function to return a random Rarity using a weighted percentage for each one.
          * COMMON = 65%
          * UNCOMMON = 15%
