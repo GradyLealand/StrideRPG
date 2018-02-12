@@ -10,21 +10,20 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information
- * about their account at the top of the screen.
+ * Leaderboards Fragment for displaying different Players in the game and sorting them based on rank,
+ * total steps, total experience, level, enemies defeated... etc.
  */
-public class DashboardFragment extends Fragment {
+public class LeaderboardsFragment extends Fragment {
 
     /**
      * Required empty public constructor function.
      */
-    public DashboardFragment() { }
+    public LeaderboardsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_leaderboards, container, false);
     }
 }

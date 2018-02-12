@@ -10,21 +10,20 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information
- * about their account at the top of the screen.
+ * Quests Fragment for showing a user their current progress in the game and how close or far
+ * away they are from unlocking a new quest/achievement.
  */
-public class DashboardFragment extends Fragment {
+public class QuestsFragment extends Fragment {
 
     /**
      * Required empty public constructor function.
      */
-    public DashboardFragment() { }
+    public QuestsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_quests, container, false);
     }
 }

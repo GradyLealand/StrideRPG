@@ -10,21 +10,20 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information
- * about their account at the top of the screen.
+ * Inventory Fragment for displaying a Users inventory and giving them options to equip, un-equip,
+ * trash and look at stats on each item in their Inventory.
  */
-public class DashboardFragment extends Fragment {
+public class InventoryFragment extends Fragment {
 
     /**
      * Required empty public constructor function.
      */
-    public DashboardFragment() { }
+    public InventoryFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_inventory, container, false);
     }
 }
