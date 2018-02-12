@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import stride.com.striderpg.global.Globals;
 import stride.com.striderpg.global.PushTimer;
-import stride.com.striderpg.models.Item;
+import stride.com.striderpg.rpg.Generators.ItemGenerator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,14 +52,11 @@ public class MainActivity extends AppCompatActivity {
         testPushItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create simple template item.
-                Item temp = new Item("test item", "description test", 14,
-                        4, 6 ,8);
-
+                ItemGenerator gen = new ItemGenerator();
                 // Put new item into players inventory with unique identifier.
                 Globals.activePlayer.getInventory().getItems().put(
                         Globals.activePlayer.getInventory().makeKey(),
-                        temp
+                        gen.generate(Globals.activePlayer)
                 );
             }
         });

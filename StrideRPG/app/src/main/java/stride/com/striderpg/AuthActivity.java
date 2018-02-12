@@ -32,9 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.models.Item;
-import stride.com.striderpg.models.Player.Inventory;
-import stride.com.striderpg.models.Player.Player;
+import stride.com.striderpg.rpg.models.Item;
+import stride.com.striderpg.rpg.models.Player.Inventory;
+import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
  * Main Authentication activity that handles any logging in, resource gathering
