@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import stride.com.striderpg.global.Globals;
 import stride.com.striderpg.global.PushTimer;
+import stride.com.striderpg.rpg.Generators.EnemyGenerator;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         // In this case, the active player is pushed to the Database every 10 seconds.
         PushTimer push = new PushTimer();
         push.start();
+
+        // Test enemy generation.
+        EnemyGenerator gen = new EnemyGenerator();
+        System.out.println(gen.generate(Globals.activePlayer).toString());
+        System.out.println(gen.generate(Globals.activePlayer).toString());
+        System.out.println(gen.generate(Globals.activePlayer).toString());
 
         // Test adding skill point to strength.
         skillButton1.setOnClickListener(new View.OnClickListener() {

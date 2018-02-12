@@ -1,4 +1,4 @@
-package stride.com.striderpg.rpg.models;
+package stride.com.striderpg.rpg.models.Item;
 
 
 import stride.com.striderpg.rpg.Enums;
@@ -35,14 +35,14 @@ public class Item {
     private Integer speedBoost;
 
     /**
-     * Items rarity level, used to determine stat's on generation.
+     * Items itemRarity level, used to determine stat's on generation.
      */
-    private Enums.Rarity rarity;
+    private Enums.ItemRarity itemRarity;
 
     /**
-     * Items type, randomly selected on item generation.
+     * Items itemType, randomly selected on item generation.
      */
-    private Enums.Type type;
+    private Enums.ItemType itemType;
 
     /**
      * Default constructor required for calls to
@@ -57,18 +57,18 @@ public class Item {
      * @param vitalityBoost Item vitality boost.
      * @param strengthBoost Item strength boost.
      * @param speedBoost Item speed boost.
-     * @param rarity Item rarity level.
-     * @param type Item type.
+     * @param itemRarity Item itemRarity level.
+     * @param itemType Item itemType.
      */
     public Item(String name, Integer powerLevel, Integer vitalityBoost, Integer strengthBoost,
-                Integer speedBoost, Enums.Rarity rarity, Enums.Type type) {
+                Integer speedBoost, Enums.ItemRarity itemRarity, Enums.ItemType itemType) {
         this.name = name;
         this.powerLevel = powerLevel;
         this.vitalityBoost = vitalityBoost;
         this.strengthBoost = strengthBoost;
         this.speedBoost = speedBoost;
-        this.rarity = rarity;
-        this.type = type;
+        this.itemRarity = itemRarity;
+        this.itemType = itemType;
     }
 
     /**
@@ -83,8 +83,8 @@ public class Item {
                 ", vitalityBoost=" + vitalityBoost +
                 ", strengthBoost=" + strengthBoost +
                 ", speedBoost=" + speedBoost +
-                ", rarity=" + rarity +
-                ", type=" + type +
+                ", itemRarity=" + itemRarity +
+                ", itemType=" + itemType +
                 '}';
     }
 
@@ -129,18 +129,18 @@ public class Item {
     }
 
     /**
-     * Get an items rarity.
-     * @return Item Rarity enum value.
+     * Get an items itemRarity.
+     * @return Item ItemRarity enum value.
      */
-    public Enums.Rarity getRarity() {
-        return rarity;
+    public Enums.ItemRarity getItemRarity() {
+        return itemRarity;
     }
 
     /**
-     * Get an items type.
-     * @return Item Type enum value.
+     * Get an items itemType.
+     * @return Item ItemType enum value.
      */
-    public Enums.Type getType() {
-        return type;
+    public Enums.ItemType getItemType() {
+        return itemType;
     }
 }

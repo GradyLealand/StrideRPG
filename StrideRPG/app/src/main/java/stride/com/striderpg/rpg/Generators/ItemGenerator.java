@@ -3,7 +3,7 @@ package stride.com.striderpg.rpg.Generators;
 
 import java.util.Random;
 
-import stride.com.striderpg.rpg.models.Item;
+import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
@@ -27,31 +27,30 @@ public class ItemGenerator {
 
     /**
      * Generate a random item based off of the Player object passed into the function.
+     * @param p Player used to determine item properties.
      * @return Newly generated Item object with randomized properties.
      */
     public Item generate(Player p) {
-        // Retrieve random Enumeration value for the Type and Rarity enum for the new Item.
-        Enums.Type type = Enums.random(Enums.Type.class);
-        Enums.Rarity rarity = Enums.Rarity.weightedRarity();
+        // Retrieve random Enumeration value for the ItemType and ItemRarity enum for the new Item.
+        Enums.ItemType itemType = Enums.random(Enums.ItemType.class);
+        Enums.ItemRarity itemRarity = Enums.ItemRarity.weightedRarity();
 
         // Set the stats/properties of the new Item.
-        int[] stats = buildItemStats(rarity, p);
+        int[] stats = buildItemStats(itemRarity, p);
         int powerLevel = generatePowerLevel(stats, p);
 
-        String name = parseName(type);
-        return new Item(name, powerLevel, stats[0], stats[1], stats[2], rarity, type);
+        String name = parseName(itemType);
+        return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, itemType);
     }
 
     /**
-     * Parse out a new Items name by choosing a random adjective and appending the Items Type enum
-     * to the end of the String after fixing the capitalization on the Type.
-     * @param type New Item Type.
+     * Parse out a new Items name by choosing a random adjective and appending the Items ItemType enum
+     * to the end of the String after fixing the capitalization on the ItemType.
+     * @param itemType New Item ItemType.
      * @return New Item Name.
      */
-    private String parseName(Enums.Type type) {
-        return itemAdjectives[r.nextInt(itemAdjectives.length)] + " " +
-                type.name().substring(0, 1).toUpperCase() +
-                type.name().substring(1).toLowerCase();
+    private String parseName(Enums.ItemType itemType) {
+        return itemAdjectives[r.nextInt(itemAdjectives.length)] + " " + itemType.getName();
     }
 
     /**
@@ -66,21 +65,21 @@ public class ItemGenerator {
         for (int stat : stats) {
             powerLevel += stat;
         }
-        return (powerLevel + p.getLevel()) * Constants.POWER_LEVEL_MODIFIER;
+        return (powerLevel + p.getLevel()) * Constants.ITEM_POWER_LEVEL_MODIFIER;
     }
 
     /**
      * Create an int[] array to hold the stats for the new Item. Randomly choose a skill
      * each loop iteration and increment the skill bonus for the Item.
-     * @param rarity Item rarity chosen.
+     * @param itemRarity Item itemRarity chosen.
      * @param p Player.
      * @return int[] array holding new Item stats.
      */
-    private int[] buildItemStats(Enums.Rarity rarity, Player p) {
+    private int[] buildItemStats(Enums.ItemRarity itemRarity, Player p) {
         int strBoost = 0, vitBoost = 0, spdBoost = 0, points = 0;
 
         // Determine amount of points this item can have put into its attribute boost.
-        switch (rarity) {
+        switch (itemRarity) {
             case COMMON: points = p.getLevel() + 3; break;
             case UNCOMMON: points = p.getLevel() + 5; break;
             case RARE: points = p.getLevel() + 7; break;
