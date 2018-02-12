@@ -6,8 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.models.Item;
-import stride.com.striderpg.models.Player.Player;
+import stride.com.striderpg.rpg.models.Item;
+import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
  * Database Utility class to encapsulate any data transfer from the FirebaseDatabase to the application

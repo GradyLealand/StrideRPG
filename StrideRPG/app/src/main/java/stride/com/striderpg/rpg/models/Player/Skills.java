@@ -1,4 +1,4 @@
-package stride.com.striderpg.models.Player;
+package stride.com.striderpg.rpg.models.Player;
 
 
 /**

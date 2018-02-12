@@ -1,4 +1,4 @@
-package stride.com.striderpg.models;
+package stride.com.striderpg.rpg.models;
 
 
 import stride.com.striderpg.rpg.Enums;

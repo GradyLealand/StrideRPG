@@ -3,8 +3,8 @@ package stride.com.striderpg.rpg.Generators;
 
 import java.util.Random;
 
-import stride.com.striderpg.models.Item;
-import stride.com.striderpg.models.Player.Player;
+import stride.com.striderpg.rpg.models.Item;
+import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 

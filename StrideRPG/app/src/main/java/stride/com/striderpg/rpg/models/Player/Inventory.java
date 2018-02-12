@@ -1,11 +1,11 @@
-package stride.com.striderpg.models.Player;
+package stride.com.striderpg.rpg.models.Player;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
 import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.models.Item;
+import stride.com.striderpg.rpg.models.Item;
 
 /**
  * A Inventory class to represent a Player's Inventory.
