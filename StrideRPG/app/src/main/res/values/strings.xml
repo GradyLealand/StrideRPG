@@ -11,6 +11,7 @@
     <string name="auth_gen_new">Generating New Player Data…</string>
 
     <!-- Navigation bar strings -->
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
     <string name="navbar_dashboard">Dashboard</string>
     <string name="navbar_quests">Quests</string>
     <string name="navbar_inventory">Inventory</string>

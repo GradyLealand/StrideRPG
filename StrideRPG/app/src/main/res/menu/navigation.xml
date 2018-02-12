@@ -11,7 +11,7 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_home_bottomnav"
-        android:title="@string/title_dashboard" />
+        android:title="@string/navbar_dashboard" />
     <item
         android:id="@+id/navigation_bestiary"
         android:icon="@drawable/ic_bottomnav_bestiary"
