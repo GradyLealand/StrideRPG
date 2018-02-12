@@ -28,3 +28,4 @@
 ### Useful Links
 - [Firebase Console](https://console.firebase.google.com/project/stride-rpg/overview)
 - [Google Drive](https://drive.google.com/open?id=0B5BBn2F7KfYCTlM0MHV2MmpzTWs)
+- [Trello Board](https://trello.com/striderpg)
