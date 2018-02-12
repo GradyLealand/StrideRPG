@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Leaderboards Fragment for displaying different Players in the game and sorting them based on rank,
+ * total steps, total experience, level, enemies defeated... etc.
  */
 public class LeaderboardsFragment extends Fragment {
 
-
-    public LeaderboardsFragment() {
-        // Required empty public constructor
-    }
-
+    /**
+     * Required empty public constructor function.
+     */
+    public LeaderboardsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,5 +26,4 @@ public class LeaderboardsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_leaderboards, container, false);
     }
-
 }

@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Inventory Fragment for displaying a Users inventory and giving them options to equip, un-equip,
+ * trash and look at stats on each item in their Inventory.
  */
 public class InventoryFragment extends Fragment {
 
-
-    public InventoryFragment() {
-        // Required empty public constructor
-    }
-
+    /**
+     * Required empty public constructor function.
+     */
+    public InventoryFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,5 +26,4 @@ public class InventoryFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_inventory, container, false);
     }
-
 }

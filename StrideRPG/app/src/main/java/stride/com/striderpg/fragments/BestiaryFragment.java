@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Bestiary Fragment class for showing a User information about the enemies they've defeated
+ * as well as the amount of each enemy they've defeated.
  */
 public class BestiaryFragment extends Fragment {
 
-
-    public BestiaryFragment() {
-        // Required empty public constructor
-    }
-
+    /**
+     * Required empty public constructor function.
+     */
+    public BestiaryFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,5 +26,4 @@ public class BestiaryFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bestiary, container, false);
     }
-
 }

@@ -1,26 +1,28 @@
 package stride.com.striderpg;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import stride.com.striderpg.fragments.BestiaryFragment;
-import stride.com.striderpg.fragments.DashboardFragment;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
-import stride.com.striderpg.fragments.InventoryFragment;
-import stride.com.striderpg.fragments.LeaderboardsFragment;
-import stride.com.striderpg.fragments.QuestsFragment;
-import stride.com.striderpg.global.Globals;
 
+/**
+ * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
+ * between the different Fragments present. by clicking on a Navigation Item located in the bottom
+ * of the View, a new Fragment is selected and replaced with the old fragment in the fragmentContainer.
+ */
 public class NavigationActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    /**
+     * FragmentGenerator instance to create and initialize the five fragments in game.
+     */
     private FragmentGenerator generator = new FragmentGenerator();
 
+    /**
+     * Custom Listener to change the Fragment every time a new Navigation Item is selected.
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -60,14 +62,10 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, generator.dashboardFragment).commit();
 
-        mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
 
         // Setting default stuff to appear, same as if selected in switch case
         navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-
-
-
 }
