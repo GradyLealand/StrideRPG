@@ -1,5 +1,8 @@
 package stride.com.striderpg.models;
 
+
+import stride.com.striderpg.rpg.Enums;
+
 /**
  * An Item class to represent an Item present in a Players Inventory.
  */
@@ -9,11 +12,6 @@ public class Item {
      * Name of the Item.
      */
     private String name;
-
-    /**
-     * Short description or flavour text to describe this Item.
-     */
-    private String description;
 
     /**
      * The power level this weapon represents. A short handed way to describe
@@ -37,6 +35,16 @@ public class Item {
     private Integer speedBoost;
 
     /**
+     * Items rarity level, used to determine stat's on generation.
+     */
+    private Enums.Rarity rarity;
+
+    /**
+     * Items type, randomly selected on item generation.
+     */
+    private Enums.Type type;
+
+    /**
      * Default constructor required for calls to
      * DataSnapshot.getValue(Item.class).
      */
@@ -45,20 +53,22 @@ public class Item {
     /**
      * Custom constructor to build an item with specified properties.
      * @param name Item name.
-     * @param description Item description or flavor text.
      * @param powerLevel Item power level. Generally used to determine how powerful this item is.
      * @param vitalityBoost Item vitality boost.
      * @param strengthBoost Item strength boost.
      * @param speedBoost Item speed boost.
+     * @param rarity Item rarity level.
+     * @param type Item type.
      */
-    public Item(String name, String description, Integer powerLevel, Integer vitalityBoost,
-                Integer strengthBoost, Integer speedBoost) {
+    public Item(String name, Integer powerLevel, Integer vitalityBoost, Integer strengthBoost,
+                Integer speedBoost, Enums.Rarity rarity, Enums.Type type) {
         this.name = name;
-        this.description = description;
         this.powerLevel = powerLevel;
         this.vitalityBoost = vitalityBoost;
         this.strengthBoost = strengthBoost;
         this.speedBoost = speedBoost;
+        this.rarity = rarity;
+        this.type = type;
     }
 
     /**
@@ -69,11 +79,12 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", powerLevel=" + powerLevel +
                 ", vitalityBoost=" + vitalityBoost +
                 ", strengthBoost=" + strengthBoost +
                 ", speedBoost=" + speedBoost +
+                ", rarity=" + rarity +
+                ", type=" + type +
                 '}';
     }
 
@@ -83,14 +94,6 @@ public class Item {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Get an Items description property.
-     * @return Item description.
-     */
-    public String getDescription() {
-        return description;
     }
 
     /**
@@ -123,5 +126,21 @@ public class Item {
      */
     public Integer getSpeedBoost() {
         return speedBoost;
+    }
+
+    /**
+     * Get an items rarity.
+     * @return Item Rarity enum value.
+     */
+    public Enums.Rarity getRarity() {
+        return rarity;
+    }
+
+    /**
+     * Get an items type.
+     * @return Item Type enum value.
+     */
+    public Enums.Type getType() {
+        return type;
     }
 }

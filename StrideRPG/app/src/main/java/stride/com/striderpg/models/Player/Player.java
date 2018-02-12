@@ -66,7 +66,7 @@ public class Player {
         this.email = user.getEmail();
         this.username = user.getDisplayName();
 
-        this.level = 0;
+        this.level = 1;
         this.experience = 0;
         this.steps = 0;
 
