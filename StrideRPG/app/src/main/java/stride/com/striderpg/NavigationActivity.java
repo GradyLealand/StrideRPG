@@ -6,7 +6,16 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
+import stride.com.striderpg.global.Globals;
+import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -67,5 +76,25 @@ public class NavigationActivity extends AppCompatActivity {
         // Setting default stuff to appear, same as if selected in switch case
         navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference(DBKeys.USERS_KEY).child(Globals.activePlayer.getUniqueId());
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Globals.activePlayer = dataSnapshot.getValue(Player.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

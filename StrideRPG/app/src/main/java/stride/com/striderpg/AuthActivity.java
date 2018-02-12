@@ -184,7 +184,7 @@ public class AuthActivity extends AppCompatActivity {
                         Globals.activePlayer = dataSnapshot.getValue(Player.class);
 
                         // Retrieve this users inventory.
-                        Globals.activePlayer.setInventory(retrievePlayerInventory(dataSnapshot));
+                        //Globals.activePlayer.setInventory(retrievePlayerInventory(dataSnapshot));
                     } else {
                         authTask.setText(R.string.auth_gen_new);
 

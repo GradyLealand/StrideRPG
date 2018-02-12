@@ -19,7 +19,7 @@ public class FirebaseDBUtil {
      * Globally available private DatabaseReference used to interact with the
      * FirebaseDatabase. It will be instantiated with a usable reference on Construction.
      */
-    private DatabaseReference database;
+    private final DatabaseReference database;
 
     /**
      * Constructor to set the database variable to the current FirebaseDatabase Instance

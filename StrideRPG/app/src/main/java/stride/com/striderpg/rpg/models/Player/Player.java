@@ -3,11 +3,16 @@ package stride.com.striderpg.rpg.models.Player;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
+
 /**
  * A Player class to represent a Users account information and player information encapsulated
  * in one Object.
  */
 public class Player {
+
+    public PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * Every player has a unique identifier attached to their account.
@@ -183,7 +188,6 @@ public class Player {
     public Inventory getInventory() {
         return inventory;
     }
-
     /**
      * Set a Players inventory.
      * @param inventory New Player inventory.

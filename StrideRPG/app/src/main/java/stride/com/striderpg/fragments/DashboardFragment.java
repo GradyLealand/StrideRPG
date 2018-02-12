@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import stride.com.striderpg.R;
 
@@ -14,6 +15,8 @@ import stride.com.striderpg.R;
  * about their account at the top of the screen.
  */
 public class DashboardFragment extends Fragment {
+
+    private TextView playerStepsTextView = getView().findViewById(R.id.playerStepsTextView);
 
     /**
      * Required empty public constructor function.
@@ -26,5 +29,11 @@ public class DashboardFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 }
