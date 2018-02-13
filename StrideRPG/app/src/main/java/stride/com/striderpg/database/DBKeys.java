@@ -11,6 +11,11 @@ public final class DBKeys {
     public static final String USERS_KEY = "users";
 
     /**
+     * Token for retrieving or reaching a users username information node in FirebaseDatabase.
+     */
+    public static final String USERNAME_KEY = "username";
+
+    /**
      * Token for retrieving or reaching a users steps node in FirebaseDatabase.
      */
     public static final String STEPS_KEY = "steps";
@@ -46,7 +51,6 @@ public final class DBKeys {
      * Token for retrieving or reaching a users inventory information node in FirebaseDatabase.
      */
     public static final String INVENTORY_KEY = "inventory";
-
     /**
      * Token for retrieving or reaching a users inventory items information node in FirebaseDatabase.
      */

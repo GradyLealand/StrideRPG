@@ -1,10 +1,22 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Objects;
+
+import stride.com.striderpg.database.DBKeys;
+
 /**
  * A Skills class to represent a Players skills or attributes in game.
  */
 public class Skills {
+
+    /**
+     * PropertyChangedSupport object to deal with raising events when a Property on this object/bean
+     * is changed.
+     */
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * Simple readonly tag to represent the Vitality skill as an abbreviation.
@@ -60,6 +72,10 @@ public class Skills {
                 '}';
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changes.addPropertyChangeListener(listener);
+    }
+
     /**
      * Get a Skills vitality property.
      * @return Skill vitality property.
@@ -72,6 +88,8 @@ public class Skills {
      * @param vitality New Skill vitality.
      */
     public void setVitality(Integer vitality) {
+        if (!Objects.equals(this.vitality, vitality))
+            changes.firePropertyChange(DBKeys.SKILLS_VITALITY, this.vitality, vitality);
         this.vitality = vitality;
     }
 
@@ -88,6 +106,8 @@ public class Skills {
      * @param strength New Skill strength.
      */
     public void setStrength(Integer strength) {
+        if (!Objects.equals(this.strength, strength))
+            changes.firePropertyChange(DBKeys.SKILLS_STRENGTH, this.strength, strength);
         this.strength = strength;
     }
 
@@ -104,6 +124,8 @@ public class Skills {
      * @param speed New Skill speed.
      */
     public void setSpeed(Integer speed) {
+        if (!Objects.equals(this.speed, speed))
+            changes.firePropertyChange(DBKeys.SKILLS_SPEED, this.speed, speed);
         this.speed = speed;
     }
 }
