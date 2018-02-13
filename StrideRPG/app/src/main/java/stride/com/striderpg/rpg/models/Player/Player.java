@@ -3,8 +3,12 @@ package stride.com.striderpg.rpg.models.Player;
 
 import com.google.firebase.auth.FirebaseUser;
 
-import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
+
+import stride.com.striderpg.database.DBKeys;
+
 
 /**
  * A Player class to represent a Users account information and player information encapsulated
@@ -12,7 +16,11 @@ import java.beans.PropertyChangeSupport;
  */
 public class Player {
 
-    public PropertyChangeSupport changes = new PropertyChangeSupport(this);
+    /**
+     * PropertyChangedSupport object to deal with raising events when a Property on this object/bean
+     * is changed.
+     */
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * Every player has a unique identifier attached to their account.
@@ -80,6 +88,14 @@ public class Player {
     }
 
     /**
+     * Level a Player up by incrementing their level property by one. Uses the public level
+     * property setter so a property change event is fired.
+     */
+    public void levelUp() {
+        this.setLevel(level + 1);
+    }
+
+    /**
      * Implementation of a Players toString method to print out the properties of a Player object.
      * @return Properties of the Player object.
      */
@@ -95,6 +111,10 @@ public class Player {
                 ", skills=" + skills +
                 ", inventory=" + inventory +
                 '}';
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changes.addPropertyChangeListener(listener);
     }
 
     /**
@@ -125,6 +145,8 @@ public class Player {
      * @param username New Player username.
      */
     public void setUsername(String username) {
+        if (!Objects.equals(this.username, username))
+            changes.firePropertyChange(DBKeys.USERNAME_KEY, this.username, username);
         this.username = username;
     }
 
@@ -140,6 +162,8 @@ public class Player {
      * @param level New Player level.
      */
     public void setLevel(Integer level) {
+        if (!Objects.equals(this.level, level))
+            changes.firePropertyChange(DBKeys.LEVEL_KEY, this.level, level);
         this.level = level;
     }
 
@@ -155,6 +179,8 @@ public class Player {
      * @param experience New Player experience.
      */
     public void setExperience(Integer experience) {
+        if (!Objects.equals(this.experience, experience))
+            changes.firePropertyChange(DBKeys.EXPERIENCE_KEY, this.experience, experience);
         this.experience = experience;
     }
 
@@ -170,6 +196,8 @@ public class Player {
      * @param steps New Player steps.
      */
     public void setSteps(Integer steps) {
+        if (!Objects.equals(this.steps, steps))
+            changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
     }
 
