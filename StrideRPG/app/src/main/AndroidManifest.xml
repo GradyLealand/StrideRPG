@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Main App Activity -->
-        <activity android:name=".MainActivity" />
-
         <!-- Auth Activity-->
         <activity android:name=".AuthActivity" />
 
