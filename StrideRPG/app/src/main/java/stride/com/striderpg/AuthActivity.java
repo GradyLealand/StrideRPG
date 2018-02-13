@@ -220,16 +220,14 @@ public class AuthActivity extends AppCompatActivity {
                         authTask.setText(R.string.auth_gen_new);
                         G.activePlayer = new Player(mAuth.getCurrentUser());
                         FirebaseDBUtil db = new FirebaseDBUtil();
-                        db.pushActivePlayer();
+                        db.pushPlayer(G.activePlayer);
                     }
                     authProgressBar.setVisibility(View.INVISIBLE);
                     startActivity(new Intent(AuthActivity.this, NavigationActivity.class));
                     finish();
                 }
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+                public void onCancelled(DatabaseError databaseError) { }
             });
         } else {
             signIn();
