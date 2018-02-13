@@ -1,6 +1,8 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
+import android.net.Uri;
+
 import com.google.firebase.auth.FirebaseUser;
 
 import java.beans.PropertyChangeListener;
@@ -37,6 +39,11 @@ public class Player {
      * Player Username. Used to identify a player in a human friendly way.
      */
     private String username;
+
+    /**
+     * Player Image Uri. Used to retrieve a Players profile picture.
+     */
+    private Uri image;
 
     /**
      * Player Level, as a player plays the game and participates in activities, they are
@@ -78,6 +85,7 @@ public class Player {
         this.uniqueId = user.getUid();
         this.email = user.getEmail();
         this.username = user.getDisplayName();
+        this.image = user.getPhotoUrl();
 
         this.level = 1;
         this.experience = 0;
@@ -102,9 +110,11 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "uniqueId='" + uniqueId + '\'' +
+                "changes=" + changes +
+                ", uniqueId='" + uniqueId + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
+                ", image=" + image +
                 ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
@@ -113,6 +123,10 @@ public class Player {
                 '}';
     }
 
+    /**
+     * Attach a new PropertyChangeListener to this classes PropertyChangeSupport object.
+     * @param listener Listener implementation.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
     }
@@ -148,6 +162,21 @@ public class Player {
         if (!Objects.equals(this.username, username))
             changes.firePropertyChange(DBKeys.USERNAME_KEY, this.username, username);
         this.username = username;
+    }
+
+    /**
+     * Get a Player profile picture.
+     * @return Player Image Uri.
+     */
+    public Uri getImage() {
+        return image;
+    }
+    /**
+     * Set a Players image property.
+     * @param image Uri for Players current profile picture.
+     */
+    public void setImage(Uri image) {
+        this.image = image;
     }
 
     /**
