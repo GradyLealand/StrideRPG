@@ -31,8 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
-import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.rpg.Generators.ItemGenerator;
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -207,7 +206,7 @@ public class AuthActivity extends AppCompatActivity {
         if (user != null) {
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
-            // Create a reference to the DatabaseReference at the users (USERS_KEY) parent node.
+            // Create a reference to the DatabaseReference at the users parent node.
             final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DBKeys.USERS_KEY);
 
             // Set a listener to check if active user currently exists in the FirebaseDatabase.
@@ -216,26 +215,19 @@ public class AuthActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
                         authTask.setText(R.string.auth_load);
-                        Globals.activePlayer = dataSnapshot.getValue(Player.class);
+                        G.activePlayer = dataSnapshot.getValue(Player.class);
                     } else {
                         authTask.setText(R.string.auth_gen_new);
-                        Globals.activePlayer = new Player(mAuth.getCurrentUser());
-
-                        // On account creation, give the Player a single item to start with.
-                        Globals.activePlayer.getInventory().addItem(ItemGenerator.generate());
-
+                        G.activePlayer = new Player(mAuth.getCurrentUser());
                         FirebaseDBUtil db = new FirebaseDBUtil();
-                        db.pushActivePlayer();
+                        db.pushPlayer(G.activePlayer);
                     }
                     authProgressBar.setVisibility(View.INVISIBLE);
-
                     startActivity(new Intent(AuthActivity.this, NavigationActivity.class));
                     finish();
                 }
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+                public void onCancelled(DatabaseError databaseError) { }
             });
         } else {
             signIn();

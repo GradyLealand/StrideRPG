@@ -6,8 +6,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.Map;
 
-import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.rpg.Generators.ItemGenerator;
+import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
@@ -34,9 +33,18 @@ public class Inventory {
     public Inventory() { }
 
     /**
+     *  Construct an Inventory with a populated HashMap based on the Items passed into the constructor.
+     * @param items Items to add to inventory.
+     */
+    public Inventory(Item... items) {
+        for (Item i : items) {
+            addItem(i);
+        }
+    }
+
+    /**
      * Implementation of an Inventories toString method to print out each Item
      * in the ArrayList items.
-     *
      * @return Properties of each Item in Inventory ArrayList<Item>.
      */
     @Override
@@ -74,8 +82,8 @@ public class Inventory {
      * Function to build a unique key for this Item in the Map<String, Item> collection.
      * @return Unique item id built from activePlayers unique identifier.
      */
-    public String makeKey() {
-        String base = Globals.activePlayer.getUniqueId().substring(0, 8);
+    private String makeKey() {
+        String base = Constants.ITEM_MAKE_BASE;
         StringBuilder sb = new StringBuilder(base.length());
         double rand;
 

@@ -4,6 +4,7 @@ package stride.com.striderpg.rpg.Generators;
 import java.util.Random;
 
 import stride.com.striderpg.rpg.models.Item.Item;
+import stride.com.striderpg.rpg.models.Player.Inventory;
 import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
@@ -21,9 +22,10 @@ public class ItemGenerator {
     private static Random r = new Random();
 
     /**
-     * String[] Array to hold the different possible Item name adjectives
+     * String Array to hold the different possible Item name adjectives
      */
-    private static String[] itemAdjectives = { "Therapeutic", "Greasy", "Private", "Glamorous", "Withered", "Profane", "Webbed", "Suspicious", "Large" };
+    private static String[] itemAdjectives = { "Therapeutic", "Greasy", "Private", "Glamorous",
+            "Withered", "Profane", "Webbed", "Suspicious", "Large" };
 
     /**
      * Generate a random item based off of the Player object passed into the function.
@@ -31,34 +33,61 @@ public class ItemGenerator {
      * @return Newly generated Item object with randomized properties.
      */
     public static Item generate(Player p) {
-        // Retrieve random Enumeration value for the ItemType and ItemRarity enum for the new Item.
         Enums.ItemType itemType = Enums.random(Enums.ItemType.class);
         Enums.ItemRarity itemRarity = Enums.ItemRarity.weightedRarity();
 
-        // Set the stats/properties of the new Item.
         int[] stats = buildItemStats(itemRarity, p);
         int powerLevel = generatePowerLevel(stats, p);
-
         String name = parseName(itemType);
+
         return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, itemType);
     }
 
     /**
-     * Generate a random default item with default stats, used to generate a new Inventory with some
-     * rookie items.
-     * @return Rookie Item.
+     * Generate a random item of a specific ItemType.
+     * @param p Player object to determine Item stats.
+     * @param type Item ItemType.
+     * @return New random Item of type specified.
      */
-    public static Item generate() {
-        // Retrieve random Enumeration value for the ItemType and ItemRarity enum for the new Item.
+    public static Item generate(Player p, Enums.ItemType type) {
+        Enums.ItemRarity itemRarity = Enums.ItemRarity.weightedRarity();
+
+        int[] stats = buildItemStats(itemRarity, p);
+        int powerLevel = generatePowerLevel(stats, p);
+        String name = parseName(type);
+
+        return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, type);
+    }
+
+    /**
+     * Generate a random item of a specific ItemRarity.
+     * @param p Player object to determine Item stats.
+     * @param rarity Item ItemRarity.
+     * @return New random Item of rarity specified.
+     */
+    public static Item generate(Player p, Enums.ItemRarity rarity) {
         Enums.ItemType itemType = Enums.random(Enums.ItemType.class);
-        Enums.ItemRarity itemRarity = Enums.ItemRarity.COMMON;
 
-        // Set the stats/properties of the new Item.
-        int[] stats = { r.nextInt(3) + 1, r.nextInt(3) + 1, r.nextInt(3) + 1 };
-        int powerLevel = Constants.ITEM_POWER_LEVEL_MODIFIER;
-
+        int[] stats = buildItemStats(rarity, p);
+        int powerLevel = generatePowerLevel(stats, p);
         String name = parseName(itemType);
-        return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, itemType);
+
+        return new Item(name, powerLevel, stats[0], stats[1], stats[2], rarity, itemType);
+    }
+
+    /**
+     * Generate a rookie Inventory with an Item of each type in it.
+     * @param p Player object.
+     * @return Inventory with new items in HashMap.
+     */
+    public static Inventory generateDefaultInventory(Player p) {
+        Item helmet = generate(p, Enums.ItemType.HELMET);
+        Item weapon = generate(p, Enums.ItemType.WEAPON);
+        Item chest = generate(p, Enums.ItemType.CHEST);
+        Item legs = generate(p, Enums.ItemType.LEGS);
+        Item boots = generate(p, Enums.ItemType.BOOTS);
+
+        return new Inventory(helmet, weapon, chest, legs, boots);
     }
 
     /**
