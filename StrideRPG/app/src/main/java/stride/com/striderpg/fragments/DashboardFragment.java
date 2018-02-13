@@ -35,9 +35,6 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        // Start PushTimer.
-        new PushTimer().start();
-
         // Active player property change listener implementation.
         Globals.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

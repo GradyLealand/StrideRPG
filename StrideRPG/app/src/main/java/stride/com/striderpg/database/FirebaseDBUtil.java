@@ -31,20 +31,6 @@ public class FirebaseDBUtil {
     }
 
     /**
-     * Add a Player directly to the Database with their UID as the key and their
-     * relevant information as the child to that key.
-     * @param user FirebaseUser that will be added to the Database as a new Player.
-     */
-    public void addPlayer(FirebaseUser user) {
-        // Generate the uniqueId for the Player object here. This will be used as
-        // the identifier for Player in memory as well as the player in the Database.
-        String playerId = user.getUid();
-
-        // Append a new Player to the Database as a child of the "users" key.
-        database.child(DBKeys.USERS_KEY).child(playerId).setValue(new Player(user));
-    }
-
-    /**
      * Push the ActivePlayer from the Globals class directly to the FirebaseDatabase. Any data
      * that has been changed in this Player since the last push will be updated.
      */

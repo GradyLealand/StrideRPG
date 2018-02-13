@@ -110,7 +110,6 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "changes=" + changes +
                 ", uniqueId='" + uniqueId + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +

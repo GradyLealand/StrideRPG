@@ -32,8 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.global.Globals;
-import stride.com.striderpg.rpg.models.Item.Item;
-import stride.com.striderpg.rpg.models.Player.Inventory;
+import stride.com.striderpg.rpg.Generators.ItemGenerator;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -101,10 +100,14 @@ public class AuthActivity extends AppCompatActivity {
         checkUser(currentUser);
     }
 
+    /**
+     * Override the onActivityResult function and check for a Google Sign In result using the
+     * RC_SIGN_IN code.
+     * @param requestCode int representing the activity completed.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -151,6 +154,40 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     /**
+     * Sign a user out of the FirebaseAuth and GoogleSignInClient.
+     */
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        checkUser(null);
+                    }
+                });
+    }
+
+    /**
+     * Sign a user out of the FirebaseAuth and revoke access to the GoogleSignInClient.
+     */
+    private void revokeAccess() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google revoke access
+        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        checkUser(null);
+                    }
+                });
+    }
+
+    /**
      * Uses the GoogleSignInClient to get the default Google sign in intent for
      * choosing an account to authenticate with.
      */
@@ -171,7 +208,7 @@ public class AuthActivity extends AppCompatActivity {
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
             // Create a reference to the DatabaseReference at the users (USERS_KEY) parent node.
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DBKeys.USERS_KEY);
+            final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DBKeys.USERS_KEY);
 
             // Set a listener to check if active user currently exists in the FirebaseDatabase.
             userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -179,50 +216,29 @@ public class AuthActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
                         authTask.setText(R.string.auth_load);
-
-                        // User exists, set active players information.
                         Globals.activePlayer = dataSnapshot.getValue(Player.class);
-
-                        // Retrieve this users inventory.
-                        //Globals.activePlayer.setInventory(retrievePlayerInventory(dataSnapshot));
                     } else {
                         authTask.setText(R.string.auth_gen_new);
-
-                        // User doesn't exist, add to database and set new active information.
-                        FirebaseDBUtil db = new FirebaseDBUtil();
-                        db.addPlayer(mAuth.getCurrentUser());
                         Globals.activePlayer = new Player(mAuth.getCurrentUser());
-                    }
 
+                        // On account creation, give the Player a single item to start with.
+                        Globals.activePlayer.getInventory().addItem(ItemGenerator.generate());
+
+                        FirebaseDBUtil db = new FirebaseDBUtil();
+                        db.pushActivePlayer();
+                    }
                     authProgressBar.setVisibility(View.INVISIBLE);
 
                     startActivity(new Intent(AuthActivity.this, NavigationActivity.class));
                     finish();
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
         } else {
-            // If the user is null, get the player to log in to Google again.
-            // TODO: Make this into a button? Indefinite log in could be an issue.
             signIn();
         }
-    }
-
-    /**
-     * Using a DataSnapshot object, iterate through the Snapshot and grab each inventory child.
-     * Put each item into the HashMap items variable.
-     * @param snapshot DataSnapshot containing current player data.
-     * @return Inventory object with all present Item objects in it.
-     */
-    private Inventory retrievePlayerInventory(DataSnapshot snapshot) {
-        Inventory inventory = new Inventory();
-        for (DataSnapshot s : snapshot.child(DBKeys.INVENTORY_KEY).child(DBKeys.INVENTORY_ITEMS_KEY).getChildren()) {
-            inventory.getItems().put(s.getKey(), s.getValue(Item.class));
-        }
-        return inventory;
     }
 }
