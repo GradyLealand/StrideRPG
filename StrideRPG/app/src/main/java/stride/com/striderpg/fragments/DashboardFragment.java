@@ -13,7 +13,6 @@ import java.beans.PropertyChangeListener;
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.Globals;
 import stride.com.striderpg.global.PushTimer;
-
 /**
  * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information
  * about their account at the top of the screen.

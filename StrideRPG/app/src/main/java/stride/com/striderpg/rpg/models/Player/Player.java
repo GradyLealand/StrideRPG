@@ -41,6 +41,11 @@ public class Player {
     private String username;
 
     /**
+     * Player Image Uri. Used to retrieve a Players profile picture.
+     */
+    private Uri image;
+
+    /**
      * Player Level, as a player plays the game and participates in activities, they are
      * rewarded experience, which will add to their level over time.
      */
@@ -80,6 +85,7 @@ public class Player {
         this.uniqueId = user.getUid();
         this.email = user.getEmail();
         this.username = user.getDisplayName();
+        this.image = user.getPhotoUrl();
 
         this.level = 1;
         this.experience = 0;
@@ -107,6 +113,7 @@ public class Player {
                 ", uniqueId='" + uniqueId + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
+                ", image=" + image +
                 ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
@@ -154,6 +161,21 @@ public class Player {
         if (!Objects.equals(this.username, username))
             changes.firePropertyChange(DBKeys.USERNAME_KEY, this.username, username);
         this.username = username;
+    }
+
+    /**
+     * Get a Player profile picture.
+     * @return Player Image Uri.
+     */
+    public Uri getImage() {
+        return image;
+    }
+    /**
+     * Set a Players image property.
+     * @param image Uri for Players current profile picture.
+     */
+    public void setImage(Uri image) {
+        this.image = image;
     }
 
     /**

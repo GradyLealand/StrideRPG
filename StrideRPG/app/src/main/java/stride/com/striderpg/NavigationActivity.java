@@ -18,6 +18,7 @@ import java.util.Objects;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
 import stride.com.striderpg.global.Globals;
+import stride.com.striderpg.rpg.Generators.LevelGenerator;
 import stride.com.striderpg.rpg.models.Player.Inventory;
 import stride.com.striderpg.rpg.models.Player.Skills;
 
@@ -88,6 +89,12 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         buildDatabaseListeners();
+
+        for (int i = 1; i <= 100; i++) {
+            Integer testExp = LevelGenerator.experienceToNextLevel(i);
+            System.out.println(i + ": " + testExp);
+        }
+
     }
 
     /**
