@@ -10,6 +10,8 @@ import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 
 import stride.com.striderpg.database.DBKeys;
+import stride.com.striderpg.rpg.Constants;
+import stride.com.striderpg.rpg.Generators.ItemGenerator;
 
 
 /**
@@ -82,11 +84,16 @@ public class Player {
         this.username = user.getDisplayName();
 
         this.level = 1;
-        this.experience = 0;
+        this.experience = 1;
         this.steps = 0;
 
-        this.skills = new Skills();
-        this.inventory = new Inventory();
+        this.skills = new Skills(
+                Constants.PLAYER_DEFAULT_VITALITY,
+                Constants.PLAYER_DEFAULT_STRENGTH,
+                Constants.PLAYER_DEFAULT_SPEED
+        );
+
+        this.inventory = ItemGenerator.generateDefaultInventory(this);
     }
 
     /**

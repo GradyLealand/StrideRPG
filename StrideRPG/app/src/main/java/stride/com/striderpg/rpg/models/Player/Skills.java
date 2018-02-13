@@ -53,10 +53,18 @@ public class Skills {
      * DataSnapshot.getValue(Skills.class).
      * Will also set by default all skills to 5.
      */
-    public Skills() {
-        vitality = 5;
-        strength = 5;
-        speed = 5;
+    public Skills() { }
+
+    /**
+     * Custom constructor function to set each skill as they are passed.
+     * @param vitality Skill vitality property.
+     * @param strength Skill strength property.
+     * @param speed Skill speed property.
+     */
+    public Skills(Integer vitality, Integer strength, Integer speed) {
+        this.vitality = vitality;
+        this.strength = strength;
+        this.speed = speed;
     }
 
     /**
@@ -72,6 +80,10 @@ public class Skills {
                 '}';
     }
 
+    /**
+     * Attach a new PropertyChangeListener to this classes PropertyChangeSupport object.
+     * @param listener Listener implementation.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
     }

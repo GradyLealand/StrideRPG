@@ -35,7 +35,6 @@ public class PushTimer {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            Log.d(TAG, "attempting to push active player to the database...");
             db.pushActivePlayer();
         }
     };
