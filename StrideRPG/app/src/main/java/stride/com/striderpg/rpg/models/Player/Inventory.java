@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import stride.com.striderpg.global.Globals;
+import stride.com.striderpg.rpg.Generators.ItemGenerator;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
@@ -59,17 +60,14 @@ public class Inventory {
      */
     public void addItem(Item item) {
         items.put(makeKey(), item);
-        changes.firePropertyChange("item_add", null, item);
     }
 
     /**
-     * TODO: IS THIS NEEDED?
      * Remove an item from items HashMap by unique key.
      * @param key Unique key to find item in HashMap.
      */
     public void removeItem(String key) {
         items.remove(key);
-        changes.firePropertyChange("item_remove", null, key);
     }
 
     /**

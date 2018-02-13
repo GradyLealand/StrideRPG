@@ -1,6 +1,8 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
+import android.net.Uri;
+
 import com.google.firebase.auth.FirebaseUser;
 
 import java.beans.PropertyChangeListener;
@@ -102,7 +104,7 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "uniqueId='" + uniqueId + '\'' +
+                ", uniqueId='" + uniqueId + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", level=" + level +
@@ -113,6 +115,10 @@ public class Player {
                 '}';
     }
 
+    /**
+     * Attach a new PropertyChangeListener to this classes PropertyChangeSupport object.
+     * @param listener Listener implementation.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
     }

@@ -18,19 +18,19 @@ public class ItemGenerator {
      * Random instance available to the ItemGenerator class for creating new items and
      * determining random values for making random choices.
      */
-    private Random r = new Random();
+    private static Random r = new Random();
 
     /**
      * String[] Array to hold the different possible Item name adjectives
      */
-    private String[] itemAdjectives = { "Therapeutic", "Greasy", "Private", "Glamorous", "Withered", "Profane", "Webbed", "Suspicious", "Large" };
+    private static String[] itemAdjectives = { "Therapeutic", "Greasy", "Private", "Glamorous", "Withered", "Profane", "Webbed", "Suspicious", "Large" };
 
     /**
      * Generate a random item based off of the Player object passed into the function.
      * @param p Player used to determine item properties.
      * @return Newly generated Item object with randomized properties.
      */
-    public Item generate(Player p) {
+    public static Item generate(Player p) {
         // Retrieve random Enumeration value for the ItemType and ItemRarity enum for the new Item.
         Enums.ItemType itemType = Enums.random(Enums.ItemType.class);
         Enums.ItemRarity itemRarity = Enums.ItemRarity.weightedRarity();
@@ -44,12 +44,30 @@ public class ItemGenerator {
     }
 
     /**
+     * Generate a random default item with default stats, used to generate a new Inventory with some
+     * rookie items.
+     * @return Rookie Item.
+     */
+    public static Item generate() {
+        // Retrieve random Enumeration value for the ItemType and ItemRarity enum for the new Item.
+        Enums.ItemType itemType = Enums.random(Enums.ItemType.class);
+        Enums.ItemRarity itemRarity = Enums.ItemRarity.COMMON;
+
+        // Set the stats/properties of the new Item.
+        int[] stats = { r.nextInt(3) + 1, r.nextInt(3) + 1, r.nextInt(3) + 1 };
+        int powerLevel = Constants.ITEM_POWER_LEVEL_MODIFIER;
+
+        String name = parseName(itemType);
+        return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, itemType);
+    }
+
+    /**
      * Parse out a new Items name by choosing a random adjective and appending the Items ItemType enum
      * to the end of the String after fixing the capitalization on the ItemType.
      * @param itemType New Item ItemType.
      * @return New Item Name.
      */
-    private String parseName(Enums.ItemType itemType) {
+    private static String parseName(Enums.ItemType itemType) {
         return itemAdjectives[r.nextInt(itemAdjectives.length)] + " " + itemType.getName();
     }
 
@@ -60,7 +78,7 @@ public class ItemGenerator {
      * @param p activePlayer Player object.
      * @return New Item powerlevel.
      */
-    private int generatePowerLevel(int[] stats, Player p) {
+    private static int generatePowerLevel(int[] stats, Player p) {
         int powerLevel = 0;
         for (int stat : stats) {
             powerLevel += stat;
@@ -75,7 +93,7 @@ public class ItemGenerator {
      * @param p Player.
      * @return int[] array holding new Item stats.
      */
-    private int[] buildItemStats(Enums.ItemRarity itemRarity, Player p) {
+    private static int[] buildItemStats(Enums.ItemRarity itemRarity, Player p) {
         int strBoost = 0, vitBoost = 0, spdBoost = 0, points = 0;
 
         // Determine amount of points this item can have put into its attribute boost.

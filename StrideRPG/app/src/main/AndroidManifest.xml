@@ -21,18 +21,16 @@
             </intent-filter>
         </activity>
 
-        <!-- Auth Activity-->
-        <activity android:name=".AuthActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <!-- Auth Activity -->
+        <activity
+            android:name=".AuthActivity"
+            android:screenOrientation="portrait"></activity>
 
-        <!-- Navigation Activity-->
+        <!-- Navigation Activity -->
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_bottom_nav"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
