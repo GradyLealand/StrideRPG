@@ -1,16 +1,23 @@
 package stride.com.striderpg.rpg.Generators;
 
-import stride.com.striderpg.rpg.Constants;
+
+import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * RPG Generator class for determining information about a Player level and experience,
+ * RPG Generator class for determining information about a Players level and experience,
  * calculating the different values required to level up.
  */
 public class LevelGenerator {
 
-    private static final Integer LEVEL_CONST_1 = 9;
-    private static final Integer LEVEL_CONST_2 = -37;
-    private static final Integer LEVEL_CONST_3 = 111;
+    /**
+     * Constant Integer for calculating the experience required for a Player to level up.
+     */
+    private static final Integer LEVEL_CONST_1 = 4;
+
+    /**
+     * Constant Integer for calculating the experience required for a Player to level up.
+     */
+    private static final Integer LEVEL_CONST_2 = 5;
 
     /**
      * Calculate the total amount of experience required for a Player to level up.
@@ -18,16 +25,17 @@ public class LevelGenerator {
      * @return Next level total experience required.
      */
     public static Integer experienceToNextLevel(Integer currentLevel) {
-        return (Integer) (int)(Math.exp((currentLevel - LEVEL_CONST_2) / LEVEL_CONST_1) - LEVEL_CONST_3);
+        return (int)Math.round((LEVEL_CONST_1 * (Math.pow(currentLevel, 3))) / LEVEL_CONST_2) + 200;
     }
 
     /**
-     * Retrieve a Players current level based on their current experience amount.
-     * @param currentExperience Players current experience property.
-     * @return Players current level.
+     * Determines if a Player can level up or not by comparing their experience with the
+     * experience required to reach their next level.
+     * @param p Player object being checked.
+     * @return Boolean for if Player should be levelled up.
      */
-    public static Integer levelFromExperience(Integer currentExperience) {
-        return (Integer) (int)Math.max(Math.floor(LEVEL_CONST_1 * Math.log(currentExperience + LEVEL_CONST_3) + LEVEL_CONST_2), 1);
+    public static boolean canLevelUp(Player p) {
+        return p.getExperience() > experienceToNextLevel(p.getLevel());
     }
 
     /**
