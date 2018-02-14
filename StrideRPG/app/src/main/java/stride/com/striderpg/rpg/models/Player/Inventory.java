@@ -63,7 +63,7 @@ public class Inventory {
     }
 
     /**
-     * Add an item directly to the items HashMap with a generated unique id.
+     * Add an fragment_leaderboards_item directly to the items HashMap with a generated unique id.
      * @param item Item to add to items.
      */
     public void addItem(Item item) {
@@ -71,8 +71,8 @@ public class Inventory {
     }
 
     /**
-     * Remove an item from items HashMap by unique key.
-     * @param key Unique key to find item in HashMap.
+     * Remove an fragment_leaderboards_item from items HashMap by unique key.
+     * @param key Unique key to find fragment_leaderboards_item in HashMap.
      */
     public void removeItem(String key) {
         items.remove(key);
@@ -80,7 +80,7 @@ public class Inventory {
 
     /**
      * Function to build a unique key for this Item in the Map<String, Item> collection.
-     * @return Unique item id built from activePlayers unique identifier.
+     * @return Unique fragment_leaderboards_item id built from activePlayers unique identifier.
      */
     private String makeKey() {
         String base = Constants.ITEM_MAKE_BASE;
