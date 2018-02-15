@@ -65,10 +65,17 @@ public class AuthActivity extends AppCompatActivity {
      */
     private GoogleSignInClient mGoogleSignInClient;
 
+    // GUI elements instanced here globally.
     private ImageView logoImageView;
     private TextView authTask;
     private ProgressBar authProgressBar;
 
+    /**
+     * onCreate method to setup the GUI elements located inside of the AuthActivity.
+     * The GoogleSignInOptions are created here and the GoogleSignInClient is created.
+     * The Fitness API is initialized by calling the subscribe() method at the end of the
+     * method.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +100,10 @@ public class AuthActivity extends AppCompatActivity {
         subscribe();
     }
 
+    /**
+     * onStart method to show the indeterminate loading bar to the user,
+     * the current FirebaseUser is retrieved from the mAuth FirebaseAuth object.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -125,6 +136,11 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Subscribe to the Fitness api's recording client. On a successful subscription,
+     * the global FitnessUtil instance is passed the Context and GoogleSignInAccount
+     * for accessing the data and steps for the logged in user.
+     */
     public void subscribe() {
         Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
@@ -133,13 +149,13 @@ public class AuthActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Log.i(TAG, "subsrcibed successfully");
+                                    Log.i(TAG, "subscribe:successful");
                                     setupFitness(
                                             getApplicationContext(),
                                             GoogleSignIn.getLastSignedInAccount(getApplicationContext())
                                     );
                                 } else {
-                                    Log.w(TAG, "problem subscribing.", task.getException());
+                                    Log.w(TAG, "subscribe:error", task.getException());
                                 }
                             }
                         }
@@ -147,8 +163,9 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     /**
-     * New up a FitnessUtil Instances as the G.fitnessUtil object using the
-     * constructor method to set the Context and GoogleSignInAccount.
+     * New up a FitnessUtil Instance as the Global fitnessUtil object using the
+     * constructor method to set the Context and GoogleSignInAccount used to read
+     * data from the api.
      * @param ctx Context.
      * @param account GoogleSignInAccount.
      */
@@ -165,8 +182,6 @@ public class AuthActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         authTask.setText(R.string.auth_authenticate);
 
-        Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
-
         // Begin credential check through Firebase.
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -180,7 +195,6 @@ public class AuthActivity extends AppCompatActivity {
                             checkUser(user);
                         } else {
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(AuthActivity.this, "Google Sign In Failed!", Toast.LENGTH_LONG).show();
                             checkUser(null);
                         }
                     }

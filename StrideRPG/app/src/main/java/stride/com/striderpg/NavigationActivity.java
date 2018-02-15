@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
-import stride.com.striderpg.global.G;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -32,7 +31,6 @@ public class NavigationActivity extends AppCompatActivity {
      */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -62,13 +60,11 @@ public class NavigationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_navigation);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
-
-        addFragments();
-
-        G.fitnessUtil.readData();
-
         navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // Add all Fragments to the NavigationActivity (Dashboard selected by default).
+        addFragments();
     }
 
     /**
@@ -131,18 +127,27 @@ public class NavigationActivity extends AppCompatActivity {
      * for the DashboardFragment.
      */
     private void addFragments() {
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, generator.dashboardFragment)
+        // Add the Dashboard to the fragmentContainer.
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, generator.dashboardFragment)
                 .commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, generator.questsFragment)
+
+        // Begin adding the rest of the fragments to the fragmentContainer
+        // and hide them as they're added.
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, generator.questsFragment)
                 .hide(generator.questsFragment)
                 .commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, generator.inventoryFragment)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, generator.inventoryFragment)
                 .hide(generator.inventoryFragment)
                 .commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, generator.bestiaryFragment)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, generator.bestiaryFragment)
                 .hide(generator.bestiaryFragment)
                 .commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, generator.leaderboardsFragment)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, generator.leaderboardsFragment)
                 .hide(generator.leaderboardsFragment)
                 .commit();
     }
