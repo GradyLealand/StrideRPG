@@ -1,5 +1,6 @@
 package stride.com.striderpg;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.fitness.Fitness;
+import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -31,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
+import stride.com.striderpg.fit.FitnessUtil;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
@@ -48,7 +52,7 @@ public class AuthActivity extends AppCompatActivity {
     /**
      * Result code for Sign-in activity.
      */
-    private static final int RC_SIGN_IN = 9001;
+    private static final int GOOGLE_SIGN_IN_REQUEST = 9001;
 
     /**
      * FirebaseAuth Object for dealing with the Firebase Authentication functionality.
@@ -61,7 +65,6 @@ public class AuthActivity extends AppCompatActivity {
      */
     private GoogleSignInClient mGoogleSignInClient;
 
-    // UI elements here.
     private ImageView logoImageView;
     private TextView authTask;
     private ProgressBar authProgressBar;
@@ -85,8 +88,9 @@ public class AuthActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Initialize the Firebase authentication api.
         mAuth = FirebaseAuth.getInstance();
+
+        subscribe();
     }
 
     @Override
@@ -101,13 +105,13 @@ public class AuthActivity extends AppCompatActivity {
 
     /**
      * Override the onActivityResult function and check for a Google Sign In result using the
-     * RC_SIGN_IN code.
+     * GOOGLE_SIGN_IN_REQUEST code.
      * @param requestCode int representing the activity completed.
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == GOOGLE_SIGN_IN_REQUEST) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase.
@@ -119,6 +123,37 @@ public class AuthActivity extends AppCompatActivity {
                 checkUser(null);
             }
         }
+    }
+
+    public void subscribe() {
+        Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                .addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.i(TAG, "subsrcibed successfully");
+                                    setupFitness(
+                                            getApplicationContext(),
+                                            GoogleSignIn.getLastSignedInAccount(getApplicationContext())
+                                    );
+                                } else {
+                                    Log.w(TAG, "problem subscribing.", task.getException());
+                                }
+                            }
+                        }
+                );
+    }
+
+    /**
+     * New up a FitnessUtil Instances as the G.fitnessUtil object using the
+     * constructor method to set the Context and GoogleSignInAccount.
+     * @param ctx Context.
+     * @param account GoogleSignInAccount.
+     */
+    public void setupFitness(Context ctx, GoogleSignInAccount account) {
+        G.fitnessUtil = new FitnessUtil(ctx, account);
     }
 
     /**
@@ -194,7 +229,7 @@ public class AuthActivity extends AppCompatActivity {
         authTask.setText(R.string.auth_signin);
 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST);
     }
 
     /**

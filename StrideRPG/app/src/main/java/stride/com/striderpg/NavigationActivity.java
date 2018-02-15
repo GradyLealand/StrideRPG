@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
+import stride.com.striderpg.global.G;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -63,6 +64,8 @@ public class NavigationActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
 
         addFragments();
+
+        G.fitnessUtil.readData();
 
         navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
