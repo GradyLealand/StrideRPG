@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
+import stride.com.striderpg.global.G;
+import stride.com.striderpg.global.PushTimer;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -65,6 +67,8 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Add all Fragments to the NavigationActivity (Dashboard selected by default).
         addFragments();
+
+        new PushTimer().start();
     }
 
     /**

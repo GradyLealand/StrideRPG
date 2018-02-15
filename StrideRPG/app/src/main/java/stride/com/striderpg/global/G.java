@@ -15,5 +15,17 @@ public final class G {
      */
     public static Player activePlayer;
 
+    /**
+     * FitnessUtil object to store information about the Fitness api required to
+     * make successful calls to the current users daily step count.
+     */
     public static FitnessUtil fitnessUtil;
+
+    /**
+     * Globally available lastStepCount counter for calculating
+     * the difference between steps. It is null on app startup but
+     * set the the users current daily steps on each call to updateSteps()
+     * in the Player class.
+     */
+    public static Integer lastStepCount = null;
 }

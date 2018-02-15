@@ -34,6 +34,7 @@ public class PushTimer {
         @Override
         public void run() {
             db.pushPlayer(G.activePlayer);
+            G.fitnessUtil.readData();
         }
     };
 

@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 
 import stride.com.striderpg.database.DBKeys;
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
 
@@ -131,6 +132,21 @@ public class Player {
     }
 
     /**
+     * Calculate and update a users steps property based on the amount of
+     * total steps for the current day.
+     * @param total Total steps taken from Fitness api for current day.
+     */
+    public void updateSteps(Integer total) {
+        if (G.lastStepCount == null) {
+            G.lastStepCount = total;
+        }
+        else {
+            this.setSteps(this.getSteps() + (total - G.lastStepCount));
+            G.lastStepCount = total;
+        }
+    }
+
+    /**
      * Get a Players unique identifier.
      * @return Player unique token.
      */
@@ -170,6 +186,7 @@ public class Player {
     public Integer getLevel() {
         return level;
     }
+
     /**
      * Set a Players current level.
      * @param level New Player level.
@@ -187,6 +204,7 @@ public class Player {
     public Integer getExperience() {
         return experience;
     }
+
     /**
      * Set a Players current experience amount.
      * @param experience New Player experience.
@@ -204,6 +222,7 @@ public class Player {
     public Integer getSteps() {
         return steps;
     }
+
     /**
      * Set a Players current steps amount.
      * @param steps New Player steps.
@@ -229,6 +248,7 @@ public class Player {
     public Inventory getInventory() {
         return inventory;
     }
+
     /**
      * Set a Players inventory.
      * @param inventory New Player inventory.

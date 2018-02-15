@@ -151,7 +151,6 @@ public class AuthActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Log.i(TAG, "subscribe:successful");
                                     setupFitness(
-                                            getApplicationContext(),
                                             GoogleSignIn.getLastSignedInAccount(getApplicationContext())
                                     );
                                 } else {
@@ -166,11 +165,10 @@ public class AuthActivity extends AppCompatActivity {
      * New up a FitnessUtil Instance as the Global fitnessUtil object using the
      * constructor method to set the Context and GoogleSignInAccount used to read
      * data from the api.
-     * @param ctx Context.
      * @param account GoogleSignInAccount.
      */
-    public void setupFitness(Context ctx, GoogleSignInAccount account) {
-        G.fitnessUtil = new FitnessUtil(ctx, account);
+    public void setupFitness(GoogleSignInAccount account) {
+        G.fitnessUtil = new FitnessUtil(account);
     }
 
     /**
