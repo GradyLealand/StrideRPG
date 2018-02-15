@@ -15,5 +15,9 @@ public final class G {
      */
     public static Player activePlayer;
 
+    /**
+     * FitnessUtil object to store information about the Fitness api required to
+     * make successful calls to the current users daily step count.
+     */
     public static FitnessUtil fitnessUtil;
 }

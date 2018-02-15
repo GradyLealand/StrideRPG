@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.global.Stride;
 
 /**
  * FitnessUtil class to deal with the reading of an Accounts daily step count.
@@ -26,23 +27,15 @@ public class FitnessUtil {
     private static final String TAG = "FitnessUtil";
 
     /**
-     * Application Context for providing any Fitness api calls with the correct
-     * Context parameter needed.
-     */
-    private Context ctx;
-
-    /**
      * GoogleSignInAccount for the Fitness api calls.
      */
     private GoogleSignInAccount account;
 
     /**
      * FitnessUtil custom constructor for setting the Context and GoogleSignAccount.
-     * @param ctx Application Context.
      * @param account GoogleSignInAccount.
      */
-    public FitnessUtil(Context ctx, GoogleSignInAccount account) {
-        this.ctx = ctx;
+    public FitnessUtil(GoogleSignInAccount account) {
         this.account = account;
     }
 
@@ -52,7 +45,7 @@ public class FitnessUtil {
      * phone being used.
      */
     public void readData() {
-        Fitness.getHistoryClient(ctx, account)
+        Fitness.getHistoryClient(Stride.getContext(), account)
                 .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
                 .addOnSuccessListener(
                         new OnSuccessListener<DataSet>() {
@@ -63,9 +56,9 @@ public class FitnessUtil {
                                                 ? 0
                                                 : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
                                 Log.d(TAG, "readData:successful : value=" + total);
-                               // G.activePlayer.updateSteps(total);
+                                G.activePlayer.updateSteps(total);
                             }}
-                            )
+                        )
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override

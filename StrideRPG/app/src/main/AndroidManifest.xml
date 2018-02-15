@@ -3,6 +3,7 @@
     package="stride.com.striderpg">
 
     <application
+        android:name=".global.Stride"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,13 +25,13 @@
         <!-- Auth Activity -->
         <activity
             android:name=".AuthActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!-- Navigation Activity -->
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_bottom_nav"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

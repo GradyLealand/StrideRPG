@@ -131,6 +131,20 @@ public class Player {
     }
 
     /**
+     * Calculate and update a users steps property based on the amount of
+     * total steps for the current day.
+     * @param total
+     */
+    public void updateSteps(long total) {
+
+    }
+
+
+    /*
+     * Player Getters and Setter methods...
+     */
+
+    /**
      * Get a Players unique identifier.
      * @return Player unique token.
      */
@@ -170,6 +184,7 @@ public class Player {
     public Integer getLevel() {
         return level;
     }
+
     /**
      * Set a Players current level.
      * @param level New Player level.
@@ -187,6 +202,7 @@ public class Player {
     public Integer getExperience() {
         return experience;
     }
+
     /**
      * Set a Players current experience amount.
      * @param experience New Player experience.
@@ -204,6 +220,7 @@ public class Player {
     public Integer getSteps() {
         return steps;
     }
+
     /**
      * Set a Players current steps amount.
      * @param steps New Player steps.
@@ -229,6 +246,7 @@ public class Player {
     public Inventory getInventory() {
         return inventory;
     }
+
     /**
      * Set a Players inventory.
      * @param inventory New Player inventory.
