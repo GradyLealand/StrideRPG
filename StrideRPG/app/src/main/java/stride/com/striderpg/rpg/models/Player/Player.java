@@ -151,6 +151,15 @@ public class Player {
         }
     }
 
+    /**
+     * Calcualte and update a users experience based on the amount of
+     * total steps since account creation
+     */
+    public void updateExperience()
+    {
+        G.activePlayer.setExperience(LevelGenerator.experienceFromSteps(G.activePlayer.getSteps()));
+    }
+
     public String getUniqueId() {
         return uniqueId;
     }
