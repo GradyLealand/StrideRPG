@@ -11,6 +11,6 @@
     <color name="material_white">#fafafa</color>
     <color name="material_light_gray">#f5f5f5</color>
 
-    <color name="cardview_initial_background">#71C3DE</color>
+    <color name="cardview_initial_background">#71c3de</color>
 
 </resources>
