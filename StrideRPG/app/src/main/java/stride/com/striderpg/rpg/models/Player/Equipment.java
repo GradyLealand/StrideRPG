@@ -69,10 +69,6 @@ public class Equipment {
         slots.put(type.name(), null);
     }
 
-    /**
-     * Get an Inventories slots HashMap property.
-     * @return slots Map property.
-     */
     public Map<String, Item> getSlots() {
         return slots;
     }

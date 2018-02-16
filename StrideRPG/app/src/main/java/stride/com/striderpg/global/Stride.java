@@ -16,7 +16,7 @@ public class Stride extends Application {
     private static Stride instance;
 
     /**
-     * Retrieve this insance.
+     * Retrieve this instance.
      * @return Stride object.
      */
     public static Stride getInstance() {

@@ -8,11 +8,6 @@ package stride.com.striderpg.rpg;
 public final class Constants {
 
     /**
-     * Constant to hold the base string that is used when generating an Item.
-     */
-    public static final String ITEM_MAKE_BASE = "abcde12345";
-
-    /**
      * Constant to hold a Players default vitality.
      */
     public static final Integer PLAYER_DEFAULT_VITALITY = 5;

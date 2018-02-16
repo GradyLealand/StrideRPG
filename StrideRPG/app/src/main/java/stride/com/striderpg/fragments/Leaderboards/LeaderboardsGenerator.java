@@ -68,7 +68,7 @@ public class LeaderboardsGenerator {
                     case EXPERIENCE:
                         return p2.getExperience().compareTo(p1.getExperience());
                     case ENEMIES_DEFEATED:
-                        return p2.getEnemiesDefeated().compareTo(p1.getEnemiesDefeated());
+                        return p2.getStats().getEnemiesDefeated().compareTo(p1.getStats().getEnemiesDefeated());
                     case STEPS:
                         return p2.getSteps().compareTo(p1.getSteps());
 

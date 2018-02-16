@@ -61,7 +61,7 @@ public class Skills {
      * @param strength Skill strength property.
      * @param speed Skill speed property.
      */
-    public Skills(Integer vitality, Integer strength, Integer speed) {
+    Skills(Integer vitality, Integer strength, Integer speed) {
         this.vitality = vitality;
         this.strength = strength;
         this.speed = speed;
@@ -88,53 +88,27 @@ public class Skills {
         changes.addPropertyChangeListener(listener);
     }
 
-    /**
-     * Get a Skills vitality property.
-     * @return Skill vitality property.
-     */
     public Integer getVitality() {
         return vitality;
     }
-    /**
-     * Set a Skills vitality property.
-     * @param vitality New Skill vitality.
-     */
     public void setVitality(Integer vitality) {
         if (!Objects.equals(this.vitality, vitality))
             changes.firePropertyChange(DBKeys.SKILLS_VITALITY, this.vitality, vitality);
         this.vitality = vitality;
     }
 
-    /**
-     * Get a Skills strength property.
-     * @return Skill strength property.
-     */
     public Integer getStrength() {
         return strength;
     }
-
-    /**
-     * Set a Skills strength property.
-     * @param strength New Skill strength.
-     */
     public void setStrength(Integer strength) {
         if (!Objects.equals(this.strength, strength))
             changes.firePropertyChange(DBKeys.SKILLS_STRENGTH, this.strength, strength);
         this.strength = strength;
     }
 
-    /**
-     * Get a Skills speed property.
-     * @return Skill speed property.
-     */
     public Integer getSpeed() {
         return speed;
     }
-
-    /**
-     * Set a Skills speed property.
-     * @param speed New Skill speed.
-     */
     public void setSpeed(Integer speed) {
         if (!Objects.equals(this.speed, speed))
             changes.firePropertyChange(DBKeys.SKILLS_SPEED, this.speed, speed);

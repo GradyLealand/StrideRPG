@@ -88,58 +88,31 @@ public class Item {
                 '}';
     }
 
-    /**
-     * Get an Items name property.
-     * @return Item name.
-     */
+
     public String getName() {
         return name;
     }
 
-    /**
-     * Get an Items power level property.
-     * @return Item power level.
-     */
     public Integer getPowerLevel() {
         return powerLevel;
     }
 
-    /**
-     * Get an Items vitality boost.
-     * @return Item vitality boost.
-     */
     public Integer getVitalityBoost() {
         return vitalityBoost;
     }
 
-    /**
-     * Get an Items strength boost.
-     * @return Item strength boost.
-     */
     public Integer getStrengthBoost() {
         return strengthBoost;
     }
 
-    /**
-     * Get an Items speed boost.
-     * @return Item speed boost.
-     */
     public Integer getSpeedBoost() {
         return speedBoost;
     }
 
-    /**
-     * Get an items itemRarity.
-     * @return Item ItemRarity enum value.
-     */
     public Enums.ItemRarity getItemRarity() {
         return itemRarity;
     }
 
-    /**
-     * Get an items itemType.
-     * @return Item ItemType enum value.
-     */
     public Enums.ItemType getItemType() {
         return itemType;
     }
