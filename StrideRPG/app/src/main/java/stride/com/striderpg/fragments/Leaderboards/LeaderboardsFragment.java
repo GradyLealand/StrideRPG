@@ -18,7 +18,16 @@ import stride.com.striderpg.R;
  */
 public class LeaderboardsFragment extends Fragment {
 
+    /**
+     * Instance the recycler view used to create the list of Players
+     * in the GUI dynamically.
+     */
     RecyclerView leaderboardsRecyclerView;
+
+    /**
+     * Generator instance used to retrieve Players. Constructor call will
+     * start the asynchronous call to the FirebaseDatabase to create the Leaderboards UI.
+     */
     LeaderboardsGenerator generator = new LeaderboardsGenerator();
 
     /**
@@ -40,7 +49,7 @@ public class LeaderboardsFragment extends Fragment {
         leaderboardsRecyclerView = rootView.findViewById(R.id.rv);
         leaderboardsRecyclerView.setHasFixedSize(true);
 
-        // LinearLayoutManager used here, will layout the elemtns in a similar fashion to a ListView
+        // LinearLayoutManager used here, will layout the elements in a similar fashion to a ListView
         // would lay things out. RecyclerView.LayoutManager defines how the elements are laid out.
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         leaderboardsRecyclerView.setLayoutManager(llm);
