@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +19,8 @@ import stride.com.striderpg.global.G;
  * about their account at the top of the screen.
  */
 public class DashboardFragment extends Fragment {
+
+    private TextView stepsTextView;
 
     /**
      * Required empty public constructor function.
@@ -35,6 +38,9 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        stepsTextView = getView().findViewById(R.id.stepsText);
+        stepsTextView.setText(G.activePlayer.getSteps().toString());
+
         // Add a new PropertyChangeListener to the active Player object for handling player property changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -47,6 +53,7 @@ public class DashboardFragment extends Fragment {
                     case "level":
                         break;
                     case "steps":
+                        stepsTextView.setText(propertyChangeEvent.getNewValue().toString());
                         break;
                     case "inventory":
                         break;

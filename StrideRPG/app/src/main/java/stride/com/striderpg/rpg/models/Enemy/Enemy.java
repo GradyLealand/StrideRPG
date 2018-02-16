@@ -87,58 +87,31 @@ public class Enemy {
                 '}';
     }
 
-    /**
-     * Get an enemies name property.
-     * @return Enemy name.
-     */
+
     public String getName() {
         return name;
     }
 
-    /**
-     * Get an enemies type enum property.
-     * @return Enemy type.
-     */
     public Enums.EnemyType getType() {
         return type;
     }
 
-    /**
-     * Get an enemies health property.
-     * @return Enemy health.
-     */
     public Integer getHealth() {
         return health;
     }
 
-    /**
-     * Get an enemies minimum damage property.
-     * @return Enemies minimum damage.
-     */
     public Integer getMinDamage() {
         return minDamage;
     }
 
-    /**
-     * Get an enemies maximum damage property.
-     * @return Enemies maximum damage.
-     */
     public Integer getMaxDamage() {
         return maxDamage;
     }
 
-    /**
-     * Get an enemies url/path to image asset.
-     * @return URI to Enemy image asset icon.
-     */
     public Integer getIcon() {
         return icon;
     }
 
-    /**
-     * Get an enemies experience reward when defeated.
-     * @return Enemy experience reward.
-     */
     public Integer getExperienceReward() {
         return experienceReward;
     }

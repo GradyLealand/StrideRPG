@@ -11,6 +11,7 @@ import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
+import stride.com.striderpg.rpg.Generators.LevelGenerator;
 
 
 /**
@@ -20,30 +21,28 @@ import stride.com.striderpg.rpg.Generators.ItemGenerator;
 public class Player {
 
     /**
-     * PropertyChangedSupport object to deal with raising events when a Property on this object/bean
-     * is changed.
+     * PropertyChangedSupport object to deal with raising events when a Property on
+     * this object/bean is changed.
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
-     * Every player has a unique identifier attached to their account.
+     * Player unique identifier.
      */
     private String uniqueId;
 
     /**
-     * Every player has an email attached to the Google Account they chose
-     * to sign in with on authentication.
-     */
-    private String email;
-
-    /**
-     * Player Username. Used to identify a player in a human friendly way.
+     * Player current username.
      */
     private String username;
 
     /**
-     * Player Level, as a player plays the game and participates in activities, they are
-     * rewarded experience, which will add to their level over time.
+     * Player email property.
+     */
+    private String email;
+
+    /**
+     * Player current level.
      */
     private Integer level;
 
@@ -58,9 +57,9 @@ public class Player {
     private Integer steps;
 
     /**
-     * Total amount of enemies this player has defeated.
+     * Reference to this players stats object.
      */
-    private Integer enemiesDefeated;
+    private Stats stats;
 
     /**
      * Reference to this players skills object.
@@ -68,9 +67,9 @@ public class Player {
     private Skills skills;
 
     /**
-     * Reference to this players inventory object.
+     * Reference to this players equipment object.
      */
-    private Inventory inventory;
+    private Equipment equipment;
 
     /**
      * Default constructor required for calls to
@@ -78,47 +77,21 @@ public class Player {
      */
     public Player() { }
 
-    public Player(String uniqueId, String email, String username, Integer level, Integer experience,
-                  Integer steps, Integer enemiesDefeated, Skills skills) {
-        this.uniqueId = uniqueId;
-        this.email = email;
-        this.username = username;
-        this.level = level;
-        this.experience = experience;
-        this.steps = steps;
-        this.enemiesDefeated = enemiesDefeated;
-        this.skills = skills;
-    }
-
     /**
      * Construct a Player using a FirebaseUser object to create an empty (new) player object.
      * @param user FirebaseUser Object to retrieve information about the player.
      */
     public Player(FirebaseUser user) {
         this.uniqueId = user.getUid();
-        this.email = user.getEmail();
         this.username = user.getDisplayName();
-
+        this.email = user.getEmail();
         this.level = 1;
         this.experience = 1;
         this.steps = 0;
-        this.enemiesDefeated = 0;
 
-        this.skills = new Skills(
-                Constants.PLAYER_DEFAULT_VITALITY,
-                Constants.PLAYER_DEFAULT_STRENGTH,
-                Constants.PLAYER_DEFAULT_SPEED
-        );
-
-        this.inventory = ItemGenerator.generateDefaultInventory(this);
-    }
-
-    /**
-     * Level a Player up by incrementing their level property by one. Uses the public level
-     * property setter so a property change event is fired.
-     */
-    public void levelUp() {
-        this.setLevel(level + 1);
+        this.stats = new Stats();
+        this.skills = new Skills(Constants.PLAYER_DEFAULT_VITALITY, Constants.PLAYER_DEFAULT_STRENGTH, Constants.PLAYER_DEFAULT_SPEED);
+        this.equipment = ItemGenerator.generateDefaultInventory(this);
     }
 
     /**
@@ -128,16 +101,12 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "changes=" + changes +
-                ", uniqueId='" + uniqueId + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", level=" + level +
+                "level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
-                ", enemiesDefeated=" + enemiesDefeated +
+                ", stats=" + stats +
                 ", skills=" + skills +
-                ", inventory=" + inventory +
+                ", equipment=" + equipment +
                 '}';
     }
 
@@ -147,6 +116,24 @@ public class Player {
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Determines if a Player can level up or not by comparing their experience with the
+     * experience required to reach their next level.
+     * @param p Player object being checked.
+     * @return Boolean for if Player should be levelled up.
+     */
+    public static boolean canLevelUp(Player p) {
+        return p.getExperience() > LevelGenerator.experienceToNextLevel(p.getLevel());
+    }
+
+    /**
+     * Level a Player up by incrementing their level property by one. Uses the public level
+     * property setter so a property change event is fired.
+     */
+    public void levelUp() {
+        this.setLevel(level + 1);
     }
 
     /**
@@ -164,131 +151,60 @@ public class Player {
         }
     }
 
-    /**
-     * Get a Players unique identifier.
-     * @return Player unique token.
-     */
     public String getUniqueId() {
         return uniqueId;
     }
 
-    /**
-     * Get a Players email address.
-     * @return Player email.
-     */
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Get a Players username.
-     * @return Player username.
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Set a Players username.
-     * @param username New Player username.
-     */
-    public void setUsername(String username) {
-        if (!Objects.equals(this.username, username))
-            changes.firePropertyChange(DBKeys.USERNAME_KEY, this.username, username);
-        this.username = username;
-    }
-
-    /**
-     * Get a Players current level.
-     * @return Player current level.
-     */
     public Integer getLevel() {
         return level;
     }
-
-    /**
-     * Set a Players current level.
-     * @param level New Player level.
-     */
     public void setLevel(Integer level) {
         if (!Objects.equals(this.level, level))
             changes.firePropertyChange(DBKeys.LEVEL_KEY, this.level, level);
         this.level = level;
     }
 
-    /**
-     * Get a Players current experience amount.
-     * @return Player current experience.
-     */
     public Integer getExperience() {
         return experience;
     }
-
-    /**
-     * Set a Players current experience amount.
-     * @param experience New Player experience.
-     */
     public void setExperience(Integer experience) {
         if (!Objects.equals(this.experience, experience))
             changes.firePropertyChange(DBKeys.EXPERIENCE_KEY, this.experience, experience);
         this.experience = experience;
     }
 
-    /**
-     * Get a Players current steps amount.
-     * @return Player current steps.
-     */
     public Integer getSteps() {
         return steps;
     }
-
-    /**
-     * Set a Players current steps amount.
-     * @param steps New Player steps.
-     */
     public void setSteps(Integer steps) {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
     }
 
-    /**
-     * Get a Players current total enemies defeated.
-     * @return Player enemies defeated amount.
-     */
-    public Integer getEnemiesDefeated() {
-        return enemiesDefeated;
+    public Stats getStats() {
+        return stats;
     }
 
-    /**
-     * Set a Players total enemies defeated.
-     * @param enemiesDefeated New Enemies defeated amount.
-     */
-    public void setEnemiesDefeated(Integer enemiesDefeated) {
-        this.enemiesDefeated = enemiesDefeated;
-    }
-
-    /**
-     * Get a Players Skills object.
-     * @return Player Skills object.
-     */
     public Skills getSkills() {
         return skills;
     }
 
-    /**
-     * Get a Players inventory.
-     * @return Player inventory.
-     */
-    public Inventory getInventory() {
-        return inventory;
+    public Equipment getEquipment() {
+        return equipment;
     }
-
-    /**
-     * Set a Players inventory.
-     * @param inventory New Player inventory.
-     */
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
     }
 }

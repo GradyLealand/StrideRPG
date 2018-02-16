@@ -28,7 +28,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
     /**
      * Constructor method for the LeaderboardsAdapter, sets the players
      * ArrayList to the specified ArrayList.
-     * @param players
+     * @param players ArrayList of type Player.
      */
     LeaderboardsAdapter(ArrayList<Player> players) {
         this.players = players;

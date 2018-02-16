@@ -95,10 +95,6 @@ public class Enums {
             this.name = name;
         }
 
-        /**
-         * Get the enums name property.
-         * @return ItemType name.
-         */
         public String getName() {
             return name;
         }
@@ -126,17 +122,13 @@ public class Enums {
             this.name = name;
         }
 
-        /**
-         * Get the enums name property.
-         * @return EnemyType name.
-         */
         public String getName() {
             return name;
         }
     }
 
     /**
-     * Enumeration PlayerSort for holding the different possible sort methods
+     * Enumeration PlayerSort for holding the different possible sort types
      * for the any Collections sorting of the Player class.
      */
     public enum PlayerSort {

@@ -28,7 +28,7 @@ public class FragmentGenerator {
     public final BestiaryFragment bestiaryFragment = new BestiaryFragment();
 
     /**
-     * Inventory Fragment, allow a Player to look at their current equipment and inventory.
+     * Equipment Fragment, allow a Player to look at their current equipment and inventory.
      * They may also choose to un-equip, trash or equip a new item in this Fragment.
      */
     public final InventoryFragment inventoryFragment = new InventoryFragment();
