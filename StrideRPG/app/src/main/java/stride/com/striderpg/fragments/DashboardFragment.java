@@ -101,6 +101,7 @@ public class DashboardFragment extends Fragment {
      * @return  Helpful String to show user exp/exp needed.
      */
     private String parseExpAmount() {
+        G.activePlayer.setExperience(LevelGenerator.experienceFromSteps(G.activePlayer.getSteps()));
         return G.activePlayer.getExperience() + "/" + LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
     }
 
