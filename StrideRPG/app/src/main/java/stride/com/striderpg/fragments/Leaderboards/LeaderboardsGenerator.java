@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import stride.com.striderpg.database.DBKeys;
+import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -48,17 +49,34 @@ public class LeaderboardsGenerator {
                     players.add(s.getValue(Player.class));
                 }
 
-                // Sort the new List of Players by amount of experience.
-                Collections.sort(players, new Comparator<Player>() {
-                    @Override
-                    public int compare(Player player, Player player2) {
-                        return player2.getExperience().compareTo(player.getExperience());
-                    }
-                });
+                // Sort the players ArrayList after creating.
+                sort(players, Enums.PlayerSort.LEVEL);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) { }
+        });
+    }
+
+    private void sort(ArrayList<Player> collection, final Enums.PlayerSort sortType) {
+        Collections.sort(collection, new Comparator<Player>() {
+            @Override
+            public int compare(Player p1, Player p2) {
+                switch (sortType) {
+                    case LEVEL:
+                        return p2.getLevel().compareTo(p1.getLevel());
+                    case EXPERIENCE:
+                        return p2.getExperience().compareTo(p1.getExperience());
+                    case ENEMIES_DEFEATED:
+                        return p2.getEnemiesDefeated().compareTo(p1.getEnemiesDefeated());
+                    case STEPS:
+                        return p2.getSteps().compareTo(p1.getSteps());
+
+                    // Sort by level if no proper sort type is given.
+                    default:
+                        return p2.getLevel().compareTo(p1.getLevel());
+                }
+            }
         });
     }
 

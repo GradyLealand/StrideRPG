@@ -134,4 +134,15 @@ public class Enums {
             return name;
         }
     }
+
+    /**
+     * Enumeration PlayerSort for holding the different possible sort methods
+     * for the any Collections sorting of the Player class.
+     */
+    public enum PlayerSort {
+        EXPERIENCE,
+        LEVEL,
+        ENEMIES_DEFEATED,
+        STEPS
+    }
 }

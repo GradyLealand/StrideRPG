@@ -1,8 +1,6 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
-import android.net.Uri;
-
 import com.google.firebase.auth.FirebaseUser;
 
 import java.beans.PropertyChangeListener;
@@ -60,6 +58,11 @@ public class Player {
     private Integer steps;
 
     /**
+     * Total amount of enemies this player has defeated.
+     */
+    private Integer enemiesDefeated;
+
+    /**
      * Reference to this players skills object.
      */
     private Skills skills;
@@ -75,6 +78,18 @@ public class Player {
      */
     public Player() { }
 
+    public Player(String uniqueId, String email, String username, Integer level, Integer experience,
+                  Integer steps, Integer enemiesDefeated, Skills skills) {
+        this.uniqueId = uniqueId;
+        this.email = email;
+        this.username = username;
+        this.level = level;
+        this.experience = experience;
+        this.steps = steps;
+        this.enemiesDefeated = enemiesDefeated;
+        this.skills = skills;
+    }
+
     /**
      * Construct a Player using a FirebaseUser object to create an empty (new) player object.
      * @param user FirebaseUser Object to retrieve information about the player.
@@ -87,6 +102,7 @@ public class Player {
         this.level = 1;
         this.experience = 1;
         this.steps = 0;
+        this.enemiesDefeated = 0;
 
         this.skills = new Skills(
                 Constants.PLAYER_DEFAULT_VITALITY,
@@ -112,12 +128,14 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
+                "changes=" + changes +
                 ", uniqueId='" + uniqueId + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
+                ", enemiesDefeated=" + enemiesDefeated +
                 ", skills=" + skills +
                 ", inventory=" + inventory +
                 '}';
@@ -169,6 +187,7 @@ public class Player {
     public String getUsername() {
         return username;
     }
+
     /**
      * Set a Players username.
      * @param username New Player username.
@@ -231,6 +250,22 @@ public class Player {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
+    }
+
+    /**
+     * Get a Players current total enemies defeated.
+     * @return Player enemies defeated amount.
+     */
+    public Integer getEnemiesDefeated() {
+        return enemiesDefeated;
+    }
+
+    /**
+     * Set a Players total enemies defeated.
+     * @param enemiesDefeated New Enemies defeated amount.
+     */
+    public void setEnemiesDefeated(Integer enemiesDefeated) {
+        this.enemiesDefeated = enemiesDefeated;
     }
 
     /**

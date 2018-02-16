@@ -4,7 +4,6 @@ package stride.com.striderpg.database;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -28,12 +27,12 @@ public class FirebaseDBUtil {
     }
 
     /**
-     * Push the ActivePlayer from the G class directly to the FirebaseDatabase. Any data
+     * Push the specified Player directly to the FirebaseDatabase. Any data
      * that has been changed in this Player since the last push will be updated.
      */
     public void pushPlayer(Player player) {
         database.child(DBKeys.USERS_KEY)
-                .child(G.activePlayer.getUniqueId())
+                .child(player.getUniqueId())
                 .setValue(player);
     }
 }
