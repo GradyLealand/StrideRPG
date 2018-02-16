@@ -1,6 +1,8 @@
 package stride.com.striderpg.global;
 
 
+import android.util.Log;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,7 +36,12 @@ public class PushTimer {
         @Override
         public void run() {
             db.pushPlayer(G.activePlayer);
-            G.fitnessUtil.readData();
+
+            try {
+                G.fitnessUtil.readData();
+            } catch (Exception e) {
+                Log.e(TAG, "timerTask.run.readData():error", e);
+            }
         }
     };
 

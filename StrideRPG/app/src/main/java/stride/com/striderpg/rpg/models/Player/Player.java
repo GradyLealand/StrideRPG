@@ -12,6 +12,8 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
 
+import stride.com.striderpg.rpg.Generators.LevelGenerator;
+
 
 /**
  * A Player class to represent a Users account information and player information encapsulated
@@ -68,27 +70,15 @@ public class Player {
     private Skills skills;
 
     /**
-     * Reference to this players inventory object.
+     * Reference to this players equipment object.
      */
-    private Inventory inventory;
+    private Equipment equipment;
 
     /**
      * Default constructor required for calls to
      * DataSnapshot.getValue(Player.class).
      */
     public Player() { }
-
-    public Player(String uniqueId, String email, String username, Integer level, Integer experience,
-                  Integer steps, Integer enemiesDefeated, Skills skills) {
-        this.uniqueId = uniqueId;
-        this.email = email;
-        this.username = username;
-        this.level = level;
-        this.experience = experience;
-        this.steps = steps;
-        this.enemiesDefeated = enemiesDefeated;
-        this.skills = skills;
-    }
 
     /**
      * Construct a Player using a FirebaseUser object to create an empty (new) player object.
@@ -110,15 +100,7 @@ public class Player {
                 Constants.PLAYER_DEFAULT_SPEED
         );
 
-        this.inventory = ItemGenerator.generateDefaultInventory(this);
-    }
-
-    /**
-     * Level a Player up by incrementing their level property by one. Uses the public level
-     * property setter so a property change event is fired.
-     */
-    public void levelUp() {
-        this.setLevel(level + 1);
+        this.equipment = ItemGenerator.generateDefaultInventory(this);
     }
 
     /**
@@ -137,7 +119,7 @@ public class Player {
                 ", steps=" + steps +
                 ", enemiesDefeated=" + enemiesDefeated +
                 ", skills=" + skills +
-                ", inventory=" + inventory +
+                ", equipment=" + equipment +
                 '}';
     }
 
@@ -147,6 +129,24 @@ public class Player {
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Determines if a Player can level up or not by comparing their experience with the
+     * experience required to reach their next level.
+     * @param p Player object being checked.
+     * @return Boolean for if Player should be levelled up.
+     */
+    public static boolean canLevelUp(Player p) {
+        return p.getExperience() > LevelGenerator.experienceToNextLevel(p.getLevel());
+    }
+
+    /**
+     * Level a Player up by incrementing their level property by one. Uses the public level
+     * property setter so a property change event is fired.
+     */
+    public void levelUp() {
+        this.setLevel(level + 1);
     }
 
     /**
@@ -277,18 +277,18 @@ public class Player {
     }
 
     /**
-     * Get a Players inventory.
-     * @return Player inventory.
+     * Get a Players equipment.
+     * @return Player equipment.
      */
-    public Inventory getInventory() {
-        return inventory;
+    public Equipment getEquipment() {
+        return equipment;
     }
 
     /**
-     * Set a Players inventory.
-     * @param inventory New Player inventory.
+     * Set a Players equipment.
+     * @param equipment New Player equipment.
      */
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
     }
 }

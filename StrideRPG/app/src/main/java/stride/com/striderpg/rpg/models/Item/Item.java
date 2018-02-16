@@ -4,7 +4,7 @@ package stride.com.striderpg.rpg.models.Item;
 import stride.com.striderpg.rpg.Enums;
 
 /**
- * An Item class to represent an Item present in a Players Inventory.
+ * An Item class to represent an Item present in a Players Equipment.
  */
 public class Item {
 

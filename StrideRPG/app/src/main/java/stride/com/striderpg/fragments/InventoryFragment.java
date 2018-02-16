@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Inventory Fragment for displaying a Users inventory and giving them options to equip, un-equip,
- * trash and look at stats on each item in their Inventory.
+ * Equipment Fragment for displaying a Users inventory and giving them options to equip, un-equip,
+ * trash and look at stats on each item in their Equipment.
  */
 public class InventoryFragment extends Fragment {
 

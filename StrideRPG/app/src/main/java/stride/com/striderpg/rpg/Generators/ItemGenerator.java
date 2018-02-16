@@ -4,7 +4,7 @@ package stride.com.striderpg.rpg.Generators;
 import java.util.Random;
 
 import stride.com.striderpg.rpg.models.Item.Item;
-import stride.com.striderpg.rpg.models.Player.Inventory;
+import stride.com.striderpg.rpg.models.Player.Equipment;
 import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
@@ -76,18 +76,20 @@ public class ItemGenerator {
     }
 
     /**
-     * Generate a rookie Inventory with an Item of each type in it.
+     * Generate a rookie Equipment with an Item of each type in it.
      * @param p Player object.
-     * @return Inventory with new items in HashMap.
+     * @return Equipment with new items in HashMap.
      */
-    public static Inventory generateDefaultInventory(Player p) {
-        Item helmet = generate(p, Enums.ItemType.HELMET);
-        Item weapon = generate(p, Enums.ItemType.WEAPON);
-        Item chest = generate(p, Enums.ItemType.CHEST);
-        Item legs = generate(p, Enums.ItemType.LEGS);
-        Item boots = generate(p, Enums.ItemType.BOOTS);
+    public static Equipment generateDefaultInventory(Player p) {
+        Equipment equipment = new Equipment();
 
-        return new Inventory(helmet, weapon, chest, legs, boots);
+        equipment.replaceItem(Enums.ItemType.BOOTS, generate(p, Enums.ItemType.BOOTS));
+        equipment.replaceItem(Enums.ItemType.HELMET, generate(p, Enums.ItemType.HELMET));
+        equipment.replaceItem(Enums.ItemType.LEGS, generate(p, Enums.ItemType.LEGS));
+        equipment.replaceItem(Enums.ItemType.WEAPON, generate(p, Enums.ItemType.WEAPON));
+        equipment.replaceItem(Enums.ItemType.CHEST, generate(p, Enums.ItemType.CHEST));
+
+        return equipment;
     }
 
     /**
