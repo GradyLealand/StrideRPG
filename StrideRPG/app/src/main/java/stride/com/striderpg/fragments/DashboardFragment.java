@@ -60,7 +60,10 @@ public class DashboardFragment extends Fragment {
 
         stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
         levelText.setText(G.activePlayer.getLevel().toString());
-        enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
+        enemiesText.setText(addCommasToInteger(
+                G.activePlayer.getStats().getEnemiesDefeated())
+        );
+
         updateLevelProgressBar();
         parseExpAmount();
 

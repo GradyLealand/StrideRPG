@@ -41,4 +41,9 @@ public final class Constants {
      * Constant to calculate an enemies experience property.
      */
     public static final int ENEMY_EXPERIENCE_MODIFIER = 10;
+
+    /**
+     * Cosntant for generating SimpleDateFormats throughout the application.
+     */
+    public static final String ACTIVITY_TIMESTAMP_FORMAT = "yyyy-mm-dd-HH-mm-ss";
 }
