@@ -86,7 +86,7 @@ public class Player {
         this.username = user.getDisplayName();
         this.email = user.getEmail();
         this.level = 1;
-        this.experience = 0;
+        this.experience = 200;
         this.steps = 0;
 
         this.stats = new Stats();
@@ -133,7 +133,9 @@ public class Player {
      * property setter so a property change event is fired.
      */
     public void levelUp() {
+        this.experience = this.experience - LevelGenerator.experienceToNextLevel(this.getLevel());
         this.setLevel(level + 1);
+
     }
 
     /**
