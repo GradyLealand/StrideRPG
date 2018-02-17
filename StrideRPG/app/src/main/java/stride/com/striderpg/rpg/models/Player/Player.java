@@ -86,7 +86,7 @@ public class Player {
         this.username = user.getDisplayName();
         this.email = user.getEmail();
         this.level = 1;
-        this.experience = 1;
+        this.experience = 0;
         this.steps = 0;
 
         this.stats = new Stats();
@@ -147,6 +147,9 @@ public class Player {
         }
         else {
             this.setSteps(this.getSteps() + (total - G.lastStepCount));
+            this.setExperience(
+                    this.getExperience() +
+                            (total - G.lastStepCount) / Constants.PLAYER_EXPERIENCE_MODIFIER);
             G.lastStepCount = total;
         }
     }

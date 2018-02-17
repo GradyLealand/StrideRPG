@@ -41,4 +41,9 @@ public final class Constants {
      * Constant to calculate an enemies experience property.
      */
     public static final int ENEMY_EXPERIENCE_MODIFIER = 10;
+
+    /**
+     * Constant to calculate experience player gains from steps
+     */
+    public static final int PLAYER_EXPERIENCE_MODIFIER = 10;
 }
