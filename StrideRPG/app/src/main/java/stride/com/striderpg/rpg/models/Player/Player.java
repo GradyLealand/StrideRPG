@@ -150,6 +150,10 @@ public class Player {
             this.setExperience(
                     this.getExperience() +
                             (total - G.lastStepCount) / Constants.PLAYER_EXPERIENCE_MODIFIER);
+            if(canLevelUp(this))
+            {
+                this.levelUp();
+            }
             G.lastStepCount = total;
         }
     }
