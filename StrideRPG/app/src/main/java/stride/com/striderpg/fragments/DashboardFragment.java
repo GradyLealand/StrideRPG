@@ -71,6 +71,7 @@ public class DashboardFragment extends Fragment {
                 switch (propertyChangeEvent.getPropertyName()) {
                     case "experience":
                         updateLevelProgressBar();
+                        playerExpCount.setText(parseExpAmount());
                         break;
                     case "username":
                         break;
@@ -112,7 +113,5 @@ public class DashboardFragment extends Fragment {
 
         playerLevelProgressBar.setMax(expNeeded);
         playerLevelProgressBar.setProgress(G.activePlayer.getExperience());
-
-        playerExpCount.setText(parseExpAmount());
     }
 }

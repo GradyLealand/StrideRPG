@@ -144,7 +144,6 @@ public class Player {
     public void updateSteps(Integer total) {
         if (G.lastStepCount == null) {
             G.lastStepCount = total;
-
         }
         else {
             this.setSteps(this.getSteps() + (total - G.lastStepCount));
@@ -154,7 +153,6 @@ public class Player {
             G.lastStepCount = total;
         }
     }
-
 
     public String getUniqueId() {
         return uniqueId;
