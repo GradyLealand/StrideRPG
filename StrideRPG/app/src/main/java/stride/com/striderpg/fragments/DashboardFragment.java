@@ -102,8 +102,7 @@ public class DashboardFragment extends Fragment {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 Log.d(TAG, String.format(
                         G.locale,
-                        "propertyChange:%s has been fired",
-                        propertyChangeEvent.getPropertyName())
+                        "propertyChange:%s has been fired", propertyChangeEvent.getPropertyName())
                 );
 
                 switch (propertyChangeEvent.getPropertyName()) {
@@ -116,15 +115,32 @@ public class DashboardFragment extends Fragment {
                         break;
                     // If Player level property has been changed.
                     case "level":
-                        levelText.setText((int)propertyChangeEvent.getNewValue());
+                        updateLevelText((int)propertyChangeEvent.getNewValue());
+                        updateLevelProgressBar(G.activePlayer.getExperience());
                         break;
                     // If Player steps property has been changed.
                     case "steps":
-                        stepsText.setText(addCommasToInteger((int)propertyChangeEvent.getNewValue()));
+                        updateStepsTextView((int)propertyChangeEvent.getNewValue());
                         break;
                 }
             }
         });
+    }
+
+    /**
+     * Update the Dashboards steps TextView with the passed paremeter with commas added.
+     * @param newValue New steps amount.
+     */
+    private void updateStepsTextView(Integer newValue) {
+        stepsText.setText(String.format(G.locale, "%s", addCommasToInteger(newValue)));
+    }
+
+    /**
+     * Update the Dashboards level TextView with the passed parameter.
+     * @param newValue New level amount.
+     */
+    private void updateLevelText(Integer newValue) {
+        levelText.setText(String.format(G.locale, "%d", newValue));
     }
 
     /**

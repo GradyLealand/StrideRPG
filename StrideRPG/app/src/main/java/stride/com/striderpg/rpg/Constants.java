@@ -58,7 +58,7 @@ public final class Constants {
      * Constant used to determine the amount of milliseconds (long seconds) in between every
      * active player database push.
      */
-    public static final long DATABASE_PUSH_RATE = 10000;
+    public static final long DATABASE_PUSH_RATE = 15000;
 
     /**
      * Constant used to determine the amount of milliseconds (long seconds) in between every
