@@ -116,7 +116,7 @@ public class DashboardFragment extends Fragment {
                     // If Player level property has been changed.
                     case "level":
                         updateLevelText((int)propertyChangeEvent.getNewValue());
-                        updateLevelProgressBar(G.activePlayer.getExperience());
+                        updateExpOnLevelUp();
                         break;
                     // If Player steps property has been changed.
                     case "steps":
@@ -125,6 +125,13 @@ public class DashboardFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void updateExpOnLevelUp() {
+        playerExpCount.setText(parseExpAmount(
+                G.activePlayer.getExperience(),
+                G.activePlayer.getLevel() + 1)
+        );
     }
 
     /**
@@ -169,6 +176,10 @@ public class DashboardFragment extends Fragment {
      */
     private String parseExpAmount(Integer exp) {
         return exp + " / " + LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
+    }
+
+    private String parseExpAmount(Integer exp, Integer level) {
+        return exp + " / " + LevelGenerator.experienceToNextLevel(level);
     }
 
     /**
