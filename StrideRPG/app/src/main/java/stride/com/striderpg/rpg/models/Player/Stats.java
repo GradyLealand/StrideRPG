@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+
 /**
  * A Stats class to store information about a Player that's less important that core
  * game-play properties. Things that are useful to store over time can go here.
@@ -33,9 +35,7 @@ public class Stats {
     public Stats() {
         this.enemiesDefeated = 0;
         this.itemsLooted = 0;
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        this.registered = dateFormat.format(new Date());
+        this.registered = TimestampParser.makeTimestamp();
     }
 
     public Integer getEnemiesDefeated() {

@@ -1,9 +1,13 @@
 package stride.com.striderpg.rpg.Generators;
 
 
+import android.util.Log;
+
+import java.util.Locale;
 import java.util.Random;
 
 import stride.com.striderpg.R;
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
@@ -14,6 +18,11 @@ import stride.com.striderpg.rpg.models.Player.Player;
  * Player activePlayer Object.
  */
 public class EnemyGenerator {
+
+    /**
+     * EnemyGenerator Logging tag.
+     */
+    private static final String TAG = "EnemyGenerator";
 
     /**
      * Random instance available to the EnemyGenerator class for creating new enemies.
@@ -32,17 +41,23 @@ public class EnemyGenerator {
      * @return Newly generated Enemy object with random properties.
      */
     public static Enemy generate(Player p) {
+
+        // TODO: Weighted enemy types based on current player level.
+        // Choose random enemy type.
         Enums.EnemyType enemyType = Enums.random(Enums.EnemyType.class);
 
+        // Calculate generic enemy values based on Player parameter.
+        String name = parseName(enemyType);
         int health = calculateEnemyHealth(p);
         int minDamage = calculateEnemyMinDamage(p);
         int maxDamage = calculateEnemyMaxDamage(p);
         int experience = calculateEnemyExp(p);
-
-        String name = parseName(enemyType);
         int icon = parseIcon(enemyType);
 
-        return new Enemy(name, enemyType, health, minDamage, maxDamage, icon, experience);
+        Enemy newEnemy = new Enemy(name, enemyType, health, minDamage, maxDamage, icon, experience);
+
+        Log.d(TAG, String.format(G.locale, "generate:success:enemy=%s", newEnemy));
+        return newEnemy;
     }
 
     /**
@@ -51,7 +66,10 @@ public class EnemyGenerator {
      * @return Enemy experience reward.
      */
     private static int calculateEnemyExp(Player p) {
-        return p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER + r.nextInt(50);
+        int expReward = p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER + r.nextInt(50);
+
+        Log.d(TAG, String.format(G.locale, "calculateEnemyExp:success:expReward=%s", expReward));
+        return expReward;
     }
 
     /**
@@ -64,8 +82,10 @@ public class EnemyGenerator {
         try {
             iconId = R.drawable.class.getField(enemyType.getName().toLowerCase()).getInt(null);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            Log.e(TAG, "parseIcon:error:", e);
         }
+
+        Log.d(TAG, String.format(G.locale, "parseIcon:success:icon=%d", iconId));
         return iconId;
     }
 
@@ -75,7 +95,10 @@ public class EnemyGenerator {
      * @return Enemy name.
      */
     private static String parseName(Enums.EnemyType enemyType) {
-        return enemyAdjectives[r.nextInt(enemyAdjectives.length)] + " " + enemyType.getName();
+        String name = enemyAdjectives[r.nextInt(enemyAdjectives.length)] + " " + enemyType.getName();
+
+        Log.d(TAG, String.format(G.locale, "parseName:success:name=%s", name));
+        return name;
     }
 
     /**
@@ -84,7 +107,10 @@ public class EnemyGenerator {
      * @return New Enemy health.
      */
     private static int calculateEnemyHealth(Player p) {
-        return (p.getLevel() * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
+        int enemyHealth = (p.getLevel() * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
+
+        Log.d(TAG, String.format(G.locale, "calculateEnemyHealth:success:enemyHealth=%d", enemyHealth));
+        return  enemyHealth;
     }
 
     /**
@@ -93,7 +119,10 @@ public class EnemyGenerator {
      * @return New Enemy minimum damage.
      */
     private static int calculateEnemyMinDamage(Player p) {
-        return (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) / 2;
+        int minDamage = (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) / 2;
+
+        Log.d(TAG, String.format(G.locale, "calculateEnemyMinDamage:success:minDamage=%d", minDamage));
+        return minDamage;
     }
 
     /**
@@ -102,6 +131,9 @@ public class EnemyGenerator {
      * @return New Enemy maximum damage.
      */
     private static int calculateEnemyMaxDamage(Player p) {
-        return (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) * 2;
+        int maxDamage = (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) * 2;
+
+        Log.d(TAG, String.format(G.locale, "calculateEnemyMaxDamage:success:maxDamage=%d", maxDamage));
+        return maxDamage;
     }
 }

@@ -16,6 +16,11 @@ import stride.com.striderpg.R;
 public class InventoryFragment extends Fragment {
 
     /**
+     * InventoryFragment Logging tag.
+     */
+    private static final String TAG = "InventoryFragment";
+
+    /**
      * Required empty public constructor function.
      */
     public InventoryFragment() { }

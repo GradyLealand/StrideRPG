@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,11 @@ import stride.com.striderpg.R;
  * total steps, total experience, level, enemies defeated... etc.
  */
 public class LeaderboardsFragment extends Fragment {
+
+    /**
+     * LeaderboardsFragment Logging tag.
+     */
+    private static final String TAG = "LeaderboardsFragment";
 
     /**
      * Instance the recycler view used to create the list of Players
@@ -40,6 +46,10 @@ public class LeaderboardsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Main LeaderboardsFragment View creation. The RecyclerView, Adapter and LayoutManager are
+     * all used here to create the Layout and dynamically create the Leaderboards View.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_leaderboards_rv, container, false);
@@ -58,6 +68,7 @@ public class LeaderboardsFragment extends Fragment {
         LeaderboardsAdapter adapter = new LeaderboardsAdapter(generator.getPlayers());
         leaderboardsRecyclerView.setAdapter(adapter);
 
+        Log.d(TAG, "onCreateView:success");
         return rootView;
     }
 }

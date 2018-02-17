@@ -3,6 +3,7 @@ package stride.com.striderpg.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,44 @@ import stride.com.striderpg.rpg.Generators.LevelGenerator;
  */
 public class DashboardFragment extends Fragment {
 
+    /**
+     * DashboardFragment Logging tag.
+     */
+    private static final String TAG = "DashboardFragment";
+
+    /**
+     * Player profile picture ImageView.
+     */
     private ImageView playerProfileImage;
-    private TextView playerUsernameText;
+
+    /**
+     * Player experience amount TextView.
+     */
     private TextView playerExpCount;
+
+    /**
+     * Player experience / neededExperience ProgressBar.
+     */
     private ProgressBar playerLevelProgressBar;
 
+    /**
+     * Player level amount TextView.
+     */
     private TextView levelText;
+
+    /**
+     * Player steps amount TextView.
+     */
     private TextView stepsText;
+
+    /**
+     * Player username value TextView.
+     */
+    private TextView playerUsernameText;
+
+    /**
+     * Player enemies defeated amount TextView.
+     */
     private TextView enemiesText;
 
     /**
@@ -49,45 +81,79 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        playerProfileImage = getView().findViewById(R.id.playerProfileImage);
-        playerUsernameText = getView().findViewById(R.id.playerUsernameText);
-        playerExpCount = getView().findViewById(R.id.playerExpCount);
-        playerLevelProgressBar = getView().findViewById(R.id.playerLevelProgressBar);
+        // Call method to set each UI element on View start.
+        getDashboardElements();
 
-        levelText = getView().findViewById(R.id.levelText);
-        stepsText = getView().findViewById(R.id.stepsText);
-        enemiesText = getView().findViewById(R.id.enemiesText);
-
+        // Initial value set for Player information on Dashboard.
         playerUsernameText.setText(G.activePlayer.getUsername());
         stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
-        levelText.setText(G.activePlayer.getLevel().toString());
+        levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
         enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
 
+        // Initial Player level progress bar update.
         updateLevelProgressBar(G.activePlayer.getExperience());
 
-        // Add a new PropertyChangeListener to the active Player object for handling player property changes.
+        // Add a new PropertyChangeListener to the active Player object for handling property changes.
+        // Whenever the Global Player (G.activePlayer) has a property changed with a value that isn't
+        // the same as the current value. This property change event will fire with the changed property
+        // as the propertyChangeEvent.getPropertyName(). switch through and change UI based on changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                Log.d(TAG, String.format(
+                        G.locale,
+                        "propertyChange:%s has been fired", propertyChangeEvent.getPropertyName())
+                );
+
                 switch (propertyChangeEvent.getPropertyName()) {
+                    // If Player experience property has been changed.
                     case "experience":
                         updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
                         break;
+                    // If Player username property has been changed.
                     case "username":
                         break;
+                    // If Player level property has been changed.
                     case "level":
-                        levelText.setText((int)propertyChangeEvent.getNewValue());
+                        updateLevelText((int)propertyChangeEvent.getNewValue());
+                        updateExpOnLevelUp();
                         break;
+                    // If Player steps property has been changed.
                     case "steps":
-                        stepsText.setText(addCommasToInteger((int)propertyChangeEvent.getNewValue()));
-                        break;
-                    case "inventory":
+                        updateStepsTextView((int)propertyChangeEvent.getNewValue());
                         break;
                 }
             }
         });
     }
 
+    public void updateExpOnLevelUp() {
+        playerExpCount.setText(parseExpAmount(
+                G.activePlayer.getExperience(),
+                G.activePlayer.getLevel() + 1)
+        );
+    }
+
+    /**
+     * Update the Dashboards steps TextView with the passed paremeter with commas added.
+     * @param newValue New steps amount.
+     */
+    private void updateStepsTextView(Integer newValue) {
+        stepsText.setText(String.format(G.locale, "%s", addCommasToInteger(newValue)));
+    }
+
+    /**
+     * Update the Dashboards level TextView with the passed parameter.
+     * @param newValue New level amount.
+     */
+    private void updateLevelText(Integer newValue) {
+        levelText.setText(String.format(G.locale, "%d", newValue));
+    }
+
+    /**
+     * Update the Dashboard playerLevelProgressBarElement with the specified amount.
+     * @param amount New Player experience amount.
+     */
     private void updateLevelProgressBar(Integer amount) {
         playerLevelProgressBar.setMax(LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel()));
         playerLevelProgressBar.setProgress(amount);
@@ -110,5 +176,26 @@ public class DashboardFragment extends Fragment {
      */
     private String parseExpAmount(Integer exp) {
         return exp + " / " + LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
+    }
+
+    private String parseExpAmount(Integer exp, Integer level) {
+        return exp + " / " + LevelGenerator.experienceToNextLevel(level);
+    }
+
+    /**
+     * Set the required Dashboard UI elements using the current view findViewById method.
+     */
+    private void getDashboardElements() {
+        try {
+            playerProfileImage = getView().findViewById(R.id.playerProfileImage);
+            playerUsernameText = getView().findViewById(R.id.playerUsernameText);
+            playerExpCount = getView().findViewById(R.id.playerExpCount);
+            playerLevelProgressBar = getView().findViewById(R.id.playerLevelProgressBar);
+            levelText = getView().findViewById(R.id.levelText);
+            stepsText = getView().findViewById(R.id.stepsText);
+            enemiesText = getView().findViewById(R.id.enemiesText);
+        } catch (Exception e) {
+            Log.e(TAG, "getDashboardElements:error:", e);
+        }
     }
 }

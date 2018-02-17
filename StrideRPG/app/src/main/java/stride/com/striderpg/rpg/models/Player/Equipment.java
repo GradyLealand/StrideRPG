@@ -69,6 +69,10 @@ public class Equipment {
         slots.put(type.name(), null);
     }
 
+    /**
+     * Get the Equipment slots HashMap.
+     * @return slots HashMap.
+     */
     public Map<String, Item> getSlots() {
         return slots;
     }

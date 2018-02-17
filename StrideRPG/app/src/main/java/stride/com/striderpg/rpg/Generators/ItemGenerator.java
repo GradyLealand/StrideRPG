@@ -1,8 +1,12 @@
 package stride.com.striderpg.rpg.Generators;
 
 
+import android.util.Log;
+
+import java.util.Arrays;
 import java.util.Random;
 
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Equipment;
 import stride.com.striderpg.rpg.models.Player.Player;
@@ -14,6 +18,11 @@ import stride.com.striderpg.rpg.Enums;
  * Player activePlayer Object that each game session will have.
  */
 public class ItemGenerator {
+
+    /**
+     * ItemGenerator Logging tag.
+     */
+    private static final String TAG = "ItemGenerator";
 
     /**
      * Random instance available to the ItemGenerator class for creating new items and
@@ -40,7 +49,10 @@ public class ItemGenerator {
         int powerLevel = generatePowerLevel(stats, p);
         String name = parseName(itemType);
 
-        return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, itemType);
+        Item newItem = new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, itemType);
+
+        Log.d(TAG, String.format(G.locale, "generate:success:item=%s", newItem));
+        return newItem;
     }
 
     /**
@@ -56,7 +68,10 @@ public class ItemGenerator {
         int powerLevel = generatePowerLevel(stats, p);
         String name = parseName(type);
 
-        return new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, type);
+        Item newItem = new Item(name, powerLevel, stats[0], stats[1], stats[2], itemRarity, type);
+
+        Log.d(TAG, String.format(G.locale, "generate:%s:success:item=%s", type, newItem));
+        return newItem;
     }
 
     /**
@@ -72,7 +87,10 @@ public class ItemGenerator {
         int powerLevel = generatePowerLevel(stats, p);
         String name = parseName(itemType);
 
-        return new Item(name, powerLevel, stats[0], stats[1], stats[2], rarity, itemType);
+        Item newItem = new Item(name, powerLevel, stats[0], stats[1], stats[2], rarity, itemType);
+
+        Log.d(TAG, String.format(G.locale, "generate:%s:success:item=%s", rarity, newItem));
+        return newItem;
     }
 
     /**
@@ -89,6 +107,7 @@ public class ItemGenerator {
         equipment.replaceItem(Enums.ItemType.WEAPON, generate(p, Enums.ItemType.WEAPON));
         equipment.replaceItem(Enums.ItemType.CHEST, generate(p, Enums.ItemType.CHEST));
 
+        Log.d(TAG, String.format(G.locale,"generateDefaultInventory:success:equipment=%s", equipment));
         return equipment;
     }
 
@@ -99,7 +118,10 @@ public class ItemGenerator {
      * @return New Item Name.
      */
     private static String parseName(Enums.ItemType itemType) {
-        return itemAdjectives[r.nextInt(itemAdjectives.length)] + " " + itemType.getName();
+        String name = itemAdjectives[r.nextInt(itemAdjectives.length)] + " " + itemType.getName();
+
+        Log.d(TAG, String.format(G.locale, "parseName:success:name=%s", name));
+        return name;
     }
 
     /**
@@ -114,7 +136,10 @@ public class ItemGenerator {
         for (int stat : stats) {
             powerLevel += stat;
         }
-        return (powerLevel + p.getLevel()) * Constants.ITEM_POWER_LEVEL_MODIFIER;
+        powerLevel += p.getLevel() * Constants.ITEM_POWER_LEVEL_MODIFIER;
+
+        Log.d(TAG, String.format(G.locale, "generatePowerLevel:success:powerLevel=%d", powerLevel));
+        return powerLevel;
     }
 
     /**
@@ -145,6 +170,9 @@ public class ItemGenerator {
                 case 2: spdBoost++; break;
             }
         }
-        return new int[] { vitBoost, strBoost, spdBoost };
+        int[] stats = new int[] { vitBoost, strBoost, spdBoost };
+
+        Log.d(TAG, String.format(G.locale, "buildItemStats:success:stats=%s", Arrays.toString(stats)));
+        return stats;
     }
 }

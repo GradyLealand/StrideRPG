@@ -2,19 +2,14 @@ package stride.com.striderpg;
 
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
-import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.PushTimer;
-import stride.com.striderpg.rpg.Generators.ActivityGenerator;
-import stride.com.striderpg.rpg.Generators.ItemGenerator;
-import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -67,13 +62,17 @@ public class NavigationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_navigation);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // Set the dashboard as the default Fragment to visit on app start up.
+        navigation.setSelectedItemId(R.id.navigation_dashboard);
 
         // Add all Fragments to the NavigationActivity (Dashboard selected by default).
         addFragments();
 
-        new PushTimer().start();
+        // Start background Tasks for reading users current steps and pushing active Player
+        // to the database, these tasks are done at a fixed rate (Constants class).
+        new PushTimer().startTimers();
     }
 
     /**
@@ -85,6 +84,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
+        Log.d(TAG, "showDashboard:success");
     }
 
     /**
@@ -96,6 +96,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
+        Log.d(TAG, "showQuests:success");
     }
 
     /**
@@ -107,6 +108,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
+        Log.d(TAG, "showInventory:success");
     }
 
     /**
@@ -118,6 +120,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
+        Log.d(TAG, "showBestiary:success");
     }
 
     /**
@@ -129,6 +132,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
+        Log.d(TAG, "showLeaderboards:success");
     }
 
     /**
@@ -159,5 +163,7 @@ public class NavigationActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainer, generator.leaderboardsFragment)
                 .hide(generator.leaderboardsFragment)
                 .commit();
+
+        Log.d(TAG, "addFragments:success");
     }
 }

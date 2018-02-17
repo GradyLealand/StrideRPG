@@ -3,6 +3,7 @@ package stride.com.striderpg.fragments.Leaderboards;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import stride.com.striderpg.R;
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -19,6 +21,8 @@ import stride.com.striderpg.rpg.models.Player.Player;
  * Used to inflate the CardView for each Player.
  */
 public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapter.PlayerViewHolder> {
+
+    private static final String TAG = "LeaderboardsAdapter";
 
     /**
      * ArrayList of type Player.
@@ -32,6 +36,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
      */
     LeaderboardsAdapter(ArrayList<Player> players) {
         this.players = players;
+        Log.d(TAG, "LeaderboardsAdapter:success:ArrayList<Player>=" + players);
     }
 
     @Override
@@ -47,9 +52,24 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
 
     @Override
     public void onBindViewHolder(PlayerViewHolder playerViewHolder, int i) {
-        playerViewHolder.personName.setText(players.get(i).getUsername());
-        playerViewHolder.personAge.setText(players.get(i).getLevel().toString());
-        playerViewHolder.personPhoto.setImageResource(R.mipmap.ic_launcher);
+        // Set players player[i] playerUsername TextView to Player username.
+        playerViewHolder.playerUsername.setText(players.get(i).getUsername());
+
+        // Set players player[i] playerLevel TextView to Player level.
+        playerViewHolder.playerLevel.setText(String.format(
+                G.locale, "%d", players.get(i).getLevel())
+        );
+
+        // Set players player[i] playerImage ImageView to Player image.
+        // TODO: Use an actual Player image. PLACEHOLDER.
+        playerViewHolder.playerImage.setImageResource(R.mipmap.ic_launcher);
+
+        // Log the successful player bind.
+        Log.d(TAG, String.format(
+                G.locale,
+                "onBindViewHolder:success:player successfully bound: %s",
+                players.get(i).toString())
+        );
     }
 
     @Override
@@ -61,11 +81,26 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
      * Static sub-class for holding the PlayerViewHolder that contains all
      * relevant information about the Player object being inflated and displayed.
      */
-    public static class PlayerViewHolder extends RecyclerView.ViewHolder {
+    static class PlayerViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * Main CardView to hold this Players information.
+         */
         CardView cv;
-        TextView personName;
-        TextView personAge;
-        ImageView personPhoto;
+
+        /**
+         * Player username TextView.
+         */
+        TextView playerUsername;
+
+        /**
+         * Player level TextView.
+         */
+        TextView playerLevel;
+
+        /**
+         * Player image ImageView.
+         */
+        ImageView playerImage;
 
         /**
          * PlayerViewHolder constructor method to set the ids of the views
@@ -75,9 +110,9 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         PlayerViewHolder(View itemView) {
             super(itemView);
             cv = itemView.findViewById(R.id.cv);
-            personName = itemView.findViewById(R.id.player_username);
-            personAge = itemView.findViewById(R.id.player_level);
-            personPhoto = itemView.findViewById(R.id.player_profile_picture);
+            playerUsername = itemView.findViewById(R.id.player_username);
+            playerLevel = itemView.findViewById(R.id.player_level);
+            playerImage = itemView.findViewById(R.id.player_profile_picture);
         }
     }
 }

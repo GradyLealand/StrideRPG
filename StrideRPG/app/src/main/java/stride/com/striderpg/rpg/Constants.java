@@ -54,4 +54,16 @@ public final class Constants {
     */
     public static final int PLAYER_STEPS_EXP_MODIFIER = 10;
 
+    /**
+     * Constant used to determine the amount of milliseconds (long seconds) in between every
+     * active player database push.
+     */
+    public static final long DATABASE_PUSH_RATE = 15000;
+
+    /**
+     * Constant used to determine the amount of milliseconds (long seconds) in between every
+     * fitnessUtil readData call.
+     */
+    public static final long FITNESS_READ_RATE = 5000;
+
 }

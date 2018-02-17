@@ -1,7 +1,6 @@
 package stride.com.striderpg.fit;
 
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -37,6 +36,7 @@ public class FitnessUtil {
      */
     public FitnessUtil(GoogleSignInAccount account) {
         this.account = account;
+        Log.d(TAG, "FitnessUtil:success:account=" + account.getId());
     }
 
     /**
@@ -45,26 +45,37 @@ public class FitnessUtil {
      * phone being used.
      */
     public void readData() {
-        Fitness.getHistoryClient(Stride.getContext(), account)
-                .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
-                .addOnSuccessListener(
-                        new OnSuccessListener<DataSet>() {
-                            @Override
-                            public void onSuccess(DataSet dataSet) {
-                                Integer total =
-                                        dataSet.isEmpty()
-                                                ? 0
-                                                : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
-                                Log.d(TAG, "readData:successful : value=" + total);
-                                G.activePlayer.updateSteps(total);
-                            }}
-                        )
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG, "readData:error", e);
-                            }}
-                        );
+        try {
+            Fitness.getHistoryClient(Stride.getContext(), account)
+                    .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
+
+                    // Add a new OnSuccessListener to deal with updating the current
+                    // Players steps when the application reads new data from the Fitness api.
+                    .addOnSuccessListener(new OnSuccessListener<DataSet>() {
+                                @Override
+                                public void onSuccess(DataSet dataSet) {
+                                    Integer total =
+                                            dataSet.isEmpty()
+                                                    ? 0
+                                                    : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
+                                    Log.d(TAG, "readData:onSuccess:value=" + total);
+                                    G.activePlayer.updateSteps(total);
+                                }
+                            })
+
+                    // Add a new OnFailureListener to dea, with any unexpected failures while
+                    // attempting to read data from the Fitness api.
+                    .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e(TAG, "readData:onFailure:error", e);
+                                }
+                            });
+
+        // Catch exception case for issues with the Fitness object
+        // when attempting to getHistoryClient.
+        } catch (Exception e) {
+            Log.e(TAG, "readData:error", e);
+        }
     }
 }

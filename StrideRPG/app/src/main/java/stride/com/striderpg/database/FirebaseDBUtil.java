@@ -1,9 +1,12 @@
 package stride.com.striderpg.database;
 
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -11,6 +14,11 @@ import stride.com.striderpg.rpg.models.Player.Player;
  * or vice versa, application to the FirebaseDatabase.
  */
 public class FirebaseDBUtil {
+
+    /**
+     * FirebaseDBUtil Logging tag.
+     */
+    private static final String TAG = "FirebaseDBUtil";
 
     /**
      * Globally available private DatabaseReference used to interact with the
@@ -31,8 +39,13 @@ public class FirebaseDBUtil {
      * that has been changed in this Player since the last push will be updated.
      */
     public void pushPlayer(Player player) {
-        database.child(DBKeys.USERS_KEY)
-                .child(player.getUniqueId())
-                .setValue(player);
+        try {
+            database.child(DBKeys.USERS_KEY)
+                    .child(player.getUniqueId())
+                    .setValue(player);
+            Log.d(TAG, String.format(G.locale, "pushPlayer:success, Player: %s", player.toString()));
+        } catch (Exception e) {
+            Log.e(TAG, "pushPlayer:error", e);
+        }
     }
 }
