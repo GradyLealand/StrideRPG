@@ -57,6 +57,11 @@ public class Player {
     private Integer steps;
 
     /**
+     * Players history and log.
+     */
+    private History history;
+
+    /**
      * Reference to this players stats object.
      */
     private Stats stats;
@@ -89,6 +94,7 @@ public class Player {
         this.experience = 200;
         this.steps = 0;
 
+        this.history = new History();
         this.stats = new Stats();
         this.skills = new Skills(Constants.PLAYER_DEFAULT_VITALITY, Constants.PLAYER_DEFAULT_STRENGTH, Constants.PLAYER_DEFAULT_SPEED);
         this.equipment = ItemGenerator.generateDefaultInventory(this);
@@ -101,9 +107,13 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "level=" + level +
+                "uniqueId='" + uniqueId + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
+                ", history=" + history +
                 ", stats=" + stats +
                 ", skills=" + skills +
                 ", equipment=" + equipment +
@@ -213,6 +223,14 @@ public class Player {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 
     public Stats getStats() {

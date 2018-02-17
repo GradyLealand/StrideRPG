@@ -45,7 +45,7 @@ public final class Constants {
     /**
      * Constant for generating SimpleDateFormats throughout the application.
      */
-    public static final String ACTIVITY_TIMESTAMP_FORMAT = "yyyy-mm-dd-HH-mm-ss";
+    public static final String ACTIVITY_TIMESTAMP_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
     /**
     * Constant to calculate experience player gains from steps by dividing the current

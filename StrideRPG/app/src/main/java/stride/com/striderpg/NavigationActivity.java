@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.PushTimer;
+import stride.com.striderpg.rpg.Generators.ActivityGenerator;
+import stride.com.striderpg.rpg.Generators.ItemGenerator;
+import stride.com.striderpg.rpg.models.Activity.Activity;
+import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel

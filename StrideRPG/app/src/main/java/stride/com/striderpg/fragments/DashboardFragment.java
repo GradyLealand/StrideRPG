@@ -58,10 +58,11 @@ public class DashboardFragment extends Fragment {
         stepsText = getView().findViewById(R.id.stepsText);
         enemiesText = getView().findViewById(R.id.enemiesText);
 
+        playerUsernameText.setText(G.activePlayer.getUsername());
         stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
         levelText.setText(G.activePlayer.getLevel().toString());
-      
         enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
+
         updateLevelProgressBar(G.activePlayer.getExperience());
 
         // Add a new PropertyChangeListener to the active Player object for handling player property changes.
@@ -75,7 +76,7 @@ public class DashboardFragment extends Fragment {
                     case "username":
                         break;
                     case "level":
-                        levelText.setText(G.activePlayer.getLevel().toString());
+                        levelText.setText((int)propertyChangeEvent.getNewValue());
                         break;
                     case "steps":
                         stepsText.setText(addCommasToInteger((int)propertyChangeEvent.getNewValue()));
