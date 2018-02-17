@@ -36,6 +36,7 @@ import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fit.FitnessUtil;
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.models.Player.History;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -261,6 +262,11 @@ public class AuthActivity extends AppCompatActivity {
                     if (dataSnapshot.getValue() != null) {
                         authTask.setText(R.string.auth_load);
                         G.activePlayer = dataSnapshot.getValue(Player.class);
+
+                        // Check for an empty Player log.
+                        if (G.activePlayer.getHistory() == null) {
+                            G.activePlayer.setHistory(new History());
+                        }
                     } else {
                         authTask.setText(R.string.auth_gen_new);
                         G.activePlayer = new Player(mAuth.getCurrentUser());

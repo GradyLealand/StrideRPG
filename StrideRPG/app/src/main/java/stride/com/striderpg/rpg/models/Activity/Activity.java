@@ -1,8 +1,6 @@
 package stride.com.striderpg.rpg.models.Activity;
 
 
-import android.graphics.drawable.Drawable;
-
 import stride.com.striderpg.rpg.Enums;
 
 public class Activity {
@@ -26,7 +24,7 @@ public class Activity {
     /**
      * Drawable icon to display this Activities specific icon.
      */
-    private Drawable activityIcon;
+    private Integer activityIconId;
 
     /**
      * Default constructor required for calls to
@@ -39,14 +37,14 @@ public class Activity {
      * @param timestamp Activity timestamp.
      * @param activityType ActivityType enum.
      * @param description Activity description.
-     * @param activityIcon Drawable activity icon.
+     * @param activityIconId Drawable activity icon id.
      */
     public Activity(String timestamp, Enums.ActivityType activityType, String description,
-                    Drawable activityIcon) {
+                    Integer activityIconId) {
         this.timestamp = timestamp;
         this.activityType = activityType;
         this.description = description;
-        this.activityIcon = activityIcon;
+        this.activityIconId = activityIconId;
     }
 
     /**
@@ -59,7 +57,7 @@ public class Activity {
                 "timestamp='" + timestamp + '\'' +
                 ", activityType=" + activityType +
                 ", description='" + description + '\'' +
-                ", activityIcon=" + activityIcon +
+                ", activityIconId=" + activityIconId +
                 '}';
     }
 
@@ -75,7 +73,7 @@ public class Activity {
         return description;
     }
 
-    public Drawable getActivityIcon() {
-        return activityIcon;
+    public Integer getActivityIconId() {
+        return activityIconId;
     }
 }

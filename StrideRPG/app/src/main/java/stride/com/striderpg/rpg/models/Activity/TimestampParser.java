@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import stride.com.striderpg.rpg.Constants;
+
 /**
  * Activity helper class to parse and convert Activity timestamp to and from Date objects
  * to determine how old an Activity is to deal with sorting and cleaning the HashMap.
@@ -16,7 +18,7 @@ public class TimestampParser {
      * Retrieve the current Date object minus 12 hours for cleaning up a Players History log.
      * @return Date() object - 12 hours.
      */
-    public Date getCurrentTimeMinusTwelveHours() {
+    public static Date getCurrentTimeMinusTwelveHours() {
         Calendar calender = Calendar.getInstance();
         calender.setTime(new Date());
         calender.add(Calendar.HOUR_OF_DAY, -12);
@@ -29,8 +31,8 @@ public class TimestampParser {
      * @param timestamp String being converted into a Date.
      * @return new Date object from timestamp.
      */
-    public Date parseActivityTimestamp(String timestamp) {
-        SimpleDateFormat format = new SimpleDateFormat();
+    public static Date parseActivityTimestamp(String timestamp) {
+        SimpleDateFormat format = new SimpleDateFormat(Constants.ACTIVITY_TIMESTAMP_FORMAT);
         Date timestampAsDate = null;
 
         try {
@@ -38,7 +40,26 @@ public class TimestampParser {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return timestampAsDate;
+    }
+
+    /**
+     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT.
+     * @return String current Date timestamp.
+     */
+    public static String makeTimestamp() {
+        SimpleDateFormat format = new SimpleDateFormat(Constants.ACTIVITY_TIMESTAMP_FORMAT);
+        return format.format(new Date());
+    }
+
+    /**
+     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT.
+     * @return String current Date timestamp.
+     */
+    public static String make12HourOldTimestamp() {
+        SimpleDateFormat format = new SimpleDateFormat(Constants.ACTIVITY_TIMESTAMP_FORMAT);
+        return format.format(getCurrentTimeMinusTwelveHours());
     }
 
 

@@ -19,7 +19,7 @@ public class History {
      * HashMap to store a Players Encounters that are generated while progressing
      * through the game.
      */
-    private HashMap<String, Activity> log;
+    private HashMap<String, Activity> log = new HashMap<>();
 
     /**
      * Default constructor required for calls to
@@ -51,18 +51,15 @@ public class History {
      * the current timestamp.
      */
     public void cleanHistory() {
-        // Create instance of TimestampParser class for dealing with Timestamp strings and Dates.
-        TimestampParser parser = new TimestampParser();
-
         // Create a Date for the current time - 12 hours.
-        Date twelveHoursAgo =  parser.getCurrentTimeMinusTwelveHours();
+        Date twelveHoursAgo =  TimestampParser.getCurrentTimeMinusTwelveHours();
 
         // Create an iterator and begin iterating through Players current log to search
         // for any entries older than 12 hours.
         Iterator it = log.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            Date keyTimestamp = parser.parseActivityTimestamp(pair.getKey().toString());
+            Date keyTimestamp = TimestampParser.parseActivityTimestamp(pair.getKey().toString());
             if (keyTimestamp.before(twelveHoursAgo)) {
                 it.remove();
             }

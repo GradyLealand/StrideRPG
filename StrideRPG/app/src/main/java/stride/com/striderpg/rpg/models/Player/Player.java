@@ -57,6 +57,11 @@ public class Player {
     private Integer steps;
 
     /**
+     * Players history and log.
+     */
+    private History history;
+
+    /**
      * Reference to this players stats object.
      */
     private Stats stats;
@@ -89,6 +94,7 @@ public class Player {
         this.experience = 0;
         this.steps = 0;
 
+        this.history = new History();
         this.stats = new Stats();
         this.skills = new Skills(Constants.PLAYER_DEFAULT_VITALITY, Constants.PLAYER_DEFAULT_STRENGTH, Constants.PLAYER_DEFAULT_SPEED);
         this.equipment = ItemGenerator.generateDefaultInventory(this);
@@ -101,9 +107,13 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "level=" + level +
+                "uniqueId='" + uniqueId + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
+                ", history=" + history +
                 ", stats=" + stats +
                 ", skills=" + skills +
                 ", equipment=" + equipment +
@@ -172,6 +182,7 @@ public class Player {
     public Integer getLevel() {
         return level;
     }
+
     public void setLevel(Integer level) {
         if (!Objects.equals(this.level, level))
             changes.firePropertyChange(DBKeys.LEVEL_KEY, this.level, level);
@@ -181,6 +192,7 @@ public class Player {
     public Integer getExperience() {
         return experience;
     }
+
     public void setExperience(Integer experience) {
         if (!Objects.equals(this.experience, experience))
             changes.firePropertyChange(DBKeys.EXPERIENCE_KEY, this.experience, experience);
@@ -190,10 +202,19 @@ public class Player {
     public Integer getSteps() {
         return steps;
     }
+
     public void setSteps(Integer steps) {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 
     public Stats getStats() {
@@ -207,6 +228,7 @@ public class Player {
     public Equipment getEquipment() {
         return equipment;
     }
+
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
     }

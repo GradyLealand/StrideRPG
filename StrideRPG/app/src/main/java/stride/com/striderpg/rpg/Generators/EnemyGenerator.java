@@ -18,12 +18,12 @@ public class EnemyGenerator {
     /**
      * Random instance available to the EnemyGenerator class for creating new enemies.
      */
-    private Random r = new Random();
+    private static Random r = new Random();
 
     /**
      * String array for choosing a random adjective for a new Enemy.
      */
-    private final String[] enemyAdjectives = { "Agile", "Ever-Watchful", "Dirty", "Tricky", "Vile",
+    private static final String[] enemyAdjectives = { "Agile", "Ever-Watchful", "Dirty", "Tricky", "Vile",
             "Profane", "Unjust", "Unfair", "Unkind", "Power-mad", "Irreverent", "Self-Centered" };
 
     /**
@@ -31,7 +31,7 @@ public class EnemyGenerator {
      * @param p Player used to determine enemy properties.
      * @return Newly generated Enemy object with random properties.
      */
-    public Enemy generate(Player p) {
+    public static Enemy generate(Player p) {
         Enums.EnemyType enemyType = Enums.random(Enums.EnemyType.class);
 
         int health = calculateEnemyHealth(p);
@@ -50,7 +50,7 @@ public class EnemyGenerator {
      * @param p activePlayer object.
      * @return Enemy experience reward.
      */
-    private int calculateEnemyExp(Player p) {
+    private static int calculateEnemyExp(Player p) {
         return p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER + r.nextInt(50);
     }
 
@@ -59,7 +59,7 @@ public class EnemyGenerator {
      * @param enemyType Type of Enemy being generated.
      * @return Enemy icon integer id.
      */
-    private int parseIcon(Enums.EnemyType enemyType) {
+    private static int parseIcon(Enums.EnemyType enemyType) {
         int iconId = 0;
         try {
             iconId = R.drawable.class.getField(enemyType.getName().toLowerCase()).getInt(null);
@@ -74,7 +74,7 @@ public class EnemyGenerator {
      * @param enemyType Type of Enemy being generated.
      * @return Enemy name.
      */
-    private String parseName(Enums.EnemyType enemyType) {
+    private static String parseName(Enums.EnemyType enemyType) {
         return enemyAdjectives[r.nextInt(enemyAdjectives.length)] + " " + enemyType.getName();
     }
 
@@ -83,7 +83,7 @@ public class EnemyGenerator {
      * @param p Player object for determining Enemies health.
      * @return New Enemy health.
      */
-    private int calculateEnemyHealth(Player p) {
+    private static int calculateEnemyHealth(Player p) {
         return (p.getLevel() * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
     }
 
@@ -92,7 +92,7 @@ public class EnemyGenerator {
      * @param p Player object for determining Enemies minimum damage.
      * @return New Enemy minimum damage.
      */
-    private int calculateEnemyMinDamage(Player p) {
+    private static int calculateEnemyMinDamage(Player p) {
         return (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) / 2;
     }
 
@@ -101,7 +101,7 @@ public class EnemyGenerator {
      * @param p Player object for determining Enemies maximum damage.
      * @return New Enemy maximum damage.
      */
-    private int calculateEnemyMaxDamage(Player p) {
+    private static int calculateEnemyMaxDamage(Player p) {
         return (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) * 2;
     }
 }
