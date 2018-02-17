@@ -60,12 +60,9 @@ public class DashboardFragment extends Fragment {
 
         stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
         levelText.setText(G.activePlayer.getLevel().toString());
-        enemiesText.setText(addCommasToInteger(
-                G.activePlayer.getStats().getEnemiesDefeated())
-        );
-
-        updateLevelProgressBar();
-        parseExpAmount();
+      
+        enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
+        updateLevelProgressBar(G.activePlayer.getExperience());
 
         // Add a new PropertyChangeListener to the active Player object for handling player property changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
@@ -73,7 +70,7 @@ public class DashboardFragment extends Fragment {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 switch (propertyChangeEvent.getPropertyName()) {
                     case "experience":
-                        updateLevelProgressBar();
+                        updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
                         break;
                     case "username":
                         break;
@@ -90,6 +87,13 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    private void updateLevelProgressBar(Integer amount) {
+        playerLevelProgressBar.setMax(LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel()));
+        playerLevelProgressBar.setProgress(amount);
+
+        playerExpCount.setText(parseExpAmount(amount));
+    }
+
     /**
      * Format a number into a String with the appropriate commas.
      * @param number Number to format.
@@ -103,19 +107,7 @@ public class DashboardFragment extends Fragment {
      * Parse a String representing the users currentExp/expToLevel.
      * @return  Helpful String to show user exp/exp needed.
      */
-    private String parseExpAmount() {
-        return G.activePlayer.getExperience() + "/" + LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
-    }
-
-    /**
-     * Update the Level ProgressBar with users current exp and the exp needed to level up.
-     */
-    private void updateLevelProgressBar() {
-        Integer expNeeded = LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
-
-        playerLevelProgressBar.setMax(expNeeded);
-        playerLevelProgressBar.setProgress(G.activePlayer.getExperience());
-
-        playerExpCount.setText(parseExpAmount());
+    private String parseExpAmount(Integer exp) {
+        return exp + " / " + LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
     }
 }

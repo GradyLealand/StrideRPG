@@ -35,4 +35,5 @@ public class LevelGenerator {
     public static Integer experienceRemaining(Integer currentLevel, Integer currentExp) {
         return experienceToNextLevel(currentLevel) - currentExp;
     }
+
 }
