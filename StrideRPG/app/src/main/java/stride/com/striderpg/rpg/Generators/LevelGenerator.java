@@ -36,8 +36,4 @@ public class LevelGenerator {
         return experienceToNextLevel(currentLevel) - currentExp;
     }
 
-    public static Integer experienceFromSteps(Integer currentSteps)
-    {
-        return currentSteps / 10;
-    }
 }

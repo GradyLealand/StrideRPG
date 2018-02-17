@@ -144,21 +144,17 @@ public class Player {
     public void updateSteps(Integer total) {
         if (G.lastStepCount == null) {
             G.lastStepCount = total;
+
         }
         else {
             this.setSteps(this.getSteps() + (total - G.lastStepCount));
+            this.setExperience(
+                    this.getExperience() +
+                            (total - G.lastStepCount) / Constants.PLAYER_EXPERIENCE_MODIFIER);
             G.lastStepCount = total;
         }
     }
 
-    /**
-     * Calcualte and update a users experience based on the amount of
-     * total steps since account creation
-     */
-    public void updateExperience()
-    {
-        G.activePlayer.setExperience(LevelGenerator.experienceFromSteps(G.activePlayer.getSteps()));
-    }
 
     public String getUniqueId() {
         return uniqueId;

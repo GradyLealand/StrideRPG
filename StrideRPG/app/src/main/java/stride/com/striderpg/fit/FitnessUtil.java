@@ -57,7 +57,6 @@ public class FitnessUtil {
                                                 : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
                                 Log.d(TAG, "readData:successful : value=" + total);
                                 G.activePlayer.updateSteps(total);
-                                G.activePlayer.updateExperience();
                             }}
                         )
                 .addOnFailureListener(
