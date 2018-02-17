@@ -86,7 +86,7 @@ public class Player {
         this.username = user.getDisplayName();
         this.email = user.getEmail();
         this.level = 1;
-        this.experience = 0;
+        this.experience = 200;
         this.steps = 0;
 
         this.stats = new Stats();
@@ -152,11 +152,15 @@ public class Player {
             this.setExperience(
                     this.getExperience() +
                             (total - G.lastStepCount) / Constants.PLAYER_EXPERIENCE_MODIFIER);
-            if(canLevelUp(this))
-            {
-                this.levelUp();
+            if(total >= 0){
+                if(canLevelUp(this))
+                {
+                    this.levelUp();
+                }
+
+                G.lastStepCount = total;
             }
-            G.lastStepCount = total;
+
         }
     }
 
