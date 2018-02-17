@@ -137,4 +137,13 @@ public class Enums {
         ENEMIES_DEFEATED,
         STEPS
     }
+
+    /**
+     * Enumeration ActivityType to hold the different possible encounters that
+     * a Player can generate whenever a new encounter is being generated.
+     */
+    public enum ActivityType {
+        ENEMY,
+        LOOT,
+    }
 }

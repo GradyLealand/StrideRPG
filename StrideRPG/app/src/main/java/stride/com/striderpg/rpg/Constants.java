@@ -43,7 +43,13 @@ public final class Constants {
     public static final int ENEMY_EXPERIENCE_MODIFIER = 10;
 
     /**
+     * Cosntant for generating SimpleDateFormats throughout the application.
+     */
+    public static final String ACTIVITY_TIMESTAMP_FORMAT = "yyyy-mm-dd-HH-mm-ss";
+
+     /**
      * Constant to calculate experience player gains from steps
      */
     public static final int PLAYER_EXPERIENCE_MODIFIER = 10;
+
 }
