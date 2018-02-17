@@ -36,7 +36,6 @@ public class PushTimer {
         @Override
         public void run() {
             db.pushPlayer(G.activePlayer);
-
             try {
                 G.fitnessUtil.readData();
             } catch (Exception e) {
