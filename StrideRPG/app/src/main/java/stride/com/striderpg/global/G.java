@@ -1,6 +1,8 @@
 package stride.com.striderpg.global;
 
 
+import java.util.Locale;
+
 import stride.com.striderpg.fit.FitnessUtil;
 import stride.com.striderpg.rpg.models.Player.Player;
 
@@ -28,4 +30,10 @@ public final class G {
      * in the Player class.
      */
     public static Integer lastStepCount = null;
+
+    /**
+     * Get the default Locale on instantiation for parsing and formatting numbers
+     * based on a Users location and standards in region.
+     */
+    public static Locale locale = Locale.getDefault();
 }

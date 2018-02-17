@@ -16,6 +16,11 @@ import stride.com.striderpg.R;
 public class BestiaryFragment extends Fragment {
 
     /**
+     * BestiaryFragment Logging tag.
+     */
+    private static final String TAG = "BestiaryFragment";
+
+    /**
      * Required empty public constructor function.
      */
     public BestiaryFragment() { }

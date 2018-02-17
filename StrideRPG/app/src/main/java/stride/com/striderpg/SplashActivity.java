@@ -1,13 +1,17 @@
 package stride.com.striderpg;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.fitness.FitnessOptions;
 import com.google.android.gms.fitness.data.DataType;
+
+import stride.com.striderpg.global.G;
 
 /**
  * SplashActivity used to request permissions from the User.
@@ -70,11 +74,15 @@ public class SplashActivity extends AppCompatActivity {
                                     int resultCode,
                                     Intent data) {
 
+        // Check if permissions have been granted by the user.
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GOOGLE_FITNESS_PERMISSIONS_REQUEST) {
+                Log.d(TAG, String.format(G.locale, "onActivityResult:RESULT_OK:%d", requestCode));
                 goToAuth();
             }
         } else {
+            // Exit application if user does not allow Google Permissions.
+            // TODO: Give user explanation on why permissions are required, give choice again.
             moveTaskToBack(true);
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
@@ -82,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
-     * Send the user to the Authentication activity.
+     * Send the user to the Authentication activity and finish the SplashActivity.
      */
     private void goToAuth() {
         startActivity(new Intent(SplashActivity.this, AuthActivity.class));

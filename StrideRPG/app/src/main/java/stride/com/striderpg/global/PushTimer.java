@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import stride.com.striderpg.database.FirebaseDBUtil;
+import stride.com.striderpg.rpg.Constants;
 
 /**
  * Class meant to control the Concurrent timer that will Asynchriously update the FirebaseDatabase
@@ -25,30 +26,70 @@ public class PushTimer {
     private FirebaseDBUtil db = new FirebaseDBUtil();
 
     /**
-     * Timer to control the timerTask and it's fixed rate execution.
+     * Timer to control the databasePusher and it's execution.
      */
-    private Timer timer = new Timer();
+    private Timer databasePusherTimer = new Timer();
 
     /**
-     * TimerTask initialized with a run() method that executes every x seconds.
+     * Timer to control the fitnessPusher and it's rate of execution.
      */
-    private TimerTask timerTask = new TimerTask() {
+    private Timer fitnessPusherTimer = new Timer();
+
+    /**
+     * TimerTask for pushing the active player directly to the database.
+     */
+    private TimerTask databasePusher = new TimerTask() {
         @Override
         public void run() {
-            db.pushPlayer(G.activePlayer);
             try {
-                G.fitnessUtil.readData();
+                db.pushPlayer(G.activePlayer);
+                Log.d(TAG, "pushPlayer:success");
             } catch (Exception e) {
-                Log.e(TAG, "timerTask.run.readData():error", e);
+                Log.e(TAG, "databasePusher:pushPlayer:error", e);
             }
         }
     };
 
     /**
-     * Function to schedule the TimerTask at a fixed rate.
+     * TimerTask for polling the fitnessUtil class for current steps information.
      */
-    public void start() {
-        timer.scheduleAtFixedRate(timerTask, 0, 10000);
+    private TimerTask fitnessPusher = new TimerTask() {
+        @Override
+        public void run() {
+            try {
+                G.fitnessUtil.readData();
+                Log.d(TAG, "readData:success");
+            } catch (Exception e) {
+                Log.e(TAG, "fitnessPusher:readData:error", e);
+            }
+        }
+    };
+
+    /**
+     * Begin the execution of both TimerTasks.
+     */
+    public void startTimers() {
+        startDatabasePusher();
+        startFitnessPusher();
+    }
+
+    /**
+     * Schedule the databasePusher TimerTask at a fixed rate.
+     */
+    private void startDatabasePusher() {
+        databasePusherTimer.scheduleAtFixedRate(
+                databasePusher,
+                0,
+                Constants.DATABASE_PUSH_RATE);
+    }
+
+    /**
+     * Schedule the fitnessPusher TimerTask at a fixed rate.
+     */
+    private void startFitnessPusher() { fitnessPusherTimer.scheduleAtFixedRate(fitnessPusher,
+            0,
+            Constants.FITNESS_READ_RATE);
+
     }
 }
 

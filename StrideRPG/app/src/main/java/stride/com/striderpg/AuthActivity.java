@@ -1,6 +1,6 @@
 package stride.com.striderpg;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -66,9 +65,19 @@ public class AuthActivity extends AppCompatActivity {
      */
     private GoogleSignInClient mGoogleSignInClient;
 
-    // GUI elements instanced here globally.
+    /**
+     * Application Logo/Icon ImageView.
+     */
     private ImageView logoImageView;
+
+    /**
+     * Current task in authentication activity TextView.
+     */
     private TextView authTask;
+
+    /**
+     * ProgressBar shown while tasks are taking place.
+     */
     private ProgressBar authProgressBar;
 
     /**
@@ -129,7 +138,7 @@ public class AuthActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In has failed, throw a null into the checkUser method.
-                Log.e(TAG, "Google Sign-In has failed:", e);
+                Log.e(TAG, "googleSignIn:error:", e);
                 checkUser(null);
             }
         }
@@ -148,12 +157,12 @@ public class AuthActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Log.i(TAG, "subscribe:successful");
+                                    Log.d(TAG, "subscribe:successful");
                                     setupFitness(
                                             GoogleSignIn.getLastSignedInAccount(getApplicationContext())
                                     );
                                 } else {
-                                    Log.w(TAG, "subscribe:error", task.getException());
+                                    Log.e(TAG, "subscribe:error", task.getException());
                                 }
                             }
                         }
@@ -167,6 +176,8 @@ public class AuthActivity extends AppCompatActivity {
      * @param account GoogleSignInAccount.
      */
     public void setupFitness(GoogleSignInAccount account) {
+        // Create the global FitnessUtil instance for querying the Fitness api
+        // for the current users step count.
         G.fitnessUtil = new FitnessUtil(account);
     }
 
@@ -265,12 +276,15 @@ public class AuthActivity extends AppCompatActivity {
 
                         // Check for an empty Player log.
                         if (G.activePlayer.getHistory() == null) {
+                            // Build new empty History for Player.
                             G.activePlayer.setHistory(new History());
                         }
                     } else {
                         authTask.setText(R.string.auth_gen_new);
                         G.activePlayer = new Player(mAuth.getCurrentUser());
                         FirebaseDBUtil db = new FirebaseDBUtil();
+
+                        // New Player for user created, push directly to database.
                         db.pushPlayer(G.activePlayer);
                     }
                     authProgressBar.setVisibility(View.INVISIBLE);
@@ -278,9 +292,14 @@ public class AuthActivity extends AppCompatActivity {
                     finish();
                 }
                 @Override
-                public void onCancelled(DatabaseError databaseError) { }
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(TAG, "checkUser:onCancelled:error:", databaseError.toException());
+                }
             });
+
+        // If user is null, attempt to sign the user in again through Google.
         } else {
+            // TODO: Add more functionality to Auth Activity for choosing to log into Google account.
             signIn();
         }
     }

@@ -16,6 +16,11 @@ import stride.com.striderpg.R;
 public class QuestsFragment extends Fragment {
 
     /**
+     * QuestsFragment Logging tag.
+     */
+    private static final String TAG = "QuestsFragment";
+
+    /**
      * Required empty public constructor function.
      */
     public QuestsFragment() { }

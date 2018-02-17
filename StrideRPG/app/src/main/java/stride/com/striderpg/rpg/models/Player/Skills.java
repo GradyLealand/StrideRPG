@@ -19,21 +19,6 @@ public class Skills {
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
-     * Simple readonly tag to represent the Vitality skill as an abbreviation.
-     */
-    public static final String VIT_TAG = "VIT";
-
-    /**
-     * Simple readonly tag to represent the Strength skill as an abbreviation.
-     */
-    public static final String STR_TAG = "STR";
-
-    /**
-     * Simple readonly tag to represent the Speed skill as an abbreviation.
-     */
-    public static final String SPD_TAG = "SPD";
-
-    /**
      * Players current vitality skill.
      */
     private Integer vitality;
