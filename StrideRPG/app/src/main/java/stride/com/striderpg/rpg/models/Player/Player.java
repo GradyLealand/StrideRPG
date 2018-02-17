@@ -121,21 +121,21 @@ public class Player {
     /**
      * Determines if a Player can level up or not by comparing their experience with the
      * experience required to reach their next level.
-     * @param p Player object being checked.
      * @return Boolean for if Player should be levelled up.
      */
-    public static boolean canLevelUp(Player p) {
-        return p.getExperience() > LevelGenerator.experienceToNextLevel(p.getLevel());
+    public boolean canLevelUp() {
+        return this.getExperience() > LevelGenerator.experienceToNextLevel(this.getLevel());
     }
 
     /**
      * Level a Player up by incrementing their level property by one. Uses the public level
-     * property setter so a property change event is fired.
+     * property setter so a property change event is fired. A Players exp is also set on a level up.
      */
     public void levelUp() {
-        this.experience = this.experience - LevelGenerator.experienceToNextLevel(this.getLevel());
-        this.setLevel(level + 1);
-
+        // Set users experience to the proper amount so exp is carried over on level up.
+        this.setExperience(this.getExperience() -
+                LevelGenerator.experienceToNextLevel(this.getLevel()));
+        this.setLevel(this.getLevel() + 1);
     }
 
     /**
@@ -146,21 +146,26 @@ public class Player {
     public void updateSteps(Integer total) {
         if (G.lastStepCount == null) {
             G.lastStepCount = total;
-        }
-        else {
-            this.setSteps(this.getSteps() + (total - G.lastStepCount));
-            this.setExperience(
-                    this.getExperience() +
-                            (total - G.lastStepCount) / Constants.PLAYER_EXPERIENCE_MODIFIER);
-            if(total >= 0){
-                if(canLevelUp(this))
-                {
+        } else {
+            if (total >= 0) {
+                // Increment user steps by new steps calculated.
+                this.setSteps(this.getSteps() + (total - G.lastStepCount));
+
+                // Increment users experience by new steps calculated divided by
+                // the experience step modifier.
+                this.setExperience(this.getExperience() +
+                        (total - G.lastStepCount) /
+                                Constants.PLAYER_STEPS_EXP_MODIFIER);
+
+                // Check if a Player can level up after step and exp changes have been made.
+                if (this.canLevelUp()) {
                     this.levelUp();
                 }
 
+                // Finally, set the last step count to the total from our readData() call
+                // in the FitnessUtil.
                 G.lastStepCount = total;
             }
-
         }
     }
 
@@ -171,6 +176,7 @@ public class Player {
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -182,6 +188,7 @@ public class Player {
     public Integer getLevel() {
         return level;
     }
+
     public void setLevel(Integer level) {
         if (!Objects.equals(this.level, level))
             changes.firePropertyChange(DBKeys.LEVEL_KEY, this.level, level);
@@ -191,6 +198,7 @@ public class Player {
     public Integer getExperience() {
         return experience;
     }
+
     public void setExperience(Integer experience) {
         if (!Objects.equals(this.experience, experience))
             changes.firePropertyChange(DBKeys.EXPERIENCE_KEY, this.experience, experience);
@@ -200,6 +208,7 @@ public class Player {
     public Integer getSteps() {
         return steps;
     }
+
     public void setSteps(Integer steps) {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
@@ -217,6 +226,7 @@ public class Player {
     public Equipment getEquipment() {
         return equipment;
     }
+
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
     }
