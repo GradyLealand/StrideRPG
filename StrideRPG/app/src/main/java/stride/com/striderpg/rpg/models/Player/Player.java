@@ -12,6 +12,7 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.generators.ItemGenerator;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
+import stride.com.striderpg.rpg.models.Bestiary.Bestiary;
 import stride.com.striderpg.rpg.utils.TimestampParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
@@ -64,6 +65,11 @@ public class Player {
     private String lastSignedIn;
 
     /**
+     * Players Bestiary information.
+     */
+    private Bestiary bestiary;
+
+    /**
      * Players history and log.
      */
     private History history;
@@ -102,6 +108,7 @@ public class Player {
         this.steps = 0;
         this.lastSignedIn = TimestampParser.makeTimestamp();
 
+        this.bestiary = new Bestiary();
         this.history = new History();
         this.stats = new Stats();
         this.skills = new Skills(Constants.PLAYER_DEFAULT_VITALITY, Constants.PLAYER_DEFAULT_STRENGTH, Constants.PLAYER_DEFAULT_SPEED);
@@ -204,8 +211,12 @@ public class Player {
             this.levelUp();
         }
 
-        // Increment the Players enemies defeated property.
+        // Update Players Bestiary after enemy defeat.
+        this.getBestiary().update(enemy.getType());
+
+        // Increment the Players Stats on enemy defeat.
         this.getStats().updateEnemiesDefeated();
+        this.getStats().updateTotalExperience(enemy.getExperienceReward());
     }
 
     public String getUniqueId() {
@@ -260,6 +271,10 @@ public class Player {
 
     public void setLastSignedIn(String lastSignedIn) {
         this.lastSignedIn = lastSignedIn;
+    }
+
+    public Bestiary getBestiary() {
+        return bestiary;
     }
 
     public History getHistory() {
