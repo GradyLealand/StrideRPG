@@ -98,7 +98,7 @@ public class Player {
         this.username = user.getDisplayName();
         this.email = user.getEmail();
         this.level = 1;
-        this.experience = 200;
+        this.experience = 0;
         this.steps = 0;
         this.lastSignedIn = TimestampParser.makeTimestamp();
 
@@ -163,7 +163,9 @@ public class Player {
      * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
-        if (G.lastStepCount == null) {
+        // Initial check for a null step count (first check on app start-up).
+        // Secondary check for total being less than lastStepCount (midnight fitness reset).
+        if (G.lastStepCount == null || total < G.lastStepCount) {
             G.lastStepCount = total;
         } else {
             if (total >= 0) {
