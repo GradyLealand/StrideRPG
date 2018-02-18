@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 
 /**
  * A History class to store a Players encounters in the game using a HashMap with a timestamp
@@ -59,7 +59,7 @@ public class History {
         Iterator it = log.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            Date keyTimestamp = TimestampParser.parseActivityTimestamp(pair.getKey().toString());
+            Date keyTimestamp = TimestampParser.parseTimestamp(pair.getKey().toString());
             if (keyTimestamp.before(twelveHoursAgo)) {
                 it.remove();
             }

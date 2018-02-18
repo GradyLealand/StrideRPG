@@ -24,7 +24,12 @@ public class Equipment {
      * Map of type String, Item to store the different Items inside
      * of a Players Equipment and use unique a String to identify them.
      */
-    private Map<String, Item> slots = new HashMap<>();
+    private HashMap<String, Item> slots = new HashMap<>();
+
+    /**
+     * Equipment total power level value, obtained by adding each slots power level together.
+     */
+    private Integer totalPowerLevel;
 
     /**
      * Default constructor required for calls to
@@ -41,6 +46,7 @@ public class Equipment {
     public String toString() {
         return "Equipment{" +
                 "slots=" + slots +
+                ", totalPowerLevel=" + totalPowerLevel +
                 '}';
     }
 
@@ -59,6 +65,22 @@ public class Equipment {
      */
     public void replaceItem(Enums.ItemType type, Item item) {
         slots.put(type.name(), item);
+        updateTotalPowerLevel();
+    }
+
+    private void updateTotalPowerLevel() {
+        this.setTotalPowerLevel(0);
+        for (Item i : this.getSlots().values()) {
+            this.setTotalPowerLevel(this.getTotalPowerLevel() + i.getPowerLevel());
+        }
+    }
+
+    /**
+     * Retrieve a specific item by ItemType from slots HashMap.
+     * @return Item.
+     */
+    public Item getItem(Enums.ItemType type) {
+        return slots.get(type.name());
     }
 
     /**
@@ -69,11 +91,15 @@ public class Equipment {
         slots.put(type.name(), null);
     }
 
-    /**
-     * Get the Equipment slots HashMap.
-     * @return slots HashMap.
-     */
-    public Map<String, Item> getSlots() {
+    public Integer getTotalPowerLevel() {
+        return totalPowerLevel;
+    }
+
+    public void setTotalPowerLevel(Integer totalPowerLevel) {
+        this.totalPowerLevel = totalPowerLevel;
+    }
+
+    public HashMap<String, Item> getSlots() {
         return slots;
     }
 }

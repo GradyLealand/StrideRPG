@@ -12,6 +12,8 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
 import stride.com.striderpg.rpg.Generators.LevelGenerator;
+import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 
 /**
@@ -57,6 +59,11 @@ public class Player {
     private Integer steps;
 
     /**
+     * The last time the user has signed in.
+     */
+    private String lastSignedIn;
+
+    /**
      * Players history and log.
      */
     private History history;
@@ -93,6 +100,7 @@ public class Player {
         this.level = 1;
         this.experience = 200;
         this.steps = 0;
+        this.lastSignedIn = TimestampParser.makeTimestamp();
 
         this.history = new History();
         this.stats = new Stats();
@@ -113,6 +121,7 @@ public class Player {
                 ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
+                ", lastSignedIn='" + lastSignedIn + '\'' +
                 ", history=" + history +
                 ", stats=" + stats +
                 ", skills=" + skills +
@@ -179,6 +188,24 @@ public class Player {
         }
     }
 
+    /**
+     * Calculate and update a users experience based on the enemy passed
+     * to the method.
+     * @param enemy Enemy being defeated.
+     */
+    public void defeatEnemy(Enemy enemy) {
+        // Increment Players current experience by the Enemies experience reward.
+        this.setExperience(this.getExperience() + enemy.getExperienceReward());
+
+        // Check if the Player can level up after defeating the Enemy.
+        if (this.canLevelUp()) {
+            this.levelUp();
+        }
+
+        // Increment the Players enemies defeated property.
+        this.getStats().updateEnemiesDefeated();
+    }
+
     public String getUniqueId() {
         return uniqueId;
     }
@@ -223,6 +250,14 @@ public class Player {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
+    }
+
+    public String getLastSignedIn() {
+        return lastSignedIn;
+    }
+
+    public void setLastSignedIn(String lastSignedIn) {
+        this.lastSignedIn = lastSignedIn;
     }
 
     public History getHistory() {

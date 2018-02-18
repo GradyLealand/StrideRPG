@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.PushTimer;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -73,6 +76,22 @@ public class NavigationActivity extends AppCompatActivity {
         // Start background Tasks for reading users current steps and pushing active Player
         // to the database, these tasks are done at a fixed rate (Constants class).
         new PushTimer().startTimers();
+    }
+
+    /**
+     * When the app is closed, ensure that the active Player is pushed to the Database.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Set the current Players last signed in date as they leave the app.
+        G.activePlayer.setLastSignedIn(TimestampParser.makeTimestamp());
+        // Create a database utility and push the active Player to the database.
+        FirebaseDBUtil db = new FirebaseDBUtil();
+        db.pushPlayer(G.activePlayer);
+
+        Log.d(TAG, "onStop:success");
     }
 
     /**

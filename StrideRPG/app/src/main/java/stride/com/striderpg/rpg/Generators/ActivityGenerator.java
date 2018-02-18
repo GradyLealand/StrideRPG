@@ -3,14 +3,13 @@ package stride.com.striderpg.rpg.Generators;
 
 import android.util.Log;
 
-import java.util.Locale;
 import java.util.Random;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 
@@ -86,15 +85,30 @@ public class ActivityGenerator {
      * @return Activity description.
      */
     private static String generateLootDescription(Item item) {
-        String desc = String.format(G.locale,
-                "You found some %s loot! %s (%s) VIT: %d STR: %d SPD: %d.",
-                item.getItemRarity().getName(),
-                item.getName(),
-                item.getItemType().getName(),
-                item.getVitalityBoost(),
-                item.getStrengthBoost(),
-                item.getSpeedBoost()
-        );
+        String desc;
+        if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
+            desc = String.format(G.locale,
+                    "You found some %s loot! %s (%s) and replaced your old equipment! Power: %d VIT: %d STR: %d SPD: %d...",
+                    item.getItemRarity().getName(),
+                    item.getName(),
+                    item.getItemType().getName(),
+                    item.getPowerLevel(),
+                    item.getVitalityBoost(),
+                    item.getStrengthBoost(),
+                    item.getSpeedBoost()
+            );
+        } else {
+            desc = String.format(G.locale,
+                    "You found some %s loot! %s (%s)! Power: %d VIT: %d STR: %d SPD: %d...",
+                    item.getItemRarity().getName(),
+                    item.getName(),
+                    item.getItemType().getName(),
+                    item.getPowerLevel(),
+                    item.getVitalityBoost(),
+                    item.getStrengthBoost(),
+                    item.getSpeedBoost()
+            );
+        }
 
         Log.d(TAG, String.format(G.locale, "generateLootDescription:success:description=%s", desc));
         return desc;

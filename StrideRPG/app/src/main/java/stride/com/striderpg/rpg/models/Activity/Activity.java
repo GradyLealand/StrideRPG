@@ -65,6 +65,10 @@ public class Activity {
         return timestamp;
     }
 
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public Enums.ActivityType getActivityType() {
         return activityType;
     }

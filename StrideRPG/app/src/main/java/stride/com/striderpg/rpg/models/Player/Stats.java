@@ -1,11 +1,7 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 
 /**
  * A Stats class to store information about a Player that's less important that core
@@ -38,9 +34,30 @@ public class Stats {
         this.registered = TimestampParser.makeTimestamp();
     }
 
+    /**
+     * Implementation of a Stats toString method to print out the properties of a Stats object.
+     * @return Properties of the Stats object.
+     */
+    @Override
+    public String toString() {
+        return "Stats{" +
+                "enemiesDefeated=" + enemiesDefeated +
+                ", itemsLooted=" + itemsLooted +
+                ", registered='" + registered + '\'' +
+                '}';
+    }
+
+    /**
+     * Increment a Stats enemies defeated property by 1.
+     */
+    public void updateEnemiesDefeated() {
+        this.setEnemiesDefeated(this.getEnemiesDefeated() + 1);
+    }
+
     public Integer getEnemiesDefeated() {
         return enemiesDefeated;
     }
+
     public void setEnemiesDefeated(Integer enemiesDefeated) {
         this.enemiesDefeated = enemiesDefeated;
     }
@@ -48,6 +65,7 @@ public class Stats {
     public Integer getItemsLooted() {
         return itemsLooted;
     }
+
     public void setItemsLooted(Integer itemsLooted) {
         this.itemsLooted = itemsLooted;
     }
