@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.utils.TimestampParser;
 
@@ -52,7 +53,7 @@ public class History {
      */
     public void cleanHistory() {
         // Create a Date for the current time - 12 hours.
-        Date twelveHoursAgo =  TimestampParser.getCurrentTimeMinusTwelveHours();
+        Date twelveHoursAgo =  TimestampParser.getCurrentTimeMinusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
 
         // Create an iterator and begin iterating through Players current log to search
         // for any entries older than 12 hours.

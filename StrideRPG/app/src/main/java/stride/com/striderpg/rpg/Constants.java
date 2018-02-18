@@ -48,6 +48,12 @@ public final class Constants {
     public static final String ACTIVITY_TIMESTAMP_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
     /**
+     * Constant for parsing Timestamps going back in time in hours to check
+     * if an Activity is old enough to be removed from the Players log.
+     */
+    public static final Integer ACTIVITY_CLEANUP_THRESHOLD_HOURS = -12;
+
+    /**
     * Constant to calculate experience player gains from steps by dividing the current
     * total by this constant, we can only allow experience from steps when a Player
     * takes more steps in a shorter period of time.

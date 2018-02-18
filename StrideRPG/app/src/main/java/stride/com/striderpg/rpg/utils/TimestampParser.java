@@ -26,15 +26,26 @@ public class TimestampParser {
      * Retrieve the current Date object minus 12 hours for cleaning up a Players History log.
      * @return Date() object - 12 hours.
      */
-    public static Date getCurrentTimeMinusTwelveHours() {
+    public static Date getCurrentTimeMinusHours(Integer hours) {
         Calendar calender = Calendar.getInstance();
         calender.setTime(new Date());
-        calender.add(Calendar.HOUR_OF_DAY, -12);
+        calender.add(Calendar.HOUR_OF_DAY, hours);
 
         Log.d(TAG, String.format(G.locale,
-                "getCurrentTimeMinusTwelveHours:success:time=%s", calender.getTime().toString())
+                "getCurrentTimeMinusHours:success:time=%s", calender.getTime().toString())
         );
         return calender.getTime();
+    }
+
+    public static Date getDateTimeMinusHours(Date date, Integer hours) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+
+        Log.d(TAG, String.format(G.locale,
+                "getDateTimeMinusHours:success:time=%s", calendar.getTime().toString())
+        );
+        return calendar.getTime();
     }
 
     /**

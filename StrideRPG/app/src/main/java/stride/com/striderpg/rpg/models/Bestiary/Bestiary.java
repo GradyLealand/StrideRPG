@@ -15,7 +15,7 @@ public class Bestiary {
      * HashMap to store each type of Enemy as the key and an Integer value for the amount of times
      * a Player has defeated this enemy type.
      */
-    private HashMap<String, Integer> enemies;
+    private HashMap<String, Integer> enemies = new HashMap<>();
 
     /**
      * Default constructor required for calls to

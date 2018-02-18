@@ -62,6 +62,13 @@ public class Stats {
     }
 
     /**
+     * Increment a Stats items looted property by 1.
+     */
+    public void updateItemsLooted() {
+        this.setItemsLooted(this.getItemsLooted() + 1);
+    }
+
+    /**
      * Increment a Stats totalExperience by a specified amount.
      * @param experience Experience to add to total experience.
      */
@@ -83,6 +90,14 @@ public class Stats {
 
     public void setItemsLooted(Integer itemsLooted) {
         this.itemsLooted = itemsLooted;
+    }
+
+    public Integer getTotalExperience() {
+        return totalExperience;
+    }
+
+    public void setTotalExperience(Integer totalExperience) {
+        this.totalExperience = totalExperience;
     }
 
     public String getRegistered() {
