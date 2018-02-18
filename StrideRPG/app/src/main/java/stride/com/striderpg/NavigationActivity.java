@@ -21,7 +21,7 @@ public class NavigationActivity extends AppCompatActivity {
     /**
      * NavigationActivity logging tag.
      */
-    public static final String TAG = "NavigationActivity";
+    private static final String TAG = "NavigationActivity";
 
     /**
      * FragmentGenerator instance to create and initialize the five fragments in game.
