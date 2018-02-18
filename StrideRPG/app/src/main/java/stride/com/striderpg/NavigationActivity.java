@@ -12,7 +12,7 @@ import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.PushTimer;
-import stride.com.striderpg.rpg.utils.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
@@ -86,7 +86,7 @@ public class NavigationActivity extends AppCompatActivity {
         super.onStop();
 
         // Set the current Players last signed in date as they leave the app.
-        G.activePlayer.setLastSignedIn(TimestampParser.makeTimestamp());
+        G.activePlayer.setLastSignedIn(TimeParser.makeTimestamp());
         // Create a database utility and push the active Player to the database.
         FirebaseDBUtil db = new FirebaseDBUtil();
         db.pushPlayer(G.activePlayer);

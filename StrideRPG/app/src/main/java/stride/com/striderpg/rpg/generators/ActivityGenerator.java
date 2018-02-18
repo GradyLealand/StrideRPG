@@ -9,7 +9,7 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.utils.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimeParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 
@@ -35,7 +35,7 @@ public class ActivityGenerator {
      */
     public static Activity generateLootActivity(Item item) {
         Activity newActivity = new Activity(
-                TimestampParser.makeTimestamp(),
+                TimeParser.makeTimestamp(),
                 Enums.ActivityType.LOOT,
                 generateLootDescription(item),
                 // TODO : Use actual icons for loot. This is placeholder.
@@ -53,7 +53,7 @@ public class ActivityGenerator {
      */
     public static Activity generateEnemyActivity(Enemy enemy) {
         Activity newActivity = new Activity(
-                TimestampParser.makeTimestamp(),
+                TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateEnemyDescription(enemy),
                 R.drawable.ic_launcher_foreground

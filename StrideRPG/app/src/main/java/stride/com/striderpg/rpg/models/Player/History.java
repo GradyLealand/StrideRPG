@@ -1,14 +1,15 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
-import java.util.Date;
+import org.joda.time.DateTime;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.utils.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
  * A History class to store a Players encounters in the game using a HashMap with a timestamp
@@ -52,16 +53,16 @@ public class History {
      * the current timestamp.
      */
     public void cleanHistory() {
-        // Create a Date for the current time - 12 hours.
-        Date twelveHoursAgo =  TimestampParser.getCurrentTimeMinusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
+        // Create a Date for the current time - hours constant.
+        DateTime twelveHoursAgo =  TimeParser.getCurrentTimeMinusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
 
         // Create an iterator and begin iterating through Players current log to search
         // for any entries older than 12 hours.
         Iterator it = log.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            Date keyTimestamp = TimestampParser.parseTimestamp(pair.getKey().toString());
-            if (keyTimestamp.before(twelveHoursAgo)) {
+            DateTime keyTimestamp = TimeParser.parseTimestamp(pair.getKey().toString());
+            if (keyTimestamp.isBefore(twelveHoursAgo)) {
                 it.remove();
             }
         }

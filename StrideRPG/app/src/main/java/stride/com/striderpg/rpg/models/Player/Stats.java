@@ -1,7 +1,7 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
-import stride.com.striderpg.rpg.utils.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
  * A Stats class to store information about a Player that's less important that core
@@ -37,7 +37,7 @@ public class Stats {
         this.enemiesDefeated = 0;
         this.itemsLooted = 0;
         this.totalExperience = 0;
-        this.registered = TimestampParser.makeTimestamp();
+        this.registered = TimeParser.makeTimestamp();
     }
 
     /**

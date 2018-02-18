@@ -1,14 +1,17 @@
 package stride.com.striderpg.rpg.generators;
 
+
 import android.util.Log;
 
-import java.util.Date;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.utils.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimeParser;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
@@ -31,14 +34,19 @@ public class OfflineGenerator {
         Log.d(TAG, "calculateOfflineActivities:begin");
 
         // Create date objects to hold the old date and the new current date.
-        Date old = TimestampParser.parseTimestamp(G.activePlayer.getLastSignedIn());
-        Date now = TimestampParser.parseTimestamp(TimestampParser.makeTimestamp());
+        DateTime old = TimeParser.parseTimestamp(G.activePlayer.getLastSignedIn());
+        DateTime now = TimeParser.parseTimestamp(TimeParser.makeTimestamp());
 
-        // Determine how many events, if any, will be generated.
-        long diff = now.getTime() - old.getTime();
-        // Get the difference in minutes.
-        long diffMinutes = (diff / 1000) / 60;
+        // Get the difference in minutes for both DateTimes.
+        long diffMinutes = TimeParser.getDifferenceInMinutes(old, now);
         Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:progress:diffMinutes=%d", diffMinutes));
+
+        // Quick check for old date being older than current date time minus constant threshold.
+        // Do this so that the actual Timestamps for these new Activities will not be removed
+        // by the History.clean() method until they are 12 hours only after they've been generated.
+        if (old.isBefore(now.minusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS))) {
+            old = now.minusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
+        }
 
         // Divide difference in minutes by the constant defined for activities offline increment.
         Integer possibleActivities = ((int)diffMinutes / Constants.OFFLINE_EVENT_INCREMENT_MINUTES);
@@ -67,36 +75,13 @@ public class OfflineGenerator {
             Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:progress:activities=%d", activities));
         }
 
+        // Loop for each activities integer. Use it to generate a new Activity for each one.
         for (int i = 0; i < activities; i++) {
             Activity activity = new Activity();
 
-            // Check if the last time a Player logged in is greater than the constant defined for
-            // cleaning up activities in the log. This will allow all new Activities generated to be
-            // within a safe range so they aren't deleted after being generated.
-            long random;
-            if (old.getTime() < TimestampParser.getDateTimeMinusHours(now, Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS).getTime()) {
-                // Generate a long time in milliseconds within a range of
-                // current time / current time minus threshold.
-                random = ThreadLocalRandom.current().nextLong(
-                        TimestampParser.getDateTimeMinusHours(now, Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS).getTime(),
-                        now.getTime()
-                );
-                Log.d(TAG, String.format(
-                        G.locale,
-                        "calculateOfflineActivities:progress:lastSignedIn is older than threshold: %d",
-                        Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS)
-                );
-            // Otherwise, the old date is less than the constant threshold
-            // and can be retrieved normally.
-            } else {
-                random = ThreadLocalRandom.current().nextLong(old.getTime(), now.getTime());
-                Log.d(TAG, String.format(
-                        G.locale,
-                        "calculateOfflineActivities:progress:lastSignedIn is newer than threshold: %d",
-                        Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS)
-                );
-            }
-            Date activityDate = new Date(random);
+            // Generate a date for this activity.
+            long random = ThreadLocalRandom.current().nextLong(old.getMillis(), now.getMillis());
+            DateTime activityDate = new DateTime(random, DateTimeZone.UTC);
 
             // Pick a random activity type and build a new activity.
             Enums.ActivityType type = Enums.random(Enums.ActivityType.class);
@@ -105,19 +90,17 @@ public class OfflineGenerator {
                     // Generate new random Item.
                     Item item = ItemGenerator.generate(G.activePlayer);
 
-                    // Update the Players Stats total items looted property.
-                    G.activePlayer.getStats().updateItemsLooted();
-
                     // Create the new Activity and set the timestamp to a random date between
-                    // old and now date.
                     activity = ActivityGenerator.generateLootActivity(item);
-                    activity.setTimestamp(TimestampParser.makeTimestamp(activityDate));
 
                     // Check if the new Item is better than the Item equipped currently
                     // on the Global activePlayer.
                     if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
                         G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
                     }
+
+                    // Update the Players Stats total items looted property.
+                    G.activePlayer.getStats().updateItemsLooted();
                     break;
                 case ENEMY:
                     // Generate new random Enemy.
@@ -126,8 +109,10 @@ public class OfflineGenerator {
                     activity = ActivityGenerator.generateEnemyActivity(enemy);
                     break;
             }
-            Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:success:activity=%s", activity));
+            activity.setTimestamp(TimeParser.makeTimestamp(activityDate));
             G.activePlayer.getHistory().addActivity(activity);
+
+            Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:success:activity=%s", activity));
         }
     }
 }

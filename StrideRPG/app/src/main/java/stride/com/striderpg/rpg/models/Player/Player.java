@@ -13,7 +13,7 @@ import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.generators.ItemGenerator;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.models.Bestiary.Bestiary;
-import stride.com.striderpg.rpg.utils.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimeParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 
@@ -106,7 +106,7 @@ public class Player {
         this.level = 1;
         this.experience = 0;
         this.steps = 0;
-        this.lastSignedIn = TimestampParser.makeTimestamp();
+        this.lastSignedIn = TimeParser.makeTimestamp();
 
         this.bestiary = new Bestiary();
         this.history = new History();

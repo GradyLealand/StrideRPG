@@ -283,6 +283,9 @@ public class AuthActivity extends AppCompatActivity {
                         // activity for this user with their last signed in property.
                         if (G.activePlayer.getLastSignedIn() != null) {
                             OfflineGenerator.calculateOfflineActivities();
+                            // Clean the returning Players History before building any
+                            // Fragments in the NavigationActivity.
+                            G.activePlayer.getHistory().cleanHistory();
                         }
                     } else {
                         authTask.setText(R.string.auth_gen_new);
