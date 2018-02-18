@@ -3,9 +3,7 @@ package stride.com.striderpg.rpg.Generators;
 import android.util.Log;
 
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
@@ -27,7 +25,7 @@ public class OfflineGenerator {
 
     /**
      * Calculate a Players offline activities by looking at their last signed in date
-     * and determining how many activities will take place for them.
+     * and determining how many activities will take place for them in that time.
      */
     public static void calculateOfflineActivities() {
         // Create date objects to hold the old date and the new current date.
@@ -49,10 +47,12 @@ public class OfflineGenerator {
             return;
         }
 
+        // Loop through possible activities property and add events if the percent
+        // is greater than the Constant defined for the offline activity chance percent.
         int activities = 0;
         for (int i = 0; i < possibleActivities; i++) {
-            double d = Math.random() * 100;
-            if (d > 50) {
+            double chance = Math.random() * 100;
+            if (chance > Constants.OFFLINE_ACTIVITY_CHANCE_PERCENT) {
                 activities++;
             }
         }
@@ -97,6 +97,7 @@ public class OfflineGenerator {
                     activity = ActivityGenerator.generateEnemyActivity(enemy);
                     break;
             }
+            Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:success:activity=%s", activity));
             G.activePlayer.getHistory().addActivity(activity);
         }
     }

@@ -62,6 +62,12 @@ public final class Constants {
     public static final int OFFLINE_EVENT_INCREMENT_MINUTES = 30;
 
     /**
+     * Constant to determine the percent chance that an activity will be generated while
+     * iterating through the possible activities property in the OfflineGenerator.
+     */
+    public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 50;
+
+    /**
      * Constant used to determine the amount of milliseconds (long seconds) in between every
      * active player database push.
      */
