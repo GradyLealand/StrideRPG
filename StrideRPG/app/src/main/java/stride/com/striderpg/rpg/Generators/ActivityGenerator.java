@@ -11,6 +11,7 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
@@ -29,8 +30,8 @@ public class ActivityGenerator {
     private static Random r = new Random();
 
     /**
-     * Generate a loot activity from using a Player and an Item that have been generated.
-     * @param item Item.
+     * Generate a loot activity from the item passed.
+     * @param item Item used to build activity description.
      * @return Activity.
      */
     public static Activity generateLootActivity(Item item) {
@@ -47,12 +48,45 @@ public class ActivityGenerator {
     }
 
     /**
+     * Generate an enemy activity from the enemy passed.
+     * @param enemy Enemy used to build activity description.
+     * @return Activity.
+     */
+    public static Activity generateEnemyActivity(Enemy enemy) {
+        Activity newActivity = new Activity(
+                TimestampParser.makeTimestamp(),
+                Enums.ActivityType.ENEMY,
+                generateEnemyDescription(enemy),
+                R.drawable.ic_launcher_foreground
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateEnemyActivity:success:activity=%s", newActivity));
+        return newActivity;
+    }
+
+    /**
+     * Generate a String to represent this Enemy Activities description.
+     * @param enemy Enemy.
+     * @return Activity description.
+     */
+    private static String generateEnemyDescription(Enemy enemy) {
+        String desc = String.format(G.locale,
+                "You encountered and defeated a %s, earning %d experience points!",
+                enemy.getName(),
+                enemy.getExperienceReward()
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateEnemyDescription:success:description=%s", desc));
+        return desc;
+    }
+
+    /**
      * Generate a String to represent this Loot Activities description.
      * @param item Item.
      * @return Activity description.
      */
     private static String generateLootDescription(Item item) {
-        String desc = String.format(Locale.CANADA,
+        String desc = String.format(G.locale,
                 "You found some %s loot! %s (%s) VIT: %d STR: %d SPD: %d.",
                 item.getItemRarity().getName(),
                 item.getName(),
