@@ -20,6 +20,11 @@ public class Stats {
     private Integer itemsLooted;
 
     /**
+     * Total amount of experience player has earned.
+     */
+    private Integer totalExperience;
+
+    /**
      * Player registration date.
      */
     private String registered;
@@ -31,6 +36,7 @@ public class Stats {
     public Stats() {
         this.enemiesDefeated = 0;
         this.itemsLooted = 0;
+        this.totalExperience = 0;
         this.registered = TimestampParser.makeTimestamp();
     }
 
@@ -43,6 +49,7 @@ public class Stats {
         return "Stats{" +
                 "enemiesDefeated=" + enemiesDefeated +
                 ", itemsLooted=" + itemsLooted +
+                ", totalExperience=" + totalExperience +
                 ", registered='" + registered + '\'' +
                 '}';
     }
@@ -52,6 +59,14 @@ public class Stats {
      */
     public void updateEnemiesDefeated() {
         this.setEnemiesDefeated(this.getEnemiesDefeated() + 1);
+    }
+
+    /**
+     * Increment a Stats totalExperience by a specified amount.
+     * @param experience Experience to add to total experience.
+     */
+    public void updateTotalExperience(Integer experience) {
+        this.totalExperience += experience;
     }
 
     public Integer getEnemiesDefeated() {
