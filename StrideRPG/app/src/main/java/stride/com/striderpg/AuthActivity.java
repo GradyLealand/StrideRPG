@@ -35,7 +35,7 @@ import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fit.FitnessUtil;
 import stride.com.striderpg.global.G;
-import stride.com.striderpg.rpg.Generators.OfflineGenerator;
+import stride.com.striderpg.rpg.generators.OfflineGenerator;
 import stride.com.striderpg.rpg.models.Player.History;
 import stride.com.striderpg.rpg.models.Player.Player;
 

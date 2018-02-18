@@ -1,4 +1,4 @@
-package stride.com.striderpg.rpg.Generators;
+package stride.com.striderpg.rpg.generators;
 
 
 import android.util.Log;
@@ -9,7 +9,7 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimestampParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 

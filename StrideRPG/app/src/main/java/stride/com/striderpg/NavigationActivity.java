@@ -12,7 +12,7 @@ import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fragments.Generator.FragmentGenerator;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.PushTimer;
-import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimestampParser;
 
 /**
  * Main Navigation Activity in the Application. This Activity is the main route for a User to travel

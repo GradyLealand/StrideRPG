@@ -1,4 +1,4 @@
-package stride.com.striderpg.rpg.Generators;
+package stride.com.striderpg.rpg.generators;
 
 
 import android.util.Log;

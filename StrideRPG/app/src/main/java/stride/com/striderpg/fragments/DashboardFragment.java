@@ -17,7 +17,7 @@ import java.text.NumberFormat;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
-import stride.com.striderpg.rpg.Generators.LevelGenerator;
+import stride.com.striderpg.rpg.generators.LevelGenerator;
 
 /**
  * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information

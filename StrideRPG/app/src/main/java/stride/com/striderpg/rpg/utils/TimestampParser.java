@@ -1,4 +1,4 @@
-package stride.com.striderpg.rpg.Util;
+package stride.com.striderpg.rpg.utils;
 
 
 import android.util.Log;

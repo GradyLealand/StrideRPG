@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimestampParser;
 
 /**
  * A History class to store a Players encounters in the game using a HashMap with a timestamp

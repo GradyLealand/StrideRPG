@@ -10,9 +10,9 @@ import java.util.Objects;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
-import stride.com.striderpg.rpg.Generators.ItemGenerator;
-import stride.com.striderpg.rpg.Generators.LevelGenerator;
-import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.generators.ItemGenerator;
+import stride.com.striderpg.rpg.generators.LevelGenerator;
+import stride.com.striderpg.rpg.utils.TimestampParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 

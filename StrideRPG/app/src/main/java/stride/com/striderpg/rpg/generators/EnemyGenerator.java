@@ -1,9 +1,8 @@
-package stride.com.striderpg.rpg.Generators;
+package stride.com.striderpg.rpg.generators;
 
 
 import android.util.Log;
 
-import java.util.Locale;
 import java.util.Random;
 
 import stride.com.striderpg.R;

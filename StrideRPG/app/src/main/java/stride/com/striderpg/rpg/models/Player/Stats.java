@@ -1,7 +1,7 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
-import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.utils.TimestampParser;
 
 /**
  * A Stats class to store information about a Player that's less important that core
