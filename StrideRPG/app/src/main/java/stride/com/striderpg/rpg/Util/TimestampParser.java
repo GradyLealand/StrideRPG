@@ -67,4 +67,18 @@ public class TimestampParser {
         Log.d(TAG, String.format(G.locale, "makeTimestamp:success:timestamp=%s", timestamp));
         return timestamp;
     }
+
+    /**
+     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT, using a Date object
+     * as the Date being converted into a Timestamp string.
+     * @param date Date being converted to Timestamp.
+     * @return String Timestamp.
+     */
+    public static String makeTimestamp(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat(Constants.ACTIVITY_TIMESTAMP_FORMAT, G.locale);
+        String timestamp = format.format(date);
+
+        Log.d(TAG, String.format(G.locale, "makeTimestamp:success:timestamp=%s", timestamp));
+        return timestamp;
+    }
 }

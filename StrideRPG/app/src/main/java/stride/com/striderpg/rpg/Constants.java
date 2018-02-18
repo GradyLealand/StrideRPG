@@ -55,6 +55,13 @@ public final class Constants {
     public static final int PLAYER_STEPS_EXP_MODIFIER = 10;
 
     /**
+     * Constant to define the time in minutes between each possible offline event.
+     * If a user is offline for 90 minutes before logging in,
+     * then 90 / OFFLINE_EVENT_INCREMENT_MINUTES = 2 possible offline activities.
+     */
+    public static final int OFFLINE_EVENT_INCREMENT_MINUTES = 30;
+
+    /**
      * Constant used to determine the amount of milliseconds (long seconds) in between every
      * active player database push.
      */

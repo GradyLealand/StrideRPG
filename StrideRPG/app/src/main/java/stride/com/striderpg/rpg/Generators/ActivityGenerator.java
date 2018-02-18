@@ -85,15 +85,30 @@ public class ActivityGenerator {
      * @return Activity description.
      */
     private static String generateLootDescription(Item item) {
-        String desc = String.format(G.locale,
-                "You found some %s loot! %s (%s) VIT: %d STR: %d SPD: %d.",
-                item.getItemRarity().getName(),
-                item.getName(),
-                item.getItemType().getName(),
-                item.getVitalityBoost(),
-                item.getStrengthBoost(),
-                item.getSpeedBoost()
-        );
+        String desc;
+        if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
+            desc = String.format(G.locale,
+                    "You found some %s loot! %s (%s) and replaced your old equipment! Power: %d VIT: %d STR: %d SPD: %d...",
+                    item.getItemRarity().getName(),
+                    item.getName(),
+                    item.getItemType().getName(),
+                    item.getPowerLevel(),
+                    item.getVitalityBoost(),
+                    item.getStrengthBoost(),
+                    item.getSpeedBoost()
+            );
+        } else {
+            desc = String.format(G.locale,
+                    "You found some %s loot! %s (%s)! Power: %d VIT: %d STR: %d SPD: %d...",
+                    item.getItemRarity().getName(),
+                    item.getName(),
+                    item.getItemType().getName(),
+                    item.getPowerLevel(),
+                    item.getVitalityBoost(),
+                    item.getStrengthBoost(),
+                    item.getSpeedBoost()
+            );
+        }
 
         Log.d(TAG, String.format(G.locale, "generateLootDescription:success:description=%s", desc));
         return desc;

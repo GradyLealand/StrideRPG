@@ -13,6 +13,7 @@ import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
 import stride.com.striderpg.rpg.Generators.LevelGenerator;
 import stride.com.striderpg.rpg.Util.TimestampParser;
+import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 
 /**
@@ -185,6 +186,24 @@ public class Player {
                 G.lastStepCount = total;
             }
         }
+    }
+
+    /**
+     * Calculate and update a users experience based on the enemy passed
+     * to the method.
+     * @param enemy Enemy being defeated.
+     */
+    public void defeatEnemy(Enemy enemy) {
+        // Increment Players current experience by the Enemies experience reward.
+        this.setExperience(this.getExperience() + enemy.getExperienceReward());
+
+        // Check if the Player can level up after defeating the Enemy.
+        if (this.canLevelUp()) {
+            this.levelUp();
+        }
+
+        // Increment the Players enemies defeated property.
+        this.getStats().updateEnemiesDefeated();
     }
 
     public String getUniqueId() {

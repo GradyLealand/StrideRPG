@@ -88,6 +88,14 @@ public class Item {
                 '}';
     }
 
+    /**
+     * Compare two items together by comparing their power level property.
+     * @param item Item being compared to.
+     * @return Boolean if this item is better than passed item.
+     */
+    public boolean isBetter(Item item) {
+        return this.powerLevel > item.getPowerLevel();
+    }
 
     public String getName() {
         return name;

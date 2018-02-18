@@ -129,7 +129,7 @@ public class ItemGenerator {
      * to the active Players level, then that number is multiplied by the POWER_LEVEL_MODIFIER.
      * @param stats New Item stats.
      * @param p activePlayer Player object.
-     * @return New Item powerlevel.
+     * @return New Item power level.
      */
     private static int generatePowerLevel(int[] stats, Player p) {
         int powerLevel = 0;
