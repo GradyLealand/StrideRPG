@@ -3,14 +3,13 @@ package stride.com.striderpg.rpg.Generators;
 
 import android.util.Log;
 
-import java.util.Locale;
 import java.util.Random;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 

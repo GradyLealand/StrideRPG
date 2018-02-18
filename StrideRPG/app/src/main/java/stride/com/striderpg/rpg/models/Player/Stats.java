@@ -1,11 +1,7 @@
 package stride.com.striderpg.rpg.models.Player;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import stride.com.striderpg.rpg.models.Activity.TimestampParser;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 
 /**
  * A Stats class to store information about a Player that's less important that core

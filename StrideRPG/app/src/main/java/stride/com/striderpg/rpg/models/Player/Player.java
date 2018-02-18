@@ -12,6 +12,7 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Generators.ItemGenerator;
 import stride.com.striderpg.rpg.Generators.LevelGenerator;
+import stride.com.striderpg.rpg.Util.TimestampParser;
 
 
 /**
@@ -57,6 +58,11 @@ public class Player {
     private Integer steps;
 
     /**
+     * The last time the user has signed in.
+     */
+    private String lastSignedIn;
+
+    /**
      * Players history and log.
      */
     private History history;
@@ -93,6 +99,7 @@ public class Player {
         this.level = 1;
         this.experience = 200;
         this.steps = 0;
+        this.lastSignedIn = TimestampParser.makeTimestamp();
 
         this.history = new History();
         this.stats = new Stats();
@@ -113,6 +120,7 @@ public class Player {
                 ", level=" + level +
                 ", experience=" + experience +
                 ", steps=" + steps +
+                ", lastSignedIn='" + lastSignedIn + '\'' +
                 ", history=" + history +
                 ", stats=" + stats +
                 ", skills=" + skills +
@@ -223,6 +231,14 @@ public class Player {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
         this.steps = steps;
+    }
+
+    public String getLastSignedIn() {
+        return lastSignedIn;
+    }
+
+    public void setLastSignedIn(String lastSignedIn) {
+        this.lastSignedIn = lastSignedIn;
     }
 
     public History getHistory() {
