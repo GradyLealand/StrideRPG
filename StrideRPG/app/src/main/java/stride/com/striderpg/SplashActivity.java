@@ -15,8 +15,8 @@ import stride.com.striderpg.global.G;
 
 /**
  * SplashActivity used to request permissions from the User.
- * The application needs the Google Fit information request
- * before beginning the authentication activity.
+ * The application needs the Google Fit information permission request
+ * before beginning the Firebase authentication activity.
  */
 public class SplashActivity extends AppCompatActivity {
 
