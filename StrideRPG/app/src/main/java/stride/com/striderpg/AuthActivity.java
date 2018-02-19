@@ -274,19 +274,23 @@ public class AuthActivity extends AppCompatActivity {
                     if (dataSnapshot.getValue() != null) {
                         authTask.setText(R.string.auth_load);
                         G.activePlayer = dataSnapshot.getValue(Player.class);
+
                         // Check for an empty Player log.
                         if (G.activePlayer.getActivityLog() == null) {
                             // Build new empty ActivityLog for Player.
                             G.activePlayer.setActivityLog(new ActivityLog());
                         }
+
                         // Previous user has returned to game, attempt to calculate offline
                         // activity for this user with their last signed in property.
                         if (G.activePlayer.getLastSignedIn() != null) {
                             OfflineGenerator.calculateOfflineActivities();
 
-                            // Clean the returning Players ActivityLog before building any
-                            // Fragments in the NavigationActivity.
+                            // Clean the returning Players ActivityLog before any information
+                            // is added to Players Dashboard History.
                             G.activePlayer.getActivityLog().cleanHistory();
+                        } else {
+                            Log.e(TAG, "onDataChange:error:Player.lastSignedIn=null");
                         }
                     } else {
                         authTask.setText(R.string.auth_gen_new);
@@ -297,9 +301,11 @@ public class AuthActivity extends AppCompatActivity {
                         db.pushPlayer(G.activePlayer);
                     }
                     authProgressBar.setVisibility(View.INVISIBLE);
+
                     startActivity(new Intent(AuthActivity.this, NavigationActivity.class));
                     finish();
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.e(TAG, "checkUser:onCancelled:error:", databaseError.toException());
