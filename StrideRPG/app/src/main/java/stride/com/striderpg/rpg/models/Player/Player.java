@@ -10,6 +10,7 @@ import java.util.Objects;
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
+import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.generators.ItemGenerator;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.models.Bestiary.Bestiary;
@@ -70,9 +71,14 @@ public class Player {
     private Bestiary bestiary;
 
     /**
-     * Players history and log.
+     * Players Quests information.
      */
-    private History history;
+    private QuestLog questLog;
+
+    /**
+     * Players activityLog and log.
+     */
+    private ActivityLog activityLog;
 
     /**
      * Reference to this players stats object.
@@ -109,7 +115,8 @@ public class Player {
         this.lastSignedIn = TimeParser.makeTimestamp();
 
         this.bestiary = new Bestiary();
-        this.history = new History();
+        this.questLog = new QuestLog();
+        this.activityLog = new ActivityLog();
         this.stats = new Stats();
         this.skills = new Skills(Constants.PLAYER_DEFAULT_VITALITY, Constants.PLAYER_DEFAULT_STRENGTH, Constants.PLAYER_DEFAULT_SPEED);
         this.equipment = ItemGenerator.generateDefaultInventory(this);
@@ -129,7 +136,9 @@ public class Player {
                 ", experience=" + experience +
                 ", steps=" + steps +
                 ", lastSignedIn='" + lastSignedIn + '\'' +
-                ", history=" + history +
+                ", bestiary=" + bestiary +
+                ", questLog=" + questLog +
+                ", activityLog=" + activityLog +
                 ", stats=" + stats +
                 ", skills=" + skills +
                 ", equipment=" + equipment +
@@ -176,21 +185,24 @@ public class Player {
             G.lastStepCount = total;
         } else {
             if (total >= 0) {
+                Integer steps = (total - G.lastStepCount);
+
                 // Increment user steps by new steps calculated.
-                this.setSteps(this.getSteps() + (total - G.lastStepCount));
+                this.setSteps(this.getSteps() + (steps));
 
                 // Increment users experience by new steps calculated divided by
                 // the experience step modifier.
-                this.setExperience(this.getExperience() +
-                        (total - G.lastStepCount) /
-                                Constants.PLAYER_STEPS_EXP_MODIFIER);
+                this.setExperience(this.getExperience() + (steps / Constants.PLAYER_STEPS_EXP_MODIFIER));
 
                 // Check if a Player can level up after step and exp changes have been made.
                 if (this.canLevelUp()) {
                     this.levelUp();
                 }
 
-                // Finally, set the last step count to the total from our readData() call
+                // Update Players Quest for steps taken.
+                this.getQuestLog().update(Enums.QuestType.TAKE_STEPS, steps);
+
+                // Finally, set the last step count to the total from the readData() call
                 // in the FitnessUtil.
                 G.lastStepCount = total;
             }
@@ -217,6 +229,9 @@ public class Player {
         // Increment the Players Stats on enemy defeat.
         this.getStats().updateEnemiesDefeated();
         this.getStats().updateTotalExperience(enemy.getExperienceReward());
+
+        // Update Players Enemies defeated quest.
+        this.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
     }
 
     public String getUniqueId() {
@@ -277,12 +292,20 @@ public class Player {
         return bestiary;
     }
 
-    public History getHistory() {
-        return history;
+    public QuestLog getQuestLog() {
+        return questLog;
     }
 
-    public void setHistory(History history) {
-        this.history = history;
+    public void setQuestLog(QuestLog questLog) {
+        this.questLog = questLog;
+    }
+
+    public ActivityLog getActivityLog() {
+        return activityLog;
+    }
+
+    public void setActivityLog(ActivityLog activityLog) {
+        this.activityLog = activityLog;
     }
 
     public Stats getStats() {

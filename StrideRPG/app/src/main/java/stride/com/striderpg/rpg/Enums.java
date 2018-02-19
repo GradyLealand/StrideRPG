@@ -146,4 +146,93 @@ public class Enums {
         ENEMY,
         LOOT,
     }
+
+    /**
+     * Enumeration QuestType for holding the different Quests that a Player has in game.
+     */
+    public enum QuestType {
+        DEFEAT_ENEMIES(Constants.QUEST_DEFEAT_ENEMIES_TITLE, Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION),
+        LOOT_ITEMS(Constants.QUEST_LOOT_ITEMS_TITLE, Constants.QUEST_LOOT_ITEMS_DESCRIPTION),
+        TAKE_STEPS(Constants.QUEST_TAKE_STEPS_TITLE, Constants.QUEST_TAKE_STEPS_DESCRIPTION);
+
+        /**
+         * QuestType title.
+         */
+        private final String title;
+
+        /**
+         * QuestType description.
+         */
+        private final String description;
+
+        /**
+         * QuestType Constructor to initialize the QuestTypes with proper title and description.
+         * @param title QuestType title.
+         * @param description QuestType description.
+         */
+        QuestType(String title, String description) {
+            this.title = title;
+            this.description = description;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+
+    /**
+     * Enumeration QuestLevel to hold the different possible Quest levels that
+     * a Player can reach while progressing through the game.
+     */
+    public enum QuestLevel {
+        ONE("I", Constants.QUEST_LEVEL_ONE_GOAL),
+        TWO("II", Constants.QUEST_LEVEL_TWO_GOAL),
+        THREE("III", Constants.QUEST_LEVEL_THREE_GOAL),
+        FOUR("IV", Constants.QUEST_LEVEL_FOUR_GOAL),
+        FIVE("V", Constants.QUEST_LEVEL_FIVE_GOAL),
+        SIX("VI", Constants.QUEST_LEVEL_SIX_GOAL),
+        SEVEN("VII", Constants.QUEST_LEVEL_SEVEN_GOAL),
+        EIGHT("VIII", Constants.QUEST_LEVEL_EIGHT_GOAL),
+        NINE("IX", Constants.QUEST_LEVEL_NINE_GOAL),
+        TEN("X", Constants.QUEST_LEVEL_TEN_GOAL);
+
+        /**
+         * QuestLevel String to represent a roman numeral for QuestLevel representation.
+         */
+        private final String numeral;
+
+        /**
+         * QuestLevel Integer to represent the goal a Player must reach to complete this level
+         * of the Quest.
+         */
+        private final Integer goal;
+
+        /**
+         * Create a static copy of the QuestLevel values to avoid copying each time next is called.
+         */
+        private static QuestLevel[] values = values();
+
+        /**
+         * QuestLevel Constructor to set the numeral property on construction.
+         * @param numeral QuestLevel numeral String.
+         */
+        QuestLevel(String numeral, Integer goal) {
+            this.numeral = numeral;
+            this.goal = goal;
+        }
+
+        public QuestLevel next() {
+            return values[(this.ordinal() + 1) % values.length];
+        }
+
+        public String getNumeral() {
+            return numeral;
+        }
+
+        public Integer getGoal() { return goal; }
+    }
 }
