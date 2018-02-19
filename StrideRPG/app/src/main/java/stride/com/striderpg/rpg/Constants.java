@@ -85,4 +85,87 @@ public final class Constants {
      */
     public static final long FITNESS_READ_RATE = 5000;
 
+    /**
+     * Constant for generic defeat enemies quest title.
+     */
+    public static final String QUEST_DEFEAT_ENEMIES_TITLE = "Defeat Enemies";
+
+    /**
+     * Constant for generic defeat enemies quest description.
+     */
+    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies throughout your travels.";
+
+    /**
+     * Constant for generic loot items quest title.
+     */
+    public static final String QUEST_LOOT_ITEMS_TITLE = "Loot Items";
+
+    /**
+     * Constant for generic loot items quest description.
+     */
+    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items throughout your travels.";
+
+    /**
+     * Constant for generic take steps quest title.
+     */
+    public static final String QUEST_TAKE_STEPS_TITLE = "Take Steps";
+
+    /**
+     * Constant for generic take steps quest description.
+     */
+    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps throughout your travels.";
+
+
+    // TODO: These goals should be dependant on the Quest itself, some goals need higher thresholds, etc.
+
+    /**
+     * Quest Level One progress goal.
+     */
+    public static final Integer QUEST_LEVEL_ONE_GOAL = 25;
+
+    /**
+     * Quest Level Two progress goal.
+     */
+    public static final Integer QUEST_LEVEL_TWO_GOAL = 50;
+
+    /**
+     * Quest Level Three progress goal.
+     */
+    public static final Integer QUEST_LEVEL_THREE_GOAL = 100;
+
+    /**
+     * Quest Level Four progress goal.
+     */
+    public static final Integer QUEST_LEVEL_FOUR_GOAL = 200;
+
+    /**
+     * Quest Level Five progress goal.
+     */
+    public static final Integer QUEST_LEVEL_FIVE_GOAL = 500;
+
+    /**
+     * Quest Level Six progress goal.
+     */
+    public static final Integer QUEST_LEVEL_SIX_GOAL = 1000;
+
+    /**
+     * Quest Level Seven progress goal.
+     */
+    public static final Integer QUEST_LEVEL_SEVEN_GOAL = 2000;
+
+    /**
+     * Quest Level Eight progress goal.
+     */
+    public static final Integer QUEST_LEVEL_EIGHT_GOAL = 5000;
+
+    /**
+     * Quest Level Nine progress goal.
+     */
+    public static final Integer QUEST_LEVEL_NINE_GOAL = 10000;
+
+    /**
+     * Quest Level Ten progress goal.
+     */
+    public static final Integer QUEST_LEVEL_TEN_GOAL = 50000;
+
 }

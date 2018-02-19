@@ -12,10 +12,10 @@ import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
- * A History class to store a Players encounters in the game using a HashMap with a timestamp
+ * A ActivityLog class to store a Players encounters in the game using a HashMap with a timestamp
  * String as the key and an Activity as the value.
  */
-public class History {
+public class ActivityLog {
 
     /**
      * HashMap to store a Players Encounters that are generated while progressing
@@ -25,23 +25,23 @@ public class History {
 
     /**
      * Default constructor required for calls to
-     * DataSnapshot.getValue(History.class).
+     * DataSnapshot.getValue(ActivityLog.class).
      */
-    public History() { }
+    public ActivityLog() { }
 
     /**
-     * Implementation of a History toString method to print out the properties of the History.
-     * @return Properties of the History object.
+     * Implementation of a ActivityLog toString method to print out the properties of the ActivityLog.
+     * @return Properties of the ActivityLog object.
      */
     @Override
     public String toString() {
-        return "History{" +
+        return "ActivityLog{" +
                 "log=" + log +
                 '}';
     }
 
     /**
-     * Add a new Activity to the History log.
+     * Add a new Activity to the ActivityLog log.
      * @param activity Activity being added to log.
      */
     public void addActivity(Activity activity) {

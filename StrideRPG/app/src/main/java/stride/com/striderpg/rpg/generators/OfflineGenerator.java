@@ -43,7 +43,7 @@ public class OfflineGenerator {
 
         // Quick check for old date being older than current date time minus constant threshold.
         // Do this so that the actual Timestamps for these new Activities will not be removed
-        // by the History.clean() method until they are 12 hours only after they've been generated.
+        // by the ActivityLog.clean() method until they are 12 hours only after they've been generated.
         if (old.isBefore(now.minusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS))) {
             old = now.minusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
         }
@@ -93,14 +93,17 @@ public class OfflineGenerator {
                     // Create the new Activity and set the timestamp to a random date between
                     activity = ActivityGenerator.generateLootActivity(item);
 
+                    // Update the Players Stats total items looted property.
+                    G.activePlayer.getStats().updateItemsLooted();
+
+                    // Update Players Items looted quest.
+                    G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
+
                     // Check if the new Item is better than the Item equipped currently
                     // on the Global activePlayer.
                     if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
                         G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
                     }
-
-                    // Update the Players Stats total items looted property.
-                    G.activePlayer.getStats().updateItemsLooted();
                     break;
                 case ENEMY:
                     // Generate new random Enemy.
@@ -110,7 +113,7 @@ public class OfflineGenerator {
                     break;
             }
             activity.setTimestamp(TimeParser.makeTimestamp(activityDate));
-            G.activePlayer.getHistory().addActivity(activity);
+            G.activePlayer.getActivityLog().addActivity(activity);
 
             Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:success:activity=%s", activity));
         }

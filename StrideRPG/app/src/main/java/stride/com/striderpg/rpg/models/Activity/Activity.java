@@ -7,7 +7,7 @@ public class Activity {
 
     /**
      * Activity timestamp to track when this activity took place. Will also be used as the
-     * History object's HashMap as an identifier.
+     * ActivityLog object's HashMap as an identifier.
      */
     private String timestamp;
 

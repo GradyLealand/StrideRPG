@@ -36,7 +36,7 @@ import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fit.FitnessUtil;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.generators.OfflineGenerator;
-import stride.com.striderpg.rpg.models.Player.History;
+import stride.com.striderpg.rpg.models.Player.ActivityLog;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -275,17 +275,18 @@ public class AuthActivity extends AppCompatActivity {
                         authTask.setText(R.string.auth_load);
                         G.activePlayer = dataSnapshot.getValue(Player.class);
                         // Check for an empty Player log.
-                        if (G.activePlayer.getHistory() == null) {
-                            // Build new empty History for Player.
-                            G.activePlayer.setHistory(new History());
+                        if (G.activePlayer.getActivityLog() == null) {
+                            // Build new empty ActivityLog for Player.
+                            G.activePlayer.setActivityLog(new ActivityLog());
                         }
                         // Previous user has returned to game, attempt to calculate offline
                         // activity for this user with their last signed in property.
                         if (G.activePlayer.getLastSignedIn() != null) {
                             OfflineGenerator.calculateOfflineActivities();
-                            // Clean the returning Players History before building any
+
+                            // Clean the returning Players ActivityLog before building any
                             // Fragments in the NavigationActivity.
-                            G.activePlayer.getHistory().cleanHistory();
+                            G.activePlayer.getActivityLog().cleanHistory();
                         }
                     } else {
                         authTask.setText(R.string.auth_gen_new);
