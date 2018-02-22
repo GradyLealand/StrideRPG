@@ -3,9 +3,12 @@ package stride.com.striderpg.rpg.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.Interval;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 
 /**
@@ -73,8 +76,31 @@ public class TimeParser {
         return date.toString(dateTimeFormatter);
     }
 
+    /**
+     * Get a long representing minutes difference
+     * between two different DateTimes.
+     * @param start Start DateTime.
+     * @param end End DateTime.
+     * @return Difference in minutes between two DateTimes.
+     */
     public static long getDifferenceInMinutes(DateTime start, DateTime end) {
         long diff = end.getMillis() - start.getMillis();
         return (diff / 1000) / 60;
+    }
+
+    /**
+     * Convert a Timestamp into a readable human friendly
+     * timestamp, ex: 02-22-18 18:49:11 -> 3 hours ago...
+     * @param timestamp Timestamp being converted to readable string.
+     * @return Human friendly timestamp.
+     */
+    public static String toReadable(String timestamp) {
+        DateTime now = DateTime.now(DateTimeZone.UTC);
+        DateTime activity = parseTimestamp(timestamp);
+
+        Interval interval = new Interval(activity, now);
+        Period period = interval.toPeriod();
+
+        return String.format(G.locale, "%s hours ago", period.getHours());
     }
 }

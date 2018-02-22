@@ -40,7 +40,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.LOOT,
                 generateLootDescription(item),
                 // TODO : Use actual icons for loot. This is placeholder.
-                R.drawable.ic_launcher_foreground
+                R.drawable.ic_treasure_160004
         );
 
         Log.d(TAG, String.format(G.locale, "generateLootActivity:success:activity=%s", newActivity));
@@ -58,7 +58,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.ENEMY,
                 generateEnemyDescription(enemy),
                 // TODO : Use actual icons for enemies. This is placeholder.
-                R.drawable.ic_launcher_foreground
+                R.drawable.ic_troll_1300185
         );
 
         Log.d(TAG, String.format(G.locale, "generateEnemyActivity:success:activity=%s", newActivity));
@@ -72,7 +72,7 @@ public class ActivityGenerator {
      */
     private static String generateEnemyDescription(Enemy enemy) {
         String desc = String.format(G.locale,
-                "You encountered and defeated a %s, earning %d experience points!",
+                "You encountered and defeated a %s\nYou earned %d experience points!",
                 enemy.getName(),
                 enemy.getExperienceReward()
         );
@@ -90,8 +90,8 @@ public class ActivityGenerator {
         String desc;
         if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
             desc = String.format(G.locale,
-                    "You found some %s loot! %s (%s) and replaced your old equipment! " +
-                            "Power: %d VIT: %d STR: %d SPD: %d...",
+                    "You found some %s loot! %s (%s) and replaced your old equipment!\n" +
+                            "Power: %d\nVitality: %d\nStrength: %d\nSpeed: %d",
                     item.getItemRarity().getName(),
                     item.getName(),
                     item.getItemType().getName(),
@@ -102,8 +102,8 @@ public class ActivityGenerator {
             );
         } else {
             desc = String.format(G.locale,
-                    "You found some %s loot! %s (%s)! " +
-                            "Power: %d VIT: %d STR: %d SPD: %d...",
+                    "You found some %s loot! %s (%s)!\n" +
+                            "Power: %d\nVIT: %d\nSTR: %d\nSPD: %d",
                     item.getItemRarity().getName(),
                     item.getName(),
                     item.getItemType().getName(),
