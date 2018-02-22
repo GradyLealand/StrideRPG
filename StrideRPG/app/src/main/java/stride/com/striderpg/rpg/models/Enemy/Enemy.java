@@ -20,7 +20,12 @@ public class Enemy {
     private Enums.EnemyType type;
 
     /**
-     * Enemies current health value.
+     * Enemy level.
+     */
+    private Integer level;
+
+    /**
+     * Enemy current health value.
      */
     private Integer health;
 
@@ -61,9 +66,10 @@ public class Enemy {
      * @param icon Path to enemy image asset.
      * @param experienceReward Experience reward for defeating this enemy.
      */
-    public Enemy(String name, Enums.EnemyType type, Integer health, Integer minDamage, Integer maxDamage, Integer icon, Integer experienceReward) {
+    public Enemy(String name, Enums.EnemyType type,Integer level, Integer health, Integer minDamage, Integer maxDamage, Integer icon, Integer experienceReward) {
         this.name = name;
         this.type = type;
+        this.level = level;
         this.health = health;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
@@ -81,6 +87,7 @@ public class Enemy {
         return "Enemy{" +
                 "name='" + name + '\'' +
                 ", type=" + type +
+                ", level =" + level +
                 ", health=" + health +
                 ", minDamage=" + minDamage +
                 ", maxDamage=" + maxDamage +
@@ -96,6 +103,10 @@ public class Enemy {
 
     public Enums.EnemyType getType() {
         return type;
+    }
+
+    public Integer getLevel() {
+        return  level;
     }
 
     public Integer getHealth() {

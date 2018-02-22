@@ -44,31 +44,55 @@ public class EnemyGenerator {
     public static Enemy generate(Player p) {
 
         // TODO: Weighted enemy types based on current player level.
+
         // Choose random enemy type.
         Enums.EnemyType enemyType = Enums.random(Enums.EnemyType.class);
 
         // Calculate generic enemy values based on Player parameter.
         String name = parseName(enemyType);
-        int health = calculateEnemyHealth(p);
+        int level = calculateEnemyLevel(p);
+        int health = calculateEnemyHealth(level);
         int minDamage = calculateEnemyMinDamage(p);
         int maxDamage = calculateEnemyMaxDamage(p);
-        int experience = calculateEnemyExp(p);
+        int experience = calculateEnemyExp(p, level - p.getLevel());
         int icon = parseIcon(enemyType);
 
-        Enemy newEnemy = new Enemy(name, enemyType, health, minDamage, maxDamage, icon, experience);
+        Enemy newEnemy = new Enemy(name, enemyType, level, health, minDamage, maxDamage, icon, experience);
 
         Log.d(TAG, String.format(G.locale, "generate:success:enemy=%s", newEnemy));
         return newEnemy;
     }
 
     /**
+     * Calculate the new enemies level based on the active
+     * Player objects current level.
+     * @param p activePlayer object.
+     * @return Enemy level.
+     */
+    private static int calculateEnemyLevel(Player p) {
+        Integer diceRoll = r.nextInt(5);
+        int monsterLevel  = (p.getLevel() + 2) - diceRoll;
+
+        // Do not allow the monster to have a level < 1
+        if(monsterLevel < Constants.MINIMUM_LEVEL)
+        {
+            monsterLevel = Constants.MINIMUM_LEVEL;
+        }
+
+        Log.d(TAG, String.format(G.locale, "calculateEnemyLevel:success:monsterLevel=%s", monsterLevel));
+        return monsterLevel;
+    }
+
+    /**
      * Calculate a new Enemies experience reward based on the active
      * Player objects current level.
      * @param p activePlayer object.
+     * @param l the difference in level
      * @return Enemy experience reward.
      */
-    private static int calculateEnemyExp(Player p) {
-        int expReward = p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER + r.nextInt(50);
+    private static int calculateEnemyExp(Player p, Integer l) {
+        int expReward = p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER
+                + (r.nextInt(50) + (Constants.ENEMY_EXPERIENCE_MODIFIER ) * l);
 
         Log.d(TAG, String.format(G.locale, "calculateEnemyExp:success:expReward=%s", expReward));
         return expReward;
@@ -106,11 +130,11 @@ public class EnemyGenerator {
 
     /**
      * Calculate a new Enemies health.
-     * @param p Player object for determining Enemies health.
+     * @param level level of the current enemy
      * @return New Enemy health.
      */
-    private static int calculateEnemyHealth(Player p) {
-        int enemyHealth = (p.getLevel() * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
+    private static int calculateEnemyHealth(Integer level) {
+        int enemyHealth = (level * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
 
         Log.d(TAG, String.format(G.locale, "calculateEnemyHealth:success:enemyHealth=%d", enemyHealth));
         return  enemyHealth;

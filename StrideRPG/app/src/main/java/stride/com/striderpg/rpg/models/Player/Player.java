@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
+import java.util.Random;
 
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
@@ -23,6 +24,11 @@ import stride.com.striderpg.rpg.models.Enemy.Enemy;
  * in one Object.
  */
 public class Player {
+
+    /**
+     *
+     */
+    final Random r = new Random();
 
     /**
      * PropertyChangedSupport object to deal with raising events
@@ -219,24 +225,54 @@ public class Player {
      * passed to the method.
      * @param enemy Enemy being defeated.
      */
-    public void defeatEnemy(Enemy enemy) {
-        // Increment Players current experience by the Enemies experience reward.
-        this.setExperience(this.getExperience() + enemy.getExperienceReward());
+    public boolean fightEnemy(Enemy enemy) {
+        // Random roll to modify player attack from skills.
+        int roll = r.nextInt(Constants.OFFLINE_BATTLE_MODIFIER);
 
-        // Check if the Player can level up after defeating the Enemy.
-        if (this.canLevelUp()) {
-            this.levelUp();
+        // Calculate attack value from Player strength property
+        // and Player vitality property.
+        int attack = ((this.skills.getStrength() + this.skills.getVitality())/2) + roll;
+
+        // Check here for fight results, Player may defeat or be defeated by Enemy.
+        if(attack >= enemy.getHealth()) {
+
+            // Increment Players current experience by the Enemies experience reward.
+            this.setExperience(this.getExperience() + enemy.getExperienceReward());
+
+            // Check if the Player can level up after defeating the Enemy.
+            if (this.canLevelUp()) {
+                this.levelUp();
+            }
+
+            // Update Players Bestiary after enemy defeat.
+            this.getBestiary().update(enemy.getType());
+
+            // Increment the Players Stats on enemy defeat.
+            this.getStats().updateEnemiesDefeated();
+            this.getStats().updateTotalExperience(enemy.getExperienceReward());
+
+            // Update Players Enemies defeated quest.
+            this.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
+
+            // Return true because Player has defeated enemy.
+            return true;
+        } else {
+            // log the defeat
+            this.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_ENEMIES, 1);
+
+            // Increment Players current experience by the Enemies level
+            this.setExperience(this.getExperience() + enemy.getLevel());
+
+            // Check if the player can level up after being defeated
+            if (this.canLevelUp()) {
+                this.levelUp();
+            }
+
+            // Return false because Player has been defeated.
+            return false;
         }
 
-        // Update Players Bestiary after enemy defeat.
-        this.getBestiary().update(enemy.getType());
 
-        // Increment the Players Stats on enemy defeat.
-        this.getStats().updateEnemiesDefeated();
-        this.getStats().updateTotalExperience(enemy.getExperienceReward());
-
-        // Update Players Enemies defeated quest.
-        this.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
     }
 
     public String getUniqueId() {

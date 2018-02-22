@@ -179,9 +179,25 @@ public class Enums {
      * Player has in game.
      */
     public enum QuestType {
-        DEFEAT_ENEMIES(Constants.QUEST_DEFEAT_ENEMIES_TITLE, Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION),
-        LOOT_ITEMS(Constants.QUEST_LOOT_ITEMS_TITLE, Constants.QUEST_LOOT_ITEMS_DESCRIPTION),
-        TAKE_STEPS(Constants.QUEST_TAKE_STEPS_TITLE, Constants.QUEST_TAKE_STEPS_DESCRIPTION);
+        DEFEAT_ENEMIES(
+                Constants.QUEST_DEFEAT_ENEMIES_TITLE,
+                Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION
+        ),
+
+        FAIL_DEFEAT_ENEMIES(
+                Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE,
+                Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION
+        ),
+
+        LOOT_ITEMS(
+                Constants.QUEST_LOOT_ITEMS_TITLE,
+                Constants.QUEST_LOOT_ITEMS_DESCRIPTION
+        ),
+
+        TAKE_STEPS(
+                Constants.QUEST_TAKE_STEPS_TITLE,
+                Constants.QUEST_TAKE_STEPS_DESCRIPTION
+        );
 
         /**
          * QuestType title.
