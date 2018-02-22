@@ -84,6 +84,12 @@ public final class Constants {
     public static final int OFFLINE_BATTLE_MODIFIER = 10;
 
     /**
+     * Constant that defines the minimum level a plater or monster
+     * can be.
+     */
+    public static final int MINIMUM_LEVEL = 1;
+
+    /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every active player database push.
      */

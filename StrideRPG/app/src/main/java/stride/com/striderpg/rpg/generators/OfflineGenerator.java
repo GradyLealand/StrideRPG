@@ -53,7 +53,7 @@ public class OfflineGenerator {
 
         // Divide difference in minutes by the constant defined for
         // activities offline increment.
-        Integer possibleActivities = ((int)diffMinutes / Constants.OFFLINE_EVENT_INCREMENT_MINUTES);
+        Integer possibleActivities = ((int)diffMinutes / 1);
 
         // Return if possible activates isn't greater than 0.
         if (possibleActivities <= 0) {
@@ -66,7 +66,7 @@ public class OfflineGenerator {
         // the offline activity chance percent.
         int activities = 0;
         for (int i = 0; i < possibleActivities; i++) {
-            double chance = Math.random() * 100;
+            double chance = 100;
             if (chance > Constants.OFFLINE_ACTIVITY_CHANCE_PERCENT) {
                 activities++;
             }
