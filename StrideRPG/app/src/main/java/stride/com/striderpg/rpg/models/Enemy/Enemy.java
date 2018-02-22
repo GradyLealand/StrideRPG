@@ -25,7 +25,7 @@ public class Enemy {
     private Integer level;
 
     /**
-     * Enemies current health value.
+     * Enemy current health value.
      */
     private Integer health;
 

@@ -48,40 +48,6 @@ public class ActivityGenerator {
     }
 
     /**
-     * Generate an enemy activity from the enemy passed.
-     * @param enemy Enemy used to build activity description.
-     * @return Activity.
-     */
-    public static Activity generateEnemyActivity(Enemy enemy) {
-        Activity newActivity = new Activity(
-                TimeParser.makeTimestamp(),
-                Enums.ActivityType.ENEMY,
-                generateEnemyDescription(enemy),
-                // TODO : Use actual icons for enemies. This is placeholder.
-                R.drawable.ic_launcher_foreground
-        );
-
-        Log.d(TAG, String.format(G.locale, "generateEnemyActivity:success:activity=%s", newActivity));
-        return newActivity;
-    }
-
-    /**
-     * Generate a String to represent this Enemy Activities description.
-     * @param enemy Enemy.
-     * @return Activity description.
-     */
-    private static String generateEnemyDescription(Enemy enemy) {
-        String desc = String.format(G.locale,
-                "You encountered and defeated a %s, earning %d experience points!",
-                enemy.getName(),
-                enemy.getExperienceReward()
-        );
-
-        Log.d(TAG, String.format(G.locale, "generateEnemyDescription:success:description=%s", desc));
-        return desc;
-    }
-
-    /**
      * Generate a String to represent this Loot Activities description.
      * @param item Item.
      * @return Activity description.
@@ -115,6 +81,74 @@ public class ActivityGenerator {
         }
 
         Log.d(TAG, String.format(G.locale, "generateLootDescription:success:description=%s", desc));
+        return desc;
+    }
+
+    /**
+     * Generate an enemy activity from the enemy passed.
+     * @param enemy Enemy used to build activity description.
+     * @return Activity.
+     */
+    public static Activity generateEnemyDefeatedActivity(Enemy enemy) {
+        Activity newActivity = new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.ENEMY,
+                generateEnemyDefeatedDescription(enemy),
+                // TODO : Use actual icons for enemies. This is placeholder.
+                R.drawable.ic_launcher_foreground
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateEnemyDefeatedActivity:success:activity=%s", newActivity));
+        return newActivity;
+    }
+
+    /**
+     * Generate a String to represent this Enemy Activities description.
+     * @param enemy Enemy.
+     * @return Activity description.
+     */
+    private static String generateEnemyDefeatedDescription(Enemy enemy) {
+        String desc = String.format(G.locale,
+                "You encountered and defeated a %s, earning %d experience points!",
+                enemy.getName(),
+                enemy.getExperienceReward()
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateEnemyDefeatedDescription:success:description=%s", desc));
+        return desc;
+    }
+
+    /**
+     * Generate an Activity to represent a Player being defeated
+     * by an enemy they have encountered.
+     * @param enemy Enemy the Player was defeated by.
+     * @return Activity representing this defeat.
+     */
+    public static Activity generateDefeatedByEnemyActivity(Enemy enemy) {
+        Activity newActivity = new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.ENEMY,
+                generateDefeatedByEnemyDescription(enemy),
+                R.drawable.ic_launcher_foreground
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateDefeatedByEnemyActivity:success:activity=%s", newActivity));
+        return newActivity;
+    }
+
+    /**
+     * Generate a String to represent the description of defeated by enemy Activity.
+     * @param enemy Enemy that has defeated Player.
+     * @return New Activity description.
+     */
+    private static String generateDefeatedByEnemyDescription(Enemy enemy) {
+        String desc = String.format(G.locale,
+                "You encountered and were defeated by a %s, you only earned %d experience points!",
+                enemy.getName(),
+                enemy.getLevel()
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateDefeatedByEnemyDescription:success:description=%s", desc));
         return desc;
     }
 }

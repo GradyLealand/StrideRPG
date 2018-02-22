@@ -44,6 +44,7 @@ public class EnemyGenerator {
     public static Enemy generate(Player p) {
 
         // TODO: Weighted enemy types based on current player level.
+
         // Choose random enemy type.
         Enums.EnemyType enemyType = Enums.random(Enums.EnemyType.class);
 
@@ -129,11 +130,11 @@ public class EnemyGenerator {
 
     /**
      * Calculate a new Enemies health.
-     * @param l level of the current enemy
+     * @param level level of the current enemy
      * @return New Enemy health.
      */
-    private static int calculateEnemyHealth(Integer l) {
-        int enemyHealth = (l * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
+    private static int calculateEnemyHealth(Integer level) {
+        int enemyHealth = (level * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
 
         Log.d(TAG, String.format(G.locale, "calculateEnemyHealth:success:enemyHealth=%d", enemyHealth));
         return  enemyHealth;

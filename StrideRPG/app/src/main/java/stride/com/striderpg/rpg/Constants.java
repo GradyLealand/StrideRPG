@@ -77,15 +77,14 @@ public final class Constants {
     public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 50;
 
     /**
-     * Constant that will be user to generate a random Integer to be
+     * Constant that will be used to generate a random Integer
      * added to a monsters health and players attack in an offline
-     * battle event.
+     * battle encounter/activity.
      */
     public static final int OFFLINE_BATTLE_MODIFIER = 10;
 
     /**
-     * Constant that defines the minimum level a plater or monster
-     * can be.
+     * Constant that defines the minimum level a Player or Enemy can be.
      */
     public static final int MINIMUM_LEVEL = 1;
 
@@ -109,7 +108,12 @@ public final class Constants {
     /**
      * Constant for generic failed to defeat enemies quest title.
      */
-    public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed to Defeat Enemies";
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed To Defeat Enemies";
+
+    /**
+     * Constant for generic loot items quest title.
+     */
+    public static final String QUEST_LOOT_ITEMS_TITLE = "Loot Items";
 
     /**
      * Constant for generic defeat enemies quest description.
@@ -119,12 +123,8 @@ public final class Constants {
     /**
      * Constant for generic defeat enemies quest description.
      */
-    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to Defeat enemies throughout your travels.";
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to defeat enemies throughout your travels.";
 
-    /**
-     * Constant for generic loot items quest title.
-     */
-    public static final String QUEST_LOOT_ITEMS_TITLE = "Loot Items";
 
     /**
      * Constant for generic loot items quest description.

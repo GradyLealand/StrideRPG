@@ -92,9 +92,8 @@ public class OfflineGenerator {
             // Pick a random activity type and build a new activity.
             Enums.ActivityType type = Enums.random(Enums.ActivityType.class);
             switch (type) {
-
-                // Switch case for a loot activity being generated.
                 case LOOT:
+
                     // Generate new random Item.
                     Item item = ItemGenerator.generate(G.activePlayer);
 
@@ -109,22 +108,34 @@ public class OfflineGenerator {
 
                     // Check if the new Item is better than the Item equipped currently
                     // on the Global activePlayer.
+                    // TODO : Clean this up?? Shorthand, new method in getEquipment maybe.
                     if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
                         G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
                     }
                     break;
-
-                // Switch case for an enemy activity being generated.
                 case ENEMY:
+
                     // Generate new random Enemy.
                     Enemy enemy = EnemyGenerator.generate(G.activePlayer);
-                    G.activePlayer.defeatEnemy(enemy);
-                    activity = ActivityGenerator.generateEnemyActivity(enemy);
+
+                    // Check if the Player has defeated, or lost to this new Enemy.
+                    boolean fightResult = G.activePlayer.fightEnemy(enemy);
+
+                    // Based on the result of the fightEnemy method, generate
+                    // a new Activity for the Players ActivityLog.
+                    if (fightResult) {
+                        activity = ActivityGenerator.generateEnemyDefeatedActivity(enemy);
+                    } else {
+                        activity = ActivityGenerator.generateDefeatedByEnemyActivity(enemy);
+                    }
                     break;
             }
-            activity.setTimestamp(TimeParser.makeTimestamp(activityDate));
-            G.activePlayer.getActivityLog().addActivity(activity);
 
+            // Set the timestamp for this new Activity.
+            activity.setTimestamp(TimeParser.makeTimestamp(activityDate));
+
+            // Add New Activity the current Players ActivityLog.
+            G.activePlayer.getActivityLog().addActivity(activity);
             Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:success:activity=%s", activity));
         }
     }
