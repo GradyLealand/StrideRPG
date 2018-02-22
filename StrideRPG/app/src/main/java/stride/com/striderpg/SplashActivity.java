@@ -31,11 +31,11 @@ public class SplashActivity extends AppCompatActivity {
     private static final int GOOGLE_FITNESS_PERMISSIONS_REQUEST = 0x1001;
 
     /**
-     * This onCreate will simply use the splash_background.xml drawable
-     * file as the background of the activity as a way to present
-     * a screen other then blank white space while the app is starting.
-     * From this point, the app will move onto authentication the current user.
-     * using Firebase.
+     * This onCreate will simply use the splash_background.xml
+     * drawable file as the background of the activity as a way to
+     * present a screen other then blank white space while the app
+     * is starting. From this point, the app will move onto
+     * authentication the current user. using Firebase.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

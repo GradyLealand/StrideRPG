@@ -15,9 +15,11 @@ import stride.com.striderpg.global.PushTimer;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
- * Main Navigation Activity in the Application. This Activity is the main route for a User to travel
- * between the different Fragments present. by clicking on a Navigation Item located in the bottom
- * of the View, a new Fragment is selected and replaced with the old fragment in the fragmentContainer.
+ * Main Navigation Activity in the Application. This Activity is the
+ * main route for a User to travel between the different Fragments
+ * present. by clicking on a Navigation Item located in the bottom of
+ * the View, a new Fragment is selected and replaced with the old
+ * fragment in the fragmentContainer.
  */
 public class NavigationActivity extends AppCompatActivity {
 
@@ -27,12 +29,14 @@ public class NavigationActivity extends AppCompatActivity {
     private static final String TAG = "NavigationActivity";
 
     /**
-     * FragmentGenerator instance to create and initialize the five fragments in game.
+     * FragmentGenerator instance to create and initialize the five
+     * fragments in game.
      */
     private FragmentGenerator generator = new FragmentGenerator();
 
     /**
-     * Custom Listener to change the Fragment every time a new Navigation Item is selected.
+     * Custom Listener to change the Fragment every time a new
+     * Navigation Item is selected.
      */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -37,7 +37,8 @@ public class ItemGenerator {
             "Withered", "Profane", "Webbed", "Suspicious", "Large" };
 
     /**
-     * Generate a random item based off of the Player object passed into the function.
+     * Generate a random item based off of the Player object passed
+     * into the function.
      * @param p Player used to determine item properties.
      * @return Newly generated Item object with randomized properties.
      */
@@ -125,8 +126,9 @@ public class ItemGenerator {
     }
 
     /**
-     * Generate a new Items power level by adding the Items stats together, that number is added
-     * to the active Players level, then that number is multiplied by the POWER_LEVEL_MODIFIER.
+     * Generate a new Items power level by adding the Items stats
+     * together, that number is added to the active Players level,
+     * then that number is multiplied by the POWER_LEVEL_MODIFIER.
      * @param stats New Item stats.
      * @param p activePlayer Player object.
      * @return New Item power level.
@@ -143,8 +145,9 @@ public class ItemGenerator {
     }
 
     /**
-     * Create an int[] array to hold the stats for the new Item. Randomly choose a skill
-     * each loop iteration and increment the skill bonus for the Item.
+     * Create an int[] array to hold the stats for the new Item.
+     * Randomly choose a skill each loop iteration and increment the
+     * skill bonus for the Item.
      * @param itemRarity Item itemRarity chosen.
      * @param p Player.
      * @return int[] array holding new Item stats.

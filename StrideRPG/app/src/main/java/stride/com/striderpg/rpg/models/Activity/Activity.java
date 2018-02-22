@@ -6,8 +6,9 @@ import stride.com.striderpg.rpg.Enums;
 public class Activity {
 
     /**
-     * Activity timestamp to track when this activity took place. Will also be used as the
-     * ActivityLog object's HashMap as an identifier.
+     * Activity timestamp to track when this activity took place.
+     * Will also be used as the ActivityLog object's HashMap as an
+     * identifier.
      */
     private String timestamp;
 
@@ -33,7 +34,8 @@ public class Activity {
     public Activity() { }
 
     /**
-     * Custom constructor to build an Activity with the parameters passed to constructor.
+     * Custom constructor to build an Activity with the parameters
+     * passed to constructor.
      * @param timestamp Activity timestamp.
      * @param activityType ActivityType enum.
      * @param description Activity description.
@@ -48,7 +50,8 @@ public class Activity {
     }
 
     /**
-     * Implementation of an Activities toString method to print out the properties of the Activity.
+     * Implementation of an Activities toString method to print out
+     * the properties of the Activity.
      * @return Properties of the Activity object.
      */
     @Override

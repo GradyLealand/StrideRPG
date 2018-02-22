@@ -17,8 +17,8 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * LeaderboardsAdapter that extends the Recycler View Adapter of type Player.
- * Used to inflate the CardView for each Player.
+ * LeaderboardsAdapter that extends the Recycler View Adapter of
+ * type Player. Used to inflate the CardView for each Player.
  */
 public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapter.PlayerViewHolder> {
 
@@ -46,7 +46,8 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
 
     @Override
     public PlayerViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_leaderboards_item, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(
+                R.layout.fragment_leaderboards_item, viewGroup, false);
         return new PlayerViewHolder(v);
     }
 
@@ -64,7 +65,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         // TODO: Use an actual Player image. PLACEHOLDER.
         playerViewHolder.playerImage.setImageResource(R.mipmap.ic_launcher);
 
-        // Log the successful player bind.
+        // Log successful player bind.
         Log.d(TAG, String.format(
                 G.locale,
                 "onBindViewHolder:success:player successfully bound: %s",
@@ -78,8 +79,9 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
     }
 
     /**
-     * Static sub-class for holding the PlayerViewHolder that contains all
-     * relevant information about the Player object being inflated and displayed.
+     * Static sub-class for holding the PlayerViewHolder that contains
+     * all relevant information about the Player object being inflated
+     * and displayed.
      */
     static class PlayerViewHolder extends RecyclerView.ViewHolder {
         /**
@@ -103,8 +105,8 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         ImageView playerImage;
 
         /**
-         * PlayerViewHolder constructor method to set the ids of the views
-         * inside of the holder.
+         * PlayerViewHolder constructor method to set the ids of the
+         * views inside of the holder.
          * @param itemView This Players itemView.
          */
         PlayerViewHolder(View itemView) {

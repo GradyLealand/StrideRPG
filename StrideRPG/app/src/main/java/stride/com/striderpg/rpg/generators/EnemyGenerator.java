@@ -13,8 +13,8 @@ import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * RPG Generator class to generate in game enemies with properties related to the Global
- * Player activePlayer Object.
+ * RPG Generator class to generate in game enemies with properties
+ * related to the Global Player activePlayer Object.
  */
 public class EnemyGenerator {
 
@@ -24,7 +24,8 @@ public class EnemyGenerator {
     private static final String TAG = "EnemyGenerator";
 
     /**
-     * Random instance available to the EnemyGenerator class for creating new enemies.
+     * Random instance available to the EnemyGenerator class for
+     * creating new enemies.
      */
     private static Random r = new Random();
 
@@ -35,7 +36,8 @@ public class EnemyGenerator {
             "Profane", "Unjust", "Unfair", "Unkind", "Power-mad", "Irreverent", "Self-Centered" };
 
     /**
-     * Generate a new enemy based off of the Player object passed into the function.
+     * Generate a new enemy based off of the Player object passed
+     * into the function.
      * @param p Player used to determine enemy properties.
      * @return Newly generated Enemy object with random properties.
      */
@@ -60,7 +62,8 @@ public class EnemyGenerator {
     }
 
     /**
-     * Calculate a new Enemies experience reward based on the active Player objects current level.
+     * Calculate a new Enemies experience reward based on the active
+     * Player objects current level.
      * @param p activePlayer object.
      * @return Enemy experience reward.
      */
@@ -89,7 +92,8 @@ public class EnemyGenerator {
     }
 
     /**
-     * Generate a new Enemy name using the EnemyType and random adjective.
+     * Generate a new Enemy name using the EnemyType and random
+     * adjective.
      * @param enemyType Type of Enemy being generated.
      * @return Enemy name.
      */

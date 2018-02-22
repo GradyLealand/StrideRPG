@@ -10,8 +10,9 @@ import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.rpg.Constants;
 
 /**
- * Class meant to control the Concurrent timer that will Asynchriously update the FirebaseDatabase
- * with any changed Data in the activePlayer Player Object.
+ * Class meant to control the Concurrent timer that will
+ * asynchronously update the FirebaseDatabase with any changed Data
+ * in the activePlayer Player Object.
  */
 public class PushTimer {
 
@@ -80,16 +81,19 @@ public class PushTimer {
         databasePusherTimer.scheduleAtFixedRate(
                 databasePusher,
                 0,
-                Constants.DATABASE_PUSH_RATE);
+                Constants.DATABASE_PUSH_RATE
+        );
     }
 
     /**
      * Schedule the fitnessPusher TimerTask at a fixed rate.
      */
-    private void startFitnessPusher() { fitnessPusherTimer.scheduleAtFixedRate(fitnessPusher,
-            0,
-            Constants.FITNESS_READ_RATE);
-
+    private void startFitnessPusher() {
+        fitnessPusherTimer.scheduleAtFixedRate(
+                fitnessPusher,
+                0,
+                Constants.FITNESS_READ_RATE
+        );
     }
 }
 

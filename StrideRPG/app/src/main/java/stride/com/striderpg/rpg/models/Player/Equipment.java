@@ -15,19 +15,22 @@ import stride.com.striderpg.rpg.models.Item.Item;
 public class Equipment {
 
     /**
-     * PropertyChangeSupport object to deal with raising events when a Property on this object/bean
+     * PropertyChangeSupport object to deal with raising events
+     * when a Property on this object/bean
      * is changed.
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * Map of type String, Item to store the different Items inside
-     * of a Players Equipment and use unique a String to identify them.
+     * of a Players Equipment and use unique a String to identify
+     * them.
      */
     private HashMap<String, Item> slots = new HashMap<>();
 
     /**
-     * Equipment total power level value, obtained by adding each slots power level together.
+     * Equipment total power level value, obtained by adding each
+     * slots power level together.
      */
     private Integer totalPowerLevel;
 
@@ -38,7 +41,8 @@ public class Equipment {
     public Equipment() { }
 
     /**
-     * Implementation of an Inventories toString method to print out each Item
+     * Implementation of an Inventories toString method to print out
+     * each Item
      * in the ArrayList slots.
      * @return Properties of each Item in Equipment ArrayList<Item>.
      */
@@ -51,7 +55,8 @@ public class Equipment {
     }
 
     /**
-     * Attach a new PropertyChangeListener to this classes PropertyChangeSupport object.
+     * Attach a new PropertyChangeListener to this classes
+     * PropertyChangeSupport object.
      * @param listener Listener implementation.
      */
     public void addPropertychangeListener(PropertyChangeListener listener) {
@@ -68,6 +73,10 @@ public class Equipment {
         updateTotalPowerLevel();
     }
 
+    /**
+     * Loop through Players equipment and set the total power level
+     * to each individual items power level added together.
+     */
     private void updateTotalPowerLevel() {
         this.setTotalPowerLevel(0);
         for (Item i : this.getSlots().values()) {

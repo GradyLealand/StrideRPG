@@ -13,8 +13,8 @@ import stride.com.striderpg.database.DBKeys;
 public class Skills {
 
     /**
-     * PropertyChangedSupport object to deal with raising events when a Property on this object/bean
-     * is changed.
+     * PropertyChangedSupport object to deal with raising events
+     * when a Property on this object/bean is changed.
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
@@ -36,12 +36,12 @@ public class Skills {
     /**
      * Default constructor required for calls to
      * DataSnapshot.getValue(Skills.class).
-     * Will also set by default all skills to 5.
      */
     public Skills() { }
 
     /**
-     * Custom constructor function to set each skill as they are passed.
+     * Custom constructor function to set each skill as they are
+     * passed.
      * @param vitality Skill vitality property.
      * @param strength Skill strength property.
      * @param speed Skill speed property.
@@ -53,7 +53,8 @@ public class Skills {
     }
 
     /**
-     * Implementation of a Skills toString() method to print out properties of a Skills object.
+     * Implementation of a Skills toString() method to print out
+     * properties of a Skills object.
      * @return Properties of the Skills object.
      */
     @Override
@@ -66,7 +67,8 @@ public class Skills {
     }
 
     /**
-     * Attach a new PropertyChangeListener to this classes PropertyChangeSupport object.
+     * Attach a new PropertyChangeListener to this classes
+     * PropertyChangeSupport object.
      * @param listener Listener implementation.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {

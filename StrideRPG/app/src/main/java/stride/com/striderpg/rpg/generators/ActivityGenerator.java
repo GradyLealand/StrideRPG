@@ -24,7 +24,8 @@ public class ActivityGenerator {
     private static final String TAG = "ActivityGenerator";
 
     /**
-     * Random instance available to the ActivityGenerator class for creating new activities.
+     * Random instance available to the ActivityGenerator class for
+     * creating new activities.
      */
     private static Random r = new Random();
 
@@ -56,6 +57,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateEnemyDescription(enemy),
+                // TODO : Use actual icons for enemies. This is placeholder.
                 R.drawable.ic_launcher_foreground
         );
 
@@ -88,7 +90,8 @@ public class ActivityGenerator {
         String desc;
         if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
             desc = String.format(G.locale,
-                    "You found some %s loot! %s (%s) and replaced your old equipment! Power: %d VIT: %d STR: %d SPD: %d...",
+                    "You found some %s loot! %s (%s) and replaced your old equipment! " +
+                            "Power: %d VIT: %d STR: %d SPD: %d...",
                     item.getItemRarity().getName(),
                     item.getName(),
                     item.getItemType().getName(),
@@ -99,7 +102,8 @@ public class ActivityGenerator {
             );
         } else {
             desc = String.format(G.locale,
-                    "You found some %s loot! %s (%s)! Power: %d VIT: %d STR: %d SPD: %d...",
+                    "You found some %s loot! %s (%s)! " +
+                            "Power: %d VIT: %d STR: %d SPD: %d...",
                     item.getItemRarity().getName(),
                     item.getName(),
                     item.getItemType().getName(),

@@ -17,7 +17,8 @@ import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
- * RPG Generator class to calculate a Players progression while they are offline.
+ * RPG Generator class to calculate a Players progression while they
+ * are offline.
  */
 public class OfflineGenerator {
 
@@ -27,8 +28,9 @@ public class OfflineGenerator {
     private static final String TAG = "OfflineGenerator";
 
     /**
-     * Calculate a Players offline activities by looking at their last signed in date
-     * and determining how many activities will take place for them in that time.
+     * Calculate a Players offline activities by looking at their
+     * last signed in date and determining how many activities will
+     * take place for them in that time.
      */
     public static void calculateOfflineActivities() {
         Log.d(TAG, "calculateOfflineActivities:begin");
@@ -41,14 +43,16 @@ public class OfflineGenerator {
         long diffMinutes = TimeParser.getDifferenceInMinutes(old, now);
         Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:progress:diffMinutes=%d", diffMinutes));
 
-        // Quick check for old date being older than current date time minus constant threshold.
-        // Do this so that the actual Timestamps for these new Activities will not be removed
-        // by the ActivityLog.clean() method until they are 12 hours only after they've been generated.
+        // Quick check for old date being older than current date
+        // time minus constant threshold. Do this so that the actual
+        // Database log nodes for these new Activities will not be
+        // removed by the ActivityLog.clean() method instantly.
         if (old.isBefore(now.minusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS))) {
             old = now.minusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
         }
 
-        // Divide difference in minutes by the constant defined for activities offline increment.
+        // Divide difference in minutes by the constant defined for
+        // activities offline increment.
         Integer possibleActivities = ((int)diffMinutes / Constants.OFFLINE_EVENT_INCREMENT_MINUTES);
 
         // Return if possible activates isn't greater than 0.
@@ -57,8 +61,9 @@ public class OfflineGenerator {
             return;
         }
 
-        // Loop through possible activities property and add events if the percent
-        // is greater than the Constant defined for the offline activity chance percent.
+        // Loop through possible activities property and add events
+        // if the percent is greater than the Constant defined for
+        // the offline activity chance percent.
         int activities = 0;
         for (int i = 0; i < possibleActivities; i++) {
             double chance = Math.random() * 100;
@@ -75,7 +80,8 @@ public class OfflineGenerator {
             Log.d(TAG, String.format(G.locale, "calculateOfflineActivities:progress:activities=%d", activities));
         }
 
-        // Loop for each activities integer. Use it to generate a new Activity for each one.
+        // Loop for each activities integer. Use it to generate a new
+        // Activity for each one.
         for (int i = 0; i < activities; i++) {
             Activity activity = new Activity();
 
@@ -86,6 +92,8 @@ public class OfflineGenerator {
             // Pick a random activity type and build a new activity.
             Enums.ActivityType type = Enums.random(Enums.ActivityType.class);
             switch (type) {
+
+                // Switch case for a loot activity being generated.
                 case LOOT:
                     // Generate new random Item.
                     Item item = ItemGenerator.generate(G.activePlayer);
@@ -105,6 +113,8 @@ public class OfflineGenerator {
                         G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
                     }
                     break;
+
+                // Switch case for an enemy activity being generated.
                 case ENEMY:
                     // Generate new random Enemy.
                     Enemy enemy = EnemyGenerator.generate(G.activePlayer);

@@ -19,9 +19,9 @@ import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * Leaderboards Generator class for creating thr ArrayList of Players that
- * will be sorted and displayed inside of the Leaderboards Fragment using
- * the RecyclerView / CardView and Adapter.
+ * Leaderboards Generator class for creating thr ArrayList of Players
+ * that will be sorted and displayed inside of the Leaderboards
+ * Fragment using the RecyclerView / CardView and Adapter.
  */
 public class LeaderboardsGenerator {
 
@@ -31,24 +31,29 @@ public class LeaderboardsGenerator {
     private static final String TAG = "LeaderboardsGenerator";
 
     /**
-     * ArrayList of type Player to store all the Players in the database.
+     * ArrayList of type Player to store all the Players in the
+     * database.
      */
     private ArrayList<Player> players = new ArrayList<>();
 
     /**
-     * LeaderboardsGenerator constructor that will call the updateLeaderboards()
-     * method to asynchronously retrieve and sort the Players in the FirebaseDatabase.
+     * LeaderboardsGenerator constructor that will call the
+     * updateLeaderboards() method to asynchronously retrieve
+     * and sort the Players in the FirebaseDatabase.
      */
     LeaderboardsGenerator() {
         updateLeaderboards();
     }
 
     /**
-     * UpdateLeaderboards method to retrieve the Players from the Database and sort them by
-     * total amount of experience.
+     * UpdateLeaderboards method to retrieve the Players from the
+     * Database and sort them by total amount of experience.
      */
     private void updateLeaderboards() {
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child(DBKeys.USERS_KEY);
+        DatabaseReference usersRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(DBKeys.USERS_KEY);
+
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,6 +98,12 @@ public class LeaderboardsGenerator {
         });
     }
 
+    /**
+     * Custom sort method to organize the ArrayList of Players based
+     * on the PlayerSort Enumeration type passed to method.
+     * @param collection Collection being sorted.
+     * @param sortType PlayerSort Enumeration type.
+     */
     private void sort(ArrayList<Player> collection, final Enums.PlayerSort sortType) {
         Log.d(TAG, String.format(G.locale, "sort:begin:type=%s", sortType));
         Collections.sort(collection, new Comparator<Player>() {

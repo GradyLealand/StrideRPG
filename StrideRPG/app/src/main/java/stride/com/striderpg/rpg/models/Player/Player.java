@@ -25,8 +25,8 @@ import stride.com.striderpg.rpg.models.Enemy.Enemy;
 public class Player {
 
     /**
-     * PropertyChangedSupport object to deal with raising events when a Property on
-     * this object/bean is changed.
+     * PropertyChangedSupport object to deal with raising events
+     * when a Property on this object/bean is changed.
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
@@ -102,7 +102,8 @@ public class Player {
     public Player() { }
 
     /**
-     * Construct a Player using a FirebaseUser object to create an empty (new) player object.
+     * Construct a Player using a FirebaseUser object to create an
+     * empty (new) player object.
      * @param user FirebaseUser Object to retrieve information about the player.
      */
     public Player(FirebaseUser user) {
@@ -123,7 +124,8 @@ public class Player {
     }
 
     /**
-     * Implementation of a Players toString method to print out the properties of a Player object.
+     * Implementation of a Players toString method to print out the
+     * properties of a Player object.
      * @return Properties of the Player object.
      */
     @Override
@@ -146,7 +148,8 @@ public class Player {
     }
 
     /**
-     * Attach a new PropertyChangeListener to this classes PropertyChangeSupport object.
+     * Attach a new PropertyChangeListener to this classes
+     * PropertyChangeSupport object.
      * @param listener Listener implementation.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -154,8 +157,9 @@ public class Player {
     }
 
     /**
-     * Determines if a Player can level up or not by comparing their experience with the
-     * experience required to reach their next level.
+     * Determines if a Player can level up or not by comparing
+     * their experience with the experience required to reach their
+     * next level.
      * @return Boolean for if Player should be levelled up.
      */
     public boolean canLevelUp() {
@@ -163,8 +167,9 @@ public class Player {
     }
 
     /**
-     * Level a Player up by incrementing their level property by one. Uses the public level
-     * property setter so a property change event is fired. A Players exp is also set on a level up.
+     * Level a Player up by incrementing their level property by one.
+     * Uses the public level property setter so a property change
+     * event is fired. A Players exp is also set on a level up.
      */
     public void levelUp() {
         // Set users experience to the proper amount so exp is carried over on level up.
@@ -174,8 +179,8 @@ public class Player {
     }
 
     /**
-     * Calculate and update a users steps property based on the amount of
-     * total steps for the current day.
+     * Calculate and update a users steps property based on the amount
+     * of total steps for the current day.
      * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
@@ -210,8 +215,8 @@ public class Player {
     }
 
     /**
-     * Calculate and update a users experience based on the enemy passed
-     * to the method.
+     * Calculate and update a users experience based on the enemy
+     * passed to the method.
      * @param enemy Enemy being defeated.
      */
     public void defeatEnemy(Enemy enemy) {

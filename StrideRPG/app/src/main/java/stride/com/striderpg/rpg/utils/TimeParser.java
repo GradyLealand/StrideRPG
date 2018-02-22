@@ -22,7 +22,8 @@ public class TimeParser {
     /**
      * Create a DateTimeFormatter for parsing DateTimes into proper Strings.
      */
-    private static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.ACTIVITY_TIMESTAMP_FORMAT).withZoneUTC();
+    private static DateTimeFormatter dateTimeFormatter = DateTimeFormat
+            .forPattern(Constants.ACTIVITY_TIMESTAMP_FORMAT).withZoneUTC();
 
 
     /**
@@ -63,8 +64,8 @@ public class TimeParser {
     }
 
     /**
-     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT, using a Date object
-     * as the Date being converted into a Timestamp string.
+     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT.
+     * using a Date object as the Date being converted into a Timestamp string.
      * @param date Date being converted to Timestamp.
      * @return String Timestamp.
      */

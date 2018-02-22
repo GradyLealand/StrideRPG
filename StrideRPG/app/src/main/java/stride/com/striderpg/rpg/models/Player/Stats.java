@@ -4,8 +4,9 @@ package stride.com.striderpg.rpg.models.Player;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
- * A Stats class to store information about a Player that's less important that core
- * game-play properties. Things that are useful to store over time can go here.
+ * A Stats class to store information about a Player that's less
+ * important that core game-play properties. Things that are useful
+ * to store over time can go here.
  */
 public class Stats {
 
@@ -41,7 +42,8 @@ public class Stats {
     }
 
     /**
-     * Implementation of a Stats toString method to print out the properties of a Stats object.
+     * Implementation of a Stats toString method to print out the
+     * properties of a Stats object.
      * @return Properties of the Stats object.
      */
     @Override
