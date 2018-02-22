@@ -50,7 +50,7 @@ public class EnemyGenerator {
         // Calculate generic enemy values based on Player parameter.
         String name = parseName(enemyType);
         int level = calculateEnemyLevel(p);
-        int health = calculateEnemyHealth(p);
+        int health = calculateEnemyHealth(level);
         int minDamage = calculateEnemyMinDamage(p);
         int maxDamage = calculateEnemyMaxDamage(p);
         int experience = calculateEnemyExp(p, level - p.getLevel());
@@ -123,11 +123,11 @@ public class EnemyGenerator {
 
     /**
      * Calculate a new Enemies health.
-     * @param p Player object for determining Enemies health.
+     * @param l level of the current enemy
      * @return New Enemy health.
      */
-    private static int calculateEnemyHealth(Player p) {
-        int enemyHealth = (p.getLevel() * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
+    private static int calculateEnemyHealth(Integer l) {
+        int enemyHealth = (l * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
 
         Log.d(TAG, String.format(G.locale, "calculateEnemyHealth:success:enemyHealth=%d", enemyHealth));
         return  enemyHealth;

@@ -30,7 +30,7 @@ public final class Constants {
     /**
      * Constant to calculate an Enemies health property.
      */
-    public static final int ENEMY_HEALTH_MODIFIER = 30;
+    public static final int ENEMY_HEALTH_MODIFIER = 3;
 
     /**
      * Constant to calculate an enemies min and max damage.
