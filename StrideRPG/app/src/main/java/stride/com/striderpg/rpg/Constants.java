@@ -77,6 +77,13 @@ public final class Constants {
     public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 50;
 
     /**
+     * Constant that will be user to generate a random Integer to be
+     * added to a monsters health and players attack in an offline
+     * battle event.
+     */
+    public static final int OFFLINE_BATTLE_MODIFIER = 10;
+
+    /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every active player database push.
      */
