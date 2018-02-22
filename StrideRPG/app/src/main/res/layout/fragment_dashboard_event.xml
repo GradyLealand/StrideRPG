@@ -23,7 +23,7 @@
             android:textSize="8sp" />
 
         <ImageView
-            android:id="@+id/event_image"
+            android:id="@+id/activity_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/activity_name"
-            android:layout_toEndOf="@+id/event_image"
+            android:layout_toEndOf="@+id/activity_image"
             android:text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. " />
 
     </RelativeLayout>
