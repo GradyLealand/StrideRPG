@@ -7,8 +7,8 @@ import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Quest.Quest;
 
 /**
- * QuestLog class to store the information about a Players Quests and how far they've
- * progressed on each.
+ * QuestLog class to store the information about a Players Quests
+ * and how far they've progressed on each.
  */
 public class QuestLog {
 
@@ -18,8 +18,10 @@ public class QuestLog {
     private HashMap<String, Quest> quests = new HashMap<>();
 
     /**
-     * Default constructor required for calls to DataSnapshot.getValue(QuestLog.class).
-     * Also used to construct a new log of Quests for the Player if one doesn't already exist.
+     * Default constructor required for calls to
+     * DataSnapshot.getValue(QuestLog.class).
+     * Also used to construct a new log of Quests for the Player
+     * if one doesn't already exist.
      */
     public QuestLog() {
         for (Enums.QuestType questType : Enums.QuestType.values()) {
@@ -34,7 +36,8 @@ public class QuestLog {
     }
 
     /**
-     * Implementation of a QuestLog toString method to print out the properties of the QuestLog.
+     * Implementation of a QuestLog toString method to print out the
+     * properties of the QuestLog.
      * @return Properties of the QuestLog object.
      */
     @Override
@@ -50,7 +53,8 @@ public class QuestLog {
      * @param amount Amount being added to Quest progress.
      */
     public void update(Enums.QuestType type, Integer amount) {
-        // Grab the current Quest to deal with updating/changes directly.
+        // Grab the current Quest to deal with updating/changes
+        // directly.
         Quest quest = quests.get(type.name());
 
         // Update quest with new progress amount.
@@ -61,7 +65,8 @@ public class QuestLog {
             quest.levelUpQuest();
         }
 
-        // Finally, put the updated quest back into the HashMap with its new values.
+        // Finally, put the updated quest back into the HashMap with
+        // its new values.
         quests.put(type.name(), quest);
     }
 

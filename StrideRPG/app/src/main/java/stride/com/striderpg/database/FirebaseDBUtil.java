@@ -10,8 +10,9 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * Database Utility class to encapsulate any data transfer from the FirebaseDatabase to the application
- * or vice versa, application to the FirebaseDatabase.
+ * Database Utility class to encapsulate any data transfer from the
+ * FirebaseDatabase to the application or vice versa, application
+ * to the FirebaseDatabase.
  */
 public class FirebaseDBUtil {
 
@@ -21,14 +22,15 @@ public class FirebaseDBUtil {
     private static final String TAG = "FirebaseDBUtil";
 
     /**
-     * Globally available private DatabaseReference used to interact with the
-     * FirebaseDatabase. It will be instantiated with a usable reference on Construction.
+     * Globally available private DatabaseReference used to
+     * interact with the FirebaseDatabase. It will be instantiated
+     * with a usable reference on Construction.
      */
     private final DatabaseReference database;
 
     /**
-     * Constructor to set the database variable to the current FirebaseDatabase Instance
-     * using the getReference() method.
+     * Constructor to set the database variable to the current
+     * FirebaseDatabase Instance using the getReference() method.
      */
     public FirebaseDBUtil() {
         database = FirebaseDatabase.getInstance().getReference();

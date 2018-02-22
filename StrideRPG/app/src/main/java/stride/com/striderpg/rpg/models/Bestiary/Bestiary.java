@@ -6,14 +6,15 @@ import java.util.HashMap;
 import stride.com.striderpg.rpg.Enums;
 
 /**
- * A Bestiary class to store a Players enemy encounters in game and the amount of an enemy they
- * have defeated.
+ * A Bestiary class to store a Players enemy encounters in game and
+ * the amount of an enemy they have defeated.
  */
 public class Bestiary {
 
     /**
-     * HashMap to store each type of Enemy as the key and an Integer value for the amount of times
-     * a Player has defeated this enemy type.
+     * HashMap to store each type of Enemy as the key and an Integer
+     * value for the amount of times a Player has defeated this enemy
+     * type.
      */
     private HashMap<String, Integer> enemies = new HashMap<>();
 
@@ -30,7 +31,8 @@ public class Bestiary {
     }
 
     /**
-     * Implementation of a Bestiary toString method to print out the Properties of a Bestiary.
+     * Implementation of a Bestiary toString method to print out the
+     * Properties of a Bestiary.
      * @return Properties of Bestiary object.
      */
     @Override

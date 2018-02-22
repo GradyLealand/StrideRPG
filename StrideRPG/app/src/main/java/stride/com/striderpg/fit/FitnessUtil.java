@@ -16,7 +16,8 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.Stride;
 
 /**
- * FitnessUtil class to deal with the reading of an Accounts daily step count.
+ * FitnessUtil class to deal with the reading of an Accounts daily
+ * step count.
  */
 public class FitnessUtil {
 
@@ -31,7 +32,8 @@ public class FitnessUtil {
     private GoogleSignInAccount account;
 
     /**
-     * FitnessUtil custom constructor for setting the Context and GoogleSignAccount.
+     * FitnessUtil custom constructor for setting the Context and
+     * GoogleSignAccount.
      * @param account GoogleSignInAccount.
      */
     public FitnessUtil(GoogleSignInAccount account) {
@@ -55,9 +57,11 @@ public class FitnessUtil {
                                 @Override
                                 public void onSuccess(DataSet dataSet) {
                                     Integer total =
-                                            dataSet.isEmpty()
-                                                    ? 0
-                                                    : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
+                                            dataSet.isEmpty() ? 0 : dataSet.getDataPoints()
+                                                    .get(0)
+                                                    .getValue(Field.FIELD_STEPS)
+                                                    .asInt();
+
                                     Log.d(TAG, "readData:onSuccess:value=" + total);
                                     G.activePlayer.updateSteps(total);
                                 }

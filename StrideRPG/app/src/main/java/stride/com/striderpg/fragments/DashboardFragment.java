@@ -2,6 +2,7 @@ package stride.com.striderpg.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class DashboardFragment extends Fragment {
     public DashboardFragment() { }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -93,31 +94,34 @@ public class DashboardFragment extends Fragment {
         // Initial Player level progress bar update.
         updateLevelProgressBar(G.activePlayer.getExperience());
 
-        // Add a new PropertyChangeListener to the active Player object for handling property changes.
-        // Whenever the Global Player (G.activePlayer) has a property changed with a value that isn't
-        // the same as the current value. This property change event will fire with the changed property
-        // as the propertyChangeEvent.getPropertyName(). switch through and change UI based on changes.
+        // Add a new PropertyChangeListener to the active Player
+        // object for handling property changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 Log.d(TAG, String.format(
                         G.locale,
-                        "propertyChange:%s has been fired", propertyChangeEvent.getPropertyName())
+                        "propertyChange:%s has been fired",
+                        propertyChangeEvent.getPropertyName())
                 );
 
                 switch (propertyChangeEvent.getPropertyName()) {
+
                     // If Player experience property has been changed.
                     case "experience":
                         updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
                         break;
+
                     // If Player username property has been changed.
                     case "username":
                         break;
+
                     // If Player level property has been changed.
                     case "level":
                         updateLevelText((int)propertyChangeEvent.getNewValue());
                         updateExpOnLevelUp();
                         break;
+
                     // If Player steps property has been changed.
                     case "steps":
                         updateStepsTextView((int)propertyChangeEvent.getNewValue());
@@ -127,6 +131,10 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    /**
+     * Helper method for updating the Dashboards active Player
+     * experience / experience needed TextView.
+     */
     public void updateExpOnLevelUp() {
         playerExpCount.setText(parseExpAmount(
                 G.activePlayer.getExperience(),
@@ -135,7 +143,8 @@ public class DashboardFragment extends Fragment {
     }
 
     /**
-     * Update the Dashboards steps TextView with the passed paremeter with commas added.
+     * Update the Dashboards steps TextView with the passed
+     * parameter with commas added.
      * @param newValue New steps amount.
      */
     private void updateStepsTextView(Integer newValue) {
@@ -155,7 +164,9 @@ public class DashboardFragment extends Fragment {
      * @param amount New Player experience amount.
      */
     private void updateLevelProgressBar(Integer amount) {
-        playerLevelProgressBar.setMax(LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel()));
+        playerLevelProgressBar.setMax(
+                LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel())
+        );
         playerLevelProgressBar.setProgress(amount);
 
         playerExpCount.setText(parseExpAmount(amount));
@@ -171,19 +182,29 @@ public class DashboardFragment extends Fragment {
     }
 
     /**
-     * Parse a String representing the users currentExp/expToLevel.
+     * Parse out a String representing the currentExp/expToLevel.
      * @return  Helpful String to show user exp/exp needed.
      */
     private String parseExpAmount(Integer exp) {
-        return exp + " / " + LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
-    }
-
-    private String parseExpAmount(Integer exp, Integer level) {
-        return exp + " / " + LevelGenerator.experienceToNextLevel(level);
+        return exp + " / " +
+                LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
     }
 
     /**
-     * Set the required Dashboard UI elements using the current view findViewById method.
+     * Parse out a String representing a specific levels required
+     * experience needed to level up.
+     * @param exp Experience passed used as current exp.
+     * @param level Level used to determined exp needed.
+     * @return String for exp/exp needed.
+     */
+    private String parseExpAmount(Integer exp, Integer level) {
+        return exp + " / " +
+                LevelGenerator.experienceToNextLevel(level);
+    }
+
+    /**
+     * Set the required Dashboard UI elements using the current view
+     * findViewById method.
      */
     private void getDashboardElements() {
         try {

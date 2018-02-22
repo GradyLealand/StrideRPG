@@ -4,7 +4,8 @@ package stride.com.striderpg.rpg.models.Quest;
 import stride.com.striderpg.rpg.Enums;
 
 /**
- * A Quest class to represent a single Quest in the game and the information about it.
+ * A Quest class to represent a single Quest in the game and the
+ * information about it.
  */
 public class Quest {
 
@@ -40,7 +41,8 @@ public class Quest {
     public Quest() { }
 
     /**
-     * Custom Constructor to generate a new Quest with specified parameters.
+     * Custom Constructor to generate a new Quest with specified
+     * parameters.
      * @param name Quest name.
      * @param description Quest description.
      * @param questLevel Enum QuestLevel.
@@ -56,7 +58,8 @@ public class Quest {
     }
 
     /**
-     * Implementation of a Quests toString method to print out the properties of a Quest object.
+     * Implementation of a Quests toString method to print out the
+     * properties of a Quest object.
      * @return Properties of the Quest object.
      */
     @Override

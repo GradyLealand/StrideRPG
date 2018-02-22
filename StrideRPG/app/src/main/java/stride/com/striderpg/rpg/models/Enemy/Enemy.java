@@ -40,7 +40,8 @@ public class Enemy {
     private Integer icon;
 
     /**
-     * The amount of experience that is rewarded to a Player on a successful Enemy defeat.
+     * The amount of experience that is rewarded to a Player on a
+     * successful Enemy defeat.
      */
     private Integer experienceReward;
 
@@ -71,7 +72,8 @@ public class Enemy {
     }
 
     /**
-     * Implementation of an Enemies toString method to print out the properties of an Enemy.
+     * Implementation of an Enemies toString method to print out the
+     * properties of an Enemy.
      * @return Properties of the Enemy object.
      */
     @Override

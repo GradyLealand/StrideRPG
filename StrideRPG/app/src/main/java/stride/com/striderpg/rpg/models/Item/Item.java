@@ -14,8 +14,9 @@ public class Item {
     private String name;
 
     /**
-     * The power level this weapon represents. A short handed way to describe
-     * how good an item is based on Players level and Skills.
+     * The power level this weapon represents. A short handed way
+     * to describe how good an item is based on Players level and
+     * Skills.
      */
     private Integer powerLevel;
 
@@ -53,7 +54,8 @@ public class Item {
     /**
      * Custom constructor to build an item with specified properties.
      * @param name Item name.
-     * @param powerLevel Item power level. Generally used to determine how powerful this item is.
+     * @param powerLevel Item power level. Generally used to determine
+     *                   how powerful this item is.
      * @param vitalityBoost Item vitality boost.
      * @param strengthBoost Item strength boost.
      * @param speedBoost Item speed boost.
@@ -72,7 +74,8 @@ public class Item {
     }
 
     /**
-     * Implementation of an Items toString method to print out the properties of an Item object.
+     * Implementation of an Items toString method to print out the
+     * properties of an Item object.
      * @return Properties of the Item object.
      */
     @Override
@@ -89,7 +92,8 @@ public class Item {
     }
 
     /**
-     * Compare two items together by comparing their power level property.
+     * Compare two items together by comparing their power level
+     * property.
      * @param item Item being compared to.
      * @return Boolean if this item is better than passed item.
      */

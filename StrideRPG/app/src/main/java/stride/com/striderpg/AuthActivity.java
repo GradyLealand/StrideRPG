@@ -40,8 +40,8 @@ import stride.com.striderpg.rpg.models.Player.ActivityLog;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * Main Authentication activity that handles any logging in, resource gathering
- * and database retrieval before moving onto the Main/Home/Navigation Activity.
+ * Main Authentication activity that handles any logging in, resource
+ * gathering and database retrieval before moving onto the Main/Home/Navigation Activity.
  */
 public class AuthActivity extends AppCompatActivity {
 

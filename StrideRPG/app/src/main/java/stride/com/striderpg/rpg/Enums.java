@@ -5,14 +5,16 @@ import java.util.Random;
 
 
 /**
- * Custom Class to hold the different enumerations that the RPG package can use freely.
+ * Custom Class to hold the different enumerations that the RPG
+ * package can use freely.
  */
 public class Enums {
 
     /**
-     * Generic Function to return a completely random enum from any enum instance passed
-     * into the function.
-     * @param tClass .class property of the Enum object being randomly chosen.
+     * Generic Function to return a completely random enum from any
+     * enum instance passed into the function.
+     * @param tClass .class property of the Enum object being randomly
+     *               chosen.
      * @param <T> The enum object the method is being called from.
      * @return Random enum constant from specified enum.
      */
@@ -23,7 +25,8 @@ public class Enums {
     }
 
     /**
-     * Enumeration ItemRarity to hold the different rarities that a Item can be.
+     * Enumeration ItemRarity to hold the different rarities that
+     * an Item can be.
      */
     public enum ItemRarity {
         COMMON("Common"),
@@ -54,7 +57,8 @@ public class Enums {
         }
 
         /**
-         * Custom function to return a random ItemRarity using a weighted percentage for each one.
+         * Custom function to return a random ItemRarity using a
+         * weighted percentage for each one.
          * COMMON = 65%
          * UNCOMMON = 15%
          * RARE = 10%
@@ -101,7 +105,8 @@ public class Enums {
     }
 
     /**
-     * Enumeration EnemyType to hold the different enemy types in game.
+     * Enumeration EnemyType to hold the different enemy types in
+     * game.
      */
     public enum EnemyType {
         TROLL("Troll"),
@@ -128,8 +133,8 @@ public class Enums {
     }
 
     /**
-     * Enumeration PlayerSort for holding the different possible sort types
-     * for the any Collections sorting of the Player class.
+     * Enumeration PlayerSort for holding the different possible
+     * sort types for the any Collections sorting of the Player class.
      */
     public enum PlayerSort {
         EXPERIENCE,
@@ -139,8 +144,9 @@ public class Enums {
     }
 
     /**
-     * Enumeration ActivityType to hold the different possible encounters that
-     * a Player can generate whenever a new encounter is being generated.
+     * Enumeration ActivityType to hold the different possible
+     * encounters that a Player can generate whenever a new encounter
+     * is being generated.
      */
     public enum ActivityType {
         ENEMY,
@@ -148,7 +154,8 @@ public class Enums {
     }
 
     /**
-     * Enumeration QuestType for holding the different Quests that a Player has in game.
+     * Enumeration QuestType for holding the different Quests that a
+     * Player has in game.
      */
     public enum QuestType {
         DEFEAT_ENEMIES(Constants.QUEST_DEFEAT_ENEMIES_TITLE, Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION),
@@ -166,7 +173,8 @@ public class Enums {
         private final String description;
 
         /**
-         * QuestType Constructor to initialize the QuestTypes with proper title and description.
+         * QuestType Constructor to initialize the QuestTypes with
+         * proper title and description.
          * @param title QuestType title.
          * @param description QuestType description.
          */
@@ -201,18 +209,21 @@ public class Enums {
         TEN("X", Constants.QUEST_LEVEL_TEN_GOAL);
 
         /**
-         * QuestLevel String to represent a roman numeral for QuestLevel representation.
+         * QuestLevel String to represent a roman numeral for
+         * QuestLevel representation.
          */
         private final String numeral;
 
         /**
-         * QuestLevel Integer to represent the goal a Player must reach to complete this level
+         * QuestLevel Integer to represent the goal a Player must
+         * reach to complete this level
          * of the Quest.
          */
         private final Integer goal;
 
         /**
-         * Create a static copy of the QuestLevel values to avoid copying each time next is called.
+         * Create a static copy of the QuestLevel values to avoid
+         * copying each time next is called.
          */
         private static QuestLevel[] values = values();
 
