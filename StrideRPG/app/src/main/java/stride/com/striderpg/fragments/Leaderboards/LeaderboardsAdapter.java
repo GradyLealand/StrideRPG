@@ -18,10 +18,14 @@ import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
  * LeaderboardsAdapter that extends the Recycler View Adapter of
- * type Player. Used to inflate the CardView for each Player.
+ * sub type PlayerViewHolder.
  */
 public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapter.PlayerViewHolder> {
 
+
+    /**
+     * LeaderboardsAdapter Logging tag.
+     */
     private static final String TAG = "LeaderboardsAdapter";
 
     /**

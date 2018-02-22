@@ -1,9 +1,11 @@
-package stride.com.striderpg.fragments;
+package stride.com.striderpg.fragments.Dashboard;
 
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,21 @@ public class DashboardFragment extends Fragment {
      * DashboardFragment Logging tag.
      */
     private static final String TAG = "DashboardFragment";
+
+
+    /**
+     * Instance the recycler view used to create the list of Activities
+     * in the GUI dynamically.
+     */
+    RecyclerView dashboardRecyclerView;
+
+
+    /**
+     * Generator instance used to retrieve Activities. Constructor
+     * call will get the current Activity HashMap from the
+     * active player object.
+     */
+    DashboardGenerator generator = new DashboardGenerator();
 
     /**
      * Player profile picture ImageView.
@@ -71,11 +88,32 @@ public class DashboardFragment extends Fragment {
      */
     public DashboardFragment() { }
 
+    /**
+     * Main DashboardFragment View creation. The RecyclerView,
+     * Adapter and LayoutManager are all used to here to create the
+     * layout and dynamically create the Dashboard Activity view.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        dashboardRecyclerView = rootView.findViewById(R.id.rv);
+        dashboardRecyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        dashboardRecyclerView.setLayoutManager(llm);
+
+        DashboardAdapter adapter = new DashboardAdapter(
+                generator.getActivities()
+        );
+        dashboardRecyclerView.setAdapter(adapter);
+
+        Log.d(TAG, "onCreateView:success");
+        return rootView;
+
+
     }
 
     @Override

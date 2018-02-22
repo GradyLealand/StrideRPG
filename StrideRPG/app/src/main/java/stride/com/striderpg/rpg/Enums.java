@@ -149,8 +149,29 @@ public class Enums {
      * is being generated.
      */
     public enum ActivityType {
-        ENEMY,
-        LOOT,
+        ENEMY("Enemy"),
+        LOOT("Loot");
+
+        /**
+         * String to hold the activity types human friendly name.
+         */
+        private final String name;
+
+        /**
+         * Constructor method for setting an activity types name.
+         * @param name
+         */
+        ActivityType(String name) {
+            this.name = name;
+        }
+
+        /**
+         * Retrieve the ActivityType name property.
+         * @return name property.
+         */
+        public String getName() {
+            return name;
+        }
     }
 
     /**
