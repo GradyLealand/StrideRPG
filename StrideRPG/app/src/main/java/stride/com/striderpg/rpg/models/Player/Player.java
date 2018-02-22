@@ -256,7 +256,15 @@ public class Player {
         else
         {
             // log the defeat
+            this.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_ENEMIES, 1);
 
+            // Increment Players current experience by the Enemies level
+            this.setExperience(this.getExperience() + enemy.getLevel());
+
+            // Check if the player cna level up after being defeated
+            if (this.canLevelUp()) {
+                this.levelUp();
+            }
         }
 
 
