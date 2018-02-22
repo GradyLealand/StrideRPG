@@ -226,25 +226,40 @@ public class Player {
      * @param enemy Enemy being defeated.
      */
     public void defeatEnemy(Enemy enemy) {
-        // modify players stats to see if it defeats the enemy
+        // get a random roll to modify players stats
+        int roll = r.nextInt(Constants.OFFLINE_BATTLE_MODIFIER);
 
-        // Increment Players current experience by the Enemies experience reward.
-        this.setExperience(this.getExperience() + enemy.getExperienceReward());
+        // calculate attack
+        int attack = ((this.skills.getStrength() + this.skills.getVitality())/2) + roll;
 
-        // Check if the Player can level up after defeating the Enemy.
-        if (this.canLevelUp()) {
-            this.levelUp();
+        // check to see if player defeats the enemy
+        if(attack >= enemy.getHealth())
+        {
+            // Increment Players current experience by the Enemies experience reward.
+            this.setExperience(this.getExperience() + enemy.getExperienceReward());
+
+            // Check if the Player can level up after defeating the Enemy.
+            if (this.canLevelUp()) {
+                this.levelUp();
+            }
+
+            // Update Players Bestiary after enemy defeat.
+            this.getBestiary().update(enemy.getType());
+
+            // Increment the Players Stats on enemy defeat.
+            this.getStats().updateEnemiesDefeated();
+            this.getStats().updateTotalExperience(enemy.getExperienceReward());
+
+            // Update Players Enemies defeated quest.
+            this.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
+        }
+        else
+        {
+            // log the defeat
+
         }
 
-        // Update Players Bestiary after enemy defeat.
-        this.getBestiary().update(enemy.getType());
 
-        // Increment the Players Stats on enemy defeat.
-        this.getStats().updateEnemiesDefeated();
-        this.getStats().updateTotalExperience(enemy.getExperienceReward());
-
-        // Update Players Enemies defeated quest.
-        this.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
     }
 
     public String getUniqueId() {
