@@ -2,7 +2,7 @@ package stride.com.striderpg.fragments.Generator;
 
 
 import stride.com.striderpg.fragments.BestiaryFragment;
-import stride.com.striderpg.fragments.DashboardFragment;
+import stride.com.striderpg.fragments.Dashboard.DashboardFragment;
 import stride.com.striderpg.fragments.InventoryFragment;
 import stride.com.striderpg.fragments.Leaderboards.LeaderboardsFragment;
 import stride.com.striderpg.fragments.QuestsFragment;

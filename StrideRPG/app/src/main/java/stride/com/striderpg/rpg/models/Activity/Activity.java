@@ -1,7 +1,11 @@
 package stride.com.striderpg.rpg.models.Activity;
 
 
+import org.joda.time.DateTime;
+
+
 import stride.com.striderpg.rpg.Enums;
+import stride.com.striderpg.rpg.utils.TimeParser;
 
 public class Activity {
 
@@ -62,6 +66,19 @@ public class Activity {
                 ", description='" + description + '\'' +
                 ", activityIconId=" + activityIconId +
                 '}';
+    }
+
+    public int compareTime(Activity anotherActivity) {
+        DateTime thisTime = TimeParser.parseTimestamp(this.getTimestamp());
+        DateTime otherTime = TimeParser.parseTimestamp(anotherActivity.getTimestamp());
+
+        if (thisTime == otherTime) {
+            return 0;
+        } else if (thisTime.isAfter(otherTime)) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     public String getTimestamp() {

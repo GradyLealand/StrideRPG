@@ -40,11 +40,45 @@ public class ActivityGenerator {
                 Enums.ActivityType.LOOT,
                 generateLootDescription(item),
                 // TODO : Use actual icons for loot. This is placeholder.
-                R.drawable.ic_launcher_foreground
+                R.drawable.ic_treasure_160004
         );
 
         Log.d(TAG, String.format(G.locale, "generateLootActivity:success:activity=%s", newActivity));
         return newActivity;
+    }
+
+    /**
+     * Generate an enemy activity from the enemy passed.
+     * @param enemy Enemy used to build activity description.
+     * @return Activity.
+     */
+    public static Activity generateEnemyActivity(Enemy enemy) {
+        Activity newActivity = new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.ENEMY,
+                generateEnemyDescription(enemy),
+                // TODO : Find real icons for enemies.
+                R.drawable.ic_troll_1300185
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateEnemyActivity:success:activity=%s", newActivity));
+        return newActivity;
+    }
+
+    /**
+     * Generate a String to represent this Enemy Activities description.
+     * @param enemy Enemy.
+     * @return Activity description.
+     */
+    private static String generateEnemyDescription(Enemy enemy) {
+        String desc = String.format(G.locale,
+                "You encountered and defeated a %s\nYou earned %d experience points!",
+                enemy.getName(),
+                enemy.getExperienceReward()
+        );
+
+        Log.d(TAG, String.format(G.locale, "generateEnemyDescription:success:description=%s", desc));
+        return desc;
     }
 
     /**
@@ -56,8 +90,8 @@ public class ActivityGenerator {
         String desc;
         if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
             desc = String.format(G.locale,
-                    "You found some %s loot! %s (%s) and replaced your old equipment! " +
-                            "Power: %d VIT: %d STR: %d SPD: %d...",
+                    "You found some %s loot! %s (%s) and replaced your old equipment!\n" +
+                            "Power: %d\nVitality: %d\nStrength: %d\nSpeed: %d",
                     item.getItemRarity().getName(),
                     item.getName(),
                     item.getItemType().getName(),
@@ -68,8 +102,8 @@ public class ActivityGenerator {
             );
         } else {
             desc = String.format(G.locale,
-                    "You found some %s loot! %s (%s)! " +
-                            "Power: %d VIT: %d STR: %d SPD: %d...",
+                    "You found some %s loot! %s (%s)!\n" +
+                            "Power: %d\nVIT: %d\nSTR: %d\nSPD: %d",
                     item.getItemRarity().getName(),
                     item.getName(),
                     item.getItemType().getName(),
@@ -94,7 +128,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateEnemyDefeatedDescription(enemy),
-                // TODO : Use actual icons for enemies. This is placeholder.
+                // TODO : Find real enemy icons.
                 R.drawable.ic_launcher_foreground
         );
 
@@ -129,6 +163,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateDefeatedByEnemyDescription(enemy),
+                // TODO : Find real enemy icons.
                 R.drawable.ic_launcher_foreground
         );
 

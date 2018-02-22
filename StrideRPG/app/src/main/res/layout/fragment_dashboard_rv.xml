@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="50dp"
     android:background="@color/material_light_gray">
 
 
@@ -10,7 +9,6 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/leaderboards_sort"
         android:background="@color/material_light_gray">
 
     </android.support.v7.widget.RecyclerView>
