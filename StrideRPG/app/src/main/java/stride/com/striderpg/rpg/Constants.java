@@ -101,9 +101,19 @@ public final class Constants {
     public static final String QUEST_DEFEAT_ENEMIES_TITLE = "Defeat Enemies";
 
     /**
+     * Constant for generic failed to defeat enemies quest title.
+     */
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed to Defeat Enemies";
+
+    /**
      * Constant for generic defeat enemies quest description.
      */
     public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies throughout your travels.";
+
+    /**
+     * Constant for generic defeat enemies quest description.
+     */
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to Defeat enemies throughout your travels.";
 
     /**
      * Constant for generic loot items quest title.
