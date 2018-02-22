@@ -53,7 +53,7 @@ public class EnemyGenerator {
         int health = calculateEnemyHealth(p);
         int minDamage = calculateEnemyMinDamage(p);
         int maxDamage = calculateEnemyMaxDamage(p);
-        int experience = calculateEnemyExp(p);
+        int experience = calculateEnemyExp(p, level - p.getLevel());
         int icon = parseIcon(enemyType);
 
         Enemy newEnemy = new Enemy(name, enemyType, level, health, minDamage, maxDamage, icon, experience);
@@ -80,11 +80,12 @@ public class EnemyGenerator {
      * Calculate a new Enemies experience reward based on the active
      * Player objects current level.
      * @param p activePlayer object.
-     * @param m level of the monster.
+     * @param l the difference in level
      * @return Enemy experience reward.
      */
-    private static int calculateEnemyExp(Player p) {
-        int expReward = p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER + r.nextInt(50);
+    private static int calculateEnemyExp(Player p, Integer l) {
+        int expReward = p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER
+                + (r.nextInt(50) + (Constants.ENEMY_EXPERIENCE_MODIFIER ) * l);
 
         Log.d(TAG, String.format(G.locale, "calculateEnemyExp:success:expReward=%s", expReward));
         return expReward;
