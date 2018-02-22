@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
+import java.util.Random;
 
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
@@ -23,6 +24,11 @@ import stride.com.striderpg.rpg.models.Enemy.Enemy;
  * in one Object.
  */
 public class Player {
+
+    /**
+     *
+     */
+    final Random r = new Random();
 
     /**
      * PropertyChangedSupport object to deal with raising events
@@ -220,6 +226,8 @@ public class Player {
      * @param enemy Enemy being defeated.
      */
     public void defeatEnemy(Enemy enemy) {
+        // modify players stats to see if it defeats the enemy
+
         // Increment Players current experience by the Enemies experience reward.
         this.setExperience(this.getExperience() + enemy.getExperienceReward());
 
