@@ -74,7 +74,7 @@ public final class Constants {
      * be generated while iterating through the possible activities
      * property in the OfflineGenerator.
      */
-    public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 50;
+    public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 60;
 
     /**
      * Constant that will be used to generate a random Integer
