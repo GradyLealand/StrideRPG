@@ -74,7 +74,7 @@ public final class Constants {
      * be generated while iterating through the possible activities
      * property in the OfflineGenerator.
      */
-    public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 50;
+    public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 60;
 
     /**
      * Constant that will be used to generate a random Integer
@@ -87,6 +87,12 @@ public final class Constants {
      * Constant that defines the minimum level a Player or Enemy can be.
      */
     public static final int MINIMUM_LEVEL = 1;
+
+    /**
+     * Constant that defines the maximum amount of points a Player
+     * can gain in their Vitality or Strength on level up.
+     */
+    public static final int LEVEL_UP_VIT_STR_MAX_AMOUNT = 3;
 
     /**
      * Constant used to determine the amount of milliseconds

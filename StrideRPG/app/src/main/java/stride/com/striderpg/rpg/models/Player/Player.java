@@ -26,11 +26,6 @@ import stride.com.striderpg.rpg.models.Enemy.Enemy;
 public class Player {
 
     /**
-     *
-     */
-    final Random r = new Random();
-
-    /**
      * PropertyChangedSupport object to deal with raising events
      * when a Property on this object/bean is changed.
      */
@@ -182,6 +177,10 @@ public class Player {
         this.setExperience(this.getExperience() -
                 LevelGenerator.experienceToNextLevel(this.getLevel()));
         this.setLevel(this.getLevel() + 1);
+
+        // Generate New Stats for a Player on level up.
+        // TODO: Let user choose the Skills they wish to increase.
+        this.skills.levelUpSkills();
     }
 
     /**
@@ -226,6 +225,10 @@ public class Player {
      * @param enemy Enemy being defeated.
      */
     public boolean fightEnemy(Enemy enemy) {
+
+        // Create a new Random instance for rolling.
+        Random r = new Random();
+
         // Random roll to modify player attack from skills.
         int roll = r.nextInt(Constants.OFFLINE_BATTLE_MODIFIER);
 

@@ -67,7 +67,7 @@ public class OfflineGenerator {
         int activities = 0;
         for (int i = 0; i < possibleActivities; i++) {
             double chance = Math.random() * 100;
-            if (chance > Constants.OFFLINE_ACTIVITY_CHANCE_PERCENT) {
+            if (chance > Constants.OFFLINE_ACTIVITY_CHANCE_PERCENT - (G.activePlayer.getSkills().getSpeed()/3)) {
                 activities++;
             }
         }

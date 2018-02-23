@@ -4,8 +4,10 @@ package stride.com.striderpg.rpg.models.Player;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
+import java.util.Random;
 
 import stride.com.striderpg.database.DBKeys;
+import stride.com.striderpg.rpg.Constants;
 
 /**
  * A Skills class to represent a Players skills or attributes in game.
@@ -73,6 +75,26 @@ public class Skills {
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Method to Increment a Players stats by a random amount.
+     */
+    public void levelUpSkills() {
+
+        // Create Random instance for choosing amounts to increment.
+        Random r = new Random();
+
+        // Increment skills.
+        this.setVitality(
+                this.getVitality() + r.nextInt(
+                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT
+                ));
+        this.setStrength(
+                this.getVitality() + r.nextInt(
+                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT
+                ));
+        this.setSpeed(this.getSpeed() + 1);
     }
 
     public Integer getVitality() {
