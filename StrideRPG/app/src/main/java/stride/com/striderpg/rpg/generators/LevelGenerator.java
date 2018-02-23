@@ -29,11 +29,11 @@ public class LevelGenerator {
     /**
      * Calculate the total amount of experience required for a
      * Player to level up.
-     * @param currentLevel Players current level.
+     * @param level Players current level.
      * @return Next level total experience required.
      */
-    public static Integer experienceToNextLevel(Integer currentLevel) {
-        int nextLevelExp = (int)Math.round((LEVEL_CONST_1 * (Math.pow(currentLevel, 3))) / LEVEL_CONST_2) + 200;
+    public static Integer experienceToNextLevel(Integer level) {
+        int nextLevelExp = (int)Math.round((LEVEL_CONST_1 * (Math.pow(level, 3))) / LEVEL_CONST_2) + 200;
 
         Log.d(TAG, String.format(G.locale, "experienceToNextLevel:success:nextLevelExp=%d", nextLevelExp));
         return nextLevelExp;
@@ -51,5 +51,15 @@ public class LevelGenerator {
 
         Log.d(TAG, String.format("experienceRemaining:success:expRemaining=%d", expRemaining));
         return expRemaining;
+    }
+
+    /**
+     * Return a readable string of Players Experience/ExpNeeded.
+     * @param currentExp Current Player experience.
+     * @param level Current Player level.
+     * @return Readable exp/expneeded String.
+     */
+    public static String getReadableExpString(Integer currentExp, Integer level) {
+        return currentExp + " / " + experienceToNextLevel(level);
     }
 }

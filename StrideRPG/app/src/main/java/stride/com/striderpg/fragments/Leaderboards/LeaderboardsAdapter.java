@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -57,12 +58,23 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
 
     @Override
     public void onBindViewHolder(PlayerViewHolder playerViewHolder, int i) {
+
+        // Set players[i] playerRank TextView to parsed Player rank.
+        playerViewHolder.playerRank.setText(parsePlayerRank(i));
+
         // Set players player[i] playerUsername TextView to Player username.
         playerViewHolder.playerUsername.setText(players.get(i).getUsername());
 
         // Set players player[i] playerLevel TextView to Player level.
         playerViewHolder.playerLevel.setText(String.format(
-                G.locale, "%d", players.get(i).getLevel())
+                G.locale, "Level %d", players.get(i).getLevel())
+        );
+
+        playerViewHolder.playerExp.setText(
+                LevelGenerator.getReadableExpString(
+                        players.get(i).getExperience(),
+                        players.get(i).getLevel()
+                )
         );
 
         // Set players player[i] playerImage ImageView to Player image.
@@ -83,6 +95,19 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
     }
 
     /**
+     * Parse a Players rank by using the position in the ArrayList i.
+     * @param i Players rank based on sorted ArrayList.
+     * @return String representing Player rank.
+     */
+    private String parsePlayerRank(int i) {
+        if (i < 10) {
+            return "0" + (i + 1);
+        } else {
+            return String.valueOf(i + 1);
+        }
+    }
+
+    /**
      * Static sub-class for holding the PlayerViewHolder that contains
      * all relevant information about the Player object being inflated
      * and displayed.
@@ -94,6 +119,11 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         CardView cv;
 
         /**
+         * Player rank in the leaderboards TextView.
+         */
+        TextView playerRank;
+
+        /**
          * Player username TextView.
          */
         TextView playerUsername;
@@ -102,6 +132,11 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
          * Player level TextView.
          */
         TextView playerLevel;
+
+        /**
+         * Player experience TextView.
+         */
+        TextView playerExp;
 
         /**
          * Player image ImageView.
@@ -116,8 +151,10 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         PlayerViewHolder(View itemView) {
             super(itemView);
             cv = itemView.findViewById(R.id.cv);
+            playerRank = itemView.findViewById(R.id.player_rank);
             playerUsername = itemView.findViewById(R.id.player_username);
             playerLevel = itemView.findViewById(R.id.player_level);
+            playerExp = itemView.findViewById(R.id.player_exp);
             playerImage = itemView.findViewById(R.id.player_profile_picture);
         }
     }

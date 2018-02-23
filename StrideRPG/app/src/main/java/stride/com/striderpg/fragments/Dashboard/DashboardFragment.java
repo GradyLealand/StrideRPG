@@ -112,8 +112,6 @@ public class DashboardFragment extends Fragment {
 
         Log.d(TAG, "onCreateView:success");
         return rootView;
-
-
     }
 
     @Override
@@ -224,8 +222,7 @@ public class DashboardFragment extends Fragment {
      * @return  Helpful String to show user exp/exp needed.
      */
     private String parseExpAmount(Integer exp) {
-        return exp + " / " +
-                LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel());
+        return LevelGenerator.getReadableExpString(exp, G.activePlayer.getLevel());
     }
 
     /**

@@ -101,12 +101,19 @@ public class TimeParser {
         Period period = interval.toPeriod();
 
         String time = "";
+
         if (period.getHours() > 0) {
-            time = String.format(G.locale, "%s hours ago.", period.getHours());
+            time = String.format(G.locale, "%d hours ago.", period.getHours());
+        } else if (period.getHours() == 1) {
+            time = String.format(G.locale, "%d hour ago.", period.getHours());
         } else if (period.getHours() == 0) {
-            time = String.format(G.locale, "%s minutes ago.", period.getMinutes());
+            time = String.format(G.locale, "%d minutes ago.", period.getMinutes());
+        } else if (period.getHours() == 0 && period.getMinutes() == 1) {
+            time = String.format(G.locale, "%d minute ago.", period.getMinutes());
         } else if (period.getHours() == 0 && period.getMinutes() == 0) {
-            time = String.format(G.locale, "%s seconds ago.", period.getSeconds());
+            time = String.format(G.locale, "%d seconds ago.", period.getSeconds());
+        } else if (period.getHours() == 0 && period.getMinutes() == 0 && period.getSeconds() == 1) {
+            time = String.format(G.locale, "%d second ago.", period.getSeconds());
         }
         return time;
     }

@@ -4,46 +4,84 @@
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:elevation="8dp">
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="2dp"
+    android:elevation="8dp"
+    android:padding="3dp">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="4"
+        android:rowCount="2">
+
+        <TextView
+            android:id="@+id/player_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:layout_rowWeight="1"
+            android:padding="5dp"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/player_profile_picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_column="1"
+            android:layout_margin="5dp"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:layout_rowWeight="1" />
+
+        <TextView
+            android:id="@+id/player_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_row="0"
+            android:layout_toEndOf="@+id/player_profile_picture"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/player_level"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="5dp"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_toEndOf="@+id/player_profile_picture"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/player_exp"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:layout_rowWeight="1"
+            android:gravity="center" />
+
+    </GridLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/player_profile_picture"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
-            android:id="@+id/player_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/player_profile_picture"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/player_level_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/player_username"
-            android:layout_toEndOf="@+id/player_profile_picture"
-            android:text="@string/player_level_label" />
-
-        <TextView
-            android:id="@+id/player_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/player_username"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/player_level_label" />
 
     </RelativeLayout>
 
