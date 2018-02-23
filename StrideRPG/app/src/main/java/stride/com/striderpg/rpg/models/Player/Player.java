@@ -182,6 +182,11 @@ public class Player {
         this.setExperience(this.getExperience() -
                 LevelGenerator.experienceToNextLevel(this.getLevel()));
         this.setLevel(this.getLevel() + 1);
+
+        //this is a temporary way to increase player stats
+        this.skills.setVitality(this.skills.getVitality() + r.nextInt(3));
+        this.skills.setStrength(this.skills.getStrength() + r.nextInt(3));
+        this.skills.setSpeed(this.skills.getSpeed() + 1);
     }
 
     /**
