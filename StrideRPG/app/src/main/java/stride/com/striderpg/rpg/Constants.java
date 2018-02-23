@@ -89,6 +89,12 @@ public final class Constants {
     public static final int MINIMUM_LEVEL = 1;
 
     /**
+     * Constant that defines the maximum amount of points a Player
+     * can gain in their Vitality or Strength on level up.
+     */
+    public static final int LEVEL_UP_VIT_STR_MAX_AMOUNT = 3;
+
+    /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every active player database push.
      */
