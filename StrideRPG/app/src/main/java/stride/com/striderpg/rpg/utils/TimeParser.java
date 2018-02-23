@@ -90,7 +90,6 @@ public class TimeParser {
 
     /**
      * Convert a Timestamp into a readable human friendly
-     * timestamp, ex: 02-22-18 18:49:11 -> 3 hours ago...
      * @param timestamp Timestamp being converted to readable string.
      * @return Human friendly timestamp.
      */
@@ -101,6 +100,14 @@ public class TimeParser {
         Interval interval = new Interval(activity, now);
         Period period = interval.toPeriod();
 
-        return String.format(G.locale, "%s hours ago", period.getHours());
+        String time = "";
+        if (period.getHours() > 0) {
+            time = String.format(G.locale, "%s hours ago.", period.getHours());
+        } else if (period.getHours() == 0) {
+            time = String.format(G.locale, "%s minutes ago.", period.getMinutes());
+        } else if (period.getHours() == 0 && period.getMinutes() == 0) {
+            time = String.format(G.locale, "%s seconds ago.", period.getSeconds());
+        }
+        return time;
     }
 }
