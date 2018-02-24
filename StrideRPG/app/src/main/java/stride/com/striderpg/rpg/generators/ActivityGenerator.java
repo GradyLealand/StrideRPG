@@ -85,7 +85,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.LOOT,
                 generateLootDescription(item),
                 // TODO : Use actual icons for loot. This is placeholder.
-                R.drawable.ic_treasure_160004
+                R.mipmap.ic_launcher_round
         );
 
         Log.d(TAG, String.format(G.locale, "generateLootActivity:success:activity=%s", newActivity));
@@ -138,7 +138,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.ENEMY,
                 generateEnemyDefeatedDescription(enemy),
                 // TODO : Find real enemy icons.
-                R.drawable.ic_launcher_foreground
+                R.mipmap.ic_launcher_round
         );
 
         Log.d(TAG, String.format(G.locale, "generateEnemyDefeatedActivity:success:activity=%s", newActivity));
@@ -173,7 +173,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.ENEMY,
                 generateDefeatedByEnemyDescription(enemy),
                 // TODO : Find real enemy icons.
-                R.drawable.ic_launcher_foreground
+                R.mipmap.ic_launcher_round
         );
 
         Log.d(TAG, String.format(G.locale, "generateDefeatedByEnemyActivity:success:activity=%s", newActivity));
@@ -196,6 +196,13 @@ public class ActivityGenerator {
         return desc;
     }
 
+    /**
+     * Parse an Enemy name passed to the method into the proper "a" or "an"
+     * based on the first letter of the Enemies name. "a,e,i,o,u" would
+     * result in an "an" return, otherwise return "a".
+     * @param enemyName Enemy name being parsed.
+     * @return "a" or "an" plus Enemy name.
+     */
     private static String parseEnemyNameToProperAOrAn(String enemyName) {
         String firstLetterLower = String.valueOf(enemyName.charAt(0)).toLowerCase();
         String[] vowels = {"a", "e", "i", "o", "u"};
