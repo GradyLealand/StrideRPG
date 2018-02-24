@@ -45,7 +45,7 @@ public class FirebaseDBUtil {
             database.child(DBKeys.USERS_KEY)
                     .child(player.getUniqueId())
                     .setValue(player);
-            Log.d(TAG, String.format(G.locale, "pushPlayer:success, Player: %s", player.toString()));
+            Log.d(TAG, "pushPlayer:success");
         } catch (Exception e) {
             Log.e(TAG, "pushPlayer:error", e);
         }

@@ -159,7 +159,7 @@ public class Enums {
 
         /**
          * Constructor method for setting an activity types name.
-         * @param name
+         * @param name ActivityType readable name.
          */
         ActivityType(String name) {
             this.name = name;

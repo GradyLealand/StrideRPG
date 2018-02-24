@@ -24,6 +24,57 @@ public class ActivityGenerator {
     private static final String TAG = "ActivityGenerator";
 
     /**
+     * Base Activity generator that will create a new Activity
+     * based on the ActivityType passed to the method.
+     * @param type BaseActivity enumeration type.
+     * @return Newly generated Activity.
+     */
+    public static Activity generateActivity(Enums.ActivityType type) {
+        // Generate a new base Activity.
+        Activity activity = new Activity();
+
+        // Switch case through the ActivityType passed into method.
+        switch (type) {
+
+            // LOOT ActivityType.
+            case LOOT:
+                // Generate new Item based on Active Player stats and generate
+                // the loot Activity that will be associated with this item.
+                Item item = ItemGenerator.generate(G.activePlayer);
+                activity = generateLootActivity(item);
+
+                // Update the Players Stats total items looted property.
+                G.activePlayer.getStats().updateItemsLooted();
+                // Update Players Items looted quest.
+                G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
+
+                // Check if the new Item is better than the Item equipped currently
+                // on the Global activePlayer.
+                if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
+                    G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
+                }
+                break;
+
+            // ENEMY ActivityType
+            case ENEMY:
+                // Generate new random Enemy.
+                Enemy enemy = EnemyGenerator.generate(G.activePlayer);
+                // Check if the Player has defeated, or lost to this new Enemy.
+                boolean fightResult = G.activePlayer.fightEnemy(enemy);
+
+                // Based on the result of the fightEnemy method, generate
+                // a new Activity for the Players ActivityLog.
+                if (fightResult) {
+                    activity = generateEnemyDefeatedActivity(enemy);
+                } else {
+                    activity = generateDefeatedByEnemyActivity(enemy);
+                }
+                break;
+        }
+        return activity;
+    }
+
+    /**
      * Generate a loot activity from the item passed.
      * @param item Item used to build activity description.
      * @return Activity.
