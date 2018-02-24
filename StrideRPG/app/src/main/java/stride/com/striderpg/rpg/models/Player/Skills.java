@@ -102,7 +102,7 @@ public class Skills {
     }
     public void setVitality(Integer vitality) {
         if (!Objects.equals(this.vitality, vitality))
-            changes.firePropertyChange(DBKeys.SKILLS_VITALITY, this.vitality, vitality);
+            changes.firePropertyChange(Constants.PROPERTY_VITALITY, this.vitality, vitality);
         this.vitality = vitality;
     }
 
@@ -111,7 +111,7 @@ public class Skills {
     }
     public void setStrength(Integer strength) {
         if (!Objects.equals(this.strength, strength))
-            changes.firePropertyChange(DBKeys.SKILLS_STRENGTH, this.strength, strength);
+            changes.firePropertyChange(Constants.PROPERTY_STRENGTH, this.strength, strength);
         this.strength = strength;
     }
 
@@ -120,7 +120,7 @@ public class Skills {
     }
     public void setSpeed(Integer speed) {
         if (!Objects.equals(this.speed, speed))
-            changes.firePropertyChange(DBKeys.SKILLS_SPEED, this.speed, speed);
+            changes.firePropertyChange(Constants.PROPERTY_SPEED, this.speed, speed);
         this.speed = speed;
     }
 }

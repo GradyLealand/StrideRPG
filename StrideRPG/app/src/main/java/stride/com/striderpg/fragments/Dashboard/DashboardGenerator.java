@@ -28,6 +28,10 @@ public class DashboardGenerator {
      */
     private ArrayList<Activity> activities = new ArrayList<>();
 
+    /**
+     * Simple DashboardGenerator Constructor to call build
+     * and sort the current ActivityLog.
+     */
     DashboardGenerator() {
         updateDashboard();
     }
@@ -44,6 +48,16 @@ public class DashboardGenerator {
         } catch (Exception e) {
             Log.e(TAG, "sort:error:", e);
         }
+    }
+
+    /**
+     * Custom insert method to insert an activity into the current
+     * ArrayList and re sort the ActivityLog ArrayList.
+     * @param activityAdded New activity being inserted.
+     */
+    public void insert(Activity activityAdded) {
+        activities.add(activityAdded);
+        sort(activities);
     }
 
     /**

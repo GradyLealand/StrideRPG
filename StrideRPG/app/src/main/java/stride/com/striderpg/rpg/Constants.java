@@ -11,12 +11,10 @@ public final class Constants {
      * Constant to hold a Players default vitality.
      */
     public static final Integer PLAYER_DEFAULT_VITALITY = 5;
-
     /**
      * Constant to hold a Players default strength.
      */
     public static final Integer PLAYER_DEFAULT_STRENGTH = 5;
-
     /**
      * Constant to hold a Players default speed.
      */
@@ -84,6 +82,12 @@ public final class Constants {
     public static final int OFFLINE_BATTLE_MODIFIER = 10;
 
     /**
+     * Constant for defining how many steps a player must reach
+     * in game before an online Activity is generated for them.
+     */
+    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 100;
+
+    /**
      * Constant that defines the minimum level a Player or Enemy can be.
      */
     public static final int MINIMUM_LEVEL = 1;
@@ -95,11 +99,51 @@ public final class Constants {
     public static final int LEVEL_UP_VIT_STR_MAX_AMOUNT = 3;
 
     /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Steps property.
+     */
+    public static final String PROPERTY_STEPS = "STEPS";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Level property.
+     */
+    public static final String PROPERTY_LEVEL = "LEVEL";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Experience property.
+     */
+    public static final String PROPERTY_EXP = "EXPERIENCE";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Username property.
+     */
+    public static final String PROPERTY_USERNAME = "USERNAME";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Strength property.
+     */
+    public static final String PROPERTY_STRENGTH = "STRENGTH";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Vitality property.
+     */
+    public static final String PROPERTY_VITALITY = "VITALITY";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the Speed property.
+     */
+    public static final String PROPERTY_SPEED = "SPEED";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the ActivityLog log property.
+     */
+    public static final String PROPERTY_ONLINE_ACTIVITY = "ONLINE_ACTIVITY";
+
+    /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every active player database push.
      */
     public static final long DATABASE_PUSH_RATE = 30000;
-
     /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every fitnessUtil readData call.
@@ -110,38 +154,30 @@ public final class Constants {
      * Constant for generic defeat enemies quest title.
      */
     public static final String QUEST_DEFEAT_ENEMIES_TITLE = "Defeat Enemies";
-
     /**
      * Constant for generic failed to defeat enemies quest title.
      */
     public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed To Defeat Enemies";
-
     /**
      * Constant for generic loot items quest title.
      */
     public static final String QUEST_LOOT_ITEMS_TITLE = "Loot Items";
-
     /**
      * Constant for generic defeat enemies quest description.
      */
     public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies throughout your travels.";
-
     /**
      * Constant for generic defeat enemies quest description.
      */
     public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to defeat enemies throughout your travels.";
-
-
     /**
      * Constant for generic loot items quest description.
      */
     public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items throughout your travels.";
-
     /**
      * Constant for generic take steps quest title.
      */
     public static final String QUEST_TAKE_STEPS_TITLE = "Take Steps";
-
     /**
      * Constant for generic take steps quest description.
      */
@@ -149,52 +185,42 @@ public final class Constants {
 
 
     // TODO: These goals should be dependant on the Quest itself, some goals need higher thresholds, etc.
-
     /**
      * Quest Level One progress goal.
      */
     public static final Integer QUEST_LEVEL_ONE_GOAL = 25;
-
     /**
      * Quest Level Two progress goal.
      */
     public static final Integer QUEST_LEVEL_TWO_GOAL = 50;
-
     /**
      * Quest Level Three progress goal.
      */
     public static final Integer QUEST_LEVEL_THREE_GOAL = 100;
-
     /**
      * Quest Level Four progress goal.
      */
     public static final Integer QUEST_LEVEL_FOUR_GOAL = 200;
-
     /**
      * Quest Level Five progress goal.
      */
     public static final Integer QUEST_LEVEL_FIVE_GOAL = 500;
-
     /**
      * Quest Level Six progress goal.
      */
     public static final Integer QUEST_LEVEL_SIX_GOAL = 1000;
-
     /**
      * Quest Level Seven progress goal.
      */
     public static final Integer QUEST_LEVEL_SEVEN_GOAL = 2000;
-
     /**
      * Quest Level Eight progress goal.
      */
     public static final Integer QUEST_LEVEL_EIGHT_GOAL = 5000;
-
     /**
      * Quest Level Nine progress goal.
      */
     public static final Integer QUEST_LEVEL_NINE_GOAL = 10000;
-
     /**
      * Quest Level Ten progress goal.
      */

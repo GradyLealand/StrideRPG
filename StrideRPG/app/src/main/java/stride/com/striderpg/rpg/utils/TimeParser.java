@@ -100,21 +100,32 @@ public class TimeParser {
         Interval interval = new Interval(activity, now);
         Period period = interval.toPeriod();
 
-        String time = "";
+        Integer seconds = period.getSeconds();
+        Integer minutes = period.getMinutes();
+        Integer hours = period.getHours();
 
-        if (period.getHours() > 0) {
-            time = String.format(G.locale, "%d hours ago.", period.getHours());
-        } else if (period.getHours() == 1) {
-            time = String.format(G.locale, "%d hour ago.", period.getHours());
-        } else if (period.getHours() == 0) {
-            time = String.format(G.locale, "%d minutes ago.", period.getMinutes());
-        } else if (period.getHours() == 0 && period.getMinutes() == 1) {
-            time = String.format(G.locale, "%d minute ago.", period.getMinutes());
-        } else if (period.getHours() == 0 && period.getMinutes() == 0) {
-            time = String.format(G.locale, "%d seconds ago.", period.getSeconds());
-        } else if (period.getHours() == 0 && period.getMinutes() == 0 && period.getSeconds() == 1) {
-            time = String.format(G.locale, "%d second ago.", period.getSeconds());
+        if (hours == 0 && minutes == 0 && seconds == 0) {
+            return "just now.";
+        } else if (hours == 0) {
+            if (minutes == 0) {
+                if (seconds == 1) {
+                    return String.format(G.locale, "%d second ago.", seconds);
+                } else {
+                    return String.format(G.locale, "%d seconds ago.", seconds);
+                }
+            } else {
+                if (minutes == 1) {
+                    return String.format(G.locale, "%d minute ago.", minutes);
+                } else {
+                    return String.format(G.locale, "%d minutes ago.", minutes);
+                }
+            }
+        } else {
+            if (hours == 1) {
+                return String.format(G.locale, "%d hour ago.", hours);
+            } else {
+                return String.format(G.locale, "%d hours ago.", hours);
+            }
         }
-        return time;
     }
 }

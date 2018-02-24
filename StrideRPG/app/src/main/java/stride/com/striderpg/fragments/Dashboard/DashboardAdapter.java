@@ -32,7 +32,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
      */
     private ArrayList<Activity> activities;
 
-
     /**
      * Constructor method for the DashboardAdapter, sets the
      * activities ArrayList to the specified ArrayList.

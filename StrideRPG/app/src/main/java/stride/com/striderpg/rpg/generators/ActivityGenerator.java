@@ -24,6 +24,57 @@ public class ActivityGenerator {
     private static final String TAG = "ActivityGenerator";
 
     /**
+     * Base Activity generator that will create a new Activity
+     * based on the ActivityType passed to the method.
+     * @param type BaseActivity enumeration type.
+     * @return Newly generated Activity.
+     */
+    public static Activity generateActivity(Enums.ActivityType type) {
+        // Generate a new base Activity.
+        Activity activity = new Activity();
+
+        // Switch case through the ActivityType passed into method.
+        switch (type) {
+
+            // LOOT ActivityType.
+            case LOOT:
+                // Generate new Item based on Active Player stats and generate
+                // the loot Activity that will be associated with this item.
+                Item item = ItemGenerator.generate(G.activePlayer);
+                activity = generateLootActivity(item);
+
+                // Update the Players Stats total items looted property.
+                G.activePlayer.getStats().updateItemsLooted();
+                // Update Players Items looted quest.
+                G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
+
+                // Check if the new Item is better than the Item equipped currently
+                // on the Global activePlayer.
+                if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
+                    G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
+                }
+                break;
+
+            // ENEMY ActivityType
+            case ENEMY:
+                // Generate new random Enemy.
+                Enemy enemy = EnemyGenerator.generate(G.activePlayer);
+                // Check if the Player has defeated, or lost to this new Enemy.
+                boolean fightResult = G.activePlayer.fightEnemy(enemy);
+
+                // Based on the result of the fightEnemy method, generate
+                // a new Activity for the Players ActivityLog.
+                if (fightResult) {
+                    activity = generateEnemyDefeatedActivity(enemy);
+                } else {
+                    activity = generateDefeatedByEnemyActivity(enemy);
+                }
+                break;
+        }
+        return activity;
+    }
+
+    /**
      * Generate a loot activity from the item passed.
      * @param item Item used to build activity description.
      * @return Activity.
@@ -34,7 +85,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.LOOT,
                 generateLootDescription(item),
                 // TODO : Use actual icons for loot. This is placeholder.
-                R.drawable.ic_treasure_160004
+                R.mipmap.ic_launcher
         );
 
         Log.d(TAG, String.format(G.locale, "generateLootActivity:success:activity=%s", newActivity));
@@ -86,8 +137,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateEnemyDefeatedDescription(enemy),
-                // TODO : Find real enemy icons.
-                R.drawable.ic_launcher_foreground
+                R.mipmap.ic_launcher
         );
 
         Log.d(TAG, String.format(G.locale, "generateEnemyDefeatedActivity:success:activity=%s", newActivity));
@@ -122,7 +172,7 @@ public class ActivityGenerator {
                 Enums.ActivityType.ENEMY,
                 generateDefeatedByEnemyDescription(enemy),
                 // TODO : Find real enemy icons.
-                R.drawable.ic_launcher_foreground
+                R.mipmap.ic_launcher
         );
 
         Log.d(TAG, String.format(G.locale, "generateDefeatedByEnemyActivity:success:activity=%s", newActivity));
@@ -145,6 +195,13 @@ public class ActivityGenerator {
         return desc;
     }
 
+    /**
+     * Parse an Enemy name passed to the method into the proper "a" or "an"
+     * based on the first letter of the Enemies name. "a,e,i,o,u" would
+     * result in an "an" return, otherwise return "a".
+     * @param enemyName Enemy name being parsed.
+     * @return "a" or "an" plus Enemy name.
+     */
     private static String parseEnemyNameToProperAOrAn(String enemyName) {
         String firstLetterLower = String.valueOf(enemyName.charAt(0)).toLowerCase();
         String[] vowels = {"a", "e", "i", "o", "u"};

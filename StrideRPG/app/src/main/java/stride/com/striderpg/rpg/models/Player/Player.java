@@ -14,6 +14,7 @@ import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.generators.ItemGenerator;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
+import stride.com.striderpg.rpg.generators.OnlineGenerator;
 import stride.com.striderpg.rpg.models.Bestiary.Bestiary;
 import stride.com.striderpg.rpg.utils.TimeParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
@@ -189,6 +190,7 @@ public class Player {
      * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
+
         // Initial check for a null step count (first check on app start-up).
         // Secondary check for total being less than lastStepCount (midnight fitness reset).
         if (G.lastStepCount == null || total < G.lastStepCount) {
@@ -215,6 +217,11 @@ public class Player {
                 // Finally, set the last step count to the total from the readData() call
                 // in the FitnessUtil.
                 G.lastStepCount = total;
+
+                // Also increment the Global session steps counter and then do a
+                // check to see if an Activity will be generated for the user.
+                G.onlineActivitySteps += steps;
+                OnlineGenerator.calculateOnlineActivity();
             }
         }
     }
@@ -300,7 +307,7 @@ public class Player {
 
     public void setLevel(Integer level) {
         if (!Objects.equals(this.level, level))
-            changes.firePropertyChange(DBKeys.LEVEL_KEY, this.level, level);
+            changes.firePropertyChange(Constants.PROPERTY_LEVEL, this.level, level);
         this.level = level;
     }
 
@@ -310,7 +317,7 @@ public class Player {
 
     public void setExperience(Integer experience) {
         if (!Objects.equals(this.experience, experience))
-            changes.firePropertyChange(DBKeys.EXPERIENCE_KEY, this.experience, experience);
+            changes.firePropertyChange(Constants.PROPERTY_EXP, this.experience, experience);
         this.experience = experience;
     }
 
@@ -320,7 +327,7 @@ public class Player {
 
     public void setSteps(Integer steps) {
         if (!Objects.equals(this.steps, steps))
-            changes.firePropertyChange(DBKeys.STEPS_KEY, this.steps, steps);
+            changes.firePropertyChange(Constants.PROPERTY_STEPS, this.steps, steps);
         this.steps = steps;
     }
 

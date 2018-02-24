@@ -3,6 +3,8 @@ package stride.com.striderpg.rpg.models.Player;
 
 import org.joda.time.DateTime;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,6 +19,12 @@ import stride.com.striderpg.rpg.utils.TimeParser;
  * String as the key and an Activity as the value.
  */
 public class ActivityLog {
+
+    /**
+     * PropertyChangedSupport object to deal with raising events
+     * when a Property on this object/bean is changed.
+     */
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * HashMap to store a Players Encounters that are generated while
@@ -43,10 +51,29 @@ public class ActivityLog {
     }
 
     /**
+     * Attach a new PropertyChangeListener to this classes
+     * PropertyChangeSupport object.
+     * @param listener Listener implementation.
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changes.addPropertyChangeListener(listener);
+    }
+
+    /**
      * Add a new Activity to the ActivityLog log.
-     * @param activity Activity being added to log.
+     * @param activity Activity being added to the log.
      */
     public void addActivity(Activity activity) {
+        log.put(activity.getTimestamp(), activity);
+    }
+
+    /**
+     * Add a new Activity to the ActivityLog log.
+     * Also fire a property changed event for dealing with ui.
+     * @param activity Activity being added to the log.
+     */
+    public void addOnlineActivity(Activity activity) {
+        changes.firePropertyChange(Constants.PROPERTY_ONLINE_ACTIVITY, null, activity);
         log.put(activity.getTimestamp(), activity);
     }
 
