@@ -39,4 +39,11 @@ public final class G {
      * region.
      */
     public static Locale locale = Locale.getDefault();
+
+    /**
+     * Use an Integer to store Players current step count, once
+     * this number reaches a certain threshold, it is reset back to
+     * 0, this process continues as the Player has the game open.
+     */
+    public static Integer onlineActivitySteps = 0;
 }

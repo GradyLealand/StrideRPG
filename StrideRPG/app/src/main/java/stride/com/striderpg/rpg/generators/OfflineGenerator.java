@@ -93,16 +93,11 @@ public class OfflineGenerator {
             Enums.ActivityType type = Enums.random(Enums.ActivityType.class);
             switch (type) {
                 case LOOT:
-
-                    // Generate new random Item.
                     Item item = ItemGenerator.generate(G.activePlayer);
-
-                    // Create the new Activity and set the timestamp to a random date between
                     activity = ActivityGenerator.generateLootActivity(item);
 
                     // Update the Players Stats total items looted property.
                     G.activePlayer.getStats().updateItemsLooted();
-
                     // Update Players Items looted quest.
                     G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
 

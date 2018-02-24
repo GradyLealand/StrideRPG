@@ -20,7 +20,9 @@ import java.text.NumberFormat;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
+import stride.com.striderpg.rpg.models.Activity.Activity;
 
 /**
  * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information
@@ -47,6 +49,11 @@ public class DashboardFragment extends Fragment {
      * active player object.
      */
     DashboardGenerator generator = new DashboardGenerator();
+
+    /**
+     * Adapter instance global to update on Activity added.
+     */
+    DashboardAdapter adapter;
 
     /**
      * Player profile picture ImageView.
@@ -105,9 +112,7 @@ public class DashboardFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         dashboardRecyclerView.setLayoutManager(llm);
 
-        DashboardAdapter adapter = new DashboardAdapter(
-                generator.getActivities()
-        );
+        adapter = new DashboardAdapter(generator.getActivities());
         dashboardRecyclerView.setAdapter(adapter);
 
         Log.d(TAG, "onCreateView:success");
@@ -135,33 +140,43 @@ public class DashboardFragment extends Fragment {
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                Log.d(TAG, String.format(
-                        G.locale,
-                        "propertyChange:%s has been fired",
-                        propertyChangeEvent.getPropertyName())
-                );
-
                 switch (propertyChangeEvent.getPropertyName()) {
-
                     // If Player experience property has been changed.
-                    case "experience":
+                    case Constants.PROPERTY_EXP:
                         updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
                         break;
-
                     // If Player username property has been changed.
-                    case "username":
+                    case Constants.PROPERTY_USERNAME:
                         break;
-
                     // If Player level property has been changed.
-                    case "level":
+                    case Constants.PROPERTY_LEVEL:
                         updateLevelText((int)propertyChangeEvent.getNewValue());
                         updateExpOnLevelUp();
                         break;
-
                     // If Player steps property has been changed.
-                    case "steps":
+                    case Constants.PROPERTY_STEPS:
                         updateStepsTextView((int)propertyChangeEvent.getNewValue());
                         break;
+                }
+            }
+        });
+
+        // Add a new PropertyChangeListener to the active Players ActivityLog
+        // for handling any new online activity additions.
+        G.activePlayer.getActivityLog().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                switch (propertyChangeEvent.getPropertyName()) {
+                    case Constants.PROPERTY_ONLINE_ACTIVITY:
+                        // Grab the new Activity that has been generated.
+                        Activity activityAdded = (Activity)propertyChangeEvent.getNewValue();
+
+                        // Insert into the Dashboard Adapter and notify
+                        // so it is displayed in the UI.
+                        generator.insert(activityAdded);
+
+                        adapter.notifyItemInserted(0);
+                        adapter.notifyDataSetChanged();
                 }
             }
         });
