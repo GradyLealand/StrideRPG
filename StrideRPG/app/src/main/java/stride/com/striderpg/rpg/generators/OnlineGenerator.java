@@ -7,8 +7,6 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Enemy.Enemy;
-import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
 public class OnlineGenerator {
@@ -23,7 +21,11 @@ public class OnlineGenerator {
      * with the Players current online steps count.
      */
     public static void calculateOnlineActivity() {
-        Log.d(TAG, "onlineActivitySteps=" + G.onlineActivitySteps);
+        Log.d(TAG, String.format(
+                G.locale,
+                "calculateOnlineActivity:check:onlineActivitySteps=%d",
+                G.onlineActivitySteps));
+
         // Check for threshold reached so an online Activity will be generated.
         if (G.onlineActivitySteps > Constants.ONLINE_ACTIVITY_STEP_THRESHOLD) {
             Log.d(TAG, "calculateOnlineActivity:begin");
@@ -50,9 +52,10 @@ public class OnlineGenerator {
         } else {
             Log.d(TAG, String.format(
                     G.locale,
-                    "calculateOnlineActivity:end (onlineActivitySteps is < " +
-                    "ONLINE_ACTIVITY_STEP_THRESHOLD=[%d]",
-                    Constants.ONLINE_ACTIVITY_STEP_THRESHOLD));
+                    "calculateOnlineActivity:end:%d<%d",
+                    G.onlineActivitySteps,
+                    Constants.ONLINE_ACTIVITY_STEP_THRESHOLD)
+            );
         }
     }
 
