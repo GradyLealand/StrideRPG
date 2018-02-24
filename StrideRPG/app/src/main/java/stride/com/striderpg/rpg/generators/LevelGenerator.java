@@ -1,10 +1,6 @@
 package stride.com.striderpg.rpg.generators;
 
 
-import android.util.Log;
-
-import stride.com.striderpg.global.G;
-
 /**
  * RPG Generator class for determining information about a Players
  * level and experience, calculating the different values required to
@@ -12,6 +8,9 @@ import stride.com.striderpg.global.G;
  */
 public class LevelGenerator {
 
+    /**
+     * LevelGenerator Logging tag.
+     */
     private static final String TAG = "LevelGenerator";
 
     /**
@@ -33,10 +32,7 @@ public class LevelGenerator {
      * @return Next level total experience required.
      */
     public static Integer experienceToNextLevel(Integer level) {
-        int nextLevelExp = (int)Math.round((LEVEL_CONST_1 * (Math.pow(level, 3))) / LEVEL_CONST_2) + 200;
-
-        Log.d(TAG, String.format(G.locale, "experienceToNextLevel:success:nextLevelExp=%d", nextLevelExp));
-        return nextLevelExp;
+        return (int)Math.round((LEVEL_CONST_1 * (Math.pow(level, 3))) / LEVEL_CONST_2) + 200;
     }
 
     /**
@@ -47,10 +43,7 @@ public class LevelGenerator {
      * @return Experience remaining for user to level up.
      */
     public static Integer experienceRemaining(Integer currentLevel, Integer currentExp) {
-        int expRemaining = experienceToNextLevel(currentLevel) - currentExp;
-
-        Log.d(TAG, String.format("experienceRemaining:success:expRemaining=%d", expRemaining));
-        return expRemaining;
+        return experienceToNextLevel(currentLevel) - currentExp;
     }
 
     /**
