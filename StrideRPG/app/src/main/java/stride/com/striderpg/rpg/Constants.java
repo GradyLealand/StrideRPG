@@ -43,12 +43,12 @@ public final class Constants {
     /**
      * Constant to calculate a bosses experience.
      */
-    public static final int BOSS_EXPERIENCE_MODIFIER = 25;
+    public static final int BOSS_EXPERIENCE_MODIFIER = 30;
 
     /**
      * Constant to calculate a bosses health property.
      */
-    public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 1500;
+    public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 250;
 
     /**
      * Constant for generating SimpleDateFormats throughout the
@@ -75,7 +75,7 @@ public final class Constants {
      * Constant to define the time in minutes between each possible
      * offline event.
      */
-    public static final int OFFLINE_EVENT_INCREMENT_MINUTES = 30;
+    public static final int OFFLINE_EVENT_INCREMENT_MINUTES = 60;
 
     /**
      * Constant to determine the percent chance that an activity will
@@ -88,7 +88,7 @@ public final class Constants {
      * Constant for determining the percent chance that an ActiveEncounter
      * will be generated.
      */
-    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 100;
+    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 75;
 
     /**
      * Constant that will be used to generate a random Integer
@@ -101,7 +101,7 @@ public final class Constants {
      * Constant for defining how many steps a player must reach
      * in game before an online Activity is generated for them.
      */
-    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 5;
+    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 100;
 
     /**
      * Constant that defines the minimum level a Player or Enemy can be.
