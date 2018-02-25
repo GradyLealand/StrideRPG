@@ -73,13 +73,12 @@ public class EnemyGenerator {
         Integer diceRoll = r.nextInt(5);
         int monsterLevel  = (p.getLevel() + 2) - diceRoll;
 
-        // Do not allow the monster to have a level < 1
-        if(monsterLevel < Constants.MINIMUM_LEVEL)
-        {
+        // Do not allow the monster to have a level < 1.
+        if(monsterLevel < Constants.MINIMUM_LEVEL) {
             monsterLevel = Constants.MINIMUM_LEVEL;
         }
 
-        Log.d(TAG, String.format(G.locale, "calculateEnemyLevel:success:monsterLevel=%s", monsterLevel));
+        Log.d(TAG, String.format(G.locale, "calculateEnemyLevel:success:monsterLevel=%d", monsterLevel));
         return monsterLevel;
     }
 

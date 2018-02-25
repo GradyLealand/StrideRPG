@@ -105,8 +105,7 @@ public class Enums {
     }
 
     /**
-     * Enumeration EnemyType to hold the different enemy types in
-     * game.
+     * Enumeration EnemyType to hold the different enemy types in game.
      */
     public enum EnemyType {
         TROLL("Troll"),
@@ -115,7 +114,7 @@ public class Enums {
         NECROMANCER("Necromancer");
 
         /**
-         * ItemType name property for the ItemType constant.
+         * ItemType name property.
          */
         private final String name;
 
@@ -129,6 +128,80 @@ public class Enums {
 
         public String getName() {
             return name;
+        }
+    }
+
+    /**
+     * Enumeration BossType to hold the different boss types in game.
+     */
+    public enum BossType {
+        DRAGON("Dragon"),
+        DEMON("Demon"),
+        KRAKEN("Kraken");
+
+        /**
+         * BossType name property.
+         */
+        private final String name;
+
+        /**
+         * BossType Constructor method to set name property.
+         * @param name Readable enum name.
+         */
+        BossType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    /**
+     * Enumeration BossTier to hold the different Boss tiers in game.
+     */
+    public enum BossTier {
+        ONE(1, "I", 30),
+        TWO(2, "II", 60),
+        THREE(3, "III", 90);
+
+        /**
+         * Number representation of enum.
+         */
+        private final Integer number;
+
+        /**
+         * Numeral representation of enum.
+         */
+        private final String numeral;
+
+        /**
+         * Expiration in minutes for enum.
+         */
+        private final Integer expires;
+
+        /**
+         * Constructor method for setting number and numeral properties.
+         * @param number Enum number.
+         * @param numeral Enum numeral.
+         * @param expires Enum expires.
+         */
+        BossTier(Integer number, String numeral, Integer expires) {
+            this.number = number;
+            this.numeral = numeral;
+            this.expires = expires;
+        }
+
+        public Integer getNumber() {
+            return number;
+        }
+
+        public String getNumeral() {
+            return numeral;
+        }
+
+        public Integer getExpires() {
+            return expires;
         }
     }
 
@@ -182,6 +255,11 @@ public class Enums {
         DEFEAT_ENEMIES(
                 Constants.QUEST_DEFEAT_ENEMIES_TITLE,
                 Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION
+        ),
+
+        DEFEAT_BOSSES(
+                Constants.QUEST_DEFEAT_BOSSES_TITLE,
+                Constants.QUEST_DEFEAT_BOSSES_DESCRIPTION
         ),
 
         FAIL_DEFEAT_ENEMIES(

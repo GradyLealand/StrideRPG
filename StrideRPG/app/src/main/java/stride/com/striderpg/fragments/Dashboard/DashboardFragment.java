@@ -4,6 +4,7 @@ package stride.com.striderpg.fragments.Dashboard;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -91,6 +92,31 @@ public class DashboardFragment extends Fragment {
     private TextView enemiesText;
 
     /**
+     * Player ActiveEncounter ImageView.
+     */
+    private ImageView activeEncounterImage;
+
+    /**
+     * Player ActiveEncounter Boss name TextView.
+     */
+    private TextView activeEncounterName;
+
+    /**
+     * Player ActiveEncounter Boss health TextView.
+     */
+    private TextView activeEncounterHealthText;
+
+    /**
+     * Player ActiveEncounter Boss health ProgressBar.
+     */
+    private ProgressBar activeEncounterHealthProgress;
+
+    /**
+     * Player ActiveEncounter CardView Container.
+     */
+    private CardView activeEncounterCard;
+
+    /**
      * Required empty public constructor function.
      */
     public DashboardFragment() { }
@@ -132,6 +158,13 @@ public class DashboardFragment extends Fragment {
         levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
         enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
 
+        // Check if Player ActiveEncounter is going on right now.
+        if (G.activePlayer.getActiveEncounter().isActive()) {
+            activeEncounterCard.setVisibility(View.VISIBLE);
+            activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
+            updateActiveEncounterCard();
+        }
+
         // Initial Player level progress bar update.
         updateLevelProgressBar(G.activePlayer.getExperience());
 
@@ -167,6 +200,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 switch (propertyChangeEvent.getPropertyName()) {
+                    // Online Activity has been added to Players ActivityLog.
                     case Constants.PROPERTY_ONLINE_ACTIVITY:
                         // Grab the new Activity that has been generated.
                         Activity activityAdded = (Activity)propertyChangeEvent.getNewValue();
@@ -180,6 +214,52 @@ public class DashboardFragment extends Fragment {
                 }
             }
         });
+
+        G.activePlayer.getActiveEncounter().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                switch(propertyChangeEvent.getPropertyName()) {
+                    // The ActiveEncounter has been set.
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_SET:
+                        activeEncounterCard.setVisibility(View.VISIBLE);
+                        updateActiveEncounterCard();
+                        break;
+
+                    // ActiveEncounter Boss health has been updated.
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_UPDATE_HEALTH:
+                        activeEncounterHealthProgress.setProgress(
+                                        G.activePlayer.getActiveEncounter().getBoss().getHealth()
+                        );
+                        activeEncounterHealthText.setText(String.format(G.locale, "%d", G.activePlayer.getActiveEncounter().getBoss().getHealth()));
+                        break;
+
+                    // Active Encounter has expired.
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES:
+                        activeEncounterCard.setVisibility(View.GONE);
+                        // TODO : Clear old card, create boss expiry activity.
+                        break;
+
+                    // Active Encounter has been finished.
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH:
+                        activeEncounterCard.setVisibility(View.GONE);
+                        // TODO : Clear old card, create boss finish activity and append.
+                        break;
+                }
+            }
+        });
+    }
+
+    private void updateActiveEncounterCard() {
+        activeEncounterName.setText(G.activePlayer.getActiveEncounter().getBoss().getName());
+        activeEncounterHealthText.setText(String.format(
+                G.locale,
+                "%d/%d",
+                G.activePlayer.getActiveEncounter().getBoss().getHealth(),
+                G.activePlayer.getActiveEncounter().getBoss().getMaxHealth()));
+
+        activeEncounterHealthProgress.setProgress(
+                G.activePlayer.getActiveEncounter().getBoss().getHealth()
+        );
     }
 
     /**
@@ -187,10 +267,7 @@ public class DashboardFragment extends Fragment {
      * experience / experience needed TextView.
      */
     public void updateExpOnLevelUp() {
-        playerExpCount.setText(parseExpAmount(
-                G.activePlayer.getExperience(),
-                G.activePlayer.getLevel() + 1)
-        );
+        playerExpCount.setText(parseExpAmount(G.activePlayer.getExperience(), G.activePlayer.getLevel() + 1));
     }
 
     /**
@@ -265,6 +342,12 @@ public class DashboardFragment extends Fragment {
             levelText = getView().findViewById(R.id.levelText);
             stepsText = getView().findViewById(R.id.stepsText);
             enemiesText = getView().findViewById(R.id.enemiesText);
+
+            activeEncounterName = getView().findViewById(R.id.activeEncounterName);
+            activeEncounterImage = getView().findViewById(R.id.activeEncounterImage);
+            activeEncounterHealthText = getView().findViewById(R.id.activeEncounterHealthTextView);
+            activeEncounterHealthProgress = getView().findViewById(R.id.activeEncounterHealthProgressBar);
+            activeEncounterCard = getView().findViewById(R.id.activeEncounterCard);
         } catch (Exception e) {
             Log.e(TAG, "getDashboardElements:error:", e);
         }

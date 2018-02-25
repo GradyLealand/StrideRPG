@@ -16,6 +16,16 @@ public class Stats {
     private Integer enemiesDefeated;
 
     /**
+     * Total amount of bosses this player has defeated.
+     */
+    private Integer bossesDefeated;
+
+    /**
+     * Total amount of losses this player has had.
+     */
+    private Integer losses;
+
+    /**
      * Total amount of items this player has looted.
      */
     private Integer itemsLooted;
@@ -36,6 +46,8 @@ public class Stats {
      */
     public Stats() {
         this.enemiesDefeated = 0;
+        this.bossesDefeated = 0;
+        this.losses = 0;
         this.itemsLooted = 0;
         this.totalExperience = 0;
         this.registered = TimeParser.makeTimestamp();
@@ -50,6 +62,8 @@ public class Stats {
     public String toString() {
         return "Stats{" +
                 "enemiesDefeated=" + enemiesDefeated +
+                ", bossesDefeated=" + bossesDefeated +
+                ", losses=" + losses +
                 ", itemsLooted=" + itemsLooted +
                 ", totalExperience=" + totalExperience +
                 ", registered='" + registered + '\'' +
@@ -64,6 +78,20 @@ public class Stats {
     }
 
     /**
+     * Increment a Stats bosses defeated property by 1.
+     */
+    public void updateBossesDefeated() {
+        this.setBossesDefeated(this.getBossesDefeated() + 1);
+    }
+
+    /**
+     * Increment a Stats losses property by 1.
+     */
+    public void updateLosses() {
+        this.setLosses(this.getLosses() + 1);
+    }
+
+    /**
      * Increment a Stats items looted property by 1.
      */
     public void updateItemsLooted() {
@@ -75,33 +103,39 @@ public class Stats {
      * @param experience Experience to add to total experience.
      */
     public void updateTotalExperience(Integer experience) {
-        this.totalExperience += experience;
+        this.setTotalExperience(this.getTotalExperience() + experience);
     }
 
     public Integer getEnemiesDefeated() {
         return enemiesDefeated;
     }
-
-    public void setEnemiesDefeated(Integer enemiesDefeated) {
+    private void setEnemiesDefeated(Integer enemiesDefeated) {
         this.enemiesDefeated = enemiesDefeated;
     }
-
-    public Integer getItemsLooted() {
+    private Integer getBossesDefeated() {
+        return bossesDefeated;
+    }
+    private void setBossesDefeated(Integer bossesDefeated) {
+        this.bossesDefeated = bossesDefeated;
+    }
+    private Integer getLosses() {
+        return losses;
+    }
+    private void setLosses(Integer losses) {
+        this.losses = losses;
+    }
+    private Integer getItemsLooted() {
         return itemsLooted;
     }
-
-    public void setItemsLooted(Integer itemsLooted) {
+    private void setItemsLooted(Integer itemsLooted) {
         this.itemsLooted = itemsLooted;
     }
-
-    public Integer getTotalExperience() {
+    private Integer getTotalExperience() {
         return totalExperience;
     }
-
-    public void setTotalExperience(Integer totalExperience) {
+    private void setTotalExperience(Integer totalExperience) {
         this.totalExperience = totalExperience;
     }
-
     public String getRegistered() {
         return this.registered;
     }

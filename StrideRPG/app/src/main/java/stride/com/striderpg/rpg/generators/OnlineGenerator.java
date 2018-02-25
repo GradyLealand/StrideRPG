@@ -9,6 +9,10 @@ import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
+/**
+ * OnlineGenerator RPG Class for building and generating online Activities
+ * for the current Player in game while the Application is open.
+ */
 public class OnlineGenerator {
 
     /**
@@ -49,6 +53,11 @@ public class OnlineGenerator {
 
             // Add new Activity to Players ActivityLog.
             G.activePlayer.getActivityLog().addOnlineActivity(activity);
+
+            // Begin check for Player ActiveEncounter/Boss encounter.
+            if (!G.activePlayer.getActiveEncounter().isActive()) {
+                EncounterGenerator.calculateActiveEncounter(G.activePlayer);
+            }
         } else {
             Log.d(TAG, String.format(
                     G.locale,

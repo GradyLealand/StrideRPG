@@ -12,6 +12,7 @@ import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
+import stride.com.striderpg.rpg.generators.EncounterGenerator;
 import stride.com.striderpg.rpg.generators.ItemGenerator;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.generators.OnlineGenerator;
@@ -68,6 +69,12 @@ public class Player {
     private String lastSignedIn;
 
     /**
+     * ActiveEncounter container for holding the Players
+     * current Active boss fight if one exists.
+     */
+    private ActiveEncounter activeEncounter;
+
+    /**
      * Players Bestiary information.
      */
     private Bestiary bestiary;
@@ -117,6 +124,7 @@ public class Player {
         this.steps = 0;
         this.lastSignedIn = TimeParser.makeTimestamp();
 
+        this.activeEncounter = new ActiveEncounter();
         this.bestiary = new Bestiary();
         this.questLog = new QuestLog();
         this.activityLog = new ActivityLog();
@@ -140,6 +148,7 @@ public class Player {
                 ", experience=" + experience +
                 ", steps=" + steps +
                 ", lastSignedIn='" + lastSignedIn + '\'' +
+                ", activeEncounter=" + activeEncounter +
                 ", bestiary=" + bestiary +
                 ", questLog=" + questLog +
                 ", activityLog=" + activityLog +
@@ -220,8 +229,22 @@ public class Player {
 
                 // Also increment the Global session steps counter and then do a
                 // check to see if an Activity will be generated for the user.
+                // This OnlineGenerator will also do a check to see if the current
+                // Player has an ActiveEncounter in progress, if they do, do nothing,
+                // if there isn't one, we will roll a random number to determine if one
+                // will be generated.
                 G.onlineActivitySteps += steps;
                 OnlineGenerator.calculateOnlineActivity();
+
+                // Check for ActiveEncounter and update.
+                if (this.activeEncounter.isActive()) {
+                    if (steps != 0) {
+                        activeEncounter.attackBoss(steps);
+                        if (activeEncounter.getBoss().getHealth() <= 0) {
+                            activeEncounter.defeatBoss();
+                        }
+                    }
+                }
             }
         }
     }
@@ -241,7 +264,7 @@ public class Player {
 
         // Calculate attack value from Player strength property
         // and Player vitality property.
-        int attack = ((this.skills.getStrength() + this.skills.getVitality())/2) + roll;
+        int attack = ((this.skills.getStrength() + this.skills.getVitality()) / 2) + roll;
 
         // Check here for fight results, Player may defeat or be defeated by Enemy.
         if(attack >= enemy.getHealth()) {
@@ -337,6 +360,10 @@ public class Player {
 
     public void setLastSignedIn(String lastSignedIn) {
         this.lastSignedIn = lastSignedIn;
+    }
+
+    public ActiveEncounter getActiveEncounter() {
+        return activeEncounter;
     }
 
     public Bestiary getBestiary() {

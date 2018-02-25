@@ -38,6 +38,11 @@ public class TimeParser {
         return now.minusHours(hours);
     }
 
+    public static DateTime getCurrentTimePlusHours(Integer expires) {
+        DateTime now = new DateTime(DateTimeZone.UTC);
+        return now.plusHours(expires);
+    }
+
     /**
      * Take the given DateTime and subtract specified hours.
      * @param date DateTime object.
