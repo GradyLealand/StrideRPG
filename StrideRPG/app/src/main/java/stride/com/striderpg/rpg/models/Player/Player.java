@@ -229,15 +229,17 @@ public class Player {
 
                 // Also increment the Global session steps counter and then do a
                 // check to see if an Activity will be generated for the user.
-                // This OnlineGenerator will also do a check to see if the current
-                // Player has an ActiveEncounter in progress, if they do, do nothing,
-                // if there isn't one, we will roll a random number to determine if one
-                // will be generated.
                 G.onlineActivitySteps += steps;
                 OnlineGenerator.calculateOnlineActivity();
 
-                // Check for ActiveEncounter and update.
+                // Check that the ActiveEncounter hasn't expired.
                 if (this.activeEncounter.isActive()) {
+                    if (this.activeEncounter.checkExpired()) {
+                        this.activeEncounter.expire();
+                        return;
+                    }
+
+                    // and new steps if amount isn't == 0.
                     if (steps != 0) {
                         activeEncounter.attackBoss(steps);
                         if (activeEncounter.getBoss().getHealth() <= 0) {
@@ -255,7 +257,6 @@ public class Player {
      * @param enemy Enemy being defeated.
      */
     public boolean fightEnemy(Enemy enemy) {
-
         // Create a new Random instance for rolling.
         Random r = new Random();
 
@@ -267,8 +268,7 @@ public class Player {
         int attack = ((this.skills.getStrength() + this.skills.getVitality()) / 2) + roll;
 
         // Check here for fight results, Player may defeat or be defeated by Enemy.
-        if(attack >= enemy.getHealth()) {
-
+        if (attack >= enemy.getHealth()) {
             // Increment Players current experience by the Enemies experience reward.
             this.setExperience(this.getExperience() + enemy.getExperienceReward());
 
@@ -276,23 +276,8 @@ public class Player {
             if (this.canLevelUp()) {
                 this.levelUp();
             }
-
-            // Update Players Bestiary after enemy defeat.
-            this.getBestiary().update(enemy.getType());
-
-            // Increment the Players Stats on enemy defeat.
-            this.getStats().updateEnemiesDefeated();
-            this.getStats().updateTotalExperience(enemy.getExperienceReward());
-
-            // Update Players Enemies defeated quest.
-            this.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
-
-            // Return true because Player has defeated enemy.
             return true;
         } else {
-            // log the defeat
-            this.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_ENEMIES, 1);
-
             // Increment Players current experience by the Enemies level
             this.setExperience(this.getExperience() + enemy.getLevel());
 
@@ -300,12 +285,8 @@ public class Player {
             if (this.canLevelUp()) {
                 this.levelUp();
             }
-
-            // Return false because Player has been defeated.
             return false;
         }
-
-
     }
 
     public String getUniqueId() {

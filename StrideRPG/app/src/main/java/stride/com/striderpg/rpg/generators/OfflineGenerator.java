@@ -82,12 +82,6 @@ public class OfflineGenerator {
         if (offlineActivities == 0) {
             Log.d(TAG, "calculateOfflineActivities:return:offlineActivities=0");
             return;
-        } else {
-            Log.d(TAG, String.format(
-                    G.locale,
-                    "calculateOfflineActivities:progress:offlineActivities=%d",
-                    offlineActivities)
-            );
         }
 
         // Loop for each offlineActivities integer. Use it to generate a new
@@ -98,9 +92,9 @@ public class OfflineGenerator {
             long random = ThreadLocalRandom.current().nextLong(old.getMillis(), now.getMillis());
             DateTime activityDate = new DateTime(random, DateTimeZone.UTC);
 
-            // Pick a random activity type and begin building new Activity.
+            // Pick a random activity type (Loot or Enemy) and begin building new Activity.
             Activity activity = ActivityGenerator.generateActivity(
-                    Enums.random(Enums.ActivityType.class)
+                    Enums.ActivityType.generic()
             );
 
             // Set the timestamp for this new Activity.
@@ -108,13 +102,6 @@ public class OfflineGenerator {
 
             // Add New Activity the current Players ActivityLog.
             G.activePlayer.getActivityLog().addActivity(activity);
-
-            // Log newly generated Activities timestamp.
-            Log.d(TAG, String.format(
-                    G.locale,
-                    "calculateOfflineActivities:success:activity=%s",
-                    activity.getTimestamp())
-            );
         }
     }
 }

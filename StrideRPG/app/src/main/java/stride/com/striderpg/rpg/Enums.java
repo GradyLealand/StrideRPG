@@ -223,7 +223,9 @@ public class Enums {
      */
     public enum ActivityType {
         ENEMY("Enemy"),
-        LOOT("Loot");
+        LOOT("Loot"),
+        BOSS_EXPIRE("Boss Expiration"),
+        BOSS_DEFEAT("Boss Defeat");
 
         /**
          * String to hold the activity types human friendly name.
@@ -245,6 +247,20 @@ public class Enums {
         public String getName() {
             return name;
         }
+
+        /**
+         * Choose between a generic Enemy or Loot ActivityType.
+         * @return Enumeration ActivityType Enemy/Loot.
+         */
+        public static ActivityType generic() {
+            // Generate percent roll 0 to 100 to choose LOOT or ENEMY ActivityType.
+            Random random = new Random();
+            Double percent = random.nextDouble() * 100;
+            if (percent < 50)
+                return LOOT;
+            else
+                return ENEMY;
+        }
     }
 
     /**
@@ -265,6 +281,11 @@ public class Enums {
         FAIL_DEFEAT_ENEMIES(
                 Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE,
                 Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION
+        ),
+
+        FAIL_DEFEAT_BOSSES(
+                Constants.QUEST_FAIL_DEFEAT_BOSSES_TITLE,
+                Constants.QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION
         ),
 
         LOOT_ITEMS(

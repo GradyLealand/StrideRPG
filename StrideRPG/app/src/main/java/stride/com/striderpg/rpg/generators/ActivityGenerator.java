@@ -3,12 +3,11 @@ package stride.com.striderpg.rpg.generators;
 
 import android.util.Log;
 
-import java.util.Random;
-
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
+import stride.com.striderpg.rpg.models.Encounter.Boss;
 import stride.com.striderpg.rpg.utils.TimeParser;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
@@ -23,73 +22,155 @@ public class ActivityGenerator {
      */
     private static final String TAG = "ActivityGenerator";
 
+
+    private static Activity generateLootActivity(Item item) {
+        // Update the Players Stats total items looted property.
+        G.activePlayer.getStats().updateItemsLooted();
+        // Update Players Items looted quest.
+        G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
+
+        // Check if the new Item is better than the Item equipped currently
+        // on the Global activePlayer.
+        if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
+            G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
+        }
+
+        // Generate new Activity with ActivityTye Loot based on
+        // Item passed into method.
+        return new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.LOOT,
+                generateLootDescription(item),
+                R.mipmap.ic_launcher);
+    }
+
     /**
-     * Base Activity generator that will create a new Activity
+     * Generate the corresponding Activity in the Event a Player
+     * wins against an Enemy.
+     * @param enemy Enemy Player beat.
+     * @return Enemy win Activity.
+     */
+    private static Activity generateEnemyWinActivity(Enemy enemy) {
+        // Update Players Bestiary after enemy defeat.
+        G.activePlayer.getBestiary().update(enemy.getType());
+
+        // Increment the Players Stats on enemy defeat.
+        G.activePlayer.getStats().updateEnemiesDefeated();
+        G.activePlayer.getStats().updateTotalExperience(enemy.getExperienceReward());
+
+        // Update Players Enemies defeated quest.
+        G.activePlayer.getQuestLog().update(Enums.QuestType.DEFEAT_ENEMIES, 1);
+
+        return new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.ENEMY,
+                generateEnemyWinDescription(enemy),
+                R.mipmap.ic_launcher
+        );
+    }
+
+    /**
+     * Generate the corresponding Activity in the Event a Player
+     * loses to an Enemy.
+     * @param enemy Enemy Player lost to.
+     * @return Enemy loss Activity.
+     */
+    private static Activity generateEnemyLossActivity(Enemy enemy) {
+        // Update Active Players Quest log to reflect Enemy loss.
+        G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_ENEMIES, 1);
+
+        // Increment the Players Stats on enemy loss.
+        G.activePlayer.getStats().updateLosses();
+        G.activePlayer.getStats().updateTotalExperience(enemy.getExperienceReward());
+
+        return new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.ENEMY,
+                generateEnemyLossDescription(enemy),
+                R.mipmap.ic_launcher
+        );
+    }
+
+    private static Activity generateBossExpireActivity(Boss boss) {
+        // Update Active Players Quest log to reflect Boss expiration.
+        G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_BOSSES, 1);
+
+        // Increment the Players stats on boss expiration.
+        G.activePlayer.getStats().updateBossesExpired();
+        G.activePlayer.getStats().updateTotalExperience(boss.getEncounterExperienceReward() / 10);
+
+        return new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.BOSS_EXPIRE,
+                generateBossExpireDescription(boss),
+                R.mipmap.ic_launcher
+        );
+    }
+
+    private static Activity generateBossDefeatActivity(Boss boss) {
+        // Update Active Players Quest log to reflect Boss win.
+        G.activePlayer.getQuestLog().update(Enums.QuestType.DEFEAT_BOSSES, 1);
+
+        // Increment the Players stats on boss win.
+        G.activePlayer.getStats().updateBossesDefeated();
+        G.activePlayer.getStats().updateTotalExperience(boss.getEncounterExperienceReward());
+
+        return new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.BOSS_DEFEAT,
+                generateBossWinDescription(boss),
+                R.mipmap.ic_launcher
+        );
+    }
+
+    /**
+     * Base Activity generator that will create a new Generic Activity
      * based on the ActivityType passed to the method.
+     * This function is used to generate a Loot or Enemy Activity through
+     * the Offline/Online Generators.
      * @param type BaseActivity enumeration type.
      * @return Newly generated Activity.
      */
     public static Activity generateActivity(Enums.ActivityType type) {
-        // Generate a new base Activity.
         Activity activity = new Activity();
 
-        // Switch case through the ActivityType passed into method.
         switch (type) {
-
-            // LOOT ActivityType.
             case LOOT:
-                // Generate new Item based on Active Player stats and generate
-                // the loot Activity that will be associated with this item.
                 Item item = ItemGenerator.generate(G.activePlayer);
                 activity = generateLootActivity(item);
-
-                // Update the Players Stats total items looted property.
-                G.activePlayer.getStats().updateItemsLooted();
-                // Update Players Items looted quest.
-                G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
-
-                // Check if the new Item is better than the Item equipped currently
-                // on the Global activePlayer.
-                if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
-                    G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
-                }
                 break;
-
-            // ENEMY ActivityType
             case ENEMY:
-                // Generate new random Enemy.
                 Enemy enemy = EnemyGenerator.generate(G.activePlayer);
-                // Check if the Player has defeated, or lost to this new Enemy.
                 boolean fightResult = G.activePlayer.fightEnemy(enemy);
 
-                // Based on the result of the fightEnemy method, generate
-                // a new Activity for the Players ActivityLog.
-                if (fightResult) {
-                    activity = generateEnemyDefeatedActivity(enemy);
-                } else {
-                    activity = generateDefeatedByEnemyActivity(enemy);
-                }
+                if (fightResult)
+                    activity = generateEnemyWinActivity(enemy);
+                else
+                    activity = generateEnemyLossActivity(enemy);
                 break;
         }
         return activity;
     }
 
     /**
-     * Generate a loot activity from the item passed.
-     * @param item Item used to build activity description.
-     * @return Activity.
+     * Overloaded Activity generateActivity method for dealing with Boss encounter
+     * Activities and generation.
+     * @param type ActivityType Enumeration, will only ever be BOSS_EXPIRE / BOSS_DEFEAT.
+     * @param boss Boss object to generate Activity information.
+     * @return New Boss Activity.
      */
-    public static Activity generateLootActivity(Item item) {
-        Activity newActivity = new Activity(
-                TimeParser.makeTimestamp(),
-                Enums.ActivityType.LOOT,
-                generateLootDescription(item),
-                // TODO : Use actual icons for loot. This is placeholder.
-                R.mipmap.ic_launcher
-        );
+    public static Activity generateActivity(Enums.ActivityType type, Boss boss) {
+        Activity activity = new Activity();
 
-        Log.d(TAG, String.format(G.locale, "generateLootActivity:success:activity=%s", newActivity));
-        return newActivity;
+        switch (type) {
+            case BOSS_EXPIRE:
+                activity = generateBossExpireActivity(boss);
+                break;
+            case BOSS_DEFEAT:
+                activity = generateBossDefeatActivity(boss);
+                break;
+        }
+        return activity;
     }
 
     /**
@@ -133,20 +214,32 @@ public class ActivityGenerator {
     }
 
     /**
-     * Generate an enemy activity from the enemy passed.
-     * @param enemy Enemy used to build activity description.
-     * @return Activity.
+     * Generate a String to represent this Bosses expiration Activity description.
+     * @param boss Boss that has expired.
+     * @return New Boss Expiration Activity description.
      */
-    public static Activity generateEnemyDefeatedActivity(Enemy enemy) {
-        Activity newActivity = new Activity(
-                TimeParser.makeTimestamp(),
-                Enums.ActivityType.ENEMY,
-                generateEnemyDefeatedDescription(enemy),
-                R.mipmap.ic_launcher
+    private static String generateBossExpireDescription(Boss boss) {
+        return String.format(G.locale,
+                "The %s ran away with %d health left before you defeated it!\n" +
+                        "You only gained %d experience during the battle",
+                boss.getName(),
+                boss.getHealth(),
+                boss.getEncounterExperienceReward() / 10
         );
+    }
 
-        Log.d(TAG, String.format(G.locale, "generateEnemyDefeatedActivity:success:activity=%s", newActivity));
-        return newActivity;
+    /**
+     * Generate a String to represent this Bosses defeat Activity description.
+     * @param boss Boss that has been defeated.
+     * @return New Boss defeat Activity description.
+     */
+    private static String generateBossWinDescription(Boss boss) {
+        return String.format(G.locale,
+                "You have defeated the %s!\nYou earned %d experience and found %d pieces of loot!",
+                boss.getName(),
+                boss.getEncounterExperienceReward(),
+                boss.getRewards().size()
+        );
     }
 
     /**
@@ -154,34 +247,12 @@ public class ActivityGenerator {
      * @param enemy Enemy.
      * @return Activity description.
      */
-    private static String generateEnemyDefeatedDescription(Enemy enemy) {
-        String desc = String.format(G.locale,
+    private static String generateEnemyWinDescription(Enemy enemy) {
+        return String.format(G.locale,
                 "You encountered and defeated %s.\nYou earned %d experience points!",
                 parseEnemyNameToProperAOrAn(enemy.getName()),
                 enemy.getExperienceReward()
         );
-
-        Log.d(TAG, String.format(G.locale, "generateEnemyDefeatedDescription:success:description=%s", desc));
-        return desc;
-    }
-
-    /**
-     * Generate an Activity to represent a Player being defeated
-     * by an enemy they have encountered.
-     * @param enemy Enemy the Player was defeated by.
-     * @return Activity representing this defeat.
-     */
-    public static Activity generateDefeatedByEnemyActivity(Enemy enemy) {
-        Activity newActivity = new Activity(
-                TimeParser.makeTimestamp(),
-                Enums.ActivityType.ENEMY,
-                generateDefeatedByEnemyDescription(enemy),
-                // TODO : Find real enemy icons.
-                R.mipmap.ic_launcher
-        );
-
-        Log.d(TAG, String.format(G.locale, "generateDefeatedByEnemyActivity:success:activity=%s", newActivity));
-        return newActivity;
     }
 
     /**
@@ -189,15 +260,12 @@ public class ActivityGenerator {
      * @param enemy Enemy that has defeated Player.
      * @return New Activity description.
      */
-    private static String generateDefeatedByEnemyDescription(Enemy enemy) {
-        String desc = String.format(G.locale,
+    private static String generateEnemyLossDescription(Enemy enemy) {
+        return String.format(G.locale,
                 "You encountered and were defeated by %s.\nYou only earned %d experience points!",
-                parseEnemyNameToProperAOrAn(enemy.getName()),
-                enemy.getLevel()
+                parseEnemyNameToProperAOrAn(
+                        enemy.getName()), enemy.getLevel()
         );
-
-        Log.d(TAG, String.format(G.locale, "generateDefeatedByEnemyDescription:success:description=%s", desc));
-        return desc;
     }
 
     /**

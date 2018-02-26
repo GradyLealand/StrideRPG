@@ -152,22 +152,6 @@ public class DashboardFragment extends Fragment {
         // Call method to set each UI element on View start.
         getDashboardElements();
 
-        // Initial value set for Player information on Dashboard.
-        playerUsernameText.setText(G.activePlayer.getUsername());
-        stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
-        levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
-        enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
-
-        // Check if Player ActiveEncounter is going on right now.
-        if (G.activePlayer.getActiveEncounter().isActive()) {
-            activeEncounterCard.setVisibility(View.VISIBLE);
-            activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
-            updateActiveEncounterCard();
-        }
-
-        // Initial Player level progress bar update.
-        updateLevelProgressBar(G.activePlayer.getExperience());
-
         // Add a new PropertyChangeListener to the active Player
         // object for handling property changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
@@ -200,7 +184,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 switch (propertyChangeEvent.getPropertyName()) {
-                    // Online Activity has been added to Players ActivityLog.
+                    // generic Activity has been added to Players ActivityLog.
                     case Constants.PROPERTY_ONLINE_ACTIVITY:
                         // Grab the new Activity that has been generated.
                         Activity activityAdded = (Activity)propertyChangeEvent.getNewValue();
@@ -236,17 +220,52 @@ public class DashboardFragment extends Fragment {
                     // Active Encounter has expired.
                     case Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES:
                         activeEncounterCard.setVisibility(View.GONE);
-                        // TODO : Clear old card, create boss expiry activity.
+                        Activity expireActivity = (Activity)propertyChangeEvent.getNewValue();
+
+                        generator.insert(expireActivity);
+
+                        adapter.notifyItemInserted(0);
+                        adapter.notifyDataSetChanged();
                         break;
 
                     // Active Encounter has been finished.
                     case Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH:
                         activeEncounterCard.setVisibility(View.GONE);
-                        // TODO : Clear old card, create boss finish activity and append.
+
+                        Activity defeatActivity = (Activity)propertyChangeEvent.getNewValue();
+
+                        generator.insert(defeatActivity);
+
+                        adapter.notifyItemInserted(0);
+                        adapter.notifyDataSetChanged();
                         break;
                 }
             }
         });
+
+        // Initial value set for Player information on Dashboard.
+        playerUsernameText.setText(G.activePlayer.getUsername());
+        stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
+        levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
+        enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
+
+        // Check if Player ActiveEncounter is going on right now.
+        if (G.activePlayer.getActiveEncounter().isActive()) {
+
+            // Check if the ActiveEncounter has expired on load.
+            if (!G.activePlayer.getActiveEncounter().checkExpired()) {
+                // Display card and allow Player to continue fighting Boss.
+                activeEncounterCard.setVisibility(View.VISIBLE);
+                activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
+                updateActiveEncounterCard();
+            } else {
+                // Expire the current ActiveEncounter.
+                G.activePlayer.getActiveEncounter().expire();
+            }
+        }
+
+        // Initial Player level progress bar update.
+        updateLevelProgressBar(G.activePlayer.getExperience());
     }
 
     private void updateActiveEncounterCard() {

@@ -206,6 +206,10 @@ public final class Constants {
      */
     public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed To Defeat Enemies";
     /**
+     * Constant for failed to defeat bosses in time quest title.
+     */
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_TITLE = "Failed to Defeat Bosses in time.";
+    /**
      * Constant for generic loot items quest title.
      */
     public static final String QUEST_LOOT_ITEMS_TITLE = "Loot Items";
@@ -213,6 +217,10 @@ public final class Constants {
      * Constant for generic defeat enemies quest description.
      */
     public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies throughout your travels.";
+    /**
+     * Constant for failed to defeat bosses in time description.
+     */
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses in time throughout your travels.";
     /**
      * Constant for generic defeat bosses quest description.
      */

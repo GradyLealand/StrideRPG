@@ -32,24 +32,17 @@ public class OnlineGenerator {
 
         // Check for threshold reached so an online Activity will be generated.
         if (G.onlineActivitySteps > Constants.ONLINE_ACTIVITY_STEP_THRESHOLD) {
-            Log.d(TAG, "calculateOnlineActivity:begin");
 
             // Reset current sessions steps counter and generate a new
             // default Activity.
             G.onlineActivitySteps = 0;
 
-            // Pick a random activity type and begin building new Activity.
+            // Pick a random activity type (Loot or Enemy) and begin building new Activity.
             Activity activity = ActivityGenerator.generateActivity(
-                    Enums.random(Enums.ActivityType.class)
+                    Enums.ActivityType.generic()
             );
 
-            // Set timestamp for this new Activity.
             activity.setTimestamp(TimeParser.makeTimestamp());
-            Log.d(TAG, String.format(
-                    G.locale,
-                    "calculateOnlineActivity:success:activity=%s",
-                    activity.getTimestamp())
-            );
 
             // Add new Activity to Players ActivityLog.
             G.activePlayer.getActivityLog().addOnlineActivity(activity);
@@ -58,13 +51,6 @@ public class OnlineGenerator {
             if (!G.activePlayer.getActiveEncounter().isActive()) {
                 EncounterGenerator.calculateActiveEncounter(G.activePlayer);
             }
-        } else {
-            Log.d(TAG, String.format(
-                    G.locale,
-                    "calculateOnlineActivity:end:%d<%d",
-                    G.onlineActivitySteps,
-                    Constants.ONLINE_ACTIVITY_STEP_THRESHOLD)
-            );
         }
     }
 

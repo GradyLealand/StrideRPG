@@ -10,6 +10,8 @@ import java.beans.PropertyChangeSupport;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
+import stride.com.striderpg.rpg.generators.ActivityGenerator;
+import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.models.Encounter.Boss;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.utils.TimeParser;
@@ -74,16 +76,27 @@ public class ActiveEncounter {
         changes.addPropertyChangeListener(listener);
     }
 
-    public void checkExpired() {
+    /**
+     * Check if a Boss has expired based on the current DateTime.
+     * @return Boolean if Boss has expired.
+     */
+    public boolean checkExpired() {
         DateTime now = new DateTime(DateTimeZone.UTC);
-        if (now.isAfter(TimeParser.parseTimestamp(boss.getExpiration()))) {
-            // Fire PropertyChange event for the expired ActiveEncounter.
-            changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES, null, boss);
+        return now.isAfter(TimeParser.parseTimestamp(boss.getExpiration()));
+    }
 
-            // Reset the Players ActiveEncounter object.
-            active = false;
-            boss = null;
-        }
+    public void expire() {
+        Activity bossExpireActivity = ActivityGenerator.generateActivity(
+                Enums.ActivityType.BOSS_EXPIRE,
+                boss
+        );
+
+        // Fire PropertyChange event for the expired ActiveEncounter.
+        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES, null, bossExpireActivity);
+
+        // Reset the Players ActiveEncounter object.
+        active = false;
+        boss = null;
     }
 
     public void attackBoss(Integer steps) {
@@ -107,12 +120,6 @@ public class ActiveEncounter {
             G.activePlayer.levelUp();
         }
 
-        // Update the Active Players Stats/Quests.
-        G.activePlayer.getBestiary().update(boss.getType());
-        G.activePlayer.getStats().updateBossesDefeated();
-        G.activePlayer.getStats().updateTotalExperience(boss.getEncounterExperienceReward());
-        G.activePlayer.getQuestLog().update(Enums.QuestType.DEFEAT_BOSSES, 1);
-
         // Give Player the Items rewarded from Boss fight.
         for (Item reward : boss.getRewards()) {
             if (reward.isBetter(G.activePlayer.getEquipment().getItem(reward.getItemType()))) {
@@ -120,8 +127,13 @@ public class ActiveEncounter {
             }
         }
 
+        Activity bossDefeatActvity = ActivityGenerator.generateActivity(
+                Enums.ActivityType.BOSS_DEFEAT,
+                boss
+        );
+
         // Fire PropertyChange event so UI knows the ActiveEncounter has ended.
-        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, boss);
+        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, bossDefeatActvity);
 
         // Reset Players
         active = false;

@@ -113,14 +113,14 @@ public class EncounterGenerator {
     /**
      * Calculate the amount of experience this Boss will be worth on defeat.
      * @param p Player object for determining exp amount.
-     * @param l Boss level for determining exp amounts.
+     * @param bossLevel Boss level for determining exp amounts.
      * @param tier BossTier for modifying the experience more so.
      * @return New boss experience reward.
      */
-    private static int calculateBossExp(Player p, Integer l, Enums.BossTier tier) {
+    private static int calculateBossExp(Player p, Integer bossLevel, Enums.BossTier tier) {
         Random r = new Random();
         int expReward = p.getLevel() * Constants.BOSS_EXPERIENCE_MODIFIER
-                + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER) * l)
+                + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER) * bossLevel)
                 * tier.getNumber());
 
         Log.d(TAG, String.format(G.locale, "calculateBossExp:success:expReward=%d", expReward));
