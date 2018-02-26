@@ -38,9 +38,14 @@ public class TimeParser {
         return now.minusHours(hours);
     }
 
-    public static DateTime getCurrentTimePlusHours(Integer expires) {
+    /**
+     * Retrieve the current DateTime and add specified minutes.
+     * @param expires Integer amount of minutes to add to DateTime.
+     * @ Now + expires minutes DateTime.
+     */
+    public static DateTime getCurrentTimePlusMinutes(Integer expires) {
         DateTime now = new DateTime(DateTimeZone.UTC);
-        return now.plusHours(expires);
+        return now.plusMinutes(expires);
     }
 
     /**
@@ -105,10 +110,13 @@ public class TimeParser {
         Interval interval = new Interval(activity, now);
         Period period = interval.toPeriod();
 
+        // Create local variables to hold each period difference.
         Integer seconds = period.getSeconds();
         Integer minutes = period.getMinutes();
         Integer hours = period.getHours();
 
+        // If statement here to return a readable string representing
+        // difference in both DateTimes.
         if (hours == 0 && minutes == 0 && seconds == 0) {
             return "just now.";
         } else if (hours == 0) {

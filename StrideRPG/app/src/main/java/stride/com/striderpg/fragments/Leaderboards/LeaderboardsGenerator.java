@@ -70,7 +70,11 @@ public class LeaderboardsGenerator {
 
                         // Add new temporary Player to ArrayList of all Players.
                         players.add(tempPlayer);
-                        Log.d(TAG, String.format(G.locale, "add:success:player=%s", tempPlayer));
+                        Log.d(TAG, String.format(
+                                G.locale,
+                                "add:success:player=%s",
+                                tempPlayer.getUniqueId())
+                        );
 
                     // Generic exception case for handling any error while trying to add the
                     // temporary Player to the ArrayList.

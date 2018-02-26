@@ -123,7 +123,12 @@ public class ActivityGenerator {
             );
         }
 
-        Log.d(TAG, String.format(G.locale, "generateLootDescription:success:description=%s", desc));
+        Log.d(TAG, String.format(
+                G.locale,
+                "generateLootDescription:success:description=%s",
+                desc.replace('\n', ' '))
+        );
+
         return desc;
     }
 

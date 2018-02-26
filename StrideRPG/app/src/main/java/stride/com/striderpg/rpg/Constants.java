@@ -88,7 +88,15 @@ public final class Constants {
      * Constant for determining the percent chance that an ActiveEncounter
      * will be generated.
      */
-    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 75;
+    // TODO : Debug value, change back to 75 before merge.
+    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 100;
+
+    /**
+     * Constant for defining how many steps a player must reach
+     * in game before an online Activity is generated for them.
+     */
+    // TODO : Debug value, change back to 100 before merge.
+    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 5;
 
     /**
      * Constant that will be used to generate a random Integer
@@ -96,12 +104,6 @@ public final class Constants {
      * battle encounter/activity.
      */
     public static final int OFFLINE_BATTLE_MODIFIER = 10;
-
-    /**
-     * Constant for defining how many steps a player must reach
-     * in game before an online Activity is generated for them.
-     */
-    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 100;
 
     /**
      * Constant that defines the minimum level a Player or Enemy can be.

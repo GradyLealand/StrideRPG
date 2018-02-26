@@ -74,7 +74,7 @@ public class EncounterGenerator {
      * @return Timestamp for Boss expiration date.
      */
     private static String calculateBossExpiration(Enums.BossTier bossTier) {
-        return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusHours(bossTier.getExpires()));
+        return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusMinutes(bossTier.getExpires()));
     }
 
     /**

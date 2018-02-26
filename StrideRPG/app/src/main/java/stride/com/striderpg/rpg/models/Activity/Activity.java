@@ -63,7 +63,7 @@ public class Activity {
         return "Activity{" +
                 "timestamp='" + timestamp + '\'' +
                 ", activityType=" + activityType +
-                ", description='" + description + '\'' +
+                ", description='" + description.replace('\n', ' ') + '\'' +
                 ", activityIconId=" + activityIconId +
                 '}';
     }
