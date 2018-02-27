@@ -36,25 +36,23 @@ public class DashboardFragment extends Fragment {
      */
     private static final String TAG = "DashboardFragment";
 
-
     /**
      * Instance the recycler view used to create the list of Activities
      * in the GUI dynamically.
      */
     RecyclerView dashboardRecyclerView;
 
-
     /**
      * Generator instance used to retrieve Activities. Constructor
      * call will get the current Activity HashMap from the
      * active player object.
      */
-    DashboardGenerator generator = new DashboardGenerator();
+    DashboardGenerator activityGenerator = new DashboardGenerator();
 
     /**
      * Adapter instance global to update on Activity added.
      */
-    DashboardAdapter adapter;
+    DashboardAdapter activityAdapter;
 
     /**
      * Player profile picture ImageView.
@@ -138,8 +136,8 @@ public class DashboardFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         dashboardRecyclerView.setLayoutManager(llm);
 
-        adapter = new DashboardAdapter(generator.getActivities());
-        dashboardRecyclerView.setAdapter(adapter);
+        activityAdapter = new DashboardAdapter(activityGenerator.getActivities());
+        dashboardRecyclerView.setAdapter(activityAdapter);
 
         Log.d(TAG, "onCreateView:success");
         return rootView;
@@ -149,28 +147,26 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        // Call method to set each UI element on View start.
         getDashboardElements();
 
-        // Add a new PropertyChangeListener to the active Player
-        // object for handling property changes.
+        // Add a new PropertyChangeListener to Global Player for handling
+        // property changes to the base Player object.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 switch (propertyChangeEvent.getPropertyName()) {
-                    // If Player experience property has been changed.
                     case Constants.PROPERTY_EXP:
                         updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
                         break;
-                    // If Player username property has been changed.
+
                     case Constants.PROPERTY_USERNAME:
                         break;
-                    // If Player level property has been changed.
+
                     case Constants.PROPERTY_LEVEL:
                         updateLevelText((int)propertyChangeEvent.getNewValue());
                         updateExpOnLevelUp();
                         break;
-                    // If Player steps property has been changed.
+
                     case Constants.PROPERTY_STEPS:
                         updateStepsTextView((int)propertyChangeEvent.getNewValue());
                         break;
@@ -178,23 +174,13 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        // Add a new PropertyChangeListener to the active Players ActivityLog
-        // for handling any new online activity additions.
+        // Add a new PropertyChangeListener to Global Players
         G.activePlayer.getActivityLog().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 switch (propertyChangeEvent.getPropertyName()) {
-                    // generic Activity has been added to Players ActivityLog.
                     case Constants.PROPERTY_ONLINE_ACTIVITY:
-                        // Grab the new Activity that has been generated.
-                        Activity activityAdded = (Activity)propertyChangeEvent.getNewValue();
-
-                        // Insert into the Dashboard Adapter and notify
-                        // so it is displayed in the UI.
-                        generator.insert(activityAdded);
-
-                        adapter.notifyItemInserted(0);
-                        adapter.notifyDataSetChanged();
+                        addDashboardActivity((Activity)propertyChangeEvent.getNewValue());
                 }
             }
         });
@@ -203,87 +189,126 @@ public class DashboardFragment extends Fragment {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 switch(propertyChangeEvent.getPropertyName()) {
-                    // The ActiveEncounter has been set.
                     case Constants.PROPERTY_ACTIVE_ENCOUNTER_SET:
-                        activeEncounterCard.setVisibility(View.VISIBLE);
-                        updateActiveEncounterCard();
+                        buildActiveEncounterCard();
                         break;
 
-                    // ActiveEncounter Boss health has been updated.
                     case Constants.PROPERTY_ACTIVE_ENCOUNTER_UPDATE_HEALTH:
-                        activeEncounterHealthProgress.setProgress(
-                                        G.activePlayer.getActiveEncounter().getBoss().getHealth()
-                        );
-                        activeEncounterHealthText.setText(String.format(G.locale, "%d", G.activePlayer.getActiveEncounter().getBoss().getHealth()));
+                        updateEncounterHealth();
                         break;
 
-                    // Active Encounter has expired.
                     case Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES:
-                        activeEncounterCard.setVisibility(View.GONE);
-                        Activity expireActivity = (Activity)propertyChangeEvent.getNewValue();
-
-                        generator.insert(expireActivity);
-
-                        adapter.notifyItemInserted(0);
-                        adapter.notifyDataSetChanged();
+                        finishActiveEncounter((Activity)propertyChangeEvent.getNewValue());
                         break;
 
-                    // Active Encounter has been finished.
                     case Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH:
-                        activeEncounterCard.setVisibility(View.GONE);
-
-                        Activity defeatActivity = (Activity)propertyChangeEvent.getNewValue();
-
-                        generator.insert(defeatActivity);
-
-                        adapter.notifyItemInserted(0);
-                        adapter.notifyDataSetChanged();
+                        finishActiveEncounter((Activity)propertyChangeEvent.getNewValue());
                         break;
                 }
             }
         });
 
-        // Initial value set for Player information on Dashboard.
-        playerUsernameText.setText(G.activePlayer.getUsername());
-        stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
-        levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
-        enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
+        buildPlayerStatsCard();
 
-        // Check if Player ActiveEncounter is going on right now.
-        if (G.activePlayer.getActiveEncounter().isActive()) {
-
-            // Check if the ActiveEncounter has expired on load.
-            if (!G.activePlayer.getActiveEncounter().checkExpired()) {
-                // Display card and allow Player to continue fighting Boss.
-                activeEncounterCard.setVisibility(View.VISIBLE);
-                activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
-                updateActiveEncounterCard();
-            } else {
-                // Expire the current ActiveEncounter.
+        // OnStart if for determining if the ActiveEncounter card should be
+        // built and displayed when the Dashboard is loaded.
+        if (G.activePlayer.getActiveEncounter().isActive())
+            if (!G.activePlayer.getActiveEncounter().checkExpired())
+                buildActiveEncounterCard();
+            else
                 G.activePlayer.getActiveEncounter().expire();
-            }
-        }
 
-        // Initial Player level progress bar update.
         updateLevelProgressBar(G.activePlayer.getExperience());
     }
 
-    private void updateActiveEncounterCard() {
-        activeEncounterName.setText(G.activePlayer.getActiveEncounter().getBoss().getName());
-        activeEncounterHealthText.setText(String.format(
-                G.locale,
-                "%d/%d",
-                G.activePlayer.getActiveEncounter().getBoss().getHealth(),
-                G.activePlayer.getActiveEncounter().getBoss().getMaxHealth()));
-
+    // [ACTIVE ENCOUNTER METHODS BEGIN].
+    /**
+     * Update the ActiveEncounter's Health ProgressBar and TextView.
+     */
+    private void updateEncounterHealth() {
+        // Update Boss Health ProgressBar with Bosses current health property.
         activeEncounterHealthProgress.setProgress(
                 G.activePlayer.getActiveEncounter().getBoss().getHealth()
         );
+
+        // Set Health remaining Text to "health / maxHealth".
+        activeEncounterHealthText.setText(String.format(
+                G.locale,
+                "%d / %d",
+                G.activePlayer.getActiveEncounter().getBoss().getHealth(),
+                G.activePlayer.getActiveEncounter().getBoss().getMaxHealth()
+        ));
+    }
+
+    /**
+     * Build the current ActiveEncounter CardView with the information
+     * about the ActiveEncounter Boss.
+     */
+    private void buildActiveEncounterCard() {
+        // Make the Encounter Card Visible.
+        activeEncounterCard.setVisibility(View.VISIBLE);
+
+        // Set Encounter name to the name of the Boss.
+        activeEncounterName.setText(
+                G.activePlayer.getActiveEncounter().getBoss().getName()
+        );
+
+        updateEncounterHealth();
+    }
+
+    /**
+     * Finish the ActiveEncounter with the specified Activity.
+     * Either from defeating the Boss, or the Boss expiring.
+     * @param activity Activity to append to Dashboard Activities.
+     */
+    private void finishActiveEncounter(Activity activity) {
+        activeEncounterCard.setVisibility(View.GONE);
+
+        activityGenerator.insert(activity);
+
+        activityAdapter.notifyItemInserted(0);
+        activityAdapter.notifyDataSetChanged();
+    }
+    // [ACTIVE ENCOUNTER METHODS END].
+
+    // [PLAYER STATS METHODS BEGIN].
+    /**
+     * Insert a new generic Activity directly into the ActivityGenerator
+     * ArrayList and notify the Adapter.
+     * @param activity Activity to append to the Dashboard Activities.
+     */
+    private void addDashboardActivity(Activity activity) {
+        activityGenerator.insert(activity);
+
+        activityAdapter.notifyItemInserted(0);
+        activityAdapter.notifyDataSetChanged();
     }
 
     /**
      * Helper method for updating the Dashboards active Player
      * experience / experience needed TextView.
+     */
+    private void buildPlayerStatsCard() {
+        playerUsernameText.setText(
+                G.activePlayer.getUsername()
+        );
+
+        stepsText.setText(
+                addCommasToInteger(G.activePlayer.getSteps())
+        );
+
+        levelText.setText(String.format(
+                G.locale,
+                "%d",
+                G.activePlayer.getLevel()));
+
+        enemiesText.setText(
+                addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated())
+        );
+    }
+
+    /**
+     * Update a Players Experience TextViews with active Players current properties.
      */
     public void updateExpOnLevelUp() {
         playerExpCount.setText(parseExpAmount(G.activePlayer.getExperience(), G.activePlayer.getLevel() + 1));
@@ -344,12 +369,11 @@ public class DashboardFragment extends Fragment {
      * @return String for exp/exp needed.
      */
     private String parseExpAmount(Integer exp, Integer level) {
-        return exp + " / " +
-                LevelGenerator.experienceToNextLevel(level);
+        return LevelGenerator.getReadableExpString(exp, level);
     }
 
     /**
-     * Set the required Dashboard UI elements using the current view
+     * Set the required Dashboard UI elements using the current View
      * findViewById method.
      */
     private void getDashboardElements() {
@@ -371,4 +395,5 @@ public class DashboardFragment extends Fragment {
             Log.e(TAG, "getDashboardElements:error:", e);
         }
     }
+    // [PLAYER STATS METHODS END].
 }

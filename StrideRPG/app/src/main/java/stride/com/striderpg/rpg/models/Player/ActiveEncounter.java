@@ -132,12 +132,12 @@ public class ActiveEncounter {
                 boss
         );
 
-        // Fire PropertyChange event so UI knows the ActiveEncounter has ended.
-        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, bossDefeatActvity);
-
-        // Reset Players
+        // Reset the ActiveEncounter.
         active = false;
         boss = null;
+
+        // Fire PropertyChange event so UI knows the ActiveEncounter has ended.
+        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, bossDefeatActvity);
     }
 
     public boolean isActive() {

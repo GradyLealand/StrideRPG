@@ -48,7 +48,7 @@ public final class Constants {
     /**
      * Constant to calculate a bosses health property.
      */
-    public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 250;
+    public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 500;
 
     /**
      * Constant for generating SimpleDateFormats throughout the
@@ -88,15 +88,13 @@ public final class Constants {
      * Constant for determining the percent chance that an ActiveEncounter
      * will be generated.
      */
-    // TODO : Debug value, change back to 75 before merge.
-    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 100;
+    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 75;
 
     /**
      * Constant for defining how many steps a player must reach
      * in game before an online Activity is generated for them.
      */
-    // TODO : Debug value, change back to 100 before merge.
-    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 5;
+    public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 100;
 
     /**
      * Constant that will be used to generate a random Integer
@@ -191,7 +189,7 @@ public final class Constants {
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every fitnessUtil readData call.
      */
-    public static final long FITNESS_READ_RATE = 5000;
+    public static final long FITNESS_READ_RATE = 1000;
 
     /**
      * Constant for generic defeat enemies quest title.
