@@ -16,6 +16,21 @@ public class Stats {
     private Integer enemiesDefeated;
 
     /**
+     * Total amount of bosses this player has defeated.
+     */
+    private Integer bossesDefeated;
+
+    /**
+     * Total amount of bosses this player has had expired on them.
+     */
+    private Integer bossesExpired;
+
+    /**
+     * Total amount of losses this player has had.
+     */
+    private Integer losses;
+
+    /**
      * Total amount of items this player has looted.
      */
     private Integer itemsLooted;
@@ -36,6 +51,9 @@ public class Stats {
      */
     public Stats() {
         this.enemiesDefeated = 0;
+        this.bossesDefeated = 0;
+        this.bossesExpired = 0;
+        this.losses = 0;
         this.itemsLooted = 0;
         this.totalExperience = 0;
         this.registered = TimeParser.makeTimestamp();
@@ -50,6 +68,9 @@ public class Stats {
     public String toString() {
         return "Stats{" +
                 "enemiesDefeated=" + enemiesDefeated +
+                ", bossesDefeated=" + bossesDefeated +
+                ", bossesExpired=" + bossesExpired +
+                ", losses=" + losses +
                 ", itemsLooted=" + itemsLooted +
                 ", totalExperience=" + totalExperience +
                 ", registered='" + registered + '\'' +
@@ -64,6 +85,27 @@ public class Stats {
     }
 
     /**
+     * Increment a Stats bosses defeated property by 1.
+     */
+    public void updateBossesDefeated() {
+        this.setBossesDefeated(this.getBossesDefeated() + 1);
+    }
+
+    /**
+     * Increment a Stats bosses expired property by 1.
+     */
+    public void updateBossesExpired() {
+        this.setBossesExpired(this.getBossesExpired() + 1);
+    }
+
+    /**
+     * Increment a Stats losses property by 1.
+     */
+    public void updateLosses() {
+        this.setLosses(this.getLosses() + 1);
+    }
+
+    /**
      * Increment a Stats items looted property by 1.
      */
     public void updateItemsLooted() {
@@ -75,7 +117,7 @@ public class Stats {
      * @param experience Experience to add to total experience.
      */
     public void updateTotalExperience(Integer experience) {
-        this.totalExperience += experience;
+        this.setTotalExperience(this.getTotalExperience() + experience);
     }
 
     public Integer getEnemiesDefeated() {
@@ -84,6 +126,30 @@ public class Stats {
 
     public void setEnemiesDefeated(Integer enemiesDefeated) {
         this.enemiesDefeated = enemiesDefeated;
+    }
+
+    public Integer getBossesDefeated() {
+        return bossesDefeated;
+    }
+
+    public void setBossesDefeated(Integer bossesDefeated) {
+        this.bossesDefeated = bossesDefeated;
+    }
+
+    public Integer getBossesExpired() {
+        return bossesExpired;
+    }
+
+    public void setBossesExpired(Integer bossesExpired) {
+        this.bossesExpired = bossesExpired;
+    }
+
+    public Integer getLosses() {
+        return losses;
+    }
+
+    public void setLosses(Integer losses) {
+        this.losses = losses;
     }
 
     public Integer getItemsLooted() {

@@ -41,6 +41,16 @@ public final class Constants {
     public static final int ENEMY_EXPERIENCE_MODIFIER = 10;
 
     /**
+     * Constant to calculate a bosses experience.
+     */
+    public static final int BOSS_EXPERIENCE_MODIFIER = 30;
+
+    /**
+     * Constant to calculate a bosses health property.
+     */
+    public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 500;
+
+    /**
      * Constant for generating SimpleDateFormats throughout the
      * application.
      */
@@ -65,7 +75,7 @@ public final class Constants {
      * Constant to define the time in minutes between each possible
      * offline event.
      */
-    public static final int OFFLINE_EVENT_INCREMENT_MINUTES = 30;
+    public static final int OFFLINE_EVENT_INCREMENT_MINUTES = 60;
 
     /**
      * Constant to determine the percent chance that an activity will
@@ -75,11 +85,10 @@ public final class Constants {
     public static final int OFFLINE_ACTIVITY_CHANCE_PERCENT = 60;
 
     /**
-     * Constant that will be used to generate a random Integer
-     * added to a monsters health and players attack in an offline
-     * battle encounter/activity.
+     * Constant for determining the percent chance that an ActiveEncounter
+     * will be generated.
      */
-    public static final int OFFLINE_BATTLE_MODIFIER = 10;
+    public static final int ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT = 75;
 
     /**
      * Constant for defining how many steps a player must reach
@@ -88,9 +97,21 @@ public final class Constants {
     public static final int ONLINE_ACTIVITY_STEP_THRESHOLD = 100;
 
     /**
+     * Constant that will be used to generate a random Integer
+     * added to a monsters health and players attack in an offline
+     * battle encounter/activity.
+     */
+    public static final int OFFLINE_BATTLE_MODIFIER = 10;
+
+    /**
      * Constant that defines the minimum level a Player or Enemy can be.
      */
     public static final int MINIMUM_LEVEL = 1;
+
+    /**
+     * Constant that defines the minimum level a Boss can be.
+     */
+    public static final int BOSS_MINIMUM_LEVEL = 3;
 
     /**
      * Constant that defines the maximum amount of points a Player
@@ -138,6 +159,26 @@ public final class Constants {
      * for the ActivityLog log property.
      */
     public static final String PROPERTY_ONLINE_ACTIVITY = "ONLINE_ACTIVITY";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the ActiveEncounter boss property.
+     */
+    public static final String PROPERTY_ACTIVE_ENCOUNTER_SET = "ACTIVE_ENCOUNTER_SET";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the ActiveEncounter boss health property.
+     */
+    public static final String PROPERTY_ACTIVE_ENCOUNTER_UPDATE_HEALTH = "ACTIVE_ENCOUNTER_UPDATE_HEALTH";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the ActiveEncounter on defeated.
+     */
+    public static final String PROPERTY_ACTIVE_ENCOUNTER_FINISH = "ACTIVE_ENCOUNTER_FINISH";
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
+     * for the ActiveEncounter on expiration.
+     */
+    public static final String PROPERTY_ACTIVE_ENCOUNTER_EXPIRES = "ACTIVE_ENCOUNTER_EXPIRES";
 
     /**
      * Constant used to determine the amount of milliseconds
@@ -148,16 +189,24 @@ public final class Constants {
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every fitnessUtil readData call.
      */
-    public static final long FITNESS_READ_RATE = 5000;
+    public static final long FITNESS_READ_RATE = 1000;
 
     /**
      * Constant for generic defeat enemies quest title.
      */
     public static final String QUEST_DEFEAT_ENEMIES_TITLE = "Defeat Enemies";
     /**
+     * Constant for generic defeat bosses quest title.
+     */
+    public static final String QUEST_DEFEAT_BOSSES_TITLE = "Defeat Bosses";
+    /**
      * Constant for generic failed to defeat enemies quest title.
      */
     public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed To Defeat Enemies";
+    /**
+     * Constant for failed to defeat bosses in time quest title.
+     */
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_TITLE = "Failed to Defeat Bosses in time.";
     /**
      * Constant for generic loot items quest title.
      */
@@ -166,6 +215,14 @@ public final class Constants {
      * Constant for generic defeat enemies quest description.
      */
     public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies throughout your travels.";
+    /**
+     * Constant for failed to defeat bosses in time description.
+     */
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses in time throughout your travels.";
+    /**
+     * Constant for generic defeat bosses quest description.
+     */
+    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat bosses throughout your travels.";
     /**
      * Constant for generic defeat enemies quest description.
      */
@@ -225,5 +282,4 @@ public final class Constants {
      * Quest Level Ten progress goal.
      */
     public static final Integer QUEST_LEVEL_TEN_GOAL = 50000;
-
 }

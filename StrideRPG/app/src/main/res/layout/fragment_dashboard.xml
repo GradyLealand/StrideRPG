@@ -177,10 +177,68 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/enemyEncounterCard"
+        android:id="@+id/activeEncounterCard"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playerStatsCard"
+        android:layout_marginTop="5dp"
+        android:visibility="gone">
+
+        <GridLayout
+            android:id="@+id/activeEncounterGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="3"
+            android:padding="5dp"
+            android:rowCount="2">
+
+            <ImageView
+                android:id="@+id/activeEncounterImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:layout_rowSpan="2"
+                android:layout_rowWeight="1"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/activeEncounterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_row="0"
+                android:paddingStart="5dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/activeEncounterHealthTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp"
+                android:layout_row="0"
+                android:text="TextView"
+                android:textAlignment="textEnd" />
+
+            <ProgressBar
+                android:id="@+id/activeEncounterHealthProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_row="1"
+                android:scaleY="7" />
+        </GridLayout>
+    </android.support.v7.widget.CardView>
 
     <include
         android:id="@+id/fragment_dashboard_list"
@@ -188,7 +246,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/playerStatsCard"
+        android:layout_below="@+id/activeEncounterCard"
         android:layout_marginBottom="65dp" />
 
 </RelativeLayout>

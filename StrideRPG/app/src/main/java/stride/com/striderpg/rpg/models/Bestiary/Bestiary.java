@@ -28,6 +28,11 @@ public class Bestiary {
         for (Enums.EnemyType enemyType : Enums.EnemyType.values()) {
             enemies.put(enemyType.name(), 0);
         }
+
+        // Add all BossTypes to HashMap as well.
+        for (Enums.BossType bossType : Enums.BossType.values()) {
+            enemies.put(bossType.name(), 0);
+        }
     }
 
     /**
@@ -47,6 +52,14 @@ public class Bestiary {
      * @param type EnemyType being updated.
      */
     public void update(Enums.EnemyType type) {
+        enemies.put(type.name(), enemies.get(type.name()) + 1);
+    }
+
+    /**
+     * Update a BossType in the Bestiary by 1.
+     * @param type BossType being updated.
+     */
+    public void update(Enums.BossType type) {
         enemies.put(type.name(), enemies.get(type.name()) + 1);
     }
 
