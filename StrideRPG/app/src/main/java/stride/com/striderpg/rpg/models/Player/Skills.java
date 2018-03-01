@@ -88,13 +88,13 @@ public class Skills {
         // Increment skills.
         this.setVitality(
                 this.getVitality() + r.nextInt(
-                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT
+                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT + 2
                 ));
         this.setStrength(
                 this.getVitality() + r.nextInt(
-                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT
+                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT + 2
                 ));
-        this.setSpeed(this.getSpeed() + 1);
+        this.setSpeed(this.getSpeed() + 3);
     }
 
     public Integer getVitality() {
