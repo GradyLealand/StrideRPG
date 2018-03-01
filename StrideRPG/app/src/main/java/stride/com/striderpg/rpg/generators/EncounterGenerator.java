@@ -63,7 +63,7 @@ public class EncounterGenerator {
 
         String name = parseName(bossType);
         String expires = calculateBossExpiration(bossTier);
-        int health = calculateBossHealth(bossTier);
+        int health = calculateBossHealth(bossTier, p);
         int experience = calculateBossExp(p, bossTier);
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
         int icon = parseIcon(bossType);
@@ -155,8 +155,34 @@ public class EncounterGenerator {
      * @param bossTier Boss tier being generated.
      * @return New Boss base health.
      */
-    private static Integer calculateBossHealth(Enums.BossTier bossTier) {
-        return bossTier.getNumber() * Constants.BOSS_ENCOUNTER_HEALTH_MODIFIER;
+    private static Integer calculateBossHealth(Enums.BossTier bossTier, Player p) {
+        //the atk needed for the monster to have normal health
+        int baseStr = 0;
+        //the tier of the current boss
+        int tier = bossTier.getNumber();
+
+        switch (tier) {
+            case 1:
+                baseStr = 17;
+                break;
+            case 2:
+                baseStr = 51;
+                break;
+            case 3:
+                baseStr = 105;
+                break;
+        }
+
+        int health = Constants.BOSS_ENCOUNTER_HEALTH_MODIFIER +
+                (baseStr - p.getSkills().getStrength()) * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE;
+
+        // boss health can not be less then 100
+        if (health < Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM)
+        {
+            health = Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM;
+        }
+
+        return health;
     }
 
     /**

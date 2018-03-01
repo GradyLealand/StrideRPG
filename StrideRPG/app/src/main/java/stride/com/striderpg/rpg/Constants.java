@@ -51,6 +51,16 @@ public final class Constants {
     public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 500;
 
     /**
+     * Constant to calculate ethe chang ein boss health property.
+     */
+    public static final int BOSS_ENCOUNTER_HEALTH_CHANGE = 10;
+
+    /**
+     * Constant to define the minimum boss health;
+     */
+    public static final int BOSS_ENCOUNTER_HEALTH_MINIMUM = 100;
+
+    /**
      * Constant for generating SimpleDateFormats throughout the
      * application.
      */
