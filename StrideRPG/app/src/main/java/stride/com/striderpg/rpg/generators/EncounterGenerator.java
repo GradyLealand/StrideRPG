@@ -122,7 +122,7 @@ public class EncounterGenerator {
      */
     private static int calculateBossExp(Player p, Enums.BossTier tier) {
         Random r = new Random();
-        int expReward = p.getLevel() * Constants.BOSS_EXPERIENCE_MODIFIER
+        int expReward = (tier.getNumber() * Constants.BOSS_EXPERIENCE_MODIFIER - p.getLevel())
                 + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER))
                 * tier.getNumber());
 
