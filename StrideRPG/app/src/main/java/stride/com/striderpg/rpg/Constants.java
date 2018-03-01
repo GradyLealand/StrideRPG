@@ -61,6 +61,11 @@ public final class Constants {
     public static final int BOSS_ENCOUNTER_HEALTH_MINIMUM = 100;
 
     /**
+     * the minimum amount of time a player can have to defeat a monster
+     */
+    public static final int BOSS_ENCOUNTER_TIME_MINIMUM = 10;
+
+    /**
      * Constant for generating SimpleDateFormats throughout the
      * application.
      */

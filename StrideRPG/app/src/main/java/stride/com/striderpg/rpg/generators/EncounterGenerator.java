@@ -62,7 +62,7 @@ public class EncounterGenerator {
         while(p.getLevel() < bossTier.getEligible());
 
         String name = parseName(bossType);
-        String expires = calculateBossExpiration(bossTier);
+        String expires = calculateBossExpiration(bossTier, p);
         int health = calculateBossHealth(bossTier, p);
         int experience = calculateBossExp(p, bossTier);
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
@@ -77,8 +77,33 @@ public class EncounterGenerator {
      * @param bossTier BossTier enumeration type for determining hours.
      * @return Timestamp for Boss expiration date.
      */
-    private static String calculateBossExpiration(Enums.BossTier bossTier) {
-        return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusMinutes(bossTier.getExpires()));
+    private static String calculateBossExpiration(Enums.BossTier bossTier, Player p) {
+        //the vit needed for the monster to have normal expiration time
+        int baseVit = 0;
+        int tier = bossTier.getNumber();
+
+        switch (tier) {
+            case 1:
+                baseVit = 17;
+                break;
+            case 2:
+                baseVit = 51;
+                break;
+            case 3:
+                baseVit = 105;
+                break;
+        }
+
+        Integer time = bossTier.getExpires() +
+                (p.getSkills().getStrength()) - baseVit * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE;
+
+        // boss health can not be less then 100
+        if (time < Constants.BOSS_ENCOUNTER_TIME_MINIMUM)
+        {
+            time = Constants.BOSS_ENCOUNTER_TIME_MINIMUM;
+        }
+
+        return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusMinutes(time));
     }
 
     /**
