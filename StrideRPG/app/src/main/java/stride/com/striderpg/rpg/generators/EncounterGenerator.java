@@ -131,25 +131,6 @@ public class EncounterGenerator {
     }
 
     /**
-     * Calculate a bosses level using a dice roll.
-     * @param p Player for keeping Boss level within a Range of player level.
-     * @return New Boss level.
-     */
-    private static Integer calculateBossLevel(Player p) {
-        Random r = new Random();
-        Integer diceRoll = r.nextInt(5);
-        int bossLevel = (p.getLevel() + 5) - diceRoll;
-
-        // Do not allow the monster to have a level < 1.
-        if (bossLevel < Constants.MINIMUM_LEVEL) {
-            bossLevel = Constants.BOSS_MINIMUM_LEVEL;
-        }
-
-        Log.d(TAG, String.format(G.locale, "calculateBossLevel:success:bossLevel=%d", bossLevel));
-        return bossLevel;
-    }
-
-    /**
      * Generate a bosses health with the bossTier and constant
      * defined for multiplying a bosses health.
      * @param bossTier Boss tier being generated.
