@@ -73,7 +73,7 @@ public class Boss {
      * into the Constructor method.
      */
     public Boss(String name, Enums.BossType type, Enums.BossTier tier, String expiration,
-                Integer health, Integer level, Integer icon, ArrayList<Item> rewards,
+                Integer health, Integer icon, ArrayList<Item> rewards,
                 Integer encounterExperienceReward) {
         this.name = name;
         this.type = type;
@@ -81,7 +81,6 @@ public class Boss {
         this.expiration = expiration;
         this.health = health;
         this.maxHealth = health;
-        this.level = level;
         this.icon = icon;
         this.rewards = rewards;
         this.encounterExperienceReward = encounterExperienceReward;
@@ -100,7 +99,6 @@ public class Boss {
                 ", tier=" + tier +
                 ", expiration='" + expiration + '\'' +
                 ", health=" + health +
-                ", level=" + level +
                 ", icon=" + icon +
                 ", rewards=" + rewards +
                 ", encounterExperienceReward=" + encounterExperienceReward +
@@ -133,10 +131,6 @@ public class Boss {
 
     public Integer getMaxHealth() {
         return maxHealth;
-    }
-
-    public Integer getLevel() {
-        return level;
     }
 
     public Integer getIcon() {

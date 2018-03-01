@@ -59,12 +59,11 @@ public class EncounterGenerator {
         String name = parseName(bossType);
         String expires = calculateBossExpiration(bossTier);
         int health = calculateBossHealth(bossTier);
-        int level = calculateBossLevel(p);
-        int experience = calculateBossExp(p, level - p.getLevel(), bossTier);
+        int experience = calculateBossExp(p, bossTier);
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
         int icon = parseIcon(bossType);
 
-        return new Boss(name, bossType, bossTier, expires, health, level, icon, rewards, experience);
+        return new Boss(name, bossType, bossTier, expires, health, icon, rewards, experience);
     }
 
     /**
@@ -113,14 +112,13 @@ public class EncounterGenerator {
     /**
      * Calculate the amount of experience this Boss will be worth on defeat.
      * @param p Player object for determining exp amount.
-     * @param bossLevel Boss level for determining exp amounts.
      * @param tier BossTier for modifying the experience more so.
      * @return New boss experience reward.
      */
-    private static int calculateBossExp(Player p, Integer bossLevel, Enums.BossTier tier) {
+    private static int calculateBossExp(Player p, Enums.BossTier tier) {
         Random r = new Random();
         int expReward = p.getLevel() * Constants.BOSS_EXPERIENCE_MODIFIER
-                + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER) * bossLevel)
+                + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER))
                 * tier.getNumber());
 
         Log.d(TAG, String.format(G.locale, "calculateBossExp:success:expReward=%d", expReward));
