@@ -185,9 +185,9 @@ public class Enums {
      * Enumeration BossTier to hold the different Boss tiers in game.
      */
     public enum BossTier {
-        ONE(1, "I", 30),
-        TWO(2, "II", 60),
-        THREE(3, "III", 90);
+        ONE(1, "I", 30, 1),
+        TWO(2, "II", 60, 8),
+        THREE(3, "III", 90, 25);
 
         /**
          * Number representation of enum.
@@ -205,15 +205,22 @@ public class Enums {
         private final Integer expires;
 
         /**
+         * Numeral representation for enum.
+         */
+        private final Integer eligible;
+
+        /**
          * Constructor method for setting number and numeral properties.
          * @param number Enum number.
          * @param numeral Enum numeral.
          * @param expires Enum expires.
+         * @param eligible Enum eligible
          */
-        BossTier(Integer number, String numeral, Integer expires) {
+        BossTier(Integer number, String numeral, Integer expires, Integer eligible) {
             this.number = number;
             this.numeral = numeral;
             this.expires = expires;
+            this.eligible = eligible;
         }
 
         public Integer getNumber() {
@@ -226,6 +233,10 @@ public class Enums {
 
         public Integer getExpires() {
             return expires;
+        }
+
+        public Integer getEligible() {
+            return eligible;
         }
     }
 
