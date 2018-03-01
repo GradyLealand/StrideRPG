@@ -1,6 +1,7 @@
 package stride.com.striderpg.rpg;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -104,56 +105,66 @@ public class Enums {
         }
     }
 
-    /**
-     * Enumeration EnemyType to hold the different enemy types in game.
-     */
     public enum EnemyType {
-        TROLL("Troll"),
-        GOBLIN("Goblin"),
-        LIZARD("Lizard"),
-        NECROMANCER("Necromancer");
-
-        /**
-         * ItemType name property.
-         */
-        private final String name;
-
-        /**
-         * EnemyType constructor to set the name property.
-         * @param name Name of constant.
-         */
-        EnemyType(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+        MONSTER,
+        BOSS
     }
 
     /**
-     * Enumeration BossType to hold the different boss types in game.
+     * Enumeration Enemies to hold the different enemy types in game.
      */
-    public enum BossType {
-        DRAGON("Dragon"),
-        DEMON("Demon"),
-        KRAKEN("Kraken");
+    public enum Enemies {
+        TROLL("Troll", EnemyType.MONSTER),
+        GOBLIN("Goblin", EnemyType.MONSTER),
+        LIZARD("Lizard", EnemyType.MONSTER),
+        NECROMANCER("Necromancer", EnemyType.MONSTER),
+
+        DRAGON("Dragon", EnemyType.BOSS),
+        DEMON("Demon", EnemyType.BOSS),
+        KRAKEN("Kraken", EnemyType.BOSS);
 
         /**
-         * BossType name property.
+         * Enemies name property.
          */
         private final String name;
 
         /**
-         * BossType Constructor method to set name property.
-         * @param name Readable enum name.
+         * Enemies EnemyType enum.
          */
-        BossType(String name) {
+        private final EnemyType type;
+
+        /**
+         * Enemies constructor to set the name property.
+         * @param name Name of constant.
+         * @param type Type of enemy.
+         */
+        Enemies(String name, EnemyType type) {
             this.name = name;
+            this.type = type;
+        }
+
+        /**
+         * Return a random Enemies enum based on the EnemyType passed.
+         * @param type EnemyType to grab all Enemies of type.
+         * @return One enemy of specified type.
+         */
+        public static Enemies getRandomEnemiesType(EnemyType type) {
+            ArrayList<Enemies> enemies = new ArrayList<>();
+            for (Enemies enemy : Enemies.values()) {
+                if (enemy.type == type) {
+                    enemies.add(enemy);
+                }
+            }
+            Random random = new Random();
+            return enemies.get(random.nextInt(enemies.size()));
         }
 
         public String getName() {
             return name;
+        }
+
+        public EnemyType getType() {
+            return type;
         }
     }
 
@@ -222,7 +233,7 @@ public class Enums {
      * is being generated.
      */
     public enum ActivityType {
-        ENEMY("Enemy"),
+        ENEMY("Monster"),
         LOOT("Loot"),
         BOSS_EXPIRE("Boss Expiration"),
         BOSS_DEFEAT("Boss Defeat");
@@ -249,8 +260,8 @@ public class Enums {
         }
 
         /**
-         * Choose between a generic Enemy or Loot ActivityType.
-         * @return Enumeration ActivityType Enemy/Loot.
+         * Choose between a generic Monster or Loot ActivityType.
+         * @return Enumeration ActivityType Monster/Loot.
          */
         public static ActivityType generic() {
             // Generate percent roll 0 to 100 to choose LOOT or ENEMY ActivityType.

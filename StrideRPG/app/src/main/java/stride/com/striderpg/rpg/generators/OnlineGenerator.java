@@ -37,7 +37,7 @@ public class OnlineGenerator {
             // default Activity.
             G.onlineActivitySteps = 0;
 
-            // Pick a random activity type (Loot or Enemy) and begin building new Activity.
+            // Pick a random activity type (Loot or Monster) and begin building new Activity.
             Activity activity = ActivityGenerator.generateActivity(
                     Enums.ActivityType.generic()
             );

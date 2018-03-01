@@ -104,7 +104,7 @@ public final class Constants {
     public static final int OFFLINE_BATTLE_MODIFIER = 10;
 
     /**
-     * Constant that defines the minimum level a Player or Enemy can be.
+     * Constant that defines the minimum level a Player or Monster can be.
      */
     public static final int MINIMUM_LEVEL = 1;
 

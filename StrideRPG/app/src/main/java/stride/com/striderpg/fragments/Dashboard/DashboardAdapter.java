@@ -39,7 +39,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
      */
     DashboardAdapter(ArrayList<Activity> activities) {
         this.activities = activities;
-        Log.d(TAG, "DashboardAdapter:success:ArrayList<Activity>=" + activities);
     }
 
     @Override

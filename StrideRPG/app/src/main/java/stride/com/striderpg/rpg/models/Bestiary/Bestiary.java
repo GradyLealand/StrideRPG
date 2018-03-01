@@ -12,7 +12,7 @@ import stride.com.striderpg.rpg.Enums;
 public class Bestiary {
 
     /**
-     * HashMap to store each type of Enemy as the key and an Integer
+     * HashMap to store each type of Monster as the key and an Integer
      * value for the amount of times a Player has defeated this enemy
      * type.
      */
@@ -24,14 +24,9 @@ public class Bestiary {
      */
     public Bestiary() {
         // Loop through each enemy type available and put a default value of 0 into the HashMap
-        // with the EnemyType as the key.
-        for (Enums.EnemyType enemyType : Enums.EnemyType.values()) {
+        // with the Enemies as the key.
+        for (Enums.Enemies enemyType : Enums.Enemies.values()) {
             enemies.put(enemyType.name(), 0);
-        }
-
-        // Add all BossTypes to HashMap as well.
-        for (Enums.BossType bossType : Enums.BossType.values()) {
-            enemies.put(bossType.name(), 0);
         }
     }
 
@@ -48,18 +43,10 @@ public class Bestiary {
     }
 
     /**
-     * Update an EnemyType in the Bestiary by 1.
-     * @param type EnemyType being updated.
+     * Update an Enemies in the Bestiary by 1.
+     * @param type Enemies being updated.
      */
-    public void update(Enums.EnemyType type) {
-        enemies.put(type.name(), enemies.get(type.name()) + 1);
-    }
-
-    /**
-     * Update a BossType in the Bestiary by 1.
-     * @param type BossType being updated.
-     */
-    public void update(Enums.BossType type) {
+    public void update(Enums.Enemies type) {
         enemies.put(type.name(), enemies.get(type.name()) + 1);
     }
 

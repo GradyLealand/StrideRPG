@@ -113,7 +113,7 @@ public class ActiveEncounter {
 
     public void defeatBoss() {
         // Increment Active Players experience with Experience reward from Boss.
-        G.activePlayer.setExperience(G.activePlayer.getExperience() + boss.getEncounterExperienceReward());
+        G.activePlayer.setExperience(G.activePlayer.getExperience() + boss.getExperienceReward());
 
         // Check for Active Player level up.
         if (G.activePlayer.canLevelUp()) {

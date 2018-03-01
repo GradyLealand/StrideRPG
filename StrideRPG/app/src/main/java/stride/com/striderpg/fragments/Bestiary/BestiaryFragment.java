@@ -1,4 +1,4 @@
-package stride.com.striderpg.fragments;
+package stride.com.striderpg.fragments.Bestiary;
 
 
 import android.os.Bundle;

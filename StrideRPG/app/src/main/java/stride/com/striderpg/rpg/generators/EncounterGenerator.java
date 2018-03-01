@@ -53,18 +53,17 @@ public class EncounterGenerator {
      */
     private static Boss generateBoss(Player p) {
         // Determine new Boss Type and Tier.
-        Enums.BossType bossType = Enums.random(Enums.BossType.class);
+        Enums.Enemies bossType = Enums.Enemies.getRandomEnemiesType(Enums.EnemyType.BOSS);
         Enums.BossTier bossTier = Enums.random(Enums.BossTier.class);
 
         String name = parseName(bossType);
         String expires = calculateBossExpiration(bossTier);
         int health = calculateBossHealth(bossTier);
-        int level = calculateBossLevel(p);
-        int experience = calculateBossExp(p, level - p.getLevel(), bossTier);
+        int experience = calculateBossExp(p, p.getLevel(), bossTier);
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
         int icon = parseIcon(bossType);
 
-        return new Boss(name, bossType, bossTier, expires, health, level, icon, rewards, experience);
+        return new Boss(name, bossType, health, icon, experience, bossTier, expires, rewards);
     }
 
     /**
@@ -98,7 +97,7 @@ public class EncounterGenerator {
      * @param bossType BossType Enumeration.
      * @return Drawable Resource ID for boss type.
      */
-    private static int parseIcon(Enums.BossType bossType) {
+    private static int parseIcon(Enums.Enemies bossType) {
         int iconId = 0;
         try {
             iconId = R.drawable.class.getField(bossType.getName().toLowerCase()).getInt(null);
@@ -162,7 +161,7 @@ public class EncounterGenerator {
      * @param bossType BossType enumeration for determining Boss name.
      * @return New Boss name.
      */
-    private static String parseName(Enums.BossType bossType) {
+    private static String parseName(Enums.Enemies bossType) {
         Random r = new Random();
         String name =
                 bossAdjectives[r.nextInt(bossAdjectives.length)] +
