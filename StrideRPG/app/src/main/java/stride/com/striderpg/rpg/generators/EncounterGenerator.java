@@ -54,7 +54,12 @@ public class EncounterGenerator {
     private static Boss generateBoss(Player p) {
         // Determine new Boss Type and Tier.
         Enums.BossType bossType = Enums.random(Enums.BossType.class);
-        Enums.BossTier bossTier = Enums.random(Enums.BossTier.class);
+        Enums.BossTier bossTier;
+        do
+        {
+            bossTier = Enums.random(Enums.BossTier.class);
+        }
+        while(p.getLevel() < bossTier.getEligible());
 
         String name = parseName(bossType);
         String expires = calculateBossExpiration(bossTier);
