@@ -61,7 +61,7 @@ public class EncounterGenerator {
         }
         while(p.getLevel() < bossTier.getEligible());
 
-        String name = parseName(bossType);
+        String name = "Tier " + bossTier.getNumeral() + ": " + parseName(bossType);
         String expires = calculateBossExpiration(bossTier, p);
         int health = calculateBossHealth(bossTier, p);
         int experience = calculateBossExp(p, bossTier);
@@ -95,7 +95,7 @@ public class EncounterGenerator {
         }
 
         Integer time = bossTier.getExpires() +
-                (p.getSkills().getStrength()) - baseVit * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE;
+                (p.getSkills().getStrength() - baseVit);
 
         // boss health can not be less then 100
         if (time < Constants.BOSS_ENCOUNTER_TIME_MINIMUM)
