@@ -2,7 +2,6 @@ package stride.com.striderpg.rpg.models.Enemy;
 
 
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.models.Encounter.Enemy;
 
 /**
  * Monster class for encounters between an Monster and a Player. Represents the different information
@@ -30,6 +29,10 @@ public class Monster extends Enemy {
                    Integer icon, Integer experienceReward) {
         super(name, type, health, icon, experienceReward);
         this.level = level;
+    }
+
+    public Monster(String name) {
+        this.setName(name);
     }
 
     public Integer getLevel() {

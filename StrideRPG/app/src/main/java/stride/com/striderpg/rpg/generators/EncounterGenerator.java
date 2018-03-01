@@ -10,7 +10,7 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.models.Encounter.Boss;
+import stride.com.striderpg.rpg.models.Enemy.Boss;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.utils.TimeParser;

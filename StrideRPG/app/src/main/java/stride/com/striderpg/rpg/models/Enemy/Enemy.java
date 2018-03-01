@@ -1,4 +1,4 @@
-package stride.com.striderpg.rpg.models.Encounter;
+package stride.com.striderpg.rpg.models.Enemy;
 
 
 import stride.com.striderpg.rpg.Enums;

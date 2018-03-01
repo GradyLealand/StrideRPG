@@ -1,4 +1,4 @@
-package stride.com.striderpg.rpg.models.Encounter;
+package stride.com.striderpg.rpg.models.Enemy;
 
 
 import java.util.ArrayList;
@@ -45,6 +45,10 @@ public class Boss extends Enemy {
         this.expiration = expiration;
         this.maxHealth = health;
         this.rewards = rewards;
+    }
+
+    public Boss(String name) {
+        this.setName(name);
     }
 
     public Enums.BossTier getTier() {
