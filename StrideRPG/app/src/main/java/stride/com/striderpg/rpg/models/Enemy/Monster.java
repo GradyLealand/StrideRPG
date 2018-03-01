@@ -31,8 +31,10 @@ public class Monster extends Enemy {
         this.level = level;
     }
 
-    public Monster(String name) {
+    public Monster(String name, Enums.Enemies type, Integer icon) {
         this.setName(name);
+        this.setType(type);
+        this.setIcon(icon);
     }
 
     public Integer getLevel() {

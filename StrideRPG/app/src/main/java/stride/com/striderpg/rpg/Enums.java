@@ -4,6 +4,8 @@ package stride.com.striderpg.rpg;
 import java.util.ArrayList;
 import java.util.Random;
 
+import stride.com.striderpg.R;
+
 
 /**
  * Custom Class to hold the different enumerations that the RPG
@@ -114,14 +116,14 @@ public class Enums {
      * Enumeration Enemies to hold the different enemy types in game.
      */
     public enum Enemies {
-        TROLL("Troll", EnemyType.MONSTER),
-        GOBLIN("Goblin", EnemyType.MONSTER),
-        LIZARD("Lizard", EnemyType.MONSTER),
-        NECROMANCER("Necromancer", EnemyType.MONSTER),
+        TROLL("Troll", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        GOBLIN("Goblin", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        LIZARD("Lizard", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        NECROMANCER("Necromancer", EnemyType.MONSTER, R.mipmap.ic_launcher),
 
-        DRAGON("Dragon", EnemyType.BOSS),
-        DEMON("Demon", EnemyType.BOSS),
-        KRAKEN("Kraken", EnemyType.BOSS);
+        DRAGON("Dragon", EnemyType.BOSS, R.mipmap.ic_launcher),
+        DEMON("Demon", EnemyType.BOSS, R.mipmap.ic_launcher),
+        KRAKEN("Kraken", EnemyType.BOSS, R.mipmap.ic_launcher);
 
         /**
          * Enemies name property.
@@ -134,13 +136,20 @@ public class Enums {
         private final EnemyType type;
 
         /**
+         * Enemies Icon integer id.
+         */
+        private final Integer enemyIcon;
+
+        /**
          * Enemies constructor to set the name property.
          * @param name Name of constant.
          * @param type Type of enemy.
+         * @param enemyIcon Enemies icon resource id.
          */
-        Enemies(String name, EnemyType type) {
+        Enemies(String name, EnemyType type, Integer enemyIcon) {
             this.name = name;
             this.type = type;
+            this.enemyIcon = enemyIcon;
         }
 
         /**
@@ -165,6 +174,10 @@ public class Enums {
 
         public EnemyType getType() {
             return type;
+        }
+
+        public Integer getEnemyIcon() {
+            return enemyIcon;
         }
     }
 

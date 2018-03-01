@@ -7,10 +7,10 @@
     <!-- TODO: Update blank fragment layout -->
 
     <include
-        android:id="@+id/rv"
+        android:id="@+id/fragment_bestiary_grid"
         layout="@layout/fragment_bestiary_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

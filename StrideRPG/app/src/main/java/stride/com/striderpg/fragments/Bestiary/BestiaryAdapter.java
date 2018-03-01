@@ -51,7 +51,7 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
         enemyViewHolder.bestiaryAmount.setText(
                 String.format(G.locale, "%d",
                         G.activePlayer.getBestiary().getEnemies().get(
-                                enemies.get(0).getType().name()
+                                enemies.get(i).getType().name()
                         )
                 )
         );
@@ -63,7 +63,7 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
 
     @Override
     public int getItemCount() {
-        return 0;
+        return enemies.size();
     }
 
 

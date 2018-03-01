@@ -20,9 +20,17 @@ public class BestiaryGenerator {
     private void buildBestiary() {
         for (Enums.Enemies enemy : Enums.Enemies.values()) {
             if (enemy.getType().equals(Enums.EnemyType.BOSS)) {
-                enemies.add(new Boss(enemy.getName()));
+                enemies.add(new Boss(
+                        enemy.getName(),
+                        enemy,
+                        enemy.getEnemyIcon())
+                );
             } else if (enemy.getType().equals(Enums.EnemyType.MONSTER)) {
-                enemies.add(new Monster(enemy.getName()));
+                enemies.add(new Monster(
+                        enemy.getName(),
+                        enemy,
+                        enemy.getEnemyIcon())
+                );
             }
         }
     }

@@ -47,8 +47,10 @@ public class Boss extends Enemy {
         this.rewards = rewards;
     }
 
-    public Boss(String name) {
+    public Boss(String name, Enums.Enemies type, Integer icon) {
         this.setName(name);
+        this.setType(type);
+        this.setIcon(icon);
     }
 
     public Enums.BossTier getTier() {
