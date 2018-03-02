@@ -10,7 +10,7 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.models.Encounter.Boss;
+import stride.com.striderpg.rpg.models.Enemy.Boss;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.utils.TimeParser;
@@ -53,10 +53,9 @@ public class EncounterGenerator {
      */
     private static Boss generateBoss(Player p) {
         // Determine new Boss Type and Tier.
-        Enums.BossType bossType = Enums.random(Enums.BossType.class);
+        Enums.Enemies bossType = Enums.Enemies.getRandomEnemiesType(Enums.EnemyType.BOSS);
         Enums.BossTier bossTier;
-        do
-        {
+        do {
             bossTier = Enums.random(Enums.BossTier.class);
         }
         while(p.getLevel() < bossTier.getEligible());
@@ -68,7 +67,7 @@ public class EncounterGenerator {
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
         int icon = parseIcon(bossType);
 
-        return new Boss(name, bossType, bossTier, expires, health, icon, rewards, experience);
+        return new Boss(name, bossType, health, icon, experience, bossTier, expires, rewards);
     }
 
     /**
@@ -82,6 +81,7 @@ public class EncounterGenerator {
         int baseVit = 0;
         int tier = bossTier.getNumber();
 
+        // TODO : Move into function/generate Skill floors based on skills points given on level.
         switch (tier) {
             case 1:
                 baseVit = 17;
@@ -97,12 +97,10 @@ public class EncounterGenerator {
         Integer time = bossTier.getExpires() +
                 (p.getSkills().getStrength() - baseVit);
 
-        // boss health can not be less then 100
-        if (time < Constants.BOSS_ENCOUNTER_TIME_MINIMUM)
-        {
+        // boss time can not be less then 100
+        if (time < Constants.BOSS_ENCOUNTER_TIME_MINIMUM) {
             time = Constants.BOSS_ENCOUNTER_TIME_MINIMUM;
         }
-
         return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusMinutes(time));
     }
 
@@ -118,6 +116,7 @@ public class EncounterGenerator {
         for (int i = 0; i < tier.getNumber(); i++) {
             rewards.add(ItemGenerator.generate(p));
         }
+
         return rewards;
     }
 
@@ -127,7 +126,7 @@ public class EncounterGenerator {
      * @param bossType BossType Enumeration.
      * @return Drawable Resource ID for boss type.
      */
-    private static int parseIcon(Enums.BossType bossType) {
+    private static int parseIcon(Enums.Enemies bossType) {
         int iconId = 0;
         try {
             iconId = R.drawable.class.getField(bossType.getName().toLowerCase()).getInt(null);
@@ -167,6 +166,7 @@ public class EncounterGenerator {
         //the tier of the current boss
         int tier = bossTier.getNumber();
 
+        // TODO : Move into function/generate Skill floors based on skills points given on level.
         switch (tier) {
             case 1:
                 baseStr = 17;
@@ -183,11 +183,9 @@ public class EncounterGenerator {
                 (baseStr - p.getSkills().getStrength()) * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE;
 
         // boss health can not be less then 100
-        if (health < Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM)
-        {
+        if (health < Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM) {
             health = Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM;
         }
-
         return health;
     }
 
@@ -197,7 +195,7 @@ public class EncounterGenerator {
      * @param bossType BossType enumeration for determining Boss name.
      * @return New Boss name.
      */
-    private static String parseName(Enums.BossType bossType) {
+    private static String parseName(Enums.Enemies bossType) {
         Random r = new Random();
         String name =
                 bossAdjectives[r.nextInt(bossAdjectives.length)] +

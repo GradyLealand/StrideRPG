@@ -31,11 +31,6 @@ public final class Constants {
     public static final int ENEMY_HEALTH_MODIFIER = 3;
 
     /**
-     * Constant to calculate an enemies min and max damage.
-     */
-    public static final int ENEMY_DAMAGE_MODIFIER = 5;
-
-    /**
      * Constant to calculate an enemies experience property.
      */
     public static final int ENEMY_EXPERIENCE_MODIFIER = 10;
@@ -61,7 +56,7 @@ public final class Constants {
     public static final int BOSS_ENCOUNTER_HEALTH_MINIMUM = 100;
 
     /**
-     * the minimum amount of time a player can have to defeat a monster
+     * Constant to define the minimum amount of time a player can have to defeat a monster
      */
     public static final int BOSS_ENCOUNTER_TIME_MINIMUM = 10;
 
@@ -204,7 +199,7 @@ public final class Constants {
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every fitnessUtil readData call.
      */
-    public static final long FITNESS_READ_RATE = 1000;
+    public static final long FITNESS_READ_RATE = 2500;
 
     /**
      * Constant for generic defeat enemies quest title.

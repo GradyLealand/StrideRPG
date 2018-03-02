@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -132,6 +133,9 @@ public class DashboardFragment extends Fragment {
 
         dashboardRecyclerView = rootView.findViewById(R.id.rv);
         dashboardRecyclerView.setHasFixedSize(true);
+        dashboardRecyclerView.setItemAnimator(
+                new DefaultItemAnimator()
+        );
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         dashboardRecyclerView.setLayoutManager(llm);
@@ -251,6 +255,10 @@ public class DashboardFragment extends Fragment {
         // Set Encounter name to the name of the Boss.
         activeEncounterName.setText(
                 G.activePlayer.getActiveEncounter().getBoss().getName()
+        );
+
+        activeEncounterHealthProgress.setMax(
+                G.activePlayer.getActiveEncounter().getBoss().getMaxHealth()
         );
 
         updateEncounterHealth();
