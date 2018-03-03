@@ -2,6 +2,7 @@ package stride.com.striderpg.rpg;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import stride.com.striderpg.R;
@@ -185,9 +186,9 @@ public class Enums {
      * Enumeration BossTier to hold the different Boss tiers in game.
      */
     public enum BossTier {
-        ONE(1, "I", 30, 1),
-        TWO(2, "II", 60, 8),
-        THREE(3, "III", 90, 25);
+        ONE(1, "I", 30, Constants.BOSS_ENCOUNTER_TIER_ONE_MINIMUM_LEVEL),
+        TWO(2, "II", 60, Constants.BOSS_ENCOUNTER_TIER_TWO_MINIMUM_LEVEL),
+        THREE(3, "III", 90, Constants.BOSS_ENCOUNTER_TIER_THREE_MINIMUM_LEVEL);
 
         /**
          * Number representation of enum.
@@ -205,7 +206,7 @@ public class Enums {
         private final Integer expires;
 
         /**
-         * Numeral representation for enum.
+         * Level requirement for a player to encounter a boss of this tier.
          */
         private final Integer eligible;
 
@@ -221,6 +222,23 @@ public class Enums {
             this.numeral = numeral;
             this.expires = expires;
             this.eligible = eligible;
+        }
+
+        /**
+         * Return a random BossTier that the level passed into the method
+         * is eligible to encounter..
+         * @param level Level for determining what tiers can be selected from.
+         * @return Random Eligible BossTier.
+         */
+        public static BossTier getEligibleTier(Integer level) {
+            ArrayList<BossTier> tempTiers = new ArrayList<>();
+            for (BossTier tier : values()) {
+                if (tier.getEligible() <= level) {
+                    tempTiers.add(tier);
+                }
+            }
+            Collections.shuffle(tempTiers);
+            return tempTiers.get(0);
         }
 
         public Integer getNumber() {

@@ -197,7 +197,6 @@ public class Player {
      * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
-
         // Initial check for a null step count (first check on app start-up).
         // Secondary check for total being less than lastStepCount (midnight fitness reset).
         if (G.lastStepCount == null || total < G.lastStepCount) {

@@ -189,6 +189,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Add a new PropertyChangeListener to the Players ActiveEncounter.
         G.activePlayer.getActiveEncounter().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -212,6 +213,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Initial Player Stats CardView setup.
         buildPlayerStatsCard();
 
         // OnStart if for determining if the ActiveEncounter card should be

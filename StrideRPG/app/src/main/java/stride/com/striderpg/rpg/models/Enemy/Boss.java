@@ -53,6 +53,8 @@ public class Boss extends Enemy {
         this.setIcon(icon);
     }
 
+
+
     public Enums.BossTier getTier() {
         return tier;
     }

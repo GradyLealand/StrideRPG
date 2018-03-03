@@ -61,6 +61,54 @@ public final class Constants {
     public static final int BOSS_ENCOUNTER_TIME_MINIMUM = 10;
 
     /**
+     * Constant to define the minimum level a player must reach before being able to encounter
+     * a boss of tier one.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_ONE_MINIMUM_LEVEL = 1;
+
+    /**
+     * Constant to define the minimum level a player must reach before being able to encounter
+     * a boss of tier two.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_TWO_MINIMUM_LEVEL = 8;
+
+    /**
+     * Constant to define the minimum level a player must reach before being able to encounter
+     * a boss of tier three.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_THREE_MINIMUM_LEVEL = 25;
+
+    /**
+     * Constant to define the minimum strength a Boss would have if it's Tier 1 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR = 17;
+
+    /**
+     * Constant to define the minimum strength a Boss would have if it's Tier 2 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_TWO_STRENGTH_FLOOR = 51;
+
+    /**
+     * Constant to define the minimum strength a Boss would have if it's Tier 3 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_THREE_STRENGTH_FLOOR = 105;
+
+    /**
+     * Constant to define the minimum vitality a Boss would have if it's Tier 1 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_ONE_VITALITY_FLOOR = 17;
+
+    /**
+     * Constant to define the minimum vitality a Boss would have if it's Tier 2 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_TWO_VITALITY_FLOOR = 51;
+
+    /**
+     * Constant to define the minimum vitality a Boss would have if it's Tier 3 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_THREE_VITALITY_FLOOR = 105;
+
+    /**
      * Constant for generating SimpleDateFormats throughout the
      * application.
      */
