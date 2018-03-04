@@ -3,7 +3,6 @@ package stride.com.striderpg.fragments.Dashboard;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,23 +54,22 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
 
     @Override
     public void onBindViewHolder(ActivityViewHolder activityViewHolder, int i) {
-        // Set all required UI elements for this current Activity
-        // ViewHolder.
-        activityViewHolder.activityName.setText(
-                activities.get(i).getActivityType().getName()
+        // Set all required UI elements for this current Activity ViewHolder.
+        activityViewHolder.activityName.setText(activities.get(i).getActivityType().getName());
+        activityViewHolder.activityDesc.setText(activities.get(i).getDescription());
+        activityViewHolder.activityIcon.setImageResource(activities.get(i).getActivityIconId());
+        activityViewHolder.activityTimestamp.setText(TimeParser.toReadable(
+                activities.get(i).getTimestamp())
         );
+    }
 
-        activityViewHolder.activityDesc.setText(
-                activities.get(i).getDescription()
-        );
+    public void add(Activity activity) {
+        activities.add(0, activity);
+        notifyItemInserted(0);
 
-        activityViewHolder.activityIcon.setImageResource(
-                activities.get(i).getActivityIconId()
-        );
-
-        activityViewHolder.activityTimestamp.setText(
-                TimeParser.toReadable(activities.get(i).getTimestamp())
-        );
+//        for (int i = 0; i < (activities.size() / 2); i++) {
+//            notifyItemChanged(i);
+//        }
     }
 
     /**

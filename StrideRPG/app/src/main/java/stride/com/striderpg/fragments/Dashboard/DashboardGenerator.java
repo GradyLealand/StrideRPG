@@ -42,7 +42,6 @@ public class DashboardGenerator {
      */
     private void updateDashboard() {
         activities.addAll(G.activePlayer.getActivityLog().getLog().values());
-
         try {
             sort(activities);
         } catch (Exception e) {
@@ -51,21 +50,11 @@ public class DashboardGenerator {
     }
 
     /**
-     * Custom insert method to insert an activity into the current
-     * ArrayList and re sort the ActivityLog ArrayList.
-     * @param activityAdded New activity being inserted.
-     */
-    public void insert(Activity activityAdded) {
-        activities.add(activityAdded);
-        sort(activities);
-    }
-
-    /**
-     * sort method for placing older activities at the back of
+     * Sort method for placing older activities at the back of
      * the ArrayList of Activities.
      * @param collection Collection being sorted.
      */
-    private void sort(ArrayList<Activity> collection) {
+    public void sort(ArrayList<Activity> collection) {
         Collections.sort(collection, new Comparator<Activity>() {
             @Override
             public int compare(Activity a1, Activity a2) {
