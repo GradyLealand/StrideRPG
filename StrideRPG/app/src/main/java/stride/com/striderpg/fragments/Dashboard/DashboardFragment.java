@@ -171,6 +171,7 @@ public class DashboardFragment extends Fragment {
     }
 
     // [ACTIVE ENCOUNTER METHODS BEGIN].
+
     /**
      * Update the ActiveEncounter's Health ProgressBar and TextView.
      */
@@ -207,9 +208,11 @@ public class DashboardFragment extends Fragment {
         activeEncounterCard.setVisibility(View.GONE);
         activityAdapter.add(activity);
     }
+
     // [ACTIVE ENCOUNTER METHODS END].
 
     // [PLAYER STATS METHODS BEGIN].
+
     /**
      * Insert a new generic Activity directly into the ActivityGenerator
      * ArrayList and notify the Adapter.
