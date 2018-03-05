@@ -12,7 +12,7 @@ import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.generators.ActivityGenerator;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Encounter.Boss;
+import stride.com.striderpg.rpg.models.Enemy.Boss;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
@@ -85,7 +85,14 @@ public class ActiveEncounter {
         return now.isAfter(TimeParser.parseTimestamp(boss.getExpiration()));
     }
 
+    /**
+     * Method for resetting and expiring a Boss once the checkExpired is True.
+     */
     public void expire() {
+        // Update Players Stats/QuestLog on Boss expire.
+        G.activePlayer.getStats().updateBossesExpired();
+        G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_BOSSES, 1);
+
         Activity bossExpireActivity = ActivityGenerator.generateActivity(
                 Enums.ActivityType.BOSS_EXPIRE,
                 boss
@@ -99,21 +106,32 @@ public class ActiveEncounter {
         boss = null;
     }
 
+    /**
+     * Attack the current Boss and decrement it's health by the steps passed to the method.
+     * @param steps Steps to decrement Boss health by.
+     */
     public void attackBoss(Integer steps) {
-        // Decrease bosses health by the amount of steps this turn.
+        // Decrease Bosses health by the amount of steps passed to method.
         boss.setHealth(boss.getHealth() - steps);
 
         // Ensure bosses health isn't less than 0.
         if (boss.getHealth() < 0) {
             boss.setHealth(0);
-
         }
         changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_UPDATE_HEALTH, null, boss.getHealth());
     }
 
+    /**
+     * Defeat the current Boss and set Players experience and statistics properties.
+     */
     public void defeatBoss() {
         // Increment Active Players experience with Experience reward from Boss.
-        G.activePlayer.setExperience(G.activePlayer.getExperience() + boss.getEncounterExperienceReward());
+        G.activePlayer.setExperience(G.activePlayer.getExperience() + boss.getExperienceReward());
+
+        // Update Players Bestiary/Quests/Stats on Boss defeat.
+        G.activePlayer.getBestiary().update(this.boss.getType());
+        G.activePlayer.getQuestLog().update(Enums.QuestType.DEFEAT_BOSSES, 1);
+        G.activePlayer.getStats().updateBossesDefeated();
 
         // Check for Active Player level up.
         if (G.activePlayer.canLevelUp()) {
@@ -127,7 +145,7 @@ public class ActiveEncounter {
             }
         }
 
-        Activity bossDefeatActvity = ActivityGenerator.generateActivity(
+        Activity bossDefeatActivity = ActivityGenerator.generateActivity(
                 Enums.ActivityType.BOSS_DEFEAT,
                 boss
         );
@@ -137,7 +155,7 @@ public class ActiveEncounter {
         boss = null;
 
         // Fire PropertyChange event so UI knows the ActiveEncounter has ended.
-        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, bossDefeatActvity);
+        changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, bossDefeatActivity);
     }
 
     public boolean isActive() {

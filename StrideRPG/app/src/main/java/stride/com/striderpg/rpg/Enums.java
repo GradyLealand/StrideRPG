@@ -1,7 +1,11 @@
 package stride.com.striderpg.rpg;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
+
+import stride.com.striderpg.R;
 
 
 /**
@@ -104,56 +108,77 @@ public class Enums {
         }
     }
 
-    /**
-     * Enumeration EnemyType to hold the different enemy types in game.
-     */
     public enum EnemyType {
-        TROLL("Troll"),
-        GOBLIN("Goblin"),
-        LIZARD("Lizard"),
-        NECROMANCER("Necromancer");
-
-        /**
-         * ItemType name property.
-         */
-        private final String name;
-
-        /**
-         * EnemyType constructor to set the name property.
-         * @param name Name of constant.
-         */
-        EnemyType(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+        MONSTER,
+        BOSS
     }
 
     /**
-     * Enumeration BossType to hold the different boss types in game.
+     * Enumeration Enemies to hold the different enemy types in game.
      */
-    public enum BossType {
-        DRAGON("Dragon"),
-        DEMON("Demon"),
-        KRAKEN("Kraken");
+    public enum Enemies {
+        TROLL("Troll", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        GOBLIN("Goblin", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        LIZARD("Lizard", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        NECROMANCER("Necromancer", EnemyType.MONSTER, R.mipmap.ic_launcher),
+
+        DRAGON("Dragon", EnemyType.BOSS, R.mipmap.ic_launcher),
+        DEMON("Demon", EnemyType.BOSS, R.mipmap.ic_launcher),
+        KRAKEN("Kraken", EnemyType.BOSS, R.mipmap.ic_launcher);
 
         /**
-         * BossType name property.
+         * Enemies name property.
          */
         private final String name;
 
         /**
-         * BossType Constructor method to set name property.
-         * @param name Readable enum name.
+         * Enemies EnemyType enum.
          */
-        BossType(String name) {
+        private final EnemyType type;
+
+        /**
+         * Enemies Icon integer id.
+         */
+        private final Integer enemyIcon;
+
+        /**
+         * Enemies constructor to set the name property.
+         * @param name Name of constant.
+         * @param type Type of enemy.
+         * @param enemyIcon Enemies icon resource id.
+         */
+        Enemies(String name, EnemyType type, Integer enemyIcon) {
             this.name = name;
+            this.type = type;
+            this.enemyIcon = enemyIcon;
+        }
+
+        /**
+         * Return a random Enemies enum based on the EnemyType passed.
+         * @param type EnemyType to grab all Enemies of type.
+         * @return One enemy of specified type.
+         */
+        public static Enemies getRandomEnemiesType(EnemyType type) {
+            ArrayList<Enemies> enemies = new ArrayList<>();
+            for (Enemies enemy : Enemies.values()) {
+                if (enemy.type == type) {
+                    enemies.add(enemy);
+                }
+            }
+            Random random = new Random();
+            return enemies.get(random.nextInt(enemies.size()));
         }
 
         public String getName() {
             return name;
+        }
+
+        public EnemyType getType() {
+            return type;
+        }
+
+        public Integer getEnemyIcon() {
+            return enemyIcon;
         }
     }
 
@@ -161,9 +186,9 @@ public class Enums {
      * Enumeration BossTier to hold the different Boss tiers in game.
      */
     public enum BossTier {
-        ONE(1, "I", 30),
-        TWO(2, "II", 60),
-        THREE(3, "III", 90);
+        ONE(1, "I", 30, Constants.BOSS_ENCOUNTER_TIER_ONE_MINIMUM_LEVEL),
+        TWO(2, "II", 60, Constants.BOSS_ENCOUNTER_TIER_TWO_MINIMUM_LEVEL),
+        THREE(3, "III", 90, Constants.BOSS_ENCOUNTER_TIER_THREE_MINIMUM_LEVEL);
 
         /**
          * Number representation of enum.
@@ -181,15 +206,39 @@ public class Enums {
         private final Integer expires;
 
         /**
+         * Level requirement for a player to encounter a boss of this tier.
+         */
+        private final Integer eligible;
+
+        /**
          * Constructor method for setting number and numeral properties.
          * @param number Enum number.
          * @param numeral Enum numeral.
          * @param expires Enum expires.
+         * @param eligible Enum eligible
          */
-        BossTier(Integer number, String numeral, Integer expires) {
+        BossTier(Integer number, String numeral, Integer expires, Integer eligible) {
             this.number = number;
             this.numeral = numeral;
             this.expires = expires;
+            this.eligible = eligible;
+        }
+
+        /**
+         * Return a random BossTier that the level passed into the method
+         * is eligible to encounter..
+         * @param level Level for determining what tiers can be selected from.
+         * @return Random Eligible BossTier.
+         */
+        public static BossTier getEligibleTier(Integer level) {
+            ArrayList<BossTier> tempTiers = new ArrayList<>();
+            for (BossTier tier : values()) {
+                if (tier.getEligible() <= level) {
+                    tempTiers.add(tier);
+                }
+            }
+            Collections.shuffle(tempTiers);
+            return tempTiers.get(0);
         }
 
         public Integer getNumber() {
@@ -202,6 +251,10 @@ public class Enums {
 
         public Integer getExpires() {
             return expires;
+        }
+
+        public Integer getEligible() {
+            return eligible;
         }
     }
 
@@ -222,7 +275,7 @@ public class Enums {
      * is being generated.
      */
     public enum ActivityType {
-        ENEMY("Enemy"),
+        ENEMY("Monster"),
         LOOT("Loot"),
         BOSS_EXPIRE("Boss Expiration"),
         BOSS_DEFEAT("Boss Defeat");
@@ -249,8 +302,8 @@ public class Enums {
         }
 
         /**
-         * Choose between a generic Enemy or Loot ActivityType.
-         * @return Enumeration ActivityType Enemy/Loot.
+         * Choose between a generic Monster or Loot ActivityType.
+         * @return Enumeration ActivityType Monster/Loot.
          */
         public static ActivityType generic() {
             // Generate percent roll 0 to 100 to choose LOOT or ENEMY ActivityType.

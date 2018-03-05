@@ -8,17 +8,15 @@ import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 import java.util.Random;
 
-import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.generators.EncounterGenerator;
 import stride.com.striderpg.rpg.generators.ItemGenerator;
 import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.generators.OnlineGenerator;
 import stride.com.striderpg.rpg.models.Bestiary.Bestiary;
 import stride.com.striderpg.rpg.utils.TimeParser;
-import stride.com.striderpg.rpg.models.Enemy.Enemy;
+import stride.com.striderpg.rpg.models.Enemy.Monster;
 
 
 /**
@@ -199,7 +197,6 @@ public class Player {
      * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
-
         // Initial check for a null step count (first check on app start-up).
         // Secondary check for total being less than lastStepCount (midnight fitness reset).
         if (G.lastStepCount == null || total < G.lastStepCount) {
@@ -254,9 +251,9 @@ public class Player {
     /**
      * Calculate and update a users experience based on the enemy
      * passed to the method.
-     * @param enemy Enemy being defeated.
+     * @param enemy Monster being defeated.
      */
-    public boolean fightEnemy(Enemy enemy) {
+    public boolean fightEnemy(Monster enemy) {
         // Create a new Random instance for rolling.
         Random r = new Random();
 
@@ -267,12 +264,12 @@ public class Player {
         // and Player vitality property.
         int attack = ((this.skills.getStrength() + this.skills.getVitality()) / 2) + roll;
 
-        // Check here for fight results, Player may defeat or be defeated by Enemy.
+        // Check here for fight results, Player may defeat or be defeated by Monster.
         if (attack >= enemy.getHealth()) {
             // Increment Players current experience by the Enemies experience reward.
             this.setExperience(this.getExperience() + enemy.getExperienceReward());
 
-            // Check if the Player can level up after defeating the Enemy.
+            // Check if the Player can level up after defeating the Monster.
             if (this.canLevelUp()) {
                 this.levelUp();
             }

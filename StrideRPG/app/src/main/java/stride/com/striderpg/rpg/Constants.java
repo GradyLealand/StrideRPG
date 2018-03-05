@@ -31,11 +31,6 @@ public final class Constants {
     public static final int ENEMY_HEALTH_MODIFIER = 3;
 
     /**
-     * Constant to calculate an enemies min and max damage.
-     */
-    public static final int ENEMY_DAMAGE_MODIFIER = 5;
-
-    /**
      * Constant to calculate an enemies experience property.
      */
     public static final int ENEMY_EXPERIENCE_MODIFIER = 10;
@@ -49,6 +44,69 @@ public final class Constants {
      * Constant to calculate a bosses health property.
      */
     public static final int BOSS_ENCOUNTER_HEALTH_MODIFIER = 500;
+
+    /**
+     * Constant to calculate ethe chang ein boss health property.
+     */
+    public static final int BOSS_ENCOUNTER_HEALTH_CHANGE = 10;
+
+    /**
+     * Constant to define the minimum boss health;
+     */
+    public static final int BOSS_ENCOUNTER_HEALTH_MINIMUM = 100;
+
+    /**
+     * Constant to define the minimum amount of time a player can have to defeat a monster
+     */
+    public static final int BOSS_ENCOUNTER_TIME_MINIMUM = 10;
+
+    /**
+     * Constant to define the minimum level a player must reach before being able to encounter
+     * a boss of tier one.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_ONE_MINIMUM_LEVEL = 1;
+
+    /**
+     * Constant to define the minimum level a player must reach before being able to encounter
+     * a boss of tier two.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_TWO_MINIMUM_LEVEL = 8;
+
+    /**
+     * Constant to define the minimum level a player must reach before being able to encounter
+     * a boss of tier three.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_THREE_MINIMUM_LEVEL = 25;
+
+    /**
+     * Constant to define the minimum strength a Boss would have if it's Tier 1 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR = 17;
+
+    /**
+     * Constant to define the minimum strength a Boss would have if it's Tier 2 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_TWO_STRENGTH_FLOOR = 51;
+
+    /**
+     * Constant to define the minimum strength a Boss would have if it's Tier 3 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_THREE_STRENGTH_FLOOR = 105;
+
+    /**
+     * Constant to define the minimum vitality a Boss would have if it's Tier 1 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_ONE_VITALITY_FLOOR = 17;
+
+    /**
+     * Constant to define the minimum vitality a Boss would have if it's Tier 2 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_TWO_VITALITY_FLOOR = 51;
+
+    /**
+     * Constant to define the minimum vitality a Boss would have if it's Tier 3 Boss.
+     */
+    public static final int BOSS_ENCOUNTER_TIER_THREE_VITALITY_FLOOR = 105;
 
     /**
      * Constant for generating SimpleDateFormats throughout the
@@ -104,7 +162,7 @@ public final class Constants {
     public static final int OFFLINE_BATTLE_MODIFIER = 10;
 
     /**
-     * Constant that defines the minimum level a Player or Enemy can be.
+     * Constant that defines the minimum level a Player or Monster can be.
      */
     public static final int MINIMUM_LEVEL = 1;
 
@@ -189,7 +247,7 @@ public final class Constants {
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every fitnessUtil readData call.
      */
-    public static final long FITNESS_READ_RATE = 1000;
+    public static final long FITNESS_READ_RATE = 2500;
 
     /**
      * Constant for generic defeat enemies quest title.

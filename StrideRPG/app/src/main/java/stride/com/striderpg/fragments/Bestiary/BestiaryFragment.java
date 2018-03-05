@@ -1,9 +1,11 @@
-package stride.com.striderpg.fragments;
+package stride.com.striderpg.fragments.Bestiary;
 
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,12 @@ public class BestiaryFragment extends Fragment {
      */
     private static final String TAG = "BestiaryFragment";
 
+    RecyclerView bestiaryRecyclerView;
+
+    BestiaryGenerator bestiaryGenerator = new BestiaryGenerator();
+
+    BestiaryAdapter bestiaryAdapter;
+
     /**
      * Required empty public constructor function.
      */
@@ -31,6 +39,17 @@ public class BestiaryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bestiary, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_bestiary, container, false);
+
+        bestiaryRecyclerView = rootView.findViewById(R.id.rv);
+        bestiaryRecyclerView.setHasFixedSize(true);
+
+        GridLayoutManager glm = new GridLayoutManager(this.getContext(), 3);
+        bestiaryRecyclerView.setLayoutManager(glm);
+
+        bestiaryAdapter = new BestiaryAdapter(bestiaryGenerator.getEnemies());
+        bestiaryRecyclerView.setAdapter(bestiaryAdapter);
+
+        return rootView;
     }
 }

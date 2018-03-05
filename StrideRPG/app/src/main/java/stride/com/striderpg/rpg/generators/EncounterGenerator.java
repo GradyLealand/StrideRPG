@@ -10,7 +10,7 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.models.Encounter.Boss;
+import stride.com.striderpg.rpg.models.Enemy.Boss;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Player;
 import stride.com.striderpg.rpg.utils.TimeParser;
@@ -37,8 +37,13 @@ public class EncounterGenerator {
      */
     public static void calculateActiveEncounter(Player p) {
         Random r = new Random();
+
+        // Calculate a percent roll out fo 100 for determining if a Boss encounter
+        // should be generated.
         Double roll = r.nextDouble() * 100;
 
+        // If an Encounter is being generated. Set Players Encounter to active,
+        // and generate a new Boss.
         if (roll < Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT) {
             G.activePlayer.getActiveEncounter().setBoss(generateBoss(p));
             G.activePlayer.getActiveEncounter().setActive(true);
@@ -53,18 +58,18 @@ public class EncounterGenerator {
      */
     private static Boss generateBoss(Player p) {
         // Determine new Boss Type and Tier.
-        Enums.BossType bossType = Enums.random(Enums.BossType.class);
-        Enums.BossTier bossTier = Enums.random(Enums.BossTier.class);
+        Enums.Enemies bossType = Enums.Enemies.getRandomEnemiesType(Enums.EnemyType.BOSS);
+        Enums.BossTier bossTier = Enums.BossTier.getEligibleTier(p.getLevel());
 
-        String name = parseName(bossType);
-        String expires = calculateBossExpiration(bossTier);
-        int health = calculateBossHealth(bossTier);
-        int level = calculateBossLevel(p);
-        int experience = calculateBossExp(p, level - p.getLevel(), bossTier);
+        // Generic Boss properties.
+        String name = "Tier " + bossTier.getNumeral() + ": " + parseName(bossType);
+        String expires = calculateBossExpiration(bossTier, p);
+        int health = calculateBossHealth(bossTier, p);
+        int experience = calculateBossExp(p, bossTier);
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
         int icon = parseIcon(bossType);
 
-        return new Boss(name, bossType, bossTier, expires, health, level, icon, rewards, experience);
+        return new Boss(name, bossType, health, icon, experience, bossTier, expires, rewards);
     }
 
     /**
@@ -73,8 +78,112 @@ public class EncounterGenerator {
      * @param bossTier BossTier enumeration type for determining hours.
      * @return Timestamp for Boss expiration date.
      */
-    private static String calculateBossExpiration(Enums.BossTier bossTier) {
-        return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusMinutes(bossTier.getExpires()));
+    private static String calculateBossExpiration(Enums.BossTier bossTier, Player p) {
+        // The vit needed for the monster to have normal expiration time
+        int baseVit = calculateBossBaseVitality(bossTier);
+        Integer time = bossTier.getExpires() +
+                (p.getSkills().getStrength() - baseVit);
+
+        // Boss time can not be less then the minimum constant defined.
+        if (time < Constants.BOSS_ENCOUNTER_TIME_MINIMUM) {
+            time = Constants.BOSS_ENCOUNTER_TIME_MINIMUM;
+        }
+        return TimeParser.makeTimestamp(TimeParser.getCurrentTimePlusMinutes(time));
+    }
+
+    /**
+     * Generate a bosses health with the bossTier and constant
+     * defined for multiplying a bosses health.
+     * @param bossTier Boss tier being generated.
+     * @return New Boss base health.
+     */
+    private static Integer calculateBossHealth(Enums.BossTier bossTier, Player p) {
+        // The attack needed for the boss to have normal health
+        int baseStr = calculateBossBaseStrength(bossTier);
+        int health = Constants.BOSS_ENCOUNTER_HEALTH_MODIFIER +
+                (baseStr - p.getSkills().getStrength()) * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE;
+
+        // Boss health can not be less then the minimum constant.
+        if (health < Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM) {
+            health = Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM;
+        }
+        return health;
+    }
+
+    /**
+     * Calculate a new Bosses base Vitality value by using the BossTier and the constants
+     * defined for dealing with Vitality Skill mins/floors.
+     * @param bossTier New Boss BossTier.
+     * @return New Boss Minimum Vitality value.
+     */
+    private static Integer calculateBossBaseVitality(Enums.BossTier bossTier) {
+        switch (bossTier) {
+            case ONE:
+                return Constants.BOSS_ENCOUNTER_TIER_ONE_VITALITY_FLOOR;
+            case TWO:
+                return Constants.BOSS_ENCOUNTER_TIER_TWO_VITALITY_FLOOR;
+            case THREE:
+                return Constants.BOSS_ENCOUNTER_TIER_THREE_VITALITY_FLOOR;
+            default:
+                Log.e(TAG, "calculateBossBaseVitality:error:no bossTier was found? bossTier=[" + bossTier + "]");
+                Log.d(TAG, "calculateBossBaseVitality:using BOSS_ENCOUNTER_TIER_ONE_VITALITY_FLOOR for now...");
+                return Constants.BOSS_ENCOUNTER_TIER_ONE_VITALITY_FLOOR;
+        }
+    }
+
+    /**
+     * Calculate a new Bosses base Strength value by using the BossTier and the constants
+     * defined for dealing with Strength Skill mins/floors.
+     * @param bossTier New Boss BossTier.
+     * @return New Boss Minimum Strength value.
+     */
+    private static Integer calculateBossBaseStrength(Enums.BossTier bossTier) {
+        switch (bossTier) {
+            case ONE:
+                return Constants.BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR;
+            case TWO:
+                return Constants.BOSS_ENCOUNTER_TIER_TWO_STRENGTH_FLOOR;
+            case THREE:
+                return Constants.BOSS_ENCOUNTER_TIER_THREE_STRENGTH_FLOOR;
+            default:
+                Log.e(TAG, "calculateBossBaseStrength:error:no bossTier was found? bossTier=[" + bossTier + "]");
+                Log.d(TAG, "calculateBossBaseStrength:using BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR for now...");
+                return Constants.BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR;
+        }
+    }
+
+    /**
+     * Parse a Bosses Icon by looking for an drawable resource with the same name as
+     * the boss type name in all lowercase.
+     * @param bossType BossType Enumeration.
+     * @return Drawable Resource ID for boss type.
+     */
+    private static int parseIcon(Enums.Enemies bossType) {
+        int iconId = 0;
+        try {
+            iconId = R.drawable.class.getField(bossType.getName().toLowerCase()).getInt(null);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "parseIcon:error:", e);
+        }
+
+        Log.d(TAG, String.format(G.locale, "parseIcon:success:icon=%d", iconId));
+        return iconId;
+    }
+
+    /**
+     * Calculate the amount of experience this Boss will be worth on defeat.
+     * @param p Player object for determining exp amount.
+     * @param tier BossTier for modifying the experience more so.
+     * @return New boss experience reward.
+     */
+    private static int calculateBossExp(Player p, Enums.BossTier tier) {
+        Random r = new Random();
+        int expReward = (tier.getNumber() * Constants.BOSS_EXPERIENCE_MODIFIER - p.getLevel())
+                + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER))
+                * tier.getNumber());
+
+        Log.d(TAG, String.format(G.locale, "calculateBossExp:success:expReward=%d", expReward));
+        return expReward;
     }
 
     /**
@@ -93,81 +202,14 @@ public class EncounterGenerator {
     }
 
     /**
-     * Parse a Bosses Icon by looking for an drawable resource with the same name as
-     * the boss type name in all lowercase.
-     * @param bossType BossType Enumeration.
-     * @return Drawable Resource ID for boss type.
-     */
-    private static int parseIcon(Enums.BossType bossType) {
-        int iconId = 0;
-        try {
-            iconId = R.drawable.class.getField(bossType.getName().toLowerCase()).getInt(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e(TAG, "parseIcon:error:", e);
-        }
-
-        Log.d(TAG, String.format(G.locale, "parseIcon:success:icon=%d", iconId));
-        return iconId;
-    }
-
-    /**
-     * Calculate the amount of experience this Boss will be worth on defeat.
-     * @param p Player object for determining exp amount.
-     * @param bossLevel Boss level for determining exp amounts.
-     * @param tier BossTier for modifying the experience more so.
-     * @return New boss experience reward.
-     */
-    private static int calculateBossExp(Player p, Integer bossLevel, Enums.BossTier tier) {
-        Random r = new Random();
-        int expReward = p.getLevel() * Constants.BOSS_EXPERIENCE_MODIFIER
-                + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER) * bossLevel)
-                * tier.getNumber());
-
-        Log.d(TAG, String.format(G.locale, "calculateBossExp:success:expReward=%d", expReward));
-        return expReward;
-    }
-
-    /**
-     * Calculate a bosses level using a dice roll.
-     * @param p Player for keeping Boss level within a Range of player level.
-     * @return New Boss level.
-     */
-    private static Integer calculateBossLevel(Player p) {
-        Random r = new Random();
-        Integer diceRoll = r.nextInt(5);
-        int bossLevel = (p.getLevel() + 5) - diceRoll;
-
-        // Do not allow the monster to have a level < 1.
-        if (bossLevel < Constants.MINIMUM_LEVEL) {
-            bossLevel = Constants.BOSS_MINIMUM_LEVEL;
-        }
-
-        Log.d(TAG, String.format(G.locale, "calculateBossLevel:success:bossLevel=%d", bossLevel));
-        return bossLevel;
-    }
-
-    /**
-     * Generate a bosses health with the bossTier and constant
-     * defined for multiplying a bosses health.
-     * @param bossTier Boss tier being generated.
-     * @return New Boss base health.
-     */
-    private static Integer calculateBossHealth(Enums.BossTier bossTier) {
-        return bossTier.getNumber() * Constants.BOSS_ENCOUNTER_HEALTH_MODIFIER;
-    }
-
-    /**
      * Parse a new Boss name property using a random adjective from list and the
      * BossType name property.
      * @param bossType BossType enumeration for determining Boss name.
      * @return New Boss name.
      */
-    private static String parseName(Enums.BossType bossType) {
+    private static String parseName(Enums.Enemies bossType) {
         Random r = new Random();
-        String name =
-                bossAdjectives[r.nextInt(bossAdjectives.length)] +
-                " " +
-                bossType.getName();
+        String name = bossAdjectives[r.nextInt(bossAdjectives.length)] + " " + bossType.getName();
 
         Log.d(TAG,  String.format(G.locale, "parseName:success:name=%s", name));
         return name;

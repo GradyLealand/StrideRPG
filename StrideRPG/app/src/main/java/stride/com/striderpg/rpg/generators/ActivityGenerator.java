@@ -7,9 +7,9 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
-import stride.com.striderpg.rpg.models.Encounter.Boss;
+import stride.com.striderpg.rpg.models.Enemy.Boss;
+import stride.com.striderpg.rpg.models.Enemy.Monster;
 import stride.com.striderpg.rpg.utils.TimeParser;
-import stride.com.striderpg.rpg.models.Enemy.Enemy;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
@@ -46,11 +46,11 @@ public class ActivityGenerator {
 
     /**
      * Generate the corresponding Activity in the Event a Player
-     * wins against an Enemy.
-     * @param enemy Enemy Player beat.
-     * @return Enemy win Activity.
+     * wins against an Monster.
+     * @param enemy Monster Player beat.
+     * @return Monster win Activity.
      */
-    private static Activity generateEnemyWinActivity(Enemy enemy) {
+    private static Activity generateEnemyWinActivity(Monster enemy) {
         // Update Players Bestiary after enemy defeat.
         G.activePlayer.getBestiary().update(enemy.getType());
 
@@ -71,12 +71,12 @@ public class ActivityGenerator {
 
     /**
      * Generate the corresponding Activity in the Event a Player
-     * loses to an Enemy.
-     * @param enemy Enemy Player lost to.
-     * @return Enemy loss Activity.
+     * loses to an Monster.
+     * @param enemy Monster Player lost to.
+     * @return Monster loss Activity.
      */
-    private static Activity generateEnemyLossActivity(Enemy enemy) {
-        // Update Active Players Quest log to reflect Enemy loss.
+    private static Activity generateEnemyLossActivity(Monster enemy) {
+        // Update Active Players Quest log to reflect Monster loss.
         G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_ENEMIES, 1);
 
         // Increment the Players Stats on enemy loss.
@@ -97,7 +97,7 @@ public class ActivityGenerator {
 
         // Increment the Players stats on boss expiration.
         G.activePlayer.getStats().updateBossesExpired();
-        G.activePlayer.getStats().updateTotalExperience(boss.getEncounterExperienceReward() / 10);
+        G.activePlayer.getStats().updateTotalExperience(boss.getExperienceReward() / 10);
 
         return new Activity(
                 TimeParser.makeTimestamp(),
@@ -113,7 +113,7 @@ public class ActivityGenerator {
 
         // Increment the Players stats on boss win.
         G.activePlayer.getStats().updateBossesDefeated();
-        G.activePlayer.getStats().updateTotalExperience(boss.getEncounterExperienceReward());
+        G.activePlayer.getStats().updateTotalExperience(boss.getExperienceReward());
 
         return new Activity(
                 TimeParser.makeTimestamp(),
@@ -126,7 +126,7 @@ public class ActivityGenerator {
     /**
      * Base Activity generator that will create a new Generic Activity
      * based on the ActivityType passed to the method.
-     * This function is used to generate a Loot or Enemy Activity through
+     * This function is used to generate a Loot or Monster Activity through
      * the Offline/Online Generators.
      * @param type BaseActivity enumeration type.
      * @return Newly generated Activity.
@@ -140,7 +140,7 @@ public class ActivityGenerator {
                 activity = generateLootActivity(item);
                 break;
             case ENEMY:
-                Enemy enemy = EnemyGenerator.generate(G.activePlayer);
+                Monster enemy = EnemyGenerator.generate(G.activePlayer);
                 boolean fightResult = G.activePlayer.fightEnemy(enemy);
 
                 if (fightResult)
@@ -224,7 +224,7 @@ public class ActivityGenerator {
                         "You only gained %d experience during the battle",
                 boss.getName(),
                 boss.getHealth(),
-                boss.getEncounterExperienceReward() / 10
+                boss.getExperienceReward() / 10
         );
     }
 
@@ -237,17 +237,17 @@ public class ActivityGenerator {
         return String.format(G.locale,
                 "You have defeated the %s!\nYou earned %d experience and found %d pieces of loot!",
                 boss.getName(),
-                boss.getEncounterExperienceReward(),
+                boss.getExperienceReward(),
                 boss.getRewards().size()
         );
     }
 
     /**
-     * Generate a String to represent this Enemy Activities description.
-     * @param enemy Enemy.
+     * Generate a String to represent this Monster Activities description.
+     * @param enemy Monster.
      * @return Activity description.
      */
-    private static String generateEnemyWinDescription(Enemy enemy) {
+    private static String generateEnemyWinDescription(Monster enemy) {
         return String.format(G.locale,
                 "You encountered and defeated %s.\nYou earned %d experience points!",
                 parseEnemyNameToProperAOrAn(enemy.getName()),
@@ -257,10 +257,10 @@ public class ActivityGenerator {
 
     /**
      * Generate a String to represent the description of defeated by enemy Activity.
-     * @param enemy Enemy that has defeated Player.
+     * @param enemy Monster that has defeated Player.
      * @return New Activity description.
      */
-    private static String generateEnemyLossDescription(Enemy enemy) {
+    private static String generateEnemyLossDescription(Monster enemy) {
         return String.format(G.locale,
                 "You encountered and were defeated by %s.\nYou only earned %d experience points!",
                 parseEnemyNameToProperAOrAn(
@@ -269,11 +269,11 @@ public class ActivityGenerator {
     }
 
     /**
-     * Parse an Enemy name passed to the method into the proper "a" or "an"
+     * Parse an Monster name passed to the method into the proper "a" or "an"
      * based on the first letter of the Enemies name. "a,e,i,o,u" would
      * result in an "an" return, otherwise return "a".
-     * @param enemyName Enemy name being parsed.
-     * @return "a" or "an" plus Enemy name.
+     * @param enemyName Monster name being parsed.
+     * @return "a" or "an" plus Monster name.
      */
     private static String parseEnemyNameToProperAOrAn(String enemyName) {
         String firstLetterLower = String.valueOf(enemyName.charAt(0)).toLowerCase();

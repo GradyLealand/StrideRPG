@@ -9,7 +9,7 @@ import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
-import stride.com.striderpg.rpg.models.Enemy.Enemy;
+import stride.com.striderpg.rpg.models.Enemy.Monster;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
@@ -30,7 +30,7 @@ public class EnemyGenerator {
     private static Random r = new Random();
 
     /**
-     * String array for choosing a random adjective for a new Enemy.
+     * String array for choosing a random adjective for a new Monster.
      */
     private static final String[] enemyAdjectives = { "Agile", "Ever-Watchful", "Dirty", "Tricky", "Vile",
             "Profane", "Unjust", "Unfair", "Unkind", "Power-mad", "Irreverent", "Self-Centered" };
@@ -39,25 +39,21 @@ public class EnemyGenerator {
      * Generate a new enemy based off of the Player object passed
      * into the function.
      * @param p Player used to determine enemy properties.
-     * @return Newly generated Enemy object with random properties.
+     * @return Newly generated Monster object with random properties.
      */
-    public static Enemy generate(Player p) {
-
+    public static Monster generate(Player p) {
         // TODO: Weighted enemy types based on current player level.
-
         // Choose random enemy type.
-        Enums.EnemyType enemyType = Enums.random(Enums.EnemyType.class);
+        Enums.Enemies enemyType = Enums.Enemies.getRandomEnemiesType(Enums.EnemyType.MONSTER);
 
         // Calculate generic enemy values based on Player parameter.
         String name = parseName(enemyType);
         int level = calculateEnemyLevel(p);
         int health = calculateEnemyHealth(level);
-        int minDamage = calculateEnemyMinDamage(p);
-        int maxDamage = calculateEnemyMaxDamage(p);
         int experience = calculateEnemyExp(p, level - p.getLevel());
         int icon = parseIcon(enemyType);
 
-        Enemy newEnemy = new Enemy(name, enemyType, level, health, minDamage, maxDamage, icon, experience);
+        Monster newEnemy = new Monster(name, enemyType, level, health, icon, experience);
 
         Log.d(TAG, String.format(G.locale, "generate:success:enemy=%s", newEnemy));
         return newEnemy;
@@ -67,7 +63,7 @@ public class EnemyGenerator {
      * Calculate the new enemies level based on the active
      * Player objects current level.
      * @param p activePlayer object.
-     * @return Enemy level.
+     * @return Monster level.
      */
     private static int calculateEnemyLevel(Player p) {
         Integer diceRoll = r.nextInt(5);
@@ -87,7 +83,7 @@ public class EnemyGenerator {
      * Player objects current level.
      * @param p activePlayer object.
      * @param l the difference in level
-     * @return Enemy experience reward.
+     * @return Monster experience reward.
      */
     private static int calculateEnemyExp(Player p, Integer l) {
         int expReward = p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER
@@ -99,10 +95,10 @@ public class EnemyGenerator {
 
     /**
      * Parse out the new enemies icon asset and return the integer id.
-     * @param enemyType Type of Enemy being generated.
-     * @return Enemy icon integer id.
+     * @param enemyType Type of Monster being generated.
+     * @return Monster icon integer id.
      */
-    private static int parseIcon(Enums.EnemyType enemyType) {
+    private static int parseIcon(Enums.Enemies enemyType) {
         int iconId = 0;
         try {
             iconId = R.drawable.class.getField(enemyType.getName().toLowerCase()).getInt(null);
@@ -115,12 +111,12 @@ public class EnemyGenerator {
     }
 
     /**
-     * Generate a new Enemy name using the EnemyType and random
+     * Generate a new Monster name using the Enemies and random
      * adjective.
-     * @param enemyType Type of Enemy being generated.
-     * @return Enemy name.
+     * @param enemyType Type of Monster being generated.
+     * @return Monster name.
      */
-    private static String parseName(Enums.EnemyType enemyType) {
+    private static String parseName(Enums.Enemies enemyType) {
         String name = enemyAdjectives[r.nextInt(enemyAdjectives.length)] + " " + enemyType.getName();
 
         Log.d(TAG, String.format(G.locale, "parseName:success:name=%s", name));
@@ -130,36 +126,12 @@ public class EnemyGenerator {
     /**
      * Calculate a new Enemies health.
      * @param level level of the current enemy
-     * @return New Enemy health.
+     * @return New Monster health.
      */
     private static int calculateEnemyHealth(Integer level) {
         int enemyHealth = (level * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
 
         Log.d(TAG, String.format(G.locale, "calculateEnemyHealth:success:enemyHealth=%d", enemyHealth));
         return  enemyHealth;
-    }
-
-    /**
-     * Calculate a new Enemies minimum damage.
-     * @param p Player object for determining Enemies minimum damage.
-     * @return New Enemy minimum damage.
-     */
-    private static int calculateEnemyMinDamage(Player p) {
-        int minDamage = (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) / 2;
-
-        Log.d(TAG, String.format(G.locale, "calculateEnemyMinDamage:success:minDamage=%d", minDamage));
-        return minDamage;
-    }
-
-    /**
-     * Calculate a new Enemies maximum damage.
-     * @param p Player object for determining Enemies maximum damage.
-     * @return New Enemy maximum damage.
-     */
-    private static int calculateEnemyMaxDamage(Player p) {
-        int maxDamage = (p.getLevel() * Constants.ENEMY_DAMAGE_MODIFIER) + r.nextInt(10) * 2;
-
-        Log.d(TAG, String.format(G.locale, "calculateEnemyMaxDamage:success:maxDamage=%d", maxDamage));
-        return maxDamage;
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +20,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 
+import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
@@ -132,6 +136,9 @@ public class DashboardFragment extends Fragment {
 
         dashboardRecyclerView = rootView.findViewById(R.id.rv);
         dashboardRecyclerView.setHasFixedSize(true);
+        dashboardRecyclerView.setItemAnimator(
+                new SlideInLeftAnimator()
+        );
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         dashboardRecyclerView.setLayoutManager(llm);
@@ -139,14 +146,12 @@ public class DashboardFragment extends Fragment {
         activityAdapter = new DashboardAdapter(activityGenerator.getActivities());
         dashboardRecyclerView.setAdapter(activityAdapter);
 
-        Log.d(TAG, "onCreateView:success");
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         getDashboardElements();
 
         // Add a new PropertyChangeListener to Global Player for handling
@@ -185,6 +190,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Add a new PropertyChangeListener to the Players ActiveEncounter.
         G.activePlayer.getActiveEncounter().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -208,6 +214,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Initial Player Stats CardView setup.
         buildPlayerStatsCard();
 
         // OnStart if for determining if the ActiveEncounter card should be
@@ -217,7 +224,6 @@ public class DashboardFragment extends Fragment {
                 buildActiveEncounterCard();
             else
                 G.activePlayer.getActiveEncounter().expire();
-
         updateLevelProgressBar(G.activePlayer.getExperience());
     }
 
@@ -227,14 +233,10 @@ public class DashboardFragment extends Fragment {
      */
     private void updateEncounterHealth() {
         // Update Boss Health ProgressBar with Bosses current health property.
-        activeEncounterHealthProgress.setProgress(
-                G.activePlayer.getActiveEncounter().getBoss().getHealth()
-        );
+        activeEncounterHealthProgress.setProgress(G.activePlayer.getActiveEncounter().getBoss().getHealth());
 
         // Set Health remaining Text to "health / maxHealth".
-        activeEncounterHealthText.setText(String.format(
-                G.locale,
-                "%d / %d",
+        activeEncounterHealthText.setText(String.format(G.locale, "%d / %d",
                 G.activePlayer.getActiveEncounter().getBoss().getHealth(),
                 G.activePlayer.getActiveEncounter().getBoss().getMaxHealth()
         ));
@@ -248,11 +250,8 @@ public class DashboardFragment extends Fragment {
         // Make the Encounter Card Visible.
         activeEncounterCard.setVisibility(View.VISIBLE);
 
-        // Set Encounter name to the name of the Boss.
-        activeEncounterName.setText(
-                G.activePlayer.getActiveEncounter().getBoss().getName()
-        );
-
+        activeEncounterName.setText(G.activePlayer.getActiveEncounter().getBoss().getName());
+        activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
         updateEncounterHealth();
     }
 
@@ -263,11 +262,7 @@ public class DashboardFragment extends Fragment {
      */
     private void finishActiveEncounter(Activity activity) {
         activeEncounterCard.setVisibility(View.GONE);
-
-        activityGenerator.insert(activity);
-
-        activityAdapter.notifyItemInserted(0);
-        activityAdapter.notifyDataSetChanged();
+        activityAdapter.add(activity);
     }
     // [ACTIVE ENCOUNTER METHODS END].
 
@@ -278,10 +273,8 @@ public class DashboardFragment extends Fragment {
      * @param activity Activity to append to the Dashboard Activities.
      */
     private void addDashboardActivity(Activity activity) {
-        activityGenerator.insert(activity);
-
-        activityAdapter.notifyItemInserted(0);
-        activityAdapter.notifyDataSetChanged();
+        activityAdapter.add(activity);
+        dashboardRecyclerView.getLayoutManager().scrollToPosition(0);
     }
 
     /**
@@ -289,22 +282,10 @@ public class DashboardFragment extends Fragment {
      * experience / experience needed TextView.
      */
     private void buildPlayerStatsCard() {
-        playerUsernameText.setText(
-                G.activePlayer.getUsername()
-        );
-
-        stepsText.setText(
-                addCommasToInteger(G.activePlayer.getSteps())
-        );
-
-        levelText.setText(String.format(
-                G.locale,
-                "%d",
-                G.activePlayer.getLevel()));
-
-        enemiesText.setText(
-                addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated())
-        );
+        playerUsernameText.setText(G.activePlayer.getUsername());
+        stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
+        levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
+        enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
     }
 
     /**
