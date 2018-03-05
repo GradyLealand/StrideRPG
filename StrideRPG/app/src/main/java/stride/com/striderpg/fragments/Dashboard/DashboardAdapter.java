@@ -66,10 +66,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
     public void add(Activity activity) {
         activities.add(0, activity);
         notifyItemInserted(0);
-
-//        for (int i = 0; i < (activities.size() / 2); i++) {
-//            notifyItemChanged(i);
-//        }
     }
 
     /**
@@ -103,7 +99,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
          * Activity icon ImageView.
          */
         ImageView activityIcon;
-
 
         /**
          * ActivityViewHolder constructor method set the ids

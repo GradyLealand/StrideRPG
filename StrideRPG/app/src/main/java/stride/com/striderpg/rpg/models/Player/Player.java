@@ -127,7 +127,11 @@ public class Player {
         this.questLog = new QuestLog();
         this.activityLog = new ActivityLog();
         this.stats = new Stats();
-        this.skills = new Skills(Constants.PLAYER_DEFAULT_VITALITY, Constants.PLAYER_DEFAULT_STRENGTH, Constants.PLAYER_DEFAULT_SPEED);
+        this.skills = new Skills(
+                Constants.PLAYER_DEFAULT_VITALITY,
+                Constants.PLAYER_DEFAULT_STRENGTH,
+                Constants.PLAYER_DEFAULT_SPEED
+        );
         this.equipment = ItemGenerator.generateDefaultInventory(this);
     }
 
@@ -197,6 +201,7 @@ public class Player {
      * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
+
         // Initial check for a null step count (first check on app start-up).
         // Secondary check for total being less than lastStepCount (midnight fitness reset).
         if (G.lastStepCount == null || total < G.lastStepCount) {
@@ -210,7 +215,8 @@ public class Player {
 
                 // Increment users experience by new steps calculated divided by
                 // the experience step modifier.
-                this.setExperience(this.getExperience() + (steps / Constants.PLAYER_STEPS_EXP_MODIFIER));
+                this.setExperience(this.getExperience() +
+                        (steps / Constants.PLAYER_STEPS_EXP_MODIFIER));
 
                 // Check if a Player can level up after step and exp changes have been made.
                 if (this.canLevelUp()) {
