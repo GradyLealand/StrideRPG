@@ -134,18 +134,21 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        // Initialize the DashboardRecyclerView.
         dashboardRecyclerView = rootView.findViewById(R.id.rv);
         dashboardRecyclerView.setHasFixedSize(true);
-        dashboardRecyclerView.setItemAnimator(
-                new SlideInLeftAnimator()
-        );
+        dashboardRecyclerView.setItemAnimator(new SlideInLeftAnimator());
 
+        // Create set the DashboardRecyclerViews LayoutManager.
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         dashboardRecyclerView.setLayoutManager(llm);
 
+        // Create the DashboardAdapter using the Generators ArrayList.
         activityAdapter = new DashboardAdapter(activityGenerator.getActivities());
         dashboardRecyclerView.setAdapter(activityAdapter);
 
+        // Build out the PropertyChangeListeners for the Objects changed/modified through Dashboard.
+        buildPropertyChangeListeners();
         return rootView;
     }
 
@@ -153,66 +156,6 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getDashboardElements();
-
-        // Add a new PropertyChangeListener to Global Player for handling
-        // property changes to the base Player object.
-        G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                switch (propertyChangeEvent.getPropertyName()) {
-                    case Constants.PROPERTY_EXP:
-                        updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
-                        break;
-
-                    case Constants.PROPERTY_USERNAME:
-                        break;
-
-                    case Constants.PROPERTY_LEVEL:
-                        updateLevelText((int)propertyChangeEvent.getNewValue());
-                        updateExpOnLevelUp();
-                        break;
-
-                    case Constants.PROPERTY_STEPS:
-                        updateStepsTextView((int)propertyChangeEvent.getNewValue());
-                        break;
-                }
-            }
-        });
-
-        // Add a new PropertyChangeListener to Global Players
-        G.activePlayer.getActivityLog().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                switch (propertyChangeEvent.getPropertyName()) {
-                    case Constants.PROPERTY_ONLINE_ACTIVITY:
-                        addDashboardActivity((Activity)propertyChangeEvent.getNewValue());
-                }
-            }
-        });
-
-        // Add a new PropertyChangeListener to the Players ActiveEncounter.
-        G.activePlayer.getActiveEncounter().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                switch(propertyChangeEvent.getPropertyName()) {
-                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_SET:
-                        buildActiveEncounterCard();
-                        break;
-
-                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_UPDATE_HEALTH:
-                        updateEncounterHealth();
-                        break;
-
-                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES:
-                        finishActiveEncounter((Activity)propertyChangeEvent.getNewValue());
-                        break;
-
-                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH:
-                        finishActiveEncounter((Activity)propertyChangeEvent.getNewValue());
-                        break;
-                }
-            }
-        });
 
         // Initial Player Stats CardView setup.
         buildPlayerStatsCard();
@@ -377,4 +320,66 @@ public class DashboardFragment extends Fragment {
         }
     }
     // [PLAYER STATS METHODS END].
+
+    /**
+     * Build out the PropertyChangeListener implementations for each required
+     * DashboardFragment UI Element.
+     */
+    private void buildPropertyChangeListeners() {
+        G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                switch (propertyChangeEvent.getPropertyName()) {
+                    case Constants.PROPERTY_EXP:
+                        updateLevelProgressBar((int)propertyChangeEvent.getNewValue());
+                        break;
+
+                    case Constants.PROPERTY_USERNAME:
+                        break;
+
+                    case Constants.PROPERTY_LEVEL:
+                        updateLevelText((int)propertyChangeEvent.getNewValue());
+                        updateExpOnLevelUp();
+                        break;
+
+                    case Constants.PROPERTY_STEPS:
+                        updateStepsTextView((int)propertyChangeEvent.getNewValue());
+                        break;
+                }
+            }
+        });
+
+        G.activePlayer.getActivityLog().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                switch (propertyChangeEvent.getPropertyName()) {
+                    case Constants.PROPERTY_ONLINE_ACTIVITY:
+                        addDashboardActivity((Activity)propertyChangeEvent.getNewValue());
+                }
+            }
+        });
+
+        G.activePlayer.getActiveEncounter().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                switch(propertyChangeEvent.getPropertyName()) {
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_SET:
+                        buildActiveEncounterCard();
+                        break;
+
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_UPDATE_HEALTH:
+                        updateEncounterHealth();
+                        break;
+
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_EXPIRES:
+                        finishActiveEncounter((Activity)propertyChangeEvent.getNewValue());
+                        break;
+
+                    case Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH:
+                        finishActiveEncounter((Activity)propertyChangeEvent.getNewValue());
+                        break;
+                }
+            }
+        });
+    }
 }
