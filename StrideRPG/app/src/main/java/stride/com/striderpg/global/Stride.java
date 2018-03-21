@@ -5,8 +5,9 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * Global Context class using a Singleton pattern to retrieve
- * the Application context.
+ * Simple Stride Contextual class for retrieving itself, this is necessary
+ * for constructing the FitnessUtil class, it required a Context when calling
+ * the readSteps() method. This class provides that Context.
  */
 public class Stride extends Application {
 

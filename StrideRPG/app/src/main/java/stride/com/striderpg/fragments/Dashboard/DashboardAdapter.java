@@ -16,8 +16,9 @@ import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.utils.TimeParser;
 
 /**
- * DashboardAdapter that extends the Recycler View Adapter
- * of sub type ActivityViewHolder.
+ * DashboardAdapter used to instantiate new ViewHolders that contain
+ * info about different activities currently present in Active Players
+ * ActivityLog.
  */
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ActivityViewHolder> {
 
@@ -27,24 +28,28 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
     private static final String TAG = "DashboardAdapter";
 
     /**
-     * ArrayList of type Activity.
+     * Activity ArrayList used when inflating each Activity as a new
+     * ActivityViewHolder.
      */
     private ArrayList<Activity> activities;
 
     /**
-     * Constructor method for the DashboardAdapter, sets the
-     * activities ArrayList to the specified ArrayList.
-     * @param activities ArrayList of type Activity.
+     * Constructor that sets the activities ArrayList.
+     * @param activities Activity ArrayList.
      */
     DashboardAdapter(ArrayList<Activity> activities) {
         this.activities = activities;
     }
 
-    @Override
-    public int getItemCount() {
-        return activities.size();
-    }
-
+    /**
+     * Method called on each ActivityViewHolder instantiated.
+     * @param viewGroup ViewGroup that will contain the children
+     *                  (Dashboard elements) -> activities.
+     * @param i Index of current activity being inflated from
+     *          activities ArrayList.
+     * @return New ActivityViewHolder with activities.get(i)'s
+     * properties set.
+     */
     @Override
     public ActivityViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
@@ -52,6 +57,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
         return new ActivityViewHolder(v);
     }
 
+    /**
+     * Method called when the ActivityViewHolder is being bound to its
+     * proper Activity located in the activities ArrayList.
+     * @param activityViewHolder Current ActivityViewHolder being bound.
+     * @param i Index of current enemy being bound to
+     *          ActivityViewHolder.
+     */
     @Override
     public void onBindViewHolder(ActivityViewHolder activityViewHolder, int i) {
         // Set all required UI elements for this current Activity ViewHolder.
@@ -63,47 +75,61 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
         );
     }
 
+    /**
+     * Add a new Activity to the activities ArrayList and notify the
+     * adapter that an item has been inserted.
+     * @param activity Activity being added to ArrayList.
+     */
     public void add(Activity activity) {
         activities.add(0, activity);
         notifyItemInserted(0);
     }
 
     /**
-     * Static sub-class for holding the ActivityViewHolder
-     * that contains all relevant information about the Activity
-     * object being inflated and displayed.
+     * Returns the activities ArrayList size.
+     * @return activities ArrayList size.
+     */
+    @Override
+    public int getItemCount() {
+        return activities.size();
+    }
+
+    /**
+     * Static ActivityViewHolder class extending the ViewHolder class
+     * and used to bind and inflate new ActivityViewHolders with
+     * required properties and elements.
      */
     static class ActivityViewHolder extends RecyclerView.ViewHolder {
 
         /**
-         * Main CardView to hold Activity information.
+         * CardView container that holds all ActivityView data.
          */
         CardView cv;
 
         /**
-         * Activity name TextView.
+         * TextView to contain the Activity name.
          */
         TextView activityName;
 
         /**
-         * Activity description TextView.
+         * TextView to contain the Activity description.
          */
         TextView activityDesc;
 
         /**
-         * Activity timestamp TextView.
+         * TextView to contain the Activity timestamp.
          */
         TextView activityTimestamp;
 
         /**
-         * Activity icon ImageView.
+         * ImageView to hold the Activity image resource.
          */
         ImageView activityIcon;
 
         /**
-         * ActivityViewHolder constructor method set the ids
-         * of the views inside of the holder.
-         * @param itemView This Activities itemView.
+         * ActivityViewHolder constructor to set class properties to
+         * elements contained in the itemView passed.
+         * @param itemView View this Activity is inside of.
          */
         ActivityViewHolder(View itemView) {
             super(itemView);

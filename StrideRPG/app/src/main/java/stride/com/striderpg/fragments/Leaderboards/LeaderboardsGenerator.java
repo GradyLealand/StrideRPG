@@ -19,9 +19,8 @@ import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * Leaderboards Generator class for creating thr ArrayList of Players
- * that will be sorted and displayed inside of the Leaderboards
- * Fragment using the RecyclerView / CardView and Adapter.
+ * LeaderboardsGenerator used to retrieve/generate the Player ArrayList
+ * containing each Player in the FirebaseDatabase.
  */
 public class LeaderboardsGenerator {
 
@@ -31,53 +30,37 @@ public class LeaderboardsGenerator {
     private static final String TAG = "LeaderboardsGenerator";
 
     /**
-     * ArrayList of type Player to store all the Players in the
-     * database.
+     * Player ArrayList to hold each Player that will be inside of the
+     * Leaderboards.
      */
     private ArrayList<Player> players = new ArrayList<>();
 
     /**
-     * LeaderboardsGenerator constructor that will call the
-     * updateLeaderboards() method to asynchronously retrieve
-     * and sort the Players in the FirebaseDatabase.
+     * Constructor that calls the buildLeaderboards() method to
+     * generate the Leaderboards information/data.
      */
     LeaderboardsGenerator() {
-        updateLeaderboards();
+        buildLeaderboards();
     }
 
     /**
-     * UpdateLeaderboards method to retrieve the Players from the
-     * Database and sort them by total amount of experience.
+     * Build out the players ArrayList by making a call to the Database
+     * and attaching a onDataChange callback to loop through results.
      */
-    private void updateLeaderboards() {
+    private void buildLeaderboards() {
+        // Create reference to the users node in the Database.
         DatabaseReference usersRef = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(DBKeys.USERS_KEY);
 
+        // Add a ValueEventListener that listens for a single response.
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "SingleValueEventListener:success");
-                players.clear();
-                Log.d(TAG, "ArrayList<Player> players has been cleared");
-
-                // Loop through each Child in the DataSnapshot (Players) and add them to the
-                // ArrayList.
                 for (DataSnapshot s : dataSnapshot.getChildren()) {
                     try {
-                        // Create a temporary Player to store current DataSnapshot s Player.
-                        Player tempPlayer = s.getValue(Player.class);
-
-                        // Add new temporary Player to ArrayList of all Players.
-                        players.add(tempPlayer);
-                        Log.d(TAG, String.format(
-                                G.locale,
-                                "add:success:player=%s",
-                                tempPlayer.getUniqueId())
-                        );
-
-                    // Generic exception case for handling any error while trying to add the
-                    // temporary Player to the ArrayList.
+                        // Add Player to players ArrayList.
+                        players.add(s.getValue(Player.class));
                     } catch (Exception e) {
                         Log.e(TAG, "add:error:", e);
                     }
@@ -86,10 +69,8 @@ public class LeaderboardsGenerator {
                 // After the players ArrayList is created and filled with all players from
                 // DataSnapshot. Sort the ArrayList.
                 try {
-                    sort(players, Enums.PlayerSort.LEVEL);
+                    sort(Enums.PlayerSort.LEVEL);
                     Log.d(TAG, "sort:success");
-
-                // Exception case for handling an error while sorting the ArrayList.
                 } catch (Exception e) {
                     Log.e(TAG, "sort:error:", e);
                 }
@@ -105,17 +86,14 @@ public class LeaderboardsGenerator {
     /**
      * Custom sort method to organize the ArrayList of Players based
      * on the PlayerSort Enumeration type passed to method.
-     * @param collection Collection being sorted.
      * @param sortType PlayerSort Enumeration type.
      */
-    private void sort(ArrayList<Player> collection, final Enums.PlayerSort sortType) {
+    private void sort(final Enums.PlayerSort sortType) {
         Log.d(TAG, String.format(G.locale, "sort:begin:type=%s", sortType));
-        Collections.sort(collection, new Comparator<Player>() {
+        Collections.sort(players, new Comparator<Player>() {
             @Override
             public int compare(Player p1, Player p2) {
                 switch (sortType) {
-                    case LEVEL:
-                        return p2.getLevel().compareTo(p1.getLevel());
                     case EXPERIENCE:
                         return p2.getExperience().compareTo(p1.getExperience());
                     case ENEMIES_DEFEATED:
@@ -123,7 +101,9 @@ public class LeaderboardsGenerator {
                     case STEPS:
                         return p2.getSteps().compareTo(p1.getSteps());
 
-                    // Sort by level if no proper sort type is given.
+                    // LEVEL / default case are the same.
+                    case LEVEL:
+                        return p2.getLevel().compareTo(p1.getLevel());
                     default:
                         return p2.getLevel().compareTo(p1.getLevel());
                 }
@@ -132,18 +112,10 @@ public class LeaderboardsGenerator {
     }
 
     /**
-     * Retrieve the ArrayList of type Player.
-     * @return players ArrayList
+     * Player ArrayList getter.
+     * @return players ArrayList.
      */
     public ArrayList<Player> getPlayers() {
         return players;
-    }
-
-    /**
-     * Set the ArrayList of type Player.
-     * @param players ArrayList being set to players.
-     */
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
     }
 }

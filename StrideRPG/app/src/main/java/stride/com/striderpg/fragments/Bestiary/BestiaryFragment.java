@@ -13,9 +13,8 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Bestiary Fragment class for showing a User information about the
- * enemies they've defeated as well as the amount of each enemy
- * they've defeated.
+ * Bestiary Fragment that displays information about the Players
+ * current enemies defeated information and updated in real time.
  */
 public class BestiaryFragment extends Fragment {
 
@@ -24,14 +23,26 @@ public class BestiaryFragment extends Fragment {
      */
     private static final String TAG = "BestiaryFragment";
 
+    /**
+     * RecyclerView that will hold each individual Enemy CardView.
+     */
     RecyclerView bestiaryRecyclerView;
 
+    /**
+     * BestiaryGenerator used to grab the Active Players current
+     * information about enemies defeated when View is initially
+     * created.
+     */
     BestiaryGenerator bestiaryGenerator = new BestiaryGenerator();
 
+    /**
+     * BestiaryAdapter for inflating and instantiating each CardView
+     * with Active Players enemies defeated information.
+     */
     BestiaryAdapter bestiaryAdapter;
 
     /**
-     * Required empty public constructor function.
+     * Empty Public Constructor.
      */
     public BestiaryFragment() { }
 
@@ -41,15 +52,17 @@ public class BestiaryFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_bestiary, container, false);
 
+        // Set the RecyclerView to the inflated rootView rv (RecyclerView).
         bestiaryRecyclerView = rootView.findViewById(R.id.rv);
         bestiaryRecyclerView.setHasFixedSize(true);
 
+        // Set the LayoutManager used in the Bestiary.
         GridLayoutManager glm = new GridLayoutManager(this.getContext(), 3);
         bestiaryRecyclerView.setLayoutManager(glm);
 
+        // Create the Adapter used to inflate each Enemy CardView.
         bestiaryAdapter = new BestiaryAdapter(bestiaryGenerator.getEnemies());
         bestiaryRecyclerView.setAdapter(bestiaryAdapter);
-
         return rootView;
     }
 }

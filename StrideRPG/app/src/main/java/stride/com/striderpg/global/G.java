@@ -7,8 +7,20 @@ import stride.com.striderpg.fit.FitnessUtil;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * Simple public class to hold and store any objects that should be
- * accessible anywhere from the application during runtime procedures.
+ * Global Class G used to create an accessible resource that can be reached
+ * during runtime and provide easier methods to reach important game elements:
+ *
+ * Player activePlayer - Used to get and set numerous values for the current
+ *                       user playing the game. This Player object is also
+ *                       consistently pushed to the database.
+ *
+ * FitnessUtil fitnessUtil - Used to read the current users steps through the use
+ *                           of Google's Fitness API.
+ *
+ * Integer lastStepCount - This Integer is null when the application is started and
+ *                         for each steps read call afterwards, it is updated based
+ *                         off of the lastStepCount to determine the difference
+ *                         between a users last steps and current steps.
  */
 public final class G {
 

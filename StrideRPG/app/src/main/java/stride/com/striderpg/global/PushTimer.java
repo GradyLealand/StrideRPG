@@ -10,14 +10,13 @@ import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.rpg.Constants;
 
 /**
- * Class meant to control the Concurrent timer that will
- * asynchronously update the FirebaseDatabase with any changed Data
- * in the activePlayer Player Object.
+ * PushTimer Class used to create Timer's that will Push data to the
+ * Firebase Database as well as read the users steps from the Fitness API.
  */
 public class PushTimer {
 
     /**
-     * Debugging Logger tag.
+     * PushTimer Logging tag.
      */
     private static final String TAG = "PushTimer";
 

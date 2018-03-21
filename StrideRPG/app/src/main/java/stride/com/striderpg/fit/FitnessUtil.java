@@ -16,8 +16,7 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.Stride;
 
 /**
- * FitnessUtil class to deal with the reading of an Accounts daily
- * step count.
+ * FitnessUtil class that implements the Google
  */
 public class FitnessUtil {
 
@@ -27,14 +26,15 @@ public class FitnessUtil {
     private static final String TAG = "FitnessUtil";
 
     /**
-     * GoogleSignInAccount for the Fitness api calls.
+     * GoogleSignInAccount reference used to control and authenticate
+     * any attempts to read a users fitness data.
      */
     private GoogleSignInAccount account;
 
     /**
-     * FitnessUtil custom constructor for setting the Context and
-     * GoogleSignAccount.
-     * @param account GoogleSignInAccount.
+     * FitnessUtil Constructor for setting the users GoogleSignInAccount.
+     * @param account GoogleSignInAccount reference used to
+     *                authenticate any calls to readData().
      */
     public FitnessUtil(GoogleSignInAccount account) {
         this.account = account;
@@ -42,9 +42,8 @@ public class FitnessUtil {
     }
 
     /**
-     * Attempt to read the current accounts daily step count.
-     * The step count resets at midnight local time depending on the
-     * phone being used.
+     * Reads the users current steps from the Fitness API with this
+     * utilities current GoogleSignInAccount reference.
      */
     public void readData() {
         try {
@@ -56,12 +55,10 @@ public class FitnessUtil {
                     .addOnSuccessListener(new OnSuccessListener<DataSet>() {
                                 @Override
                                 public void onSuccess(DataSet dataSet) {
-                                    Integer total =
-                                            dataSet.isEmpty() ? 0 : dataSet.getDataPoints()
+                                    Integer total = dataSet.isEmpty() ? 0 : dataSet.getDataPoints()
                                                     .get(0)
                                                     .getValue(Field.FIELD_STEPS)
                                                     .asInt();
-
                                     Log.d(TAG, "readData:onSuccess:value=" + total);
                                     G.activePlayer.updateSteps(total);
                                 }
@@ -75,9 +72,6 @@ public class FitnessUtil {
                                     Log.e(TAG, "readData:onFailure:error", e);
                                 }
                             });
-
-        // Catch exception case for issues with the Fitness object
-        // when attempting to getHistoryClient.
         } catch (Exception e) {
             Log.e(TAG, "readData:error", e);
         }

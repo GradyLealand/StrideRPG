@@ -3,7 +3,6 @@ package stride.com.striderpg.fragments.Leaderboards;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,11 @@ import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.models.Player.Player;
 
 /**
- * LeaderboardsAdapter that extends the Recycler View Adapter of
- * sub type PlayerViewHolder.
+ * Leaderboards Adapter used to instantiate new ViewHolders that
+ * contain info about different players in the game sorted to display
+ * players in a ranked format.
  */
 public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapter.PlayerViewHolder> {
-
 
     /**
      * LeaderboardsAdapter Logging tag.
@@ -30,25 +29,27 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
     private static final String TAG = "LeaderboardsAdapter";
 
     /**
-     * ArrayList of type Player.
+     * Player ArrayList used when inflating each Player as a new
+     * PlayerViewHolder.
      */
     private ArrayList<Player> players;
 
     /**
-     * Constructor method for the LeaderboardsAdapter, sets the players
-     * ArrayList to the specified ArrayList.
-     * @param players ArrayList of type Player.
+     * Constructor that sets the players ArrayList.
+     * @param players Player ArrayList.
      */
     LeaderboardsAdapter(ArrayList<Player> players) {
         this.players = players;
-        Log.d(TAG, "LeaderboardsAdapter:success:ArrayList<Player>=" + players);
     }
 
-    @Override
-    public int getItemCount() {
-        return players.size();
-    }
-
+    /**
+     * Method called on each PlayerViewHolder instantiated.
+     * @param viewGroup ViewGroup that will contain the children
+     *                  (Leaderboard elements) -> players.
+     * @param i Index of current player being inflated from players
+     *          ArrayList.
+     * @return New PlayerViewHolder with players.get(i)'s properties set.
+     */
     @Override
     public PlayerViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
@@ -56,48 +57,34 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         return new PlayerViewHolder(v);
     }
 
+    /**
+     * Method called when the PlayerViewHolder is being bound to its
+     * property Player located in the players ArrayList.
+     * @param playerViewHolder Current PlayerViewHolder being bound.
+     * @param i Index of current player being bound to PlayerViewHolder.
+     */
     @Override
     public void onBindViewHolder(PlayerViewHolder playerViewHolder, int i) {
-
-        // Set players[i] playerRank TextView to parsed Player rank.
         playerViewHolder.playerRank.setText(parsePlayerRank(i));
-
-        // Set players player[i] playerUsername TextView to Player username.
         playerViewHolder.playerUsername.setText(players.get(i).getUsername());
-
-        // Set players player[i] playerLevel TextView to Player level.
         playerViewHolder.playerLevel.setText(String.format(
                 G.locale, "Level %d", players.get(i).getLevel())
         );
-
         playerViewHolder.playerExp.setText(
                 LevelGenerator.getReadableExpString(
                         players.get(i).getExperience(),
                         players.get(i).getLevel()
                 )
         );
-
-        // Set players player[i] playerImage ImageView to Player image.
-        // TODO: Use an actual Player image. PLACEHOLDER.
         playerViewHolder.playerImage.setImageResource(R.mipmap.ic_launcher);
-
-        // Log successful player bind.
-        Log.d(TAG, String.format(
-                G.locale,
-                "onBindViewHolder:success:player successfully bound: %s",
-                players.get(i).toString())
-        );
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     /**
-     * Parse a Players rank by using the position in the ArrayList i.
-     * @param i Players rank based on sorted ArrayList.
-     * @return String representing Player rank.
+     * Parse out a Players rank based on their position in the sorted players
+     * ArrayList, a Player in the top 10 will have their rank (0#).
+     * Otherwise their rank is just their index + 1.
+     * @param i Players index in ArrayList.
+     * @return Player rank String.
      */
     private String parsePlayerRank(int i) {
         if (i < 10) {
@@ -108,45 +95,54 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
     }
 
     /**
-     * Static sub-class for holding the PlayerViewHolder that contains
-     * all relevant information about the Player object being inflated
-     * and displayed.
+     * Returns the players ArrayList size.
+     * @return players ArrayList size.
+     */
+    @Override
+    public int getItemCount() {
+        return players.size();
+    }
+
+    /**
+     * Static PlayerViewHolder class extending the ViewHolder class
+     * and used to bind and inflate new PlayerViewHolders with
+     * required properties and elements.
      */
     static class PlayerViewHolder extends RecyclerView.ViewHolder {
         /**
-         * Main CardView to hold this Players information.
+         * CardView container that holds all PlayerView data.
          */
         CardView cv;
 
         /**
-         * Player rank in the leaderboards TextView.
+         * TextView to contain the Player rank.
          */
         TextView playerRank;
 
         /**
-         * Player username TextView.
+         * TextView to contain the Player username.
          */
         TextView playerUsername;
 
         /**
-         * Player level TextView.
+         * TextView to contain the Player level.
          */
         TextView playerLevel;
 
         /**
-         * Player experience TextView.
+         * TextView to contain the Player experience.
          */
         TextView playerExp;
 
         /**
-         * Player image ImageView.
+         * TextView to contain the Player image resource.
          */
         ImageView playerImage;
 
         /**
-         * PlayerViewHolder constructor method to set the ids of the
-         * views inside of the holder.
-         * @param itemView This Players itemView.
+         * PlayerViewHolder constructor to set class properties
+         * to elements contained in the itemView passed.
+         * @param itemView View this Player is inside of.
          */
         PlayerViewHolder(View itemView) {
             super(itemView);

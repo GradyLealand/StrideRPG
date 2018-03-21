@@ -11,9 +11,8 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 
 /**
- * Dashboard Generator for creating the ArrayList of a Players
- * Activities that is displayed inside of the Dashboards Fragment
- * using the RecyclerView / CardView
+ * DashboardGenerator used to retrieve/generate the Activity ArrayList
+ * for the Active Player.
  */
 public class DashboardGenerator {
 
@@ -23,39 +22,41 @@ public class DashboardGenerator {
     private static final String TAG = "DashboardsGenerator";
 
     /**
-     * ArrayList of type Activity to store all the Activities
-     * from Global activePlayer.
+     * Activity ArrayList to hold each Activity that will be inside of the
+     * Dashboard.
      */
     private ArrayList<Activity> activities = new ArrayList<>();
 
     /**
-     * Simple DashboardGenerator Constructor to call build
-     * and sort the current ActivityLog.
+     * Constructor that calls the buildDashboard() method to generate
+     * the Dashboard activities information/data.
      */
     DashboardGenerator() {
-        updateDashboard();
+        buildDashboard();
     }
 
     /**
-     * Update the Dashboard by adding all of the current Global Players
-     * ActivityLog HashMap and sorting it.
+     * Build out the activities ArrayList by adding each value from
+     * the Active Players ActivityLog object.
      */
-    private void updateDashboard() {
+    private void buildDashboard() {
+
+        // Adds each Activity to the activities ArrayList.
         activities.addAll(G.activePlayer.getActivityLog().getLog().values());
+
+        // Sort the activities ArrayList.
         try {
-            sort(activities);
+            sortActivities();
         } catch (Exception e) {
             Log.e(TAG, "sort:error:", e);
         }
     }
 
     /**
-     * Sort method for placing older activities at the back of
-     * the ArrayList of Activities.
-     * @param collection Collection being sorted.
+     * Sorts the activities ArrayList.
      */
-    public void sort(ArrayList<Activity> collection) {
-        Collections.sort(collection, new Comparator<Activity>() {
+    private void sortActivities() {
+        Collections.sort(activities, new Comparator<Activity>() {
             @Override
             public int compare(Activity a1, Activity a2) {
                 return a1.compareTime(a2);
@@ -64,8 +65,8 @@ public class DashboardGenerator {
     }
 
     /**
-     * Retrieve the Activities ArrayList.
-     * @return Activities property.
+     * Activity ArrayList getter.
+     * @return activities ArrayList.
      */
     public ArrayList<Activity> getActivities() {
         return activities;

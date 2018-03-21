@@ -3,11 +3,9 @@ package stride.com.striderpg.fragments.Leaderboards;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +13,8 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Leaderboards Fragment for displaying different Players in the game
- * and sorting them based on rank, total steps, total experience,
- * level, enemies defeated... etc.
+ * Leaderboards Fragment that displays Players in game in a leaderboard
+ * style.
  */
 public class LeaderboardsFragment extends Fragment {
 
@@ -27,58 +24,38 @@ public class LeaderboardsFragment extends Fragment {
     private static final String TAG = "LeaderboardsFragment";
 
     /**
-     * Instance the recycler view used to create the list of Players
-     * in the GUI dynamically.
+     * RecyclerView that will hold each individual Player CardView.
      */
     RecyclerView leaderboardsRecyclerView;
 
     /**
-     * Generator instance used to retrieve Players. Constructor call
-     * will start the asynchronous call to the FirebaseDatabase to
-     * create the Leaderboards UI.
+     * LeaderboardGenerator used to grab the current Players from
+     * the Firebase Database when View is initially created.
      */
     LeaderboardsGenerator generator = new LeaderboardsGenerator();
 
     /**
-     * Required empty public constructor function.
+     * Empty Public Constructor.
      */
     public LeaderboardsFragment() { }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    /**
-     * Main LeaderboardsFragment View creation. The RecyclerView,
-     * Adapter and LayoutManager are all used here to create the
-     * Layout and dynamically create the Leaderboards View.
-     */
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment.
         View rootView = inflater.inflate(R.layout.fragment_leaderboards_rv, container, false);
 
-        // Get the leaderboardsRecyclerView from the rootView that
-        // is inflated from the fragment_leaderboards_rv xml layout
-        // that contains the rv RecyclerView.
+        // Set the RecyclerView to the inflated rootView rv (RecyclerView).
         leaderboardsRecyclerView = rootView.findViewById(R.id.rv);
         leaderboardsRecyclerView.setHasFixedSize(true);
 
-        // LinearLayoutManager used here, will layout the elements
-        // in a similar fashion to a ListView would lay things out.
-        // RecyclerView.LayoutManager defines how the elements are
-        // laid out.
+        // Set the LayoutManager used in the Leaderboards.
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         leaderboardsRecyclerView.setLayoutManager(llm);
 
-        // Set the LeaderboardsAdapter as the adapter for this
-        // RecyclerView.
-        LeaderboardsAdapter adapter = new LeaderboardsAdapter(
-                generator.getPlayers()
-        );
+        // Create the Adapter used to inflate each Player CardView.
+        LeaderboardsAdapter adapter = new LeaderboardsAdapter(generator.getPlayers());
         leaderboardsRecyclerView.setAdapter(adapter);
-
-        Log.d(TAG, "onCreateView:success");
         return rootView;
     }
 }

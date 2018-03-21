@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Equipment Fragment for displaying a Users inventory and giving
- * them options to equip, un-equip, trash and look at stats on each
- * item in their Equipment.
+ * Inventory Fragment that displays a Players current equipment
+ * and what they have equipped as well as their statistics gained
+ * from the equipment.
  */
 public class InventoryFragment extends Fragment {
 
@@ -23,7 +23,7 @@ public class InventoryFragment extends Fragment {
     private static final String TAG = "InventoryFragment";
 
     /**
-     * Required empty public constructor function.
+     * Empty Public Constructor.
      */
     public InventoryFragment() { }
 

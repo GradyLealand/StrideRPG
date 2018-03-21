@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,9 +19,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 
-import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
@@ -30,8 +27,14 @@ import stride.com.striderpg.rpg.generators.LevelGenerator;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 
 /**
- * Dashboard Fragment for displaying a Users recent activity log and a profile bar with information
- * about their account at the top of the screen.
+ * Dashboard Fragment that acts as a main hub for a Player on
+ * application startup. Used to Display the Active Player's basic
+ * stats, such as Username, Level, Steps, Exp...
+ *
+ * An Adapter is located below the Players information that contains
+ * all of their Activities on startup, as well as dynamically
+ * populated as new activities are generated as the application is
+ * running.
  */
 public class DashboardFragment extends Fragment {
 
@@ -41,20 +44,19 @@ public class DashboardFragment extends Fragment {
     private static final String TAG = "DashboardFragment";
 
     /**
-     * Instance the recycler view used to create the list of Activities
-     * in the GUI dynamically.
+     * RecyclerView that will hold each individual Activity CardView.
      */
     RecyclerView dashboardRecyclerView;
 
     /**
-     * Generator instance used to retrieve Activities. Constructor
-     * call will get the current Activity HashMap from the
-     * active player object.
+     * DashboardGenerator used to grab the Active Players current
+     * activities when the View is initially created.
      */
     DashboardGenerator activityGenerator = new DashboardGenerator();
 
     /**
-     * Adapter instance global to update on Activity added.
+     * DashboardAdapter for inflating and instantiating each CardView
+     * with Active Players current activities log.
      */
     DashboardAdapter activityAdapter;
 
@@ -69,7 +71,7 @@ public class DashboardFragment extends Fragment {
     private TextView playerExpCount;
 
     /**
-     * Player experience / neededExperience ProgressBar.
+     * Player (experience/neededExperience) ProgressBar.
      */
     private ProgressBar playerLevelProgressBar;
 
@@ -119,31 +121,26 @@ public class DashboardFragment extends Fragment {
     private CardView activeEncounterCard;
 
     /**
-     * Required empty public constructor function.
+     * Empty Public Constructor.
      */
     public DashboardFragment() { }
 
-    /**
-     * Main DashboardFragment View creation. The RecyclerView,
-     * Adapter and LayoutManager are all used to here to create the
-     * layout and dynamically create the Dashboard Activity view.
-     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        // Initialize the DashboardRecyclerView.
+        // Set the RecyclerView to the inflated rootView rv (RecyclerView).
         dashboardRecyclerView = rootView.findViewById(R.id.rv);
         dashboardRecyclerView.setHasFixedSize(true);
         dashboardRecyclerView.setItemAnimator(new SlideInLeftAnimator());
 
-        // Create set the DashboardRecyclerViews LayoutManager.
+        // Set the LayoutManager used in the Dashboard.
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         dashboardRecyclerView.setLayoutManager(llm);
 
-        // Create the DashboardAdapter using the Generators ArrayList.
+        // Create the Adapter used to inflate each Activity CardView.
         activityAdapter = new DashboardAdapter(activityGenerator.getActivities());
         dashboardRecyclerView.setAdapter(activityAdapter);
 
@@ -155,6 +152,8 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        // Set each element present on the Dashboard.
         getDashboardElements();
 
         // Initial Player Stats CardView setup.
@@ -167,17 +166,20 @@ public class DashboardFragment extends Fragment {
                 buildActiveEncounterCard();
             else
                 G.activePlayer.getActiveEncounter().expire();
+
+        // Initial Level ProgressBar update.
         updateLevelProgressBar(G.activePlayer.getExperience());
     }
-
-    // [ACTIVE ENCOUNTER METHODS BEGIN].
 
     /**
      * Update the ActiveEncounter's Health ProgressBar and TextView.
      */
     private void updateEncounterHealth() {
+
         // Update Boss Health ProgressBar with Bosses current health property.
-        activeEncounterHealthProgress.setProgress(G.activePlayer.getActiveEncounter().getBoss().getHealth());
+        activeEncounterHealthProgress.setProgress(
+                G.activePlayer.getActiveEncounter().getBoss().getHealth()
+        );
 
         // Set Health remaining Text to "health / maxHealth".
         activeEncounterHealthText.setText(String.format(G.locale, "%d / %d",
@@ -191,9 +193,11 @@ public class DashboardFragment extends Fragment {
      * about the ActiveEncounter Boss.
      */
     private void buildActiveEncounterCard() {
+
         // Make the Encounter Card Visible.
         activeEncounterCard.setVisibility(View.VISIBLE);
 
+        // Set the ActiveEncounter name TextView and health ProgressBar.
         activeEncounterName.setText(G.activePlayer.getActiveEncounter().getBoss().getName());
         activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
         updateEncounterHealth();
@@ -209,10 +213,6 @@ public class DashboardFragment extends Fragment {
         activityAdapter.add(activity);
     }
 
-    // [ACTIVE ENCOUNTER METHODS END].
-
-    // [PLAYER STATS METHODS BEGIN].
-
     /**
      * Insert a new generic Activity directly into the ActivityGenerator
      * ArrayList and notify the Adapter.
@@ -220,6 +220,8 @@ public class DashboardFragment extends Fragment {
      */
     private void addDashboardActivity(Activity activity) {
         activityAdapter.add(activity);
+
+        // TODO: Remove? Should dashboard scroll to top when a new activity is appended?
         dashboardRecyclerView.getLayoutManager().scrollToPosition(0);
     }
 
@@ -238,7 +240,10 @@ public class DashboardFragment extends Fragment {
      * Update a Players Experience TextViews with active Players current properties.
      */
     public void updateExpOnLevelUp() {
-        playerExpCount.setText(parseExpAmount(G.activePlayer.getExperience(), G.activePlayer.getLevel() + 1));
+        playerExpCount.setText(parseExpAmount(
+                G.activePlayer.getExperience(),
+                G.activePlayer.getLevel() + 1)
+        );
     }
 
     /**
@@ -322,13 +327,15 @@ public class DashboardFragment extends Fragment {
             Log.e(TAG, "getDashboardElements:error:", e);
         }
     }
-    // [PLAYER STATS METHODS END].
 
     /**
      * Build out the PropertyChangeListener implementations for each required
      * DashboardFragment UI Element.
      */
     private void buildPropertyChangeListeners() {
+
+        // Add a new PropertyChangeListener implementation that controls
+        // the ui elements being changed when their internal value changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -352,6 +359,9 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Add a new PropertyChangeListener implementation that controls
+        // the activity log elements being changed when their internal
+        // value changes.
         G.activePlayer.getActivityLog().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -362,6 +372,9 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Add a new PropertyChangeListener implementation that controls
+        // the active encounter elements being changed when their
+        // internal value changes.
         G.activePlayer.getActiveEncounter().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {

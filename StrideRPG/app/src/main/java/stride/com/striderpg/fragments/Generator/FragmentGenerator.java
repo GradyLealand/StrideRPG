@@ -11,7 +11,7 @@ import stride.com.striderpg.fragments.QuestsFragment;
  * Generator class for instancing the different Fragments present in
  * the application. Each fragment in game is generated on
  * FragmentGenerator instantiation, from then on, Fragments can be
- * hidden or shown based on NavigationActivity choices.
+ * hidden or shown based on NavigationActivity choices made by the user.
  */
 public class FragmentGenerator {
 

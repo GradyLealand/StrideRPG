@@ -11,9 +11,8 @@ import android.view.ViewGroup;
 import stride.com.striderpg.R;
 
 /**
- * Quests Fragment for showing a user their current progress in
- * the game and how close or far away they are from unlocking
- * a new quest/achievement.
+ * Quests Fragment that displays information about a players current
+ * quests and the progress between each.
  */
 public class QuestsFragment extends Fragment {
 
@@ -23,7 +22,7 @@ public class QuestsFragment extends Fragment {
     private static final String TAG = "QuestsFragment";
 
     /**
-     * Required empty public constructor function.
+     * Empty Public Constructor.
      */
     public QuestsFragment() { }
 
