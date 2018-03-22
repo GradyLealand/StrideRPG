@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     tools:context="stride.com.striderpg.fragments.Bestiary.BestiaryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <include
         android:id="@+id/fragment_bestiary_grid"
         layout="@layout/fragment_bestiary_rv"

@@ -279,7 +279,7 @@ public final class Constants {
     /**
      * Constant for failed to defeat bosses in time description.
      */
-    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses in time throughout your travels.";
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses throughout your travels.";
     /**
      * Constant for generic defeat bosses quest description.
      */
