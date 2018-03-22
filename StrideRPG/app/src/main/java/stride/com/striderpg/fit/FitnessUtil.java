@@ -16,7 +16,10 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.global.Stride;
 
 /**
- * FitnessUtil class that implements the Google
+ * FitnessUtil class that implements the Google Fitness API to read in
+ * a users current step count.
+ *
+ * Fitness API Doc: https://github.com/googlesamples/android-fit
  */
 public class FitnessUtil {
 

@@ -161,15 +161,12 @@ public class ActiveEncounter {
     public boolean isActive() {
         return active;
     }
-
     public void setActive(boolean active) {
         this.active = active;
     }
-
     public Boss getBoss() {
         return boss;
     }
-
     public void setBoss(Boss boss) {
         this.boss = boss;
         changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_SET, null, boss);

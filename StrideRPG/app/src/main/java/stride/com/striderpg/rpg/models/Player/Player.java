@@ -295,93 +295,72 @@ public class Player {
     public String getUniqueId() {
         return uniqueId;
     }
-
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getEmail() {
         return email;
     }
-
     public Integer getLevel() {
         return level;
     }
-
     public void setLevel(Integer level) {
         if (!Objects.equals(this.level, level))
             changes.firePropertyChange(Constants.PROPERTY_LEVEL, this.level, level);
         this.level = level;
     }
-
     public Integer getExperience() {
         return experience;
     }
-
     public void setExperience(Integer experience) {
         if (!Objects.equals(this.experience, experience))
             changes.firePropertyChange(Constants.PROPERTY_EXP, this.experience, experience);
         this.experience = experience;
     }
-
     public Integer getSteps() {
         return steps;
     }
-
     public void setSteps(Integer steps) {
         if (!Objects.equals(this.steps, steps))
             changes.firePropertyChange(Constants.PROPERTY_STEPS, this.steps, steps);
         this.steps = steps;
     }
-
     public String getLastSignedIn() {
         return lastSignedIn;
     }
-
     public void setLastSignedIn(String lastSignedIn) {
         this.lastSignedIn = lastSignedIn;
     }
-
     public ActiveEncounter getActiveEncounter() {
         return activeEncounter;
     }
-
     public Bestiary getBestiary() {
         return bestiary;
     }
-
     public QuestLog getQuestLog() {
         return questLog;
     }
-
     public void setQuestLog(QuestLog questLog) {
         this.questLog = questLog;
     }
-
     public ActivityLog getActivityLog() {
         return activityLog;
     }
-
     public void setActivityLog(ActivityLog activityLog) {
         this.activityLog = activityLog;
     }
-
     public Stats getStats() {
         return stats;
     }
-
     public Skills getSkills() {
         return skills;
     }
-
     public Equipment getEquipment() {
         return equipment;
     }
-
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
     }

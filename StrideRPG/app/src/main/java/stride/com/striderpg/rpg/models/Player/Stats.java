@@ -123,51 +123,39 @@ public class Stats {
     public Integer getEnemiesDefeated() {
         return enemiesDefeated;
     }
-
     public void setEnemiesDefeated(Integer enemiesDefeated) {
         this.enemiesDefeated = enemiesDefeated;
     }
-
     public Integer getBossesDefeated() {
         return bossesDefeated;
     }
-
     public void setBossesDefeated(Integer bossesDefeated) {
         this.bossesDefeated = bossesDefeated;
     }
-
     public Integer getBossesExpired() {
         return bossesExpired;
     }
-
     public void setBossesExpired(Integer bossesExpired) {
         this.bossesExpired = bossesExpired;
     }
-
     public Integer getLosses() {
         return losses;
     }
-
     public void setLosses(Integer losses) {
         this.losses = losses;
     }
-
     public Integer getItemsLooted() {
         return itemsLooted;
     }
-
     public void setItemsLooted(Integer itemsLooted) {
         this.itemsLooted = itemsLooted;
     }
-
     public Integer getTotalExperience() {
         return totalExperience;
     }
-
     public void setTotalExperience(Integer totalExperience) {
         this.totalExperience = totalExperience;
     }
-
     public String getRegistered() {
         return this.registered;
     }

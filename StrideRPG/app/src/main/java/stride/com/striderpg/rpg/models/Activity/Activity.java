@@ -84,19 +84,15 @@ public class Activity {
     public String getTimestamp() {
         return timestamp;
     }
-
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-
     public Enums.ActivityType getActivityType() {
         return activityType;
     }
-
     public String getDescription() {
         return description;
     }
-
     public Integer getActivityIconId() {
         return activityIconId;
     }

@@ -9,8 +9,9 @@ import stride.com.striderpg.R;
 
 
 /**
- * Custom Class to hold the different enumerations that the RPG
- * package can use freely.
+ * Enums Class to store any Enumeration Types and the custom functionality
+ * contained in each one. Many of these Enumerations are used to generate rpg
+ * elements inside of the game.
  */
 public class Enums {
 
@@ -29,8 +30,8 @@ public class Enums {
     }
 
     /**
-     * Enumeration ItemRarity to hold the different rarities that
-     * an Item can be.
+     * ItemRarity Enumeration to store each possible rarity that an Item
+     * can possibly be. Item Rarity also affects an Items statistics.
      */
     public enum ItemRarity {
         COMMON("Common"),
@@ -40,20 +41,20 @@ public class Enums {
         LEGENDARY("Legendary");
 
         /**
-         * ItemRarity name property for the ItemRarity constant.
+         * Item Rarity name property.
          */
         private final String name;
 
         /**
-         * ItemRarity constructor to set the name property.
-         * @param name Name of constant.
+         * Constructor method to set name property.
+         * @param name Name of enum.
          */
         ItemRarity(String name) {
             this.name = name;
         }
 
         /**
-         * Get the enums name property.
+         * Gets the name property.
          * @return ItemRarity name.
          */
         public String getName() {
@@ -61,8 +62,8 @@ public class Enums {
         }
 
         /**
-         * Custom function to return a random ItemRarity using a
-         * weighted percentage for each one.
+         * Get a random ItemRarity based on weighted percentages.
+         * TODO : Move weights out into the Constants class.
          * COMMON = 65%
          * UNCOMMON = 15%
          * RARE = 10%
@@ -81,7 +82,7 @@ public class Enums {
     }
 
     /**
-     * Enumeration ItemType to hold the different Item types a item can be.
+     * ItemType Enumeration to store each possible ItemType in the game.
      */
     public enum ItemType {
         WEAPON("Weapon"),
@@ -91,30 +92,38 @@ public class Enums {
         BOOTS("Boots");
 
         /**
-         * ItemType name property for the ItemType constant.
+         * Item Type name property.
          */
         private final String name;
 
         /**
-         * ItemType constructor to set the name property.
-         * @param name Name of constant.
+         * Constructor to set the name property.
+         * @param name Name of enum.
          */
         ItemType(String name) {
             this.name = name;
         }
 
+        /**
+         * Gets the name property.
+         * @return ItemType name.
+         */
         public String getName() {
             return name;
         }
     }
 
+    /**
+     * EnemyType Enumeration to store each possible EnemyType in the game.
+     */
     public enum EnemyType {
         MONSTER,
         BOSS
     }
 
     /**
-     * Enumeration Enemies to hold the different enemy types in game.
+     * Enemies Enumeration to store each possible Enemy in the game and
+     * their image resource.
      */
     public enum Enemies {
         TROLL("Troll", EnemyType.MONSTER, R.mipmap.ic_launcher),
@@ -137,15 +146,15 @@ public class Enums {
         private final EnemyType type;
 
         /**
-         * Enemies Icon integer id.
+         * Enemies Icon Image resource.
          */
         private final Integer enemyIcon;
 
         /**
-         * Enemies constructor to set the name property.
+         * Constructor to set the name, type and image resource id.
          * @param name Name of constant.
          * @param type Type of enemy.
-         * @param enemyIcon Enemies icon resource id.
+         * @param enemyIcon Enemies icon image resource.
          */
         Enemies(String name, EnemyType type, Integer enemyIcon) {
             this.name = name;
@@ -155,8 +164,8 @@ public class Enums {
 
         /**
          * Return a random Enemies enum based on the EnemyType passed.
-         * @param type EnemyType to grab all Enemies of type.
-         * @return One enemy of specified type.
+         * @param type EnemyType to search for while looping through Enemies.
+         * @return random Enemies enumeration.
          */
         public static Enemies getRandomEnemiesType(EnemyType type) {
             ArrayList<Enemies> enemies = new ArrayList<>();
@@ -165,25 +174,38 @@ public class Enums {
                     enemies.add(enemy);
                 }
             }
+
             Random random = new Random();
             return enemies.get(random.nextInt(enemies.size()));
         }
 
+        /**
+         * Gets the name property.
+         * @return Enemies name.
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         * Gets the type property.
+         * @return Enemies type.
+         */
         public EnemyType getType() {
             return type;
         }
 
+        /**
+         * Gets the icon resource id.
+         * @return Enemies icon resource.
+         */
         public Integer getEnemyIcon() {
             return enemyIcon;
         }
     }
 
     /**
-     * Enumeration BossTier to hold the different Boss tiers in game.
+     * BossTier enumeration to store each tier of boss present in the game.
      */
     public enum BossTier {
         ONE(1, "I", 30, Constants.BOSS_ENCOUNTER_TIER_ONE_MINIMUM_LEVEL),
@@ -191,31 +213,33 @@ public class Enums {
         THREE(3, "III", 90, Constants.BOSS_ENCOUNTER_TIER_THREE_MINIMUM_LEVEL);
 
         /**
-         * Number representation of enum.
+         * BossTier Number.
          */
         private final Integer number;
 
         /**
-         * Numeral representation of enum.
+         * BossTier numeral, representing a roman numeral for the tier.
+         * Ex: 1->I 2->II 3->III 10->X.
          */
         private final String numeral;
 
         /**
-         * Expiration in minutes for enum.
+         * BossTier expiration value in minutes.
          */
         private final Integer expires;
 
         /**
-         * Level requirement for a player to encounter a boss of this tier.
+         * BossTier level requirement for a Player to be eligible
+         * to encounter specific BossTier's.
          */
         private final Integer eligible;
 
         /**
-         * Constructor method for setting number and numeral properties.
-         * @param number Enum number.
-         * @param numeral Enum numeral.
-         * @param expires Enum expires.
-         * @param eligible Enum eligible
+         * Constructor to set the number, numeral, expires and eligible properties.
+         * @param number Number representing BossTier.
+         * @param numeral Numeral representing BossTier.
+         * @param expires Expiration time in minutes for BossTier.
+         * @param eligible Level requirement for BossTier.
          */
         BossTier(Integer number, String numeral, Integer expires, Integer eligible) {
             this.number = number;
@@ -225,10 +249,10 @@ public class Enums {
         }
 
         /**
-         * Return a random BossTier that the level passed into the method
-         * is eligible to encounter..
-         * @param level Level for determining what tiers can be selected from.
-         * @return Random Eligible BossTier.
+         * Gets a random BossTier enumeration as long as the level passed to the method
+         * is less than or equal to a Boss Tier's eligible property.
+         * @param level Level being compared to a Boss Tier's eligible property.
+         * @return Random BossTier.
          */
         public static BossTier getEligibleTier(Integer level) {
             ArrayList<BossTier> tempTiers = new ArrayList<>();
@@ -241,26 +265,42 @@ public class Enums {
             return tempTiers.get(0);
         }
 
+        /**
+         * Gets the number property.
+         * @return BossTier number.
+         */
         public Integer getNumber() {
             return number;
         }
 
+        /**
+         * Gets the numeral property.
+         * @return BossTier numeral.
+         */
         public String getNumeral() {
             return numeral;
         }
 
+        /**
+         * Gets the expires property.
+         * @return BossTier expires.
+         */
         public Integer getExpires() {
             return expires;
         }
 
+        /**
+         * Gets the eligible property.
+         * @return BossTier eligible.
+         */
         public Integer getEligible() {
             return eligible;
         }
     }
 
     /**
-     * Enumeration PlayerSort for holding the different possible
-     * sort types for the any Collections sorting of the Player class.
+     * PlayerSort enumeration to store the different sort types available when
+     * sorting Players in the leaderboards.
      */
     public enum PlayerSort {
         EXPERIENCE,
@@ -270,9 +310,8 @@ public class Enums {
     }
 
     /**
-     * Enumeration ActivityType to hold the different possible
-     * encounters that a Player can generate whenever a new encounter
-     * is being generated.
+     * ActivityType enumeration to store the different Activities that
+     * can be generated inside of the game.
      */
     public enum ActivityType {
         ENEMY("Monster"),
@@ -281,32 +320,32 @@ public class Enums {
         BOSS_DEFEAT("Boss Defeat");
 
         /**
-         * String to hold the activity types human friendly name.
+         * ActivityType name.
          */
         private final String name;
 
         /**
-         * Constructor method for setting an activity types name.
-         * @param name ActivityType readable name.
+         * Constructor to set the name property.
+         * @param name Activity name.
          */
         ActivityType(String name) {
             this.name = name;
         }
 
         /**
-         * Retrieve the ActivityType name property.
-         * @return name property.
+         * Gets the name property.
+         * @return ActivityType name.
          */
         public String getName() {
             return name;
         }
 
         /**
-         * Choose between a generic Monster or Loot ActivityType.
-         * @return Enumeration ActivityType Monster/Loot.
+         * Gets a random generic ActivityType.
+         * A generic ActivityType includes the LOOT and ENEMY types.
+         * @return ActivityType.
          */
         public static ActivityType generic() {
-            // Generate percent roll 0 to 100 to choose LOOT or ENEMY ActivityType.
             Random random = new Random();
             Double percent = random.nextDouble() * 100;
             if (percent < 50)
@@ -317,35 +356,29 @@ public class Enums {
     }
 
     /**
-     * Enumeration QuestType for holding the different Quests that a
-     * Player has in game.
+     * QuestType enumeration to store the different quests inside of the game.
      */
     public enum QuestType {
         DEFEAT_ENEMIES(
                 Constants.QUEST_DEFEAT_ENEMIES_TITLE,
                 Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION
         ),
-
         DEFEAT_BOSSES(
                 Constants.QUEST_DEFEAT_BOSSES_TITLE,
                 Constants.QUEST_DEFEAT_BOSSES_DESCRIPTION
         ),
-
         FAIL_DEFEAT_ENEMIES(
                 Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE,
                 Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION
         ),
-
         FAIL_DEFEAT_BOSSES(
                 Constants.QUEST_FAIL_DEFEAT_BOSSES_TITLE,
                 Constants.QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION
         ),
-
         LOOT_ITEMS(
                 Constants.QUEST_LOOT_ITEMS_TITLE,
                 Constants.QUEST_LOOT_ITEMS_DESCRIPTION
         ),
-
         TAKE_STEPS(
                 Constants.QUEST_TAKE_STEPS_TITLE,
                 Constants.QUEST_TAKE_STEPS_DESCRIPTION
@@ -362,8 +395,7 @@ public class Enums {
         private final String description;
 
         /**
-         * QuestType Constructor to initialize the QuestTypes with
-         * proper title and description.
+         * Constructor to set the title and description properties.
          * @param title QuestType title.
          * @param description QuestType description.
          */
@@ -372,18 +404,26 @@ public class Enums {
             this.description = description;
         }
 
+        /**
+         * Gets the title property.
+         * @return QuestType title.
+         */
         public String getTitle() {
             return title;
         }
 
+        /**
+         * Gets the description property.
+         * @return QuestType description.
+         */
         public String getDescription() {
             return description;
         }
     }
 
     /**
-     * Enumeration QuestLevel to hold the different possible Quest levels that
-     * a Player can reach while progressing through the game.
+     * QuestLevel enumeration to store the different levels that the
+     * different QuestTypes can be at as a Player progresses in game.
      */
     public enum QuestLevel {
         ONE("I", Constants.QUEST_LEVEL_ONE_GOAL),
@@ -398,41 +438,51 @@ public class Enums {
         TEN("X", Constants.QUEST_LEVEL_TEN_GOAL);
 
         /**
-         * QuestLevel String to represent a roman numeral for
-         * QuestLevel representation.
+         * QuestLevel numeral representation.
          */
         private final String numeral;
 
         /**
-         * QuestLevel Integer to represent the goal a Player must
-         * reach to complete this level
-         * of the Quest.
+         * QuestLevel goal.
          */
         private final Integer goal;
 
         /**
-         * Create a static copy of the QuestLevel values to avoid
-         * copying each time next is called.
+         * Static copy of values used for retrieving next QuestLevel
+         * after an instance of one already exists.
          */
         private static QuestLevel[] values = values();
 
         /**
-         * QuestLevel Constructor to set the numeral property on construction.
-         * @param numeral QuestLevel numeral String.
+         * Constructor to set the numeral and goal properties.
+         * @param numeral QuestLevel numeral.
+         * @param goal QuestLevel goal.
          */
         QuestLevel(String numeral, Integer goal) {
             this.numeral = numeral;
             this.goal = goal;
         }
 
+        /**
+         * Gets the next QuestLevel based on the values() of this Enumeration.
+         * @return QuestLevel.
+         */
         public QuestLevel next() {
             return values[(this.ordinal() + 1) % values.length];
         }
 
+        /**
+         * Gets the numeral property.
+         * @return QuestLevel numeral.
+         */
         public String getNumeral() {
             return numeral;
         }
 
+        /**
+         * Gets the goal property.
+         * @return QuestLevel goal.
+         */
         public Integer getGoal() { return goal; }
     }
 }

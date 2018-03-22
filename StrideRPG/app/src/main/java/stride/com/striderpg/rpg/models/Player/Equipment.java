@@ -103,11 +103,9 @@ public class Equipment {
     public Integer getTotalPowerLevel() {
         return totalPowerLevel;
     }
-
     public void setTotalPowerLevel(Integer totalPowerLevel) {
         this.totalPowerLevel = totalPowerLevel;
     }
-
     public HashMap<String, Item> getSlots() {
         return slots;
     }

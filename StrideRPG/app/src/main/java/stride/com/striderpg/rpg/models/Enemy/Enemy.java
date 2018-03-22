@@ -44,39 +44,30 @@ public abstract class Enemy {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Enums.Enemies getType() {
         return type;
     }
-
     public void setType(Enums.Enemies type) {
         this.type = type;
     }
-
     public Integer getHealth() {
         return health;
     }
-
     public void setHealth(Integer health) {
         this.health = health;
     }
-
     public Integer getIcon() {
         return icon;
     }
-
     public void setIcon(Integer icon) {
         this.icon = icon;
     }
-
     public Integer getExperienceReward() {
         return experienceReward;
     }
-
     public void setExperienceReward(Integer experienceReward) {
         this.experienceReward = experienceReward;
     }

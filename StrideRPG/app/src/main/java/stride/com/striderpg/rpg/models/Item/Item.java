@@ -104,27 +104,21 @@ public class Item {
     public String getName() {
         return name;
     }
-
     public Integer getPowerLevel() {
         return powerLevel;
     }
-
     public Integer getVitalityBoost() {
         return vitalityBoost;
     }
-
     public Integer getStrengthBoost() {
         return strengthBoost;
     }
-
     public Integer getSpeedBoost() {
         return speedBoost;
     }
-
     public Enums.ItemRarity getItemRarity() {
         return itemRarity;
     }
-
     public Enums.ItemType getItemType() {
         return itemType;
     }

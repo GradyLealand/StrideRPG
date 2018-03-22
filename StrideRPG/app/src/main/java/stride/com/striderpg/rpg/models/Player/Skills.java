@@ -105,7 +105,6 @@ public class Skills {
             changes.firePropertyChange(Constants.PROPERTY_VITALITY, this.vitality, vitality);
         this.vitality = vitality;
     }
-
     public Integer getStrength() {
         return strength;
     }
@@ -114,7 +113,6 @@ public class Skills {
             changes.firePropertyChange(Constants.PROPERTY_STRENGTH, this.strength, strength);
         this.strength = strength;
     }
-
     public Integer getSpeed() {
         return speed;
     }

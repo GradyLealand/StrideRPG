@@ -40,7 +40,6 @@ public class Monster extends Enemy {
     public Integer getLevel() {
         return level;
     }
-
     public void setLevel(Integer level) {
         this.level = level;
     }

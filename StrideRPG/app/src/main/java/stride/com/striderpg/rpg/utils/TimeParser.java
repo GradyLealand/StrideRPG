@@ -12,8 +12,11 @@ import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
 
 /**
- * Activity helper class to parse and convert Activity timestamp to and from Date objects
- * to determine how old an Activity is to deal with sorting and cleaning the HashMap.
+ * Helper class used to Generate/Parse out Timestamps using the
+ * JodaTime Library. All Timestamps are stored and parsed to-><-from
+ * a UTC format.
+ *
+ * Timestamp example: "03-21-2018 02:16:31".
  */
 public class TimeParser {
 
@@ -23,15 +26,19 @@ public class TimeParser {
     private static final String TAG = "TimeParser";
 
     /**
-     * Create a DateTimeFormatter for parsing DateTimes into proper Strings.
+     * Create a DateTimeFormatter for formatting any input/output
+     * using the correct format, UTC is format used in application
+     * and the Database.
      */
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormat
             .forPattern(Constants.ACTIVITY_TIMESTAMP_FORMAT).withZoneUTC();
 
-
     /**
-     * Retrieve the current DateTime and subtract specified hours.
-     * @return DateTime - threshold constant.
+     * Get a DateTime object from the current Timestamp minus
+     * a specified amount of hours.
+     * @param hours Hours that are subtracted from current Timestamp.
+     * @return DateTime object representing current Timestamp minus
+     * the specified amount of hours.
      */
     public static DateTime getCurrentTimeMinusHours(Integer hours) {
         DateTime now = new DateTime(DateTimeZone.UTC);
@@ -39,37 +46,43 @@ public class TimeParser {
     }
 
     /**
-     * Retrieve the current DateTime and add specified minutes.
-     * @param expires Integer amount of minutes to add to DateTime.
-     * @ Now + expires minutes DateTime.
+     * Get a DateTime object from the current Timestamp plus
+     * a specified amount of minutes.
+     * @param minutes Minutes that are added to current Timestamp.
+     * @return DateTime object representing current Timestamp plus
+     * the specified amount of minutes.
      */
-    public static DateTime getCurrentTimePlusMinutes(Integer expires) {
+    public static DateTime getCurrentTimePlusMinutes(Integer minutes) {
         DateTime now = new DateTime(DateTimeZone.UTC);
-        return now.plusMinutes(expires);
+        return now.plusMinutes(minutes);
     }
 
     /**
-     * Take the given DateTime and subtract specified hours.
-     * @param date DateTime object.
-     * @param hours Hours to subtract.
-     * @return DateTime object.
+     * Get a DateTime object from a specified Timestamp minus
+     * a specified amount of hours.
+     * @param date DateTime object being subtracted from.
+     * @param hours Hours being subtracted from the specified DateTime.
+     * @return DateTime object representing the specified DateTime
+     * minus the amount of hours specified.
      */
     public static DateTime getDateTimeMinusHours(DateTime date, Integer hours) {
         return date.minusHours(hours);
     }
 
     /**
-     * Parse out a Timestamp string from an Activity key into it's proper Date object.
-     * @param timestamp String being converted into a Date.
-     * @return new Date object from timestamp.
+     * Converts a String Timestamp to a DateTime object.
+     * @param timestamp Timestamp String being parsed into DateTime
+     *                  object.
+     * @return DateTime object representing the timestamp passed
+     * to the method.
      */
     public static DateTime parseTimestamp(String timestamp) {
         return dateTimeFormatter.parseDateTime(timestamp);
     }
 
     /**
-     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT.
-     * @return String current Date timestamp.
+     * Create a String Timestamp for the current DateTime.
+     * @return DateTime String representation of current Timestamp.
      */
     public static String makeTimestamp() {
         DateTime now = new DateTime(DateTimeZone.UTC);
@@ -77,21 +90,19 @@ public class TimeParser {
     }
 
     /**
-     * Generate a String timestamp using the constant ACTIVITY_TIMESTAMP_FORMAT.
-     * using a Date object as the Date being converted into a Timestamp string.
-     * @param date Date being converted to Timestamp.
-     * @return String Timestamp.
+     * Create a String Timestamp from the DateTime object passed
+     * to the method.
+     * @param date DateTime object being converted to String Timestamp.
      */
     public static String makeTimestamp(DateTime date) {
         return date.toString(dateTimeFormatter);
     }
 
     /**
-     * Get a long representing minutes difference
-     * between two different DateTimes.
-     * @param start Start DateTime.
-     * @param end End DateTime.
-     * @return Difference in minutes between two DateTimes.
+     * Gets the difference in long milliseconds between two DateTime objects.
+     * @param start DateTime Start.
+     * @param end DateTime End.
+     * @return long difference in milliseconds.
      */
     public static long getDifferenceInMinutes(DateTime start, DateTime end) {
         long diff = end.getMillis() - start.getMillis();
@@ -99,9 +110,13 @@ public class TimeParser {
     }
 
     /**
-     * Convert a Timestamp into a readable human friendly
-     * @param timestamp Timestamp being converted to readable string.
-     * @return Human friendly timestamp.
+     * Convert a String Timestamp into a readable String representing the
+     * amount of time since the Timestamp passed to the method.
+     * Based on the hours/minutes/seconds of the Period between
+     * the current DateTime and the Timestamp passed to method
+     * DateTime representation.
+     * @param timestamp Timestamp being used as the start DateTime.
+     * @return String representing the time since the Timestamp took place.
      */
     public static String toReadable(String timestamp) {
         DateTime now = DateTime.now(DateTimeZone.UTC);

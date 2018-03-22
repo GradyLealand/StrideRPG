@@ -53,36 +53,27 @@ public class Boss extends Enemy {
         this.setIcon(icon);
     }
 
-
-
     public Enums.BossTier getTier() {
         return tier;
     }
-
     public void setTier(Enums.BossTier tier) {
         this.tier = tier;
     }
-
     public String getExpiration() {
         return expiration;
     }
-
     public void setExpiration(String expiration) {
         this.expiration = expiration;
     }
-
     public Integer getMaxHealth() {
         return maxHealth;
     }
-
     public void setMaxHealth(Integer maxHealth) {
         this.maxHealth = maxHealth;
     }
-
     public ArrayList<Item> getRewards() {
         return rewards;
     }
-
     public void setRewards(ArrayList<Item> rewards) {
         this.rewards = rewards;
     }

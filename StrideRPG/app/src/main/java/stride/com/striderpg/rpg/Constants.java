@@ -2,8 +2,11 @@ package stride.com.striderpg.rpg;
 
 
 /**
- * RPG Helper class to store and give the rpg package access to the different constants for
- * calculating game related values.
+ * Constants Class to store any values that may be used within the application
+ * that will not change.
+ *
+ * Any modifiers, default values or multipliers are put here and used mostly inside
+ * of the RPG package.
  */
 public final class Constants {
 
