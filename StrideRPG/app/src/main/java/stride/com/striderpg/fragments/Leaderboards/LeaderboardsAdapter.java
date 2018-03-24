@@ -109,6 +109,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
      * required properties and elements.
      */
     static class PlayerViewHolder extends RecyclerView.ViewHolder {
+
         /**
          * CardView container that holds all PlayerView data.
          */
