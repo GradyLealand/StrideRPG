@@ -3,7 +3,7 @@ package stride.com.striderpg.fragments.Generator;
 
 import stride.com.striderpg.fragments.Bestiary.BestiaryFragment;
 import stride.com.striderpg.fragments.Dashboard.DashboardFragment;
-import stride.com.striderpg.fragments.InventoryFragment;
+import stride.com.striderpg.fragments.Equipment.EquipmentFragment;
 import stride.com.striderpg.fragments.Leaderboards.LeaderboardsFragment;
 import stride.com.striderpg.fragments.Quests.QuestsFragment;
 
@@ -35,7 +35,7 @@ public class FragmentGenerator {
      * equipment and inventory. They may also choose to un-equip,
      * trash or equip a new item in this Fragment.
      */
-    public final InventoryFragment inventoryFragment = new InventoryFragment();
+    public final EquipmentFragment equipmentFragment = new EquipmentFragment();
 
     /**
      * Quests Fragment for showing a Player what quests they have

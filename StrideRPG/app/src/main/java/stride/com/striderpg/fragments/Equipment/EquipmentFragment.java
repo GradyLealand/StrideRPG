@@ -1,4 +1,4 @@
-package stride.com.striderpg.fragments;
+package stride.com.striderpg.fragments.Equipment;
 
 
 import android.os.Bundle;
@@ -15,22 +15,22 @@ import stride.com.striderpg.R;
  * and what they have equipped as well as their statistics gained
  * from the equipment.
  */
-public class InventoryFragment extends Fragment {
+public class EquipmentFragment extends Fragment {
 
     /**
-     * InventoryFragment Logging tag.
+     * EquipmentFragment Logging tag.
      */
-    private static final String TAG = "InventoryFragment";
+    private static final String TAG = "EquipmentFragment";
 
     /**
      * Empty Public Constructor.
      */
-    public InventoryFragment() { }
+    public EquipmentFragment() { }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inventory, container, false);
+        return inflater.inflate(R.layout.fragment_equipment, container, false);
     }
 }

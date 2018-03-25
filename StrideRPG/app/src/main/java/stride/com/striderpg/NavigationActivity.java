@@ -104,7 +104,7 @@ public class NavigationActivity extends AppCompatActivity {
     private void showDashboard() {
         getSupportFragmentManager().beginTransaction().show(generator.dashboardFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
         Log.d(TAG, "showDashboard:success");
@@ -116,17 +116,17 @@ public class NavigationActivity extends AppCompatActivity {
     private void showQuests() {
         getSupportFragmentManager().beginTransaction().show(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.dashboardFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
         Log.d(TAG, "showQuests:success");
     }
 
     /**
-     * Display the InventoryFragment and hide every other Fragment.
+     * Display the EquipmentFragment and hide every other Fragment.
      */
     private void showInventory() {
-        getSupportFragmentManager().beginTransaction().show(generator.inventoryFragment).commit();
+        getSupportFragmentManager().beginTransaction().show(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.dashboardFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
@@ -141,7 +141,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().show(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.dashboardFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
         Log.d(TAG, "showBestiary:success");
     }
@@ -154,7 +154,7 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.dashboardFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
-        getSupportFragmentManager().beginTransaction().hide(generator.inventoryFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         Log.d(TAG, "showLeaderboards:success");
     }
 
@@ -175,8 +175,8 @@ public class NavigationActivity extends AppCompatActivity {
                 .hide(generator.questsFragment)
                 .commit();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, generator.inventoryFragment)
-                .hide(generator.inventoryFragment)
+                .add(R.id.fragmentContainer, generator.equipmentFragment)
+                .hide(generator.equipmentFragment)
                 .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, generator.bestiaryFragment)

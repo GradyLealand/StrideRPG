@@ -127,11 +127,7 @@ public class Player {
         this.questLog = new QuestLog();
         this.activityLog = new ActivityLog();
         this.stats = new Stats();
-        this.skills = new Skills(
-                Constants.PLAYER_DEFAULT_VITALITY,
-                Constants.PLAYER_DEFAULT_STRENGTH,
-                Constants.PLAYER_DEFAULT_SPEED
-        );
+        this.skills = new Skills();
         this.equipment = ItemGenerator.generateDefaultInventory(this);
     }
 
@@ -186,13 +182,11 @@ public class Player {
      */
     public void levelUp() {
         // Set users experience to the proper amount so exp is carried over on level up.
-        this.setExperience(this.getExperience() -
-                LevelGenerator.experienceToNextLevel(this.getLevel()));
+        this.setExperience(this.getExperience() - LevelGenerator.experienceToNextLevel(this.getLevel()));
         this.setLevel(this.getLevel() + 1);
 
-        // Generate New Stats for a Player on level up.
-        // TODO: Let user choose the Skills they wish to increase.
-        this.skills.levelUpSkills();
+        // Give the Player new skill points that can be assigned later.
+        this.skills.gainSkillPoints();
     }
 
     /**
