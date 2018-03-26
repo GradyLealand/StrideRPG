@@ -1,16 +1,12 @@
 package stride.com.striderpg.rpg.generators;
 
 
-import android.util.Log;
-
-import java.util.Arrays;
 import java.util.Random;
 
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Equipment;
 import stride.com.striderpg.rpg.models.Player.Player;
-import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 
 /**
@@ -48,7 +44,7 @@ public class ItemGenerator {
 
         // Generate Item name and description.
         String name = parseName(type);
-        String description = parseDescription(type);
+        String description = parseDescription(type, rarity);
 
         return new Item(name, description, type, rarity, statBoost);
     }
@@ -68,7 +64,7 @@ public class ItemGenerator {
 
         // Generate Item name and description.
         String name = parseName(type);
-        String description = parseDescription(type);
+        String description = parseDescription(type, rarity);
 
         return new Item(name, description, type, rarity, statBoost);
     }
@@ -88,7 +84,7 @@ public class ItemGenerator {
 
         // Generate Item name and description.
         String name = parseName(type);
-        String description = parseDescription(type);
+        String description = parseDescription(type, rarity);
 
         return new Item(name, description, type, rarity, statBoost);
     }
@@ -114,21 +110,50 @@ public class ItemGenerator {
     /**
      * Parse out a new Items name by choosing a random adjective and appending the Items ItemType enum
      * to the end of the String after fixing the capitalization on the ItemType.
-     * @param itemType New Item ItemType.
-     * @return New Item Name.
+     * @param type Item Type Enumeration.
+     * @return Random Item name taken from the list of random names possible +
+     * the type of the Item being parsed.
+     *
+     *  Ex: - Wicked Weapon
+     *      - Twisted Helmet
+     *      - Profane Boots
      */
-    private static String parseName(Enums.ItemType itemType) {
+    private static String parseName(Enums.ItemType type) {
         return itemAdjectives[new Random().nextInt(itemAdjectives.length)] +
-                " " + itemType.getName();
+                " " + type.getName();
     }
 
     /**
-     * Create an int[] array to hold the stats for the new Item.
-     * Randomly choose a skill each loop iteration and increment the
-     * skill bonus for the Item.
-     * @param rarity Item itemRarity chosen.
-     * @param p Player.
-     * @return Integer Item's stat boost.
+     * Parse out a new Items description based on the Item Type Enumeration and
+     * the Item Rarity enumeration.
+     * @param type Item Type Enumeration.
+     * @param rarity Item Rarity Enumeration.
+     * @return Description of Item Type passed to method.
+     */
+    private static String parseDescription(Enums.ItemType type, Enums.ItemRarity rarity) {
+        switch (type) {
+            case WEAPON:
+                return String.format(G.locale, "A %s weapon used to increase your strength!", rarity.getName());
+            case BOOTS:
+                return String.format(G.locale, "A pair of %s boots to increase your speed!", rarity.getName());
+            case HELMET:
+                return String.format(G.locale, "A %s helmet to increase your vitality!", rarity.getName());
+
+            // If no valid Item Type is somehow passed into this method, Item's description
+            // is set accordingly.
+            default: return String.format(G.locale, "Invalid type: %s", type.getName());
+        }
+    }
+
+    /**
+     * Generate an Integer that represents an Item's stat boost based on the
+     * given rarity of the item being generated. The Item Type Enumeration
+     * for any given Item is used to determine what stat is actually boosted
+     * when this Item is equipped.
+     * @param rarity Item Rarity Enumeration.
+     * @param p Player object used to get their level for adding an
+     *          extra level of progression to Item's and their stats.
+     * @return Integer representing new Item's stat boost property.
      */
     private static Integer buildItemStatBoost(Enums.ItemRarity rarity, Player p) {
         // Get the base value for building an Item's stat boost.

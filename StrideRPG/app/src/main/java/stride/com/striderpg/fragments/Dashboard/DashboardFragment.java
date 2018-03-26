@@ -220,8 +220,6 @@ public class DashboardFragment extends Fragment {
      */
     private void addDashboardActivity(Activity activity) {
         activityAdapter.add(activity);
-
-        // TODO: Remove? Should dashboard scroll to top when a new activity is appended?
         dashboardRecyclerView.getLayoutManager().scrollToPosition(0);
     }
 
@@ -272,7 +270,6 @@ public class DashboardFragment extends Fragment {
                 LevelGenerator.experienceToNextLevel(G.activePlayer.getLevel())
         );
         playerLevelProgressBar.setProgress(amount);
-
         playerExpCount.setText(parseExpAmount(amount));
     }
 

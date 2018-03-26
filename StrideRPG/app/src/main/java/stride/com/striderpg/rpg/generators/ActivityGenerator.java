@@ -1,8 +1,6 @@
 package stride.com.striderpg.rpg.generators;
 
 
-import android.util.Log;
-
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
@@ -22,18 +20,11 @@ public class ActivityGenerator {
      */
     private static final String TAG = "ActivityGenerator";
 
-
-    private static Activity generateLootActivity(Item item) {
+    public static Activity generateLootActivity(Item item) {
         // Update the Players Stats total items looted property.
         G.activePlayer.getStats().updateItemsLooted();
         // Update Players Items looted quest.
         G.activePlayer.getQuestLog().update(Enums.QuestType.LOOT_ITEMS, 1);
-
-        // Check if the new Item is better than the Item equipped currently
-        // on the Global activePlayer.
-        if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
-            G.activePlayer.getEquipment().replaceItem(item.getItemType(), item);
-        }
 
         // Generate new Activity with ActivityTye Loot based on
         // Item passed into method.
@@ -124,21 +115,17 @@ public class ActivityGenerator {
     }
 
     /**
-     * Base Activity generator that will create a new Generic Activity
-     * based on the ActivityType passed to the method.
-     * This function is used to generate a Loot or Monster Activity through
-     * the Offline/Online Generators.
-     * @param type BaseActivity enumeration type.
-     * @return Newly generated Activity.
+     * Generates an Activity of a given ActivityType Enumeration.
+     * @param type Activity Type Enumeration.
+     * @return Generated Activity based on type.
      */
-    public static Activity generateActivity(Enums.ActivityType type) {
+    public static Activity generateActivityOfType(Enums.ActivityType type) {
+        // Create new blank Activity.
         Activity activity = new Activity();
 
+        // Switch case through possible Activity Types. Only an Enemy
+        // Activity can currently be generated. Room here to add more if needed.
         switch (type) {
-            case LOOT:
-                Item item = ItemGenerator.generate(G.activePlayer);
-                activity = generateLootActivity(item);
-                break;
             case ENEMY:
                 Monster enemy = EnemyGenerator.generate(G.activePlayer);
                 boolean fightResult = G.activePlayer.fightEnemy(enemy);
@@ -153,15 +140,17 @@ public class ActivityGenerator {
     }
 
     /**
-     * Overloaded Activity generateActivity method for dealing with Boss encounter
-     * Activities and generation.
-     * @param type ActivityType Enumeration, will only ever be BOSS_EXPIRE / BOSS_DEFEAT.
-     * @param boss Boss object to generate Activity information.
-     * @return New Boss Activity.
+     * Active Encounter Activity generator based on the ActivityType Enumeration
+     * passed to the method.
+     * @param type ActivityType Enumeration.
+     * @param boss Boss object for generating descriptions.
+     * @return Activity for ActiveEncounter.
      */
-    public static Activity generateActivity(Enums.ActivityType type, Boss boss) {
+    public static Activity generateActiveEncounterActivity(Enums.ActivityType type, Boss boss) {
+        // Create new blank Activity.
         Activity activity = new Activity();
 
+        // Switch case to look at the Activity Type Enumeration being specified.
         switch (type) {
             case BOSS_EXPIRE:
                 activity = generateBossExpireActivity(boss);
@@ -179,38 +168,27 @@ public class ActivityGenerator {
      * @return Activity description.
      */
     private static String generateLootDescription(Item item) {
-        String desc;
-        if (item.isBetter(G.activePlayer.getEquipment().getItem(item.getItemType()))) {
-            desc = String.format(G.locale,
-                    "You found some %s equipment...\n%s\nYou replaced your old equipment!\n" +
-                            "Power: %d\nVitality: %d\nStrength: %d\nSpeed: %d",
-                    item.getItemRarity().getName(),
-                    item.getName(),
-                    item.getPowerLevel(),
-                    item.getVitalityBoost(),
-                    item.getStrengthBoost(),
-                    item.getSpeedBoost()
-            );
-        } else {
-            desc = String.format(G.locale,
-                    "You found some %s equipment...\n%s\n" +
-                            "Power: %d\nVitality: %d\nStrength: %d\nSpeed: %d",
-                    item.getItemRarity().getName(),
-                    item.getName(),
-                    item.getPowerLevel(),
-                    item.getVitalityBoost(),
-                    item.getStrengthBoost(),
-                    item.getSpeedBoost()
-            );
+        switch (item.getType()) {
+            case WEAPON:
+                return String.format(G.locale,
+                        "You found and equipped a %s weapon! Providing you\nWith a %d boost to strength!",
+                        item.getRarity().getName(), item.getStatBoost()
+                );
+            case HELMET:
+                return String.format(G.locale,
+                        "You found and equipped a %s helmet! Providing you\nWith a %d boost to vitality!",
+                        item.getRarity().getName(), item.getStatBoost()
+                );
+            case BOOTS:
+                return String.format(G.locale,
+                        "You found and equipped a pair of %s boots! Providing you\nWith a %d boost to speed!",
+                        item.getRarity().getName(), item.getStatBoost()
+                );
+
+            // Default case for an invalid Item Type Enumeration.
+            default:
+                return null;
         }
-
-        Log.d(TAG, String.format(
-                G.locale,
-                "generateLootDescription:success:description=%s",
-                desc.replace('\n', ' '))
-        );
-
-        return desc;
     }
 
     /**
@@ -271,7 +249,7 @@ public class ActivityGenerator {
     /**
      * Parse an Monster name passed to the method into the proper "a" or "an"
      * based on the first letter of the Enemies name. "a,e,i,o,u" would
-     * result in an "an" return, otherwise return "a".
+     * result in a "an" return, otherwise return "a".
      * @param enemyName Monster name being parsed.
      * @return "a" or "an" plus Monster name.
      */

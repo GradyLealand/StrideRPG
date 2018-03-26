@@ -262,6 +262,13 @@ public final class Constants {
 
     /**
      * Constant for accessing and firing PropertyChangeEvents
+     * for new loot being equipped when an ActiveEncounter/Boss is defeated
+     * and a new piece of Loot is better than what's currently equipped.
+     */
+    public static final String PROPERTY_ACTIVE_ENCOUNTER_NEW_LOOT = "ACTIVE_ENCOUNTER_NEW_LOOT";
+
+    /**
+     * Constant for accessing and firing PropertyChangeEvents
      * for the Vitality property on a Players Skills object.
      */
     public static final String PROPERTY_SKILL_VITALITY = "VITALITY_LEVELED";

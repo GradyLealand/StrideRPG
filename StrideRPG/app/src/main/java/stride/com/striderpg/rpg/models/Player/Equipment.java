@@ -29,12 +29,6 @@ public class Equipment {
     private HashMap<String, Item> slots = new HashMap<>();
 
     /**
-     * Equipment total power level value, obtained by adding each
-     * slots power level together.
-     */
-    private Integer totalPowerLevel;
-
-    /**
      * Default constructor required for calls to
      * DataSnapshot.getValue(Equipment.class).
      */
@@ -50,7 +44,6 @@ public class Equipment {
     public String toString() {
         return "Equipment{" +
                 "slots=" + slots +
-                ", totalPowerLevel=" + totalPowerLevel +
                 '}';
     }
 
@@ -70,18 +63,6 @@ public class Equipment {
      */
     public void replaceItem(Enums.ItemType type, Item item) {
         slots.put(type.name(), item);
-        updateTotalPowerLevel();
-    }
-
-    /**
-     * Loop through Players equipment and set the total power level
-     * to each individual items power level added together.
-     */
-    private void updateTotalPowerLevel() {
-        this.setTotalPowerLevel(0);
-        for (Item i : this.getSlots().values()) {
-            this.setTotalPowerLevel(this.getTotalPowerLevel() + i.getPowerLevel());
-        }
     }
 
     /**
@@ -98,13 +79,6 @@ public class Equipment {
      */
     public void destroyItem(Enums.ItemType type) {
         slots.put(type.name(), null);
-    }
-
-    public Integer getTotalPowerLevel() {
-        return totalPowerLevel;
-    }
-    public void setTotalPowerLevel(Integer totalPowerLevel) {
-        this.totalPowerLevel = totalPowerLevel;
     }
     public HashMap<String, Item> getSlots() {
         return slots;

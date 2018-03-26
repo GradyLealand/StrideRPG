@@ -6,6 +6,7 @@ import org.joda.time.DateTimeZone;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Constants;
@@ -93,7 +94,7 @@ public class ActiveEncounter {
         G.activePlayer.getStats().updateBossesExpired();
         G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_BOSSES, 1);
 
-        Activity bossExpireActivity = ActivityGenerator.generateActivity(
+        Activity bossExpireActivity = ActivityGenerator.generateActiveEncounterActivity(
                 Enums.ActivityType.BOSS_EXPIRE,
                 boss
         );
@@ -138,14 +139,29 @@ public class ActiveEncounter {
             G.activePlayer.levelUp();
         }
 
+        // Create an ArrayList of Activities that will hold the Activities for each Item
+        // that was equipped from defeating the Boss.
+        ArrayList<Activity> newLootActivities = new ArrayList<>();
+
         // Give Player the Items rewarded from Boss fight.
         for (Item reward : boss.getRewards()) {
-            if (reward.isBetter(G.activePlayer.getEquipment().getItem(reward.getItemType()))) {
-                G.activePlayer.getEquipment().replaceItem(reward.getItemType(), reward);
+            // Create a temporary Item to hold the Active Players current Item of the Type
+            // generated from defeating the Boss.
+            Item temp = G.activePlayer.getEquipment().getItem(reward.getType());
+
+            // Compare both Item's, if the reward Item's stat boost is greater than
+            // the temporary Item storing active Player's current Item, then replace.
+            if (reward.compare(temp)) {
+                G.activePlayer.getEquipment().replaceItem(reward.getType(), reward);
+
+                // Generate an Activity that corresponds to this new Loot
+                // being equipped by the Player.
+                newLootActivities.add(ActivityGenerator.generateLootActivity(reward));
             }
         }
 
-        Activity bossDefeatActivity = ActivityGenerator.generateActivity(
+        // Generate the corresponding Activity to this Boss being defeated.
+        Activity bossDefeatActivity = ActivityGenerator.generateActiveEncounterActivity(
                 Enums.ActivityType.BOSS_DEFEAT,
                 boss
         );
@@ -156,6 +172,15 @@ public class ActiveEncounter {
 
         // Fire PropertyChange event so UI knows the ActiveEncounter has ended.
         changes.firePropertyChange(Constants.PROPERTY_ACTIVE_ENCOUNTER_FINISH, null, bossDefeatActivity);
+
+        // Check for any new Activities that should be appended to the ActivityLog.
+        if (newLootActivities.size() != 0) {
+            for (Activity activity : newLootActivities) {
+                // Add the new Activity to the Players ActivityLog. This allows for the
+                // Activity to be displayed in the Users Dashboard.
+                G.activePlayer.getActivityLog().addOnlineActivity(activity);
+            }
+        }
     }
 
     public boolean isActive() {

@@ -92,10 +92,8 @@ public class OfflineGenerator {
             long random = ThreadLocalRandom.current().nextLong(old.getMillis(), now.getMillis());
             DateTime activityDate = new DateTime(random, DateTimeZone.UTC);
 
-            // Pick a random activity type (Loot or Monster) and begin building new Activity.
-            Activity activity = ActivityGenerator.generateActivity(
-                    Enums.ActivityType.generic()
-            );
+            // Generate a simple Enemy Encounter Activity.
+            Activity activity = ActivityGenerator.generateActivityOfType(Enums.ActivityType.ENEMY);
 
             // Set the timestamp for this new Activity.
             activity.setTimestamp(TimeParser.makeTimestamp(activityDate));

@@ -58,7 +58,7 @@ public class Item {
      * is less than the item passed as a parameter.
      */
     public boolean compare(Item item) {
-        return this.statBoost < item.getStatBoost();
+        return this.statBoost > item.getStatBoost();
     }
 
     @Override
