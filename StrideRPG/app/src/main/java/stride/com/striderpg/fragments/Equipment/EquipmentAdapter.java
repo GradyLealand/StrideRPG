@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import stride.com.striderpg.R;
+import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
@@ -65,7 +66,19 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         equipmentViewHolder.itemImage.setBackgroundColor(items.get(i).getRarity().getColor());
         equipmentViewHolder.itemName.setText(items.get(i).getName());
         equipmentViewHolder.itemDescription.setText(items.get(i).getDescription());
-        equipmentViewHolder.itemStatBoost.setText(items.get(i).getStatBoost());
+
+        String skillBoost = null;
+        switch (items.get(i).getType()) {
+            case WEAPON: skillBoost = "Strength"; break;
+            case BOOTS: skillBoost = "Speed"; break;
+            case HELMET: skillBoost = "Vitality"; break;
+        }
+        equipmentViewHolder.itemStatBoost.setText(
+                String.format(G.locale,
+                        "+%d %s",
+                        items.get(i).getStatBoost(),
+                        skillBoost)
+        );
     }
 
     @Override
