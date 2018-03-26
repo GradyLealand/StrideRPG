@@ -35,13 +35,13 @@ public class OnlineGenerator {
             //roll a random int between 1-100
             int roll = rnd.nextInt(100) + 1;
             //The Players total speed
-            int totatlSpeed = G.activePlayer.getSkills().getSpeed() + G.activePlayer.getEquipment().getItem(Enums.ItemType.BOOTS).getStatBoost();
+            int totalSpeed = G.activePlayer.getSkills().getSpeed() + G.activePlayer.getEquipment().getItem(Enums.ItemType.BOOTS).getStatBoost();
             // Reset current sessions steps counter and generate a new
             // default Activity.
             G.onlineActivitySteps = 0;
 
             //if the roll + speed modifier is grater then the encounter chance, trigger an encounter
-            if(roll + (totatlSpeed / 2) > Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT)
+            if(roll + (totalSpeed / 2) > Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT)
             {
                 // Generate an Activity to represent a Player Encountering an Enemy.
                 Activity activity = ActivityGenerator.generateActivityOfType(Enums.ActivityType.ENEMY);

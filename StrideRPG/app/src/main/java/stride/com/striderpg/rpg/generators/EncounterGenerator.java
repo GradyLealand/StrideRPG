@@ -79,10 +79,11 @@ public class EncounterGenerator {
      * @return Timestamp for Boss expiration date.
      */
     private static String calculateBossExpiration(Enums.BossTier bossTier, Player p) {
+        int totalVitality = p.getSkills().getSpeed() + p.getEquipment().getItem(Enums.ItemType.BOOTS).getStatBoost();
         // The vit needed for the monster to have normal expiration time
         int baseVit = calculateBossBaseVitality(bossTier);
         Integer time = bossTier.getExpires() +
-                (p.getSkills().getStrength() - baseVit);
+                (totalVitality - baseVit);
 
         // Boss time can not be less then the minimum constant defined.
         if (time < Constants.BOSS_ENCOUNTER_TIME_MINIMUM) {
