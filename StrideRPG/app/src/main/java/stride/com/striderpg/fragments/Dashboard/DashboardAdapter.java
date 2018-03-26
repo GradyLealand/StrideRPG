@@ -134,9 +134,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
         ActivityViewHolder(View itemView) {
             super(itemView);
             cv = itemView.findViewById(R.id.cv);
-            activityName = itemView.findViewById(R.id.item_name);
+            activityName = itemView.findViewById(R.id.activity_name);
             activityDesc = itemView.findViewById(R.id.activity_desc);
-            activityTimestamp = itemView.findViewById(R.id.item_statboost);
+            activityTimestamp = itemView.findViewById(R.id.activity_timestamp);
             activityIcon = itemView.findViewById(R.id.activity_image);
         }
     }

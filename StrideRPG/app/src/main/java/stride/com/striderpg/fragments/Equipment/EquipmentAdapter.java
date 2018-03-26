@@ -1,6 +1,7 @@
 package stride.com.striderpg.fragments.Equipment;
 
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -63,7 +64,9 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
      */
     @Override
     public void onBindViewHolder(EquipmentViewHolder equipmentViewHolder, int i) {
-        equipmentViewHolder.itemImage.setBackgroundColor(items.get(i).getRarity().getColor());
+        equipmentViewHolder.itemImage.setBackgroundColor(
+                Color.parseColor(items.get(i).getRarity().getColor())
+        );
         equipmentViewHolder.itemName.setText(items.get(i).getName());
         equipmentViewHolder.itemDescription.setText(items.get(i).getDescription());
 

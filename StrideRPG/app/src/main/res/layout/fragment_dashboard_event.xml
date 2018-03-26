@@ -20,7 +20,7 @@
         android:rowCount="3">
 
         <TextView
-            android:id="@+id/item_statboost"
+            android:id="@+id/activity_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="false"
@@ -52,7 +52,7 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/item_name"
+            android:id="@+id/activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/item_statboost"
