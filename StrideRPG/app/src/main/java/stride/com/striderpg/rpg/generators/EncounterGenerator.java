@@ -99,10 +99,11 @@ public class EncounterGenerator {
      * @return New Boss base health.
      */
     private static Integer calculateBossHealth(Enums.BossTier bossTier, Player p) {
+        int totalStrenght = p.getSkills().getStrength() + p.getEquipment().getItem(Enums.ItemType.WEAPON).getStatBoost();
         // The attack needed for the boss to have normal health
         int baseStr = calculateBossBaseStrength(bossTier);
         int health = Constants.BOSS_ENCOUNTER_HEALTH_MODIFIER +
-                (baseStr - p.getSkills().getStrength()) * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE;
+                ((baseStr -  totalStrenght) * Constants.BOSS_ENCOUNTER_HEALTH_CHANGE);
 
         // Boss health can not be less then the minimum constant.
         if (health < Constants.BOSS_ENCOUNTER_HEALTH_MINIMUM) {
