@@ -87,8 +87,6 @@ public class Enums {
     public enum ItemType {
         WEAPON("Weapon"),
         HELMET("Helmet"),
-        CHEST("Chest"),
-        LEGS("Legs"),
         BOOTS("Boots");
 
         /**
