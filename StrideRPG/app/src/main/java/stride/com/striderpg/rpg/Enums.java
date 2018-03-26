@@ -34,11 +34,11 @@ public class Enums {
      * can possibly be. Item Rarity also affects an Items statistics.
      */
     public enum ItemRarity {
-        COMMON("Common"),
-        UNCOMMON("Uncommon"),
-        RARE("Rare"),
-        EPIC("Epic"),
-        LEGENDARY("Legendary");
+        COMMON("Common", R.color.common),
+        UNCOMMON("Uncommon", R.color.uncommon),
+        RARE("Rare", R.color.rare),
+        EPIC("Epic", R.color.epic),
+        LEGENDARY("Legendary", R.color.legendary);
 
         /**
          * Item Rarity name property.
@@ -46,11 +46,18 @@ public class Enums {
         private final String name;
 
         /**
+         * Item Rarity color property.
+         */
+        private final Integer color;
+
+        /**
          * Constructor method to set name property.
          * @param name Name of enum.
+         * @param color Color resource id of enum.
          */
-        ItemRarity(String name) {
+        ItemRarity(String name, Integer color) {
             this.name = name;
+            this.color = color;
         }
 
         /**
@@ -59,6 +66,10 @@ public class Enums {
          */
         public String getName() {
             return name;
+        }
+
+        public Integer getColor() {
+            return color;
         }
 
         /**

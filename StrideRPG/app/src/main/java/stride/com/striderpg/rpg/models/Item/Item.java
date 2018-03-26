@@ -19,6 +19,11 @@ public class Item {
     private String description;
 
     /**
+     * Icon integer resource id of the Item.
+     */
+    private Integer icon;
+
+    /**
      * Item Type Enumeration.
      */
     private Enums.ItemType type;
@@ -43,9 +48,10 @@ public class Item {
      * @param rarity Item Rarity Enumeration.
      * @param statBoost Item stat boost.
      */
-    public Item(String name, String description, Enums.ItemType type, Enums.ItemRarity rarity, Integer statBoost) {
+    public Item(String name, String description, Integer icon, Enums.ItemType type, Enums.ItemRarity rarity, Integer statBoost) {
         this.name = name;
         this.description = description;
+        this.icon = icon;
         this.type = type;
         this.rarity = rarity;
         this.statBoost = statBoost;
@@ -66,6 +72,7 @@ public class Item {
         return "Item{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", icon=" + icon +
                 ", type=" + type +
                 ", rarity=" + rarity +
                 ", statBoost=" + statBoost +
@@ -77,6 +84,9 @@ public class Item {
     }
     public String getDescription() {
         return description;
+    }
+    public Integer getIcon() {
+        return icon;
     }
     public Enums.ItemType getType() {
         return type;

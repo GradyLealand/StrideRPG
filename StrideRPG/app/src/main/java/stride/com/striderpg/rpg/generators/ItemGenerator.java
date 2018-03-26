@@ -3,6 +3,7 @@ package stride.com.striderpg.rpg.generators;
 
 import java.util.Random;
 
+import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.models.Item.Item;
 import stride.com.striderpg.rpg.models.Player.Equipment;
@@ -42,11 +43,14 @@ public class ItemGenerator {
         // Generate new Item's stat boost.
         Integer statBoost = buildItemStatBoost(rarity, p);
 
+        // Generate the image icon used for the new Item.
+        Integer icon = R.drawable.ic_launcher_foreground;
+
         // Generate Item name and description.
         String name = parseName(type);
         String description = parseDescription(type, rarity);
 
-        return new Item(name, description, type, rarity, statBoost);
+        return new Item(name, description, icon, type, rarity, statBoost);
     }
 
     /**
@@ -62,11 +66,14 @@ public class ItemGenerator {
         // Generate new Item's stat boost.
         Integer statBoost = buildItemStatBoost(rarity, p);
 
+        // Generate the image icon used for the new Item.
+        Integer icon = R.drawable.ic_launcher_foreground;
+
         // Generate Item name and description.
         String name = parseName(type);
         String description = parseDescription(type, rarity);
 
-        return new Item(name, description, type, rarity, statBoost);
+        return new Item(name, description, icon, type, rarity, statBoost);
     }
 
     /**
@@ -82,11 +89,14 @@ public class ItemGenerator {
         // Generate new Item's stat boost.
         Integer statBoost = buildItemStatBoost(rarity, p);
 
+        // Generate the image icon used for the new Item.
+        Integer icon = R.drawable.ic_launcher_foreground;
+
         // Generate Item name and description.
         String name = parseName(type);
         String description = parseDescription(type, rarity);
 
-        return new Item(name, description, type, rarity, statBoost);
+        return new Item(name, description, icon, type, rarity, statBoost);
     }
 
     /**

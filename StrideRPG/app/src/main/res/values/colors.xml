@@ -13,4 +13,11 @@
 
     <color name="cardview_initial_background">#71c3de</color>
 
+    <!-- Item Rarity Colors -->
+    <color name="common">#fafafa</color>
+    <color name="uncommon">#6be564</color>
+    <color name="rare">#6497e5</color>
+    <color name="epic">#be64e5</color>
+    <color name="legendary">#fcc74b</color>
+
 </resources>

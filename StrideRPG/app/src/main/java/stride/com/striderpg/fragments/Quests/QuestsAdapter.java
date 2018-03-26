@@ -63,19 +63,19 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
      */
     @Override
     public void onBindViewHolder(QuestViewHolder questViewHolder, int i) {
-        // TODO: Quest icons?
-        //questViewHolder.questImage.setImageResource();
-
         questViewHolder.questTitle.setText(quests.get(i).getName());
         questViewHolder.questTier.setText(parseTier(i));
         questViewHolder.questDescription.setText(quests.get(i).getDescription());
-
         questViewHolder.questProgress.setMax(quests.get(i).getProgressGoal());
         questViewHolder.questProgress.setProgress(quests.get(i).getProgress());
-
         questViewHolder.questProgressText.setText(parseProgress(i));
     }
 
+    /**
+     * Parse out a quests current tier number from it's Enumeration.
+     * @param i Integer representing Quest Tier.
+     * @return Readable string to represent Quest Tier.
+     */
     private String parseTier(int i) {
         return String.format(
                 G.locale,
