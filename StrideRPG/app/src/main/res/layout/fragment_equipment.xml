@@ -11,13 +11,13 @@
         layout="@layout/fragment_equipment_rv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/equipmentCard" />
+        android:layout_below="@id/equipmentCard" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/equipmentCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
         android:padding="5dp">
