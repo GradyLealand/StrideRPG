@@ -254,6 +254,8 @@ public class Player {
      * @param enemy Monster being defeated.
      */
     public boolean fightEnemy(Monster enemy) {
+        int totalStrength = this.skills.getStrength() + this.getEquipment().getItem(Enums.ItemType.WEAPON).getStatBoost();
+        int totalVitality = this.skills.getVitality() + this.getEquipment().getItem(Enums.ItemType.HELMET).getStatBoost();
         // Create a new Random instance for rolling.
         Random r = new Random();
 
@@ -262,7 +264,7 @@ public class Player {
 
         // Calculate attack value from Player strength property
         // and Player vitality property.
-        int attack = ((this.skills.getStrength() + this.skills.getVitality()) / 2) + roll;
+        int attack = ((totalStrength + totalVitality) / 2) + roll;
 
         // Check here for fight results, Player may defeat or be defeated by Monster.
         if (attack >= enemy.getHealth()) {
