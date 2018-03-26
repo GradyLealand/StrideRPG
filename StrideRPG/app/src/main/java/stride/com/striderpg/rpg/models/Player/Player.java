@@ -127,11 +127,7 @@ public class Player {
         this.questLog = new QuestLog();
         this.activityLog = new ActivityLog();
         this.stats = new Stats();
-        this.skills = new Skills(
-                Constants.PLAYER_DEFAULT_VITALITY,
-                Constants.PLAYER_DEFAULT_STRENGTH,
-                Constants.PLAYER_DEFAULT_SPEED
-        );
+        this.skills = new Skills();
         this.equipment = ItemGenerator.generateDefaultInventory(this);
     }
 
@@ -186,13 +182,11 @@ public class Player {
      */
     public void levelUp() {
         // Set users experience to the proper amount so exp is carried over on level up.
-        this.setExperience(this.getExperience() -
-                LevelGenerator.experienceToNextLevel(this.getLevel()));
+        this.setExperience(this.getExperience() - LevelGenerator.experienceToNextLevel(this.getLevel()));
         this.setLevel(this.getLevel() + 1);
 
-        // Generate New Stats for a Player on level up.
-        // TODO: Let user choose the Skills they wish to increase.
-        this.skills.levelUpSkills();
+        // Give the Player new skill points that can be assigned later.
+        this.skills.gainSkillPoints();
     }
 
     /**
@@ -260,6 +254,8 @@ public class Player {
      * @param enemy Monster being defeated.
      */
     public boolean fightEnemy(Monster enemy) {
+        int totalStrength = this.skills.getStrength() + this.getEquipment().getItem(Enums.ItemType.WEAPON).getStatBoost();
+        int totalVitality = this.skills.getVitality() + this.getEquipment().getItem(Enums.ItemType.HELMET).getStatBoost();
         // Create a new Random instance for rolling.
         Random r = new Random();
 
@@ -268,7 +264,7 @@ public class Player {
 
         // Calculate attack value from Player strength property
         // and Player vitality property.
-        int attack = ((this.skills.getStrength() + this.skills.getVitality()) / 2) + roll;
+        int attack = ((totalStrength + totalVitality) / 2) + roll;
 
         // Check here for fight results, Player may defeat or be defeated by Monster.
         if (attack >= enemy.getHealth()) {

@@ -14,112 +14,87 @@ public class Item {
     private String name;
 
     /**
-     * The power level this weapon represents. A short handed way
-     * to describe how good an item is based on Players level and
-     * Skills.
+     * Description of the Item.
      */
-    private Integer powerLevel;
+    private String description;
 
     /**
-     * Amount to boost a Players Vitality by when equipped.
+     * Icon integer resource id of the Item.
      */
-    private Integer vitalityBoost;
+    private Integer icon;
 
     /**
-     * Amount to boost a Players Strength by when equipped.
+     * Item Type Enumeration.
      */
-    private Integer strengthBoost;
+    private Enums.ItemType type;
 
     /**
-     * Amount to boost a Players Speed by when equipped.
+     * Item Rarity Enumeration.
      */
-    private Integer speedBoost;
+    private Enums.ItemRarity rarity;
 
     /**
-     * Items itemRarity level, used to determine stat's on generation.
+     * Stat boost this Item gives the Player.
      */
-    private Enums.ItemRarity itemRarity;
+    private Integer statBoost;
 
-    /**
-     * Items itemType, randomly selected on item generation.
-     */
-    private Enums.ItemType itemType;
-
-    /**
-     * Default constructor required for calls to
-     * DataSnapshot.getValue(Item.class).
-     */
     public Item() { }
 
     /**
-     * Custom constructor to build an item with specified properties.
+     * Constructor to set all Item properties.
      * @param name Item name.
-     * @param powerLevel Item power level. Generally used to determine
-     *                   how powerful this item is.
-     * @param vitalityBoost Item vitality boost.
-     * @param strengthBoost Item strength boost.
-     * @param speedBoost Item speed boost.
-     * @param itemRarity Item itemRarity level.
-     * @param itemType Item itemType.
+     * @param description Item description.
+     * @param type Item Type Enumeration.
+     * @param rarity Item Rarity Enumeration.
+     * @param statBoost Item stat boost.
      */
-    public Item(String name, Integer powerLevel, Integer vitalityBoost, Integer strengthBoost,
-                Integer speedBoost, Enums.ItemRarity itemRarity, Enums.ItemType itemType) {
+    public Item(String name, String description, Integer icon, Enums.ItemType type, Enums.ItemRarity rarity, Integer statBoost) {
         this.name = name;
-        this.powerLevel = powerLevel;
-        this.vitalityBoost = vitalityBoost;
-        this.strengthBoost = strengthBoost;
-        this.speedBoost = speedBoost;
-        this.itemRarity = itemRarity;
-        this.itemType = itemType;
+        this.description = description;
+        this.icon = icon;
+        this.type = type;
+        this.rarity = rarity;
+        this.statBoost = statBoost;
     }
 
     /**
-     * Implementation of an Items toString method to print out the
-     * properties of an Item object.
-     * @return Properties of the Item object.
+     * Compare this Item to another Item.
+     * @param item Item being compared to this.
+     * @return True or False if this Item's stat boost
+     * is less than the item passed as a parameter.
      */
+    public boolean compare(Item item) {
+        return this.statBoost > item.getStatBoost();
+    }
+
     @Override
     public String toString() {
         return "Item{" +
                 "name='" + name + '\'' +
-                ", powerLevel=" + powerLevel +
-                ", vitalityBoost=" + vitalityBoost +
-                ", strengthBoost=" + strengthBoost +
-                ", speedBoost=" + speedBoost +
-                ", itemRarity=" + itemRarity +
-                ", itemType=" + itemType +
+                ", description='" + description + '\'' +
+                ", icon=" + icon +
+                ", type=" + type +
+                ", rarity=" + rarity +
+                ", statBoost=" + statBoost +
                 '}';
-    }
-
-    /**
-     * Compare two items together by comparing their power level
-     * property.
-     * @param item Item being compared to.
-     * @return Boolean if this item is better than passed item.
-     */
-    public boolean isBetter(Item item) {
-        return this.powerLevel > item.getPowerLevel();
     }
 
     public String getName() {
         return name;
     }
-    public Integer getPowerLevel() {
-        return powerLevel;
+    public String getDescription() {
+        return description;
     }
-    public Integer getVitalityBoost() {
-        return vitalityBoost;
+    public Integer getIcon() {
+        return icon;
     }
-    public Integer getStrengthBoost() {
-        return strengthBoost;
+    public Enums.ItemType getType() {
+        return type;
     }
-    public Integer getSpeedBoost() {
-        return speedBoost;
+    public Enums.ItemRarity getRarity() {
+        return rarity;
     }
-    public Enums.ItemRarity getItemRarity() {
-        return itemRarity;
-    }
-    public Enums.ItemType getItemType() {
-        return itemType;
+    public Integer getStatBoost() {
+        return statBoost;
     }
 }

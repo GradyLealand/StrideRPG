@@ -36,22 +36,18 @@ public class Skills {
     private Integer speed;
 
     /**
-     * Default constructor required for calls to
-     * DataSnapshot.getValue(Skills.class).
+     * Players current skill points.
      */
-    public Skills() { }
+    private Integer skillPoints;
 
     /**
-     * Custom constructor function to set each skill as they are
-     * passed.
-     * @param vitality Skill vitality property.
-     * @param strength Skill strength property.
-     * @param speed Skill speed property.
+     * Constructor function to initialize a new Skill objects values.
      */
-    Skills(Integer vitality, Integer strength, Integer speed) {
-        this.vitality = vitality;
-        this.strength = strength;
-        this.speed = speed;
+    Skills() {
+        this.vitality = Constants.PLAYER_DEFAULT_VITALITY;
+        this.strength = Constants.PLAYER_DEFAULT_STRENGTH;
+        this.speed = Constants.PLAYER_DEFAULT_SPEED;
+        this.skillPoints = 0;
     }
 
     /**
@@ -65,6 +61,7 @@ public class Skills {
                 "vitality=" + vitality +
                 ", strength=" + strength +
                 ", speed=" + speed +
+                ", skillPoints=" + skillPoints +
                 '}';
     }
 
@@ -78,47 +75,50 @@ public class Skills {
     }
 
     /**
-     * Method to Increment a Players stats by a random amount.
+     * Increment the Players skill points property by the Constant defined.
      */
-    public void levelUpSkills() {
+    public void gainSkillPoints() {
+        this.skillPoints += Constants.SKILL_POINTS_ON_LEVEL;
+        changes.firePropertyChange(Constants.PROPERTY_SKILL_POINTS, null, this.getSkillPoints());
+    }
 
-        // Create Random instance for choosing amounts to increment.
-        Random r = new Random();
+    /**
+     * Level up a Players vitality property by one.
+     */
+    public void levelUpVitality() {
+        this.vitality += 1;
+        changes.firePropertyChange(Constants.PROPERTY_SKILL_VITALITY, null, this.getVitality());
+    }
 
-        // Increment skills.
-        this.setVitality(
-                this.getVitality() + r.nextInt(
-                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT + 2
-                ));
-        this.setStrength(
-                this.getVitality() + r.nextInt(
-                        Constants.LEVEL_UP_VIT_STR_MAX_AMOUNT + 2
-                ));
-        this.setSpeed(this.getSpeed() + 3);
+    /**
+     * Level up a Players strength property by one.
+     */
+    public void levelUpStrength() {
+        this.strength += 1;
+        changes.firePropertyChange(Constants.PROPERTY_SKILL_STRENGTH, null, this.getStrength());
+    }
+
+    /**
+     * Level up a Players speed property by one.
+     */
+    public void levelUpSpeed() {
+        this.speed += 1;
+        changes.firePropertyChange(Constants.PROPERTY_SKILL_SPEED, null, this.getSpeed());
     }
 
     public Integer getVitality() {
         return vitality;
     }
-    public void setVitality(Integer vitality) {
-        if (!Objects.equals(this.vitality, vitality))
-            changes.firePropertyChange(Constants.PROPERTY_VITALITY, this.vitality, vitality);
-        this.vitality = vitality;
-    }
+
     public Integer getStrength() {
         return strength;
     }
-    public void setStrength(Integer strength) {
-        if (!Objects.equals(this.strength, strength))
-            changes.firePropertyChange(Constants.PROPERTY_STRENGTH, this.strength, strength);
-        this.strength = strength;
-    }
+
     public Integer getSpeed() {
         return speed;
     }
-    public void setSpeed(Integer speed) {
-        if (!Objects.equals(this.speed, speed))
-            changes.firePropertyChange(Constants.PROPERTY_SPEED, this.speed, speed);
-        this.speed = speed;
+
+    public Integer getSkillPoints() {
+        return skillPoints;
     }
 }
