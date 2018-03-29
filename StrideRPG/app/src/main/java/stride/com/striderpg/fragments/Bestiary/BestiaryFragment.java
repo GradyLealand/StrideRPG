@@ -10,7 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import stride.com.striderpg.R;
+import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Constants;
+import stride.com.striderpg.rpg.Enums;
+import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 /**
  * Bestiary Fragment that displays information about the Players
@@ -63,6 +70,22 @@ public class BestiaryFragment extends Fragment {
         // Create the Adapter used to inflate each Enemy CardView.
         bestiaryAdapter = new BestiaryAdapter(bestiaryGenerator.getEnemies());
         bestiaryRecyclerView.setAdapter(bestiaryAdapter);
+
+        // Build out the PropertyChangeListeners for the Objects changed/modified through Bestiary.
+        buildPropertyChangeListeners();
         return rootView;
+    }
+
+    private void buildPropertyChangeListeners() {
+        G.activePlayer.getBestiary().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                // Switch case over the propertyChangeEvent.
+                switch (propertyChangeEvent.getPropertyName()) {
+                    case Constants.PROPERTY_BESTIARY_UPDATED:
+                        bestiaryAdapter.update((Enums.Enemies)propertyChangeEvent.getOldValue());
+                }
+            }
+        });
     }
 }

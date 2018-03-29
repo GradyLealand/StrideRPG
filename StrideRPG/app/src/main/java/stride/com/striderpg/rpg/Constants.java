@@ -292,6 +292,12 @@ public final class Constants {
     public static final String PROPERTY_SKILL_POINTS = "POINTS_EARNED";
 
     /**
+     * Constant for firing and accessing a PropertyChangeEvents
+     * for the skill points property on a Players Bestiary object.
+     */
+    public static final String PROPERTY_BESTIARY_UPDATED = "BESTIARY_UPDATED";
+
+    /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every active player database push.
      */

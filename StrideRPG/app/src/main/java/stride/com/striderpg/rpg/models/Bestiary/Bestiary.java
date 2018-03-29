@@ -1,8 +1,11 @@
 package stride.com.striderpg.rpg.models.Bestiary;
 
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 
+import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 
 /**
@@ -10,6 +13,12 @@ import stride.com.striderpg.rpg.Enums;
  * the amount of an enemy they have defeated.
  */
 public class Bestiary {
+
+    /**
+     * PropertyChangeSupport object to deal with raising events when
+     * a property on this object/bean is changed.
+     */
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * HashMap to store each type of Monster as the key and an Integer
@@ -43,11 +52,25 @@ public class Bestiary {
     }
 
     /**
+     * Attach a new PropertyChangeListener to this classes
+     * PropertyChangeSupport object.
+     * @param listener PropertyChangeSupport object.
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changes.addPropertyChangeListener(listener);
+    }
+
+    /**
      * Update an Enemies in the Bestiary by 1.
      * @param type Enemies being updated.
      */
     public void update(Enums.Enemies type) {
+        // Update Bestiary value with given EnemyType by 1.
         enemies.put(type.name(), enemies.get(type.name()) + 1);
+        changes.firePropertyChange(
+                Constants.PROPERTY_BESTIARY_UPDATED,
+                type, enemies.get(type.name())
+        );
     }
 
     /**
@@ -57,6 +80,4 @@ public class Bestiary {
     public HashMap<String, Integer> getEnemies() {
         return enemies;
     }
-
-
 }

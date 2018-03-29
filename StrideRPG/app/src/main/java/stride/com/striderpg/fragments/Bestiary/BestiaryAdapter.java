@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 /**
@@ -65,11 +66,11 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
     @Override
     public void onBindViewHolder(EnemyViewHolder enemyViewHolder, int i) {
         enemyViewHolder.bestiaryName.setText(enemies.get(i).getName());
-        enemyViewHolder.bestiaryAmount.setText(String.format(
-                G.locale,
+        enemyViewHolder.bestiaryAmount.setText(String.format(G.locale,
                 "%d",
-                G.activePlayer.getBestiary().getEnemies().get(
-                        enemies.get(i).getType().name()
+                G.activePlayer.getBestiary()
+                        .getEnemies()
+                        .get(enemies.get(i).getType().name()
                     )
                 )
         );
@@ -77,6 +78,19 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
                 enemies.get(i).getIcon()
         );
     }
+
+    public void update(Enums.Enemies enemy) {
+        for (Enemy e : enemies) {
+            if (e.getType() == enemy) {
+                enemies.remove(e);
+                enemies.add(e);
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+
 
     /**
      * Returns the enemies ArrayList size.
