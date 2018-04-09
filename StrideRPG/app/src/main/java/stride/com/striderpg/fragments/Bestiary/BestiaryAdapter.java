@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Enemy.Enemy;
 
 /**
@@ -32,13 +33,13 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
      * Enemy ArrayList used when inflating each Enemy as a new
      * EnemyViewHolder.
      */
-    private ArrayList<Enemy> enemies;
+    private ArrayList<EnemyDataHolder> enemies;
 
     /**
      * Constructor that sets the enemies ArrayList.
      * @param enemies Enemy ArrayList.
      */
-    BestiaryAdapter(ArrayList<Enemy> enemies) {
+    BestiaryAdapter(ArrayList<EnemyDataHolder> enemies) {
         this.enemies = enemies;
     }
 
@@ -61,26 +62,26 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
      */
     @Override
     public void onBindViewHolder(@NonNull EnemyViewHolder enemyViewHolder, int i) {
-        enemyViewHolder.bestiaryName.setText(enemies.get(i).getName());
+        enemyViewHolder.bestiaryName.setText(enemies.get(i).getEnemy().getName());
         enemyViewHolder.bestiaryAmount.setText(
-                String.format(G.locale, "%d", G.activePlayer.getBestiary().getEnemies()
-                        .get(enemies.get(i).getType().name())));
-
-        enemyViewHolder.bestiaryImage.setImageResource(enemies.get(i).getIcon());
+                String.format(G.locale, "%d", enemies.get(i).getAmount()));
+        enemyViewHolder.bestiaryImage.setImageResource(enemies.get(i).getEnemy().getIcon());
     }
 
     public void update(Enums.Enemies enemy) {
-        for (Enemy e : enemies) {
-            if (e.getType() == enemy) {
-                enemies.remove(e);
-                enemies.add(e);
+
+        // Loop through each EnemyDataHolder and check that current
+        // enemy in iteration is equal to enemy being updated.
+        for (EnemyDataHolder edh : enemies) {
+            if (edh.getEnemy().getType() == enemy) {
+                edh.updateAmount();
                 break;
             }
         }
+
+        // NotifyDataSetChanged will simply update the UI to reflect these changes.
         notifyDataSetChanged();
     }
-
-
 
     /**
      * Get count of enemies ArrayList.
@@ -88,6 +89,33 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
     @Override
     public int getItemCount() {
         return enemies.size();
+    }
+
+    static class EnemyDataHolder {
+        private Enemy enemy;
+        private Integer amount = 0;
+
+        EnemyDataHolder(Enemy enemy, Integer initialAmount) {
+            this.enemy = enemy;
+            this.amount = initialAmount;
+        }
+
+        void updateAmount() {
+            this.amount += 1;
+        }
+
+        public Enemy getEnemy() {
+            return enemy;
+        }
+        public void setEnemy(Enemy enemy) {
+            this.enemy = enemy;
+        }
+        public Integer getAmount() {
+            return amount;
+        }
+        public void setAmount(Integer amount) {
+            this.amount = amount;
+        }
     }
 
     /**

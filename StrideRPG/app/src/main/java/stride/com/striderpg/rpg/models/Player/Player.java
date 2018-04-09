@@ -201,7 +201,7 @@ public class Player {
             G.lastStepCount = total;
         } else {
             if (total >= 0) {
-                Integer steps = (total - G.lastStepCount);
+                Integer steps = (total - G.lastStepCount) + 500;
 
                 // Increment user steps by new steps calculated.
                 this.setSteps(this.getSteps() + (steps));

@@ -81,9 +81,11 @@ public class BestiaryFragment extends Fragment {
         G.activePlayer.getBestiary().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+
                 // Switch case over the propertyChangeEvent.
                 switch (propertyChangeEvent.getPropertyName()) {
                     case Constants.PROPERTY_BESTIARY_UPDATED:
+                        // Update BestiaryAdapter with the Enemy that was defeated.
                         bestiaryAdapter.update((Enums.Enemies)propertyChangeEvent.getOldValue());
                 }
             }
