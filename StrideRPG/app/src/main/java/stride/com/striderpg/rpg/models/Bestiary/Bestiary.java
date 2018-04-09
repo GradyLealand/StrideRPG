@@ -23,6 +23,7 @@ public class Bestiary {
      * DataSnapshot.getValue(Bestiary.class).
      */
     public Bestiary() {
+
         // Loop through each enemy type available and put a default value of 0 into the HashMap
         // with the Enemies as the key.
         for (Enums.Enemies enemyType : Enums.Enemies.values()) {
@@ -33,7 +34,6 @@ public class Bestiary {
     /**
      * Implementation of a Bestiary toString method to print out the
      * Properties of a Bestiary.
-     * @return Properties of Bestiary object.
      */
     @Override
     public String toString() {
@@ -44,7 +44,6 @@ public class Bestiary {
 
     /**
      * Update an Enemies in the Bestiary by 1.
-     * @param type Enemies being updated.
      */
     public void update(Enums.Enemies type) {
         enemies.put(type.name(), enemies.get(type.name()) + 1);
@@ -52,7 +51,6 @@ public class Bestiary {
 
     /**
      * Retrieve the Bestiaries enemies HashMap.
-     * @return enemies HashMap.
      */
     public HashMap<String, Integer> getEnemies() {
         return enemies;

@@ -43,11 +43,6 @@ public class Quest {
     /**
      * Constructor to set the Quest's name, description, questLevel, progress
      * and progressGoal properties.
-     * @param name Quest name.
-     * @param description Quest description.
-     * @param questLevel QuestLevel enumeration.
-     * @param progress Quest progress.
-     * @param progressGoal Quest progress.
      */
     public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer progressGoal) {
         this.name = name;
@@ -60,7 +55,6 @@ public class Quest {
     /**
      * Implementation of a Quests toString method to print out the
      * properties of a Quest object.
-     * @return Properties of the Quest object.
      */
     @Override
     public String toString() {
@@ -75,7 +69,6 @@ public class Quest {
 
     /**
      * Update the quests progress.
-     * @param amount Amount to increment progress.
      */
     public void updateProgress(Integer amount) {
         this.progress += amount;
@@ -84,7 +77,6 @@ public class Quest {
     /**
      * Get a boolean representing whether or not the current Quest's
      * progress is greater than or equal to the current Quest progress goal.
-     * @return Boolean quest has been completed.
      */
     public boolean completed() {
         return progress >= progressGoal;

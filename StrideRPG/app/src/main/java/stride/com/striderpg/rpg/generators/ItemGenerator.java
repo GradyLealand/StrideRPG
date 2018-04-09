@@ -30,10 +30,9 @@ public class ItemGenerator {
     /**
      * Generate a random item based off of the Player object passed
      * into the function.
-     * @param p Player used to determine item properties.
-     * @return Newly generated Item object with randomized properties.
      */
     public static Item generate(Player p) {
+
         // Generate a random ItemType Enumeration.
         Enums.ItemType type = Enums.random(Enums.ItemType.class);
 
@@ -55,11 +54,9 @@ public class ItemGenerator {
 
     /**
      * Generate a random item of a specific ItemType.
-     * @param p Player object to determine Item stats.
-     * @param type Item ItemType.
-     * @return New random Item of type specified.
      */
     public static Item generate(Player p, Enums.ItemType type) {
+
         // Generate a random ItemRarity Enumeration based on percent/weights.
         Enums.ItemRarity rarity = Enums.ItemRarity.weightedRarity();
 
@@ -78,11 +75,9 @@ public class ItemGenerator {
 
     /**
      * Generate a random item of a specific ItemRarity.
-     * @param p Player object to determine Item stats.
-     * @param rarity Item ItemRarity.
-     * @return New random Item of rarity specified.
      */
     public static Item generate(Player p, Enums.ItemRarity rarity) {
+
         // Generate a random ItemType Enumeration.
         Enums.ItemType type = Enums.random(Enums.ItemType.class);
 
@@ -101,10 +96,9 @@ public class ItemGenerator {
 
     /**
      * Generate a rookie Equipment with an Item of each type in it.
-     * @param p Player object.
-     * @return Equipment with new items in HashMap.
      */
     public static Equipment generateDefaultInventory(Player p) {
+
         // Create a new Equipment object to hold the Inventory.
         Equipment equipment = new Equipment();
 
@@ -122,13 +116,9 @@ public class ItemGenerator {
      * to the end of the String after fixing the capitalization on the ItemType.
      * @param type Item Type Enumeration.
      * @return Random Item name taken from the list of random names possible +
-     * the type of the Item being parsed.
-     *
-     *  Ex: - Wicked Weapon
-     *      - Twisted Helmet
-     *      - Profane Boots
      */
     private static String parseName(Enums.ItemType type) {
+
         return itemAdjectives[new Random().nextInt(itemAdjectives.length)] +
                 " " + type.getName();
     }
@@ -136,11 +126,9 @@ public class ItemGenerator {
     /**
      * Parse out a new Items description based on the Item Type Enumeration and
      * the Item Rarity enumeration.
-     * @param type Item Type Enumeration.
-     * @param rarity Item Rarity Enumeration.
-     * @return Description of Item Type passed to method.
      */
     private static String parseDescription(Enums.ItemType type, Enums.ItemRarity rarity) {
+
         switch (type) {
             case WEAPON:
                 return String.format(G.locale, "A %s weapon used to increase your strength!", rarity.getName());
@@ -160,10 +148,6 @@ public class ItemGenerator {
      * given rarity of the item being generated. The Item Type Enumeration
      * for any given Item is used to determine what stat is actually boosted
      * when this Item is equipped.
-     * @param rarity Item Rarity Enumeration.
-     * @param p Player object used to get their level for adding an
-     *          extra level of progression to Item's and their stats.
-     * @return Integer representing new Item's stat boost property.
      */
     private static Integer buildItemStatBoost(Enums.ItemRarity rarity, Player p) {
         // Get the base value for building an Item's stat boost.

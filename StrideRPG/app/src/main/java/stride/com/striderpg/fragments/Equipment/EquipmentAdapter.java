@@ -2,6 +2,7 @@ package stride.com.striderpg.fragments.Equipment;
 
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,7 +36,6 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
 
     /**
      * Constructor that sets the items ArrayList.
-     * @param items Items ArrayList.
      */
     EquipmentAdapter(ArrayList<Item> items) {
         this.items = items;
@@ -43,14 +43,10 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
 
     /**
      * Method called on each EquipmentViewHolder instantiated.
-     * @param viewGroup ViewGroup that will contain the children
-     *                  (Equipment elements) -> items.
-     * @param i Index of current Item being inflated from items
-     *          ArrayList.
-     * @return New EquipmentViewHolder with items.get(i)'s properties set.
      */
+    @NonNull
     @Override
-    public EquipmentViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public EquipmentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.fragment_equipment_item, viewGroup, false);
         return new EquipmentViewHolder(v);
@@ -59,11 +55,9 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
     /**
      * Method called when the EquipmentViewHolder is being bound to its
      * property Item located in the items ArrayList.
-     * @param equipmentViewHolder Current EquipmentViewHolder being bound.
-     * @param i Index of current item being bound to EquipmentViewHolder.
      */
     @Override
-    public void onBindViewHolder(EquipmentViewHolder equipmentViewHolder, int i) {
+    public void onBindViewHolder(@NonNull EquipmentViewHolder equipmentViewHolder, int i) {
         equipmentViewHolder.itemImage.setBackgroundColor(
                 Color.parseColor(items.get(i).getRarity().getColor())
         );
@@ -119,7 +113,6 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         /**
          * EquipmentViewHolder constructor to set class properties
          * to elements contained in the itemView passed.
-         * @param itemView View this Item is inside of.
          */
         public EquipmentViewHolder(View itemView) {
             super(itemView);

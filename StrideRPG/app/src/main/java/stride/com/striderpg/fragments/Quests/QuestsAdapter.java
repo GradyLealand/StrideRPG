@@ -1,5 +1,6 @@
 package stride.com.striderpg.fragments.Quests;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,8 +49,9 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
      *          ArrayList.
      * @return New QuestViewHolder with quests.get(i)'s properties set.
      */
+    @NonNull
     @Override
-    public QuestViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public QuestViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.fragment_quests_item, viewGroup, false);
         return new QuestViewHolder(v);
@@ -58,11 +60,9 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
     /**
      * Method called when the QuestViewHolder is being bound to its
      * property Quest located in the quests ArrayList.
-     * @param questViewHolder Current QuestViewHolder being bound.
-     * @param i Index of current quest being bound to QuestViewHolder.
      */
     @Override
-    public void onBindViewHolder(QuestViewHolder questViewHolder, int i) {
+    public void onBindViewHolder(@NonNull QuestViewHolder questViewHolder, int i) {
         questViewHolder.questTitle.setText(quests.get(i).getName());
         questViewHolder.questTier.setText(parseTier(i));
         questViewHolder.questDescription.setText(quests.get(i).getDescription());
@@ -86,8 +86,6 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
 
     /**
      * Parse out a Quests progress in the format (Progress/Goal).
-     * @param i Index of quest being parsed.
-     * @return String representing current Quest progress.
      */
     private String parseProgress(int i) {
         String currentProgress = quests.get(i).getProgress().toString();
@@ -98,13 +96,17 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
 
     /**
      * Returns the quests ArrayList size.
-     * @return quests ArrayList size.
      */
     @Override
     public int getItemCount() {
         return quests.size();
     }
 
+    /**
+     * Static QuestViewHolder class extending the ViewHolder class
+     * and used to bind and inflate new QuestViewHolders with
+     * required properties and elements.
+     */
     static class QuestViewHolder extends RecyclerView.ViewHolder {
 
         /**
@@ -145,7 +147,6 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
         /**
          * QuestViewHolder constructor to set class properties
          * to elements contained in the itemView passed.
-         * @param itemView View this Quest is inside of.
          */
         public QuestViewHolder(View itemView) {
             super(itemView);

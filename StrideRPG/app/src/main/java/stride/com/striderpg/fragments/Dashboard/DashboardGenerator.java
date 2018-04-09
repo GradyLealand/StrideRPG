@@ -45,11 +45,7 @@ public class DashboardGenerator {
         activities.addAll(G.activePlayer.getActivityLog().getLog().values());
 
         // Sort the activities ArrayList.
-        try {
-            sortActivities();
-        } catch (Exception e) {
-            Log.e(TAG, "sort:error:", e);
-        }
+        sortActivities();
     }
 
     /**

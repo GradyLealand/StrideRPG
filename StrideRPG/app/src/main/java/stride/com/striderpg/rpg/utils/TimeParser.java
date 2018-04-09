@@ -36,9 +36,6 @@ public class TimeParser {
     /**
      * Get a DateTime object from the current Timestamp minus
      * a specified amount of hours.
-     * @param hours Hours that are subtracted from current Timestamp.
-     * @return DateTime object representing current Timestamp minus
-     * the specified amount of hours.
      */
     public static DateTime getCurrentTimeMinusHours(Integer hours) {
         DateTime now = new DateTime(DateTimeZone.UTC);
@@ -48,9 +45,6 @@ public class TimeParser {
     /**
      * Get a DateTime object from the current Timestamp plus
      * a specified amount of minutes.
-     * @param minutes Minutes that are added to current Timestamp.
-     * @return DateTime object representing current Timestamp plus
-     * the specified amount of minutes.
      */
     public static DateTime getCurrentTimePlusMinutes(Integer minutes) {
         DateTime now = new DateTime(DateTimeZone.UTC);
@@ -60,10 +54,6 @@ public class TimeParser {
     /**
      * Get a DateTime object from a specified Timestamp minus
      * a specified amount of hours.
-     * @param date DateTime object being subtracted from.
-     * @param hours Hours being subtracted from the specified DateTime.
-     * @return DateTime object representing the specified DateTime
-     * minus the amount of hours specified.
      */
     public static DateTime getDateTimeMinusHours(DateTime date, Integer hours) {
         return date.minusHours(hours);
@@ -71,10 +61,6 @@ public class TimeParser {
 
     /**
      * Converts a String Timestamp to a DateTime object.
-     * @param timestamp Timestamp String being parsed into DateTime
-     *                  object.
-     * @return DateTime object representing the timestamp passed
-     * to the method.
      */
     public static DateTime parseTimestamp(String timestamp) {
         return dateTimeFormatter.parseDateTime(timestamp);
@@ -82,17 +68,15 @@ public class TimeParser {
 
     /**
      * Create a String Timestamp for the current DateTime.
-     * @return DateTime String representation of current Timestamp.
      */
     public static String makeTimestamp() {
+
         DateTime now = new DateTime(DateTimeZone.UTC);
         return now.toString(dateTimeFormatter);
     }
 
     /**
-     * Create a String Timestamp from the DateTime object passed
-     * to the method.
-     * @param date DateTime object being converted to String Timestamp.
+     * Create a String Timestamp from the DateTime object passed to the method.
      */
     public static String makeTimestamp(DateTime date) {
         return date.toString(dateTimeFormatter);
@@ -100,11 +84,9 @@ public class TimeParser {
 
     /**
      * Gets the difference in long milliseconds between two DateTime objects.
-     * @param start DateTime Start.
-     * @param end DateTime End.
-     * @return long difference in milliseconds.
      */
     public static long getDifferenceInMinutes(DateTime start, DateTime end) {
+
         long diff = end.getMillis() - start.getMillis();
         return (diff / 1000) / 60;
     }
@@ -115,10 +97,9 @@ public class TimeParser {
      * Based on the hours/minutes/seconds of the Period between
      * the current DateTime and the Timestamp passed to method
      * DateTime representation.
-     * @param timestamp Timestamp being used as the start DateTime.
-     * @return String representing the time since the Timestamp took place.
      */
     public static String toReadable(String timestamp) {
+
         DateTime now = DateTime.now(DateTimeZone.UTC);
         DateTime activity = parseTimestamp(timestamp);
 

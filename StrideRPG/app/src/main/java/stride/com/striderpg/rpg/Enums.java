@@ -18,10 +18,6 @@ public class Enums {
     /**
      * Generic Function to return a completely random enum from any
      * enum instance passed into the function.
-     * @param tClass .class property of the Enum object being randomly
-     *               chosen.
-     * @param <T> The enum object the method is being called from.
-     * @return Random enum constant from specified enum.
      */
     public static <T extends Enum<?>> T random(Class<T> tClass) {
         Random random = new Random();
@@ -52,8 +48,6 @@ public class Enums {
 
         /**
          * Constructor method to set name property.
-         * @param name Name of enum.
-         * @param color Color resource id of enum.
          */
         ItemRarity(String name, String color) {
             this.name = name;
@@ -62,7 +56,6 @@ public class Enums {
 
         /**
          * Gets the name property.
-         * @return ItemRarity name.
          */
         public String getName() {
             return name;
@@ -80,7 +73,6 @@ public class Enums {
          * RARE = 10%
          * EPIC = 7%
          * LEGENDARY = 3%
-         * @return ItemRarity enum based on percent calculated.
          */
         public static ItemRarity weightedRarity() {
             double d = Math.random() * 100;
@@ -107,7 +99,6 @@ public class Enums {
 
         /**
          * Constructor to set the name property.
-         * @param name Name of enum.
          */
         ItemType(String name) {
             this.name = name;
@@ -115,7 +106,6 @@ public class Enums {
 
         /**
          * Gets the name property.
-         * @return ItemType name.
          */
         public String getName() {
             return name;
@@ -161,9 +151,6 @@ public class Enums {
 
         /**
          * Constructor to set the name, type and image resource id.
-         * @param name Name of constant.
-         * @param type Type of enemy.
-         * @param enemyIcon Enemies icon image resource.
          */
         Enemies(String name, EnemyType type, Integer enemyIcon) {
             this.name = name;
@@ -173,8 +160,6 @@ public class Enums {
 
         /**
          * Return a random Enemies enum based on the EnemyType passed.
-         * @param type EnemyType to search for while looping through Enemies.
-         * @return random Enemies enumeration.
          */
         public static Enemies getRandomEnemiesType(EnemyType type) {
             ArrayList<Enemies> enemies = new ArrayList<>();
@@ -190,7 +175,6 @@ public class Enums {
 
         /**
          * Gets the name property.
-         * @return Enemies name.
          */
         public String getName() {
             return name;
@@ -198,7 +182,6 @@ public class Enums {
 
         /**
          * Gets the type property.
-         * @return Enemies type.
          */
         public EnemyType getType() {
             return type;
@@ -206,7 +189,6 @@ public class Enums {
 
         /**
          * Gets the icon resource id.
-         * @return Enemies icon resource.
          */
         public Integer getEnemyIcon() {
             return enemyIcon;
@@ -245,10 +227,6 @@ public class Enums {
 
         /**
          * Constructor to set the number, numeral, expires and eligible properties.
-         * @param number Number representing BossTier.
-         * @param numeral Numeral representing BossTier.
-         * @param expires Expiration time in minutes for BossTier.
-         * @param eligible Level requirement for BossTier.
          */
         BossTier(Integer number, String numeral, Integer expires, Integer eligible) {
             this.number = number;
@@ -260,8 +238,6 @@ public class Enums {
         /**
          * Gets a random BossTier enumeration as long as the level passed to the method
          * is less than or equal to a Boss Tier's eligible property.
-         * @param level Level being compared to a Boss Tier's eligible property.
-         * @return Random BossTier.
          */
         public static BossTier getEligibleTier(Integer level) {
             ArrayList<BossTier> tempTiers = new ArrayList<>();
@@ -276,7 +252,6 @@ public class Enums {
 
         /**
          * Gets the number property.
-         * @return BossTier number.
          */
         public Integer getNumber() {
             return number;
@@ -284,7 +259,6 @@ public class Enums {
 
         /**
          * Gets the numeral property.
-         * @return BossTier numeral.
          */
         public String getNumeral() {
             return numeral;
@@ -292,7 +266,6 @@ public class Enums {
 
         /**
          * Gets the expires property.
-         * @return BossTier expires.
          */
         public Integer getExpires() {
             return expires;
@@ -300,7 +273,6 @@ public class Enums {
 
         /**
          * Gets the eligible property.
-         * @return BossTier eligible.
          */
         public Integer getEligible() {
             return eligible;
@@ -335,7 +307,6 @@ public class Enums {
 
         /**
          * Constructor to set the name property.
-         * @param name Activity name.
          */
         ActivityType(String name) {
             this.name = name;
@@ -343,7 +314,6 @@ public class Enums {
 
         /**
          * Gets the name property.
-         * @return ActivityType name.
          */
         public String getName() {
             return name;
@@ -352,7 +322,6 @@ public class Enums {
         /**
          * Gets a random generic ActivityType.
          * A generic ActivityType includes the LOOT and ENEMY types.
-         * @return ActivityType.
          */
         public static ActivityType generic() {
             Random random = new Random();
@@ -405,8 +374,6 @@ public class Enums {
 
         /**
          * Constructor to set the title and description properties.
-         * @param title QuestType title.
-         * @param description QuestType description.
          */
         QuestType(String title, String description) {
             this.title = title;
@@ -415,7 +382,6 @@ public class Enums {
 
         /**
          * Gets the title property.
-         * @return QuestType title.
          */
         public String getTitle() {
             return title;
@@ -423,7 +389,6 @@ public class Enums {
 
         /**
          * Gets the description property.
-         * @return QuestType description.
          */
         public String getDescription() {
             return description;
@@ -464,8 +429,6 @@ public class Enums {
 
         /**
          * Constructor to set the numeral and goal properties.
-         * @param numeral QuestLevel numeral.
-         * @param goal QuestLevel goal.
          */
         QuestLevel(String numeral, Integer goal) {
             this.numeral = numeral;
@@ -474,7 +437,6 @@ public class Enums {
 
         /**
          * Gets the next QuestLevel based on the values() of this Enumeration.
-         * @return QuestLevel.
          */
         public QuestLevel next() {
             return values[(this.ordinal() + 1) % values.length];
@@ -482,7 +444,6 @@ public class Enums {
 
         /**
          * Gets the numeral property.
-         * @return QuestLevel numeral.
          */
         public String getNumeral() {
             return numeral;
@@ -490,7 +451,6 @@ public class Enums {
 
         /**
          * Gets the goal property.
-         * @return QuestLevel goal.
          */
         public Integer getGoal() { return goal; }
     }

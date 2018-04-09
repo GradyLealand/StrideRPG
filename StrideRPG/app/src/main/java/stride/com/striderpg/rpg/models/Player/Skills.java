@@ -53,7 +53,6 @@ public class Skills {
     /**
      * Implementation of a Skills toString() method to print out
      * properties of a Skills object.
-     * @return Properties of the Skills object.
      */
     @Override
     public String toString() {
@@ -68,7 +67,6 @@ public class Skills {
     /**
      * Attach a new PropertyChangeListener to this classes
      * PropertyChangeSupport object.
-     * @param listener Listener implementation.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);

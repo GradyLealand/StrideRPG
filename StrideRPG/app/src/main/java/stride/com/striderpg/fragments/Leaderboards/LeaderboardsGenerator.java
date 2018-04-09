@@ -48,6 +48,7 @@ public class LeaderboardsGenerator {
      * and attaching a onDataChange callback to loop through results.
      */
     private void buildLeaderboards() {
+
         // Create reference to the users node in the Database.
         DatabaseReference usersRef = FirebaseDatabase.getInstance()
                 .getReference()
@@ -68,12 +69,7 @@ public class LeaderboardsGenerator {
 
                 // After the players ArrayList is created and filled with all players from
                 // DataSnapshot. Sort the ArrayList.
-                try {
-                    sort(Enums.PlayerSort.LEVEL);
-                    Log.d(TAG, "sort:success");
-                } catch (Exception e) {
-                    Log.e(TAG, "sort:error:", e);
-                }
+                sort(Enums.PlayerSort.LEVEL);
             }
 
             @Override
@@ -86,7 +82,6 @@ public class LeaderboardsGenerator {
     /**
      * Custom sort method to organize the ArrayList of Players based
      * on the PlayerSort Enumeration type passed to method.
-     * @param sortType PlayerSort Enumeration type.
      */
     private void sort(final Enums.PlayerSort sortType) {
         Log.d(TAG, String.format(G.locale, "sort:begin:type=%s", sortType));
@@ -100,7 +95,6 @@ public class LeaderboardsGenerator {
                         return p2.getStats().getEnemiesDefeated().compareTo(p1.getStats().getEnemiesDefeated());
                     case STEPS:
                         return p2.getSteps().compareTo(p1.getSteps());
-
                     // LEVEL / default case are the same.
                     case LEVEL:
                         return p2.getLevel().compareTo(p1.getLevel());
@@ -113,7 +107,6 @@ public class LeaderboardsGenerator {
 
     /**
      * Player ArrayList getter.
-     * @return players ArrayList.
      */
     public ArrayList<Player> getPlayers() {
         return players;

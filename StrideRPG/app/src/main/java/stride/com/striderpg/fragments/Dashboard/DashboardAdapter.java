@@ -1,6 +1,7 @@
 package stride.com.striderpg.fragments.Dashboard;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,15 +44,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
 
     /**
      * Method called on each ActivityViewHolder instantiated.
-     * @param viewGroup ViewGroup that will contain the children
-     *                  (Dashboard elements) -> activities.
-     * @param i Index of current activity being inflated from
-     *          activities ArrayList.
-     * @return New ActivityViewHolder with activities.get(i)'s
-     * properties set.
      */
+    @NonNull
     @Override
-    public ActivityViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.fragment_dashboard_event, viewGroup, false);
         return new ActivityViewHolder(v);
@@ -65,7 +61,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
      *          ActivityViewHolder.
      */
     @Override
-    public void onBindViewHolder(ActivityViewHolder activityViewHolder, int i) {
+    public void onBindViewHolder(@NonNull ActivityViewHolder activityViewHolder, int i) {
         // Set all required UI elements for this current Activity ViewHolder.
         activityViewHolder.activityName.setText(activities.get(i).getActivityType().getName());
         activityViewHolder.activityDesc.setText(activities.get(i).getDescription());
@@ -78,7 +74,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
     /**
      * Add a new Activity to the activities ArrayList and notify the
      * adapter that an item has been inserted.
-     * @param activity Activity being added to ArrayList.
      */
     public void add(Activity activity) {
         activities.add(0, activity);
@@ -86,8 +81,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
     }
 
     /**
-     * Returns the activities ArrayList size.
-     * @return activities ArrayList size.
+     * Get count of activities ArrayList.
      */
     @Override
     public int getItemCount() {

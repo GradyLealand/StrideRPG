@@ -1,8 +1,6 @@
 package stride.com.striderpg.rpg.generators;
 
 
-import android.util.Log;
-
 import java.util.Random;
 
 import stride.com.striderpg.global.G;
@@ -32,20 +30,22 @@ public class OnlineGenerator {
 
         // Check for threshold reached so an online Activity will be generated.
         if (G.onlineActivitySteps > Constants.ONLINE_ACTIVITY_STEP_THRESHOLD) {
-            //roll a random int between 1-100
+
+            // Roll a random int between 1-100
             int roll = rnd.nextInt(100) + 1;
-            //The Players total speed
+
+            // The Players total speed
             int totalSpeed = G.activePlayer.getSkills().getSpeed() + G.activePlayer.getEquipment().getItem(Enums.ItemType.BOOTS).getStatBoost();
+
             // Reset current sessions steps counter and generate a new
             // default Activity.
             G.onlineActivitySteps = 0;
 
-            //if the roll + speed modifier is grater then the encounter chance, trigger an encounter
-            if(roll + (totalSpeed / 2) > Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT)
+            // If the roll + speed modifier is greater then the encounter chance, trigger an encounter
+            if (roll + (totalSpeed / 2) > Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT)
             {
                 // Generate an Activity to represent a Player Encountering an Enemy.
                 Activity activity = ActivityGenerator.generateActivityOfType(Enums.ActivityType.ENEMY);
-
                 activity.setTimestamp(TimeParser.makeTimestamp());
 
                 // Add new Activity to Players ActivityLog.
@@ -58,5 +58,4 @@ public class OnlineGenerator {
             }
         }
     }
-
 }

@@ -1,6 +1,7 @@
 package stride.com.striderpg.fragments.Bestiary;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,14 +44,10 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
 
     /**
      * Method called on each EnemyViewHolder instantiated.
-     * @param viewGroup ViewGroup that will contain the children
-     *                  (Bestiary elements) -> enemies.
-     * @param i Index of current enemy being inflated from enemies
-     *          ArrayList.
-     * @return New EnemyViewHolder with enemies.get(i)'s properties set.
      */
+    @NonNull
     @Override
-    public EnemyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public EnemyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.fragment_bestiary_item, viewGroup, false);
         return new EnemyViewHolder(v);
@@ -63,24 +60,17 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
      * @param i Index of current enemy being bound to EnemyViewHolder.
      */
     @Override
-    public void onBindViewHolder(EnemyViewHolder enemyViewHolder, int i) {
+    public void onBindViewHolder(@NonNull EnemyViewHolder enemyViewHolder, int i) {
         enemyViewHolder.bestiaryName.setText(enemies.get(i).getName());
-        enemyViewHolder.bestiaryAmount.setText(String.format(
-                G.locale,
-                "%d",
-                G.activePlayer.getBestiary().getEnemies().get(
-                        enemies.get(i).getType().name()
-                    )
-                )
-        );
-        enemyViewHolder.bestiaryImage.setImageResource(
-                enemies.get(i).getIcon()
-        );
+        enemyViewHolder.bestiaryAmount.setText(
+                String.format(G.locale, "%d", G.activePlayer.getBestiary().getEnemies()
+                        .get(enemies.get(i).getType().name())));
+
+        enemyViewHolder.bestiaryImage.setImageResource(enemies.get(i).getIcon());
     }
 
     /**
-     * Returns the enemies ArrayList size.
-     * @return enemies ArrayList size.
+     * Get count of enemies ArrayList.
      */
     @Override
     public int getItemCount() {
@@ -93,6 +83,7 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
      * required properties and elements.
      */
     static class EnemyViewHolder extends RecyclerView.ViewHolder {
+
         /**
          * CardView container that holds all EnemyView data.
          */
@@ -116,7 +107,6 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
         /**
          * EnemyViewHolder constructor to set class properties to
          * elements contained in the itemView passed.
-         * @param itemView View this Enemy is inside of.
          */
         EnemyViewHolder(View itemView) {
             super(itemView);
@@ -126,5 +116,4 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
             bestiaryImage = itemView.findViewById(R.id.bestiary_image);
         }
     }
-
 }

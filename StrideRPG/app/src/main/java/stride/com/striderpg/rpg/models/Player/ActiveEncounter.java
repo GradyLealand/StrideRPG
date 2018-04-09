@@ -51,6 +51,7 @@ public class ActiveEncounter {
      * Construct an ActiveEncounter using the properties passed to method.
      */
     public ActiveEncounter(boolean active, Boss activeEncounter) {
+
         this.active = active;
         this.boss = activeEncounter;
     }
@@ -58,10 +59,10 @@ public class ActiveEncounter {
     /**
      * Implementation of a ActiveEncounters toString method to print out the
      * properties of a ActiveEncounter object.
-     * @return Properties of the ActiveEncounter object.
      */
     @Override
     public String toString() {
+
         return "ActiveEncounter{" +
                 "active=" + active +
                 ", boss=" + boss +
@@ -71,17 +72,17 @@ public class ActiveEncounter {
     /**
      * Attach a new PropertyChangeListener to this classes
      * PropertyChangeSupport object.
-     * @param listener Listener implementation.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
+
         changes.addPropertyChangeListener(listener);
     }
 
     /**
      * Check if a Boss has expired based on the current DateTime.
-     * @return Boolean if Boss has expired.
      */
     public boolean checkExpired() {
+
         DateTime now = new DateTime(DateTimeZone.UTC);
         return now.isAfter(TimeParser.parseTimestamp(boss.getExpiration()));
     }
@@ -90,6 +91,7 @@ public class ActiveEncounter {
      * Method for resetting and expiring a Boss once the checkExpired is True.
      */
     public void expire() {
+
         // Update Players Stats/QuestLog on Boss expire.
         G.activePlayer.getStats().updateBossesExpired();
         G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_BOSSES, 1);
@@ -109,9 +111,9 @@ public class ActiveEncounter {
 
     /**
      * Attack the current Boss and decrement it's health by the steps passed to the method.
-     * @param steps Steps to decrement Boss health by.
      */
     public void attackBoss(Integer steps) {
+
         // Decrease Bosses health by the amount of steps passed to method.
         boss.setHealth(boss.getHealth() - steps);
 
@@ -126,6 +128,7 @@ public class ActiveEncounter {
      * Defeat the current Boss and set Players experience and statistics properties.
      */
     public void defeatBoss() {
+
         // Increment Active Players experience with Experience reward from Boss.
         G.activePlayer.setExperience(G.activePlayer.getExperience() + boss.getExperienceReward());
 
@@ -145,6 +148,7 @@ public class ActiveEncounter {
 
         // Give Player the Items rewarded from Boss fight.
         for (Item reward : boss.getRewards()) {
+
             // Create a temporary Item to hold the Active Players current Item of the Type
             // generated from defeating the Boss.
             Item temp = G.activePlayer.getEquipment().getItem(reward.getType());
@@ -152,6 +156,7 @@ public class ActiveEncounter {
             // Compare both Item's, if the reward Item's stat boost is greater than
             // the temporary Item storing active Player's current Item, then replace.
             if (reward.compare(temp)) {
+
                 G.activePlayer.getEquipment().replaceItem(reward.getType(), reward);
 
                 // Generate an Activity that corresponds to this new Loot
