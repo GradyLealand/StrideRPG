@@ -69,6 +69,19 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
         enemyViewHolder.bestiaryImage.setImageResource(enemies.get(i).getIcon());
     }
 
+    public void update(Enums.Enemies enemy) {
+        for (Enemy e : enemies) {
+            if (e.getType() == enemy) {
+                enemies.remove(e);
+                enemies.add(e);
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+
+
     /**
      * Get count of enemies ArrayList.
      */
