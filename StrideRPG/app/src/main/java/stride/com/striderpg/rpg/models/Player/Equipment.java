@@ -4,7 +4,6 @@ package stride.com.striderpg.rpg.models.Player;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
-import java.util.Map;
 
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Item.Item;
@@ -42,6 +41,7 @@ public class Equipment {
      */
     @Override
     public String toString() {
+
         return "Equipment{" +
                 "slots=" + slots +
                 '}';
@@ -50,36 +50,35 @@ public class Equipment {
     /**
      * Attach a new PropertyChangeListener to this classes
      * PropertyChangeSupport object.
-     * @param listener Listener implementation.
      */
     public void addPropertychangeListener(PropertyChangeListener listener) {
+
         changes.addPropertyChangeListener(listener);
     }
 
     /**
      * Replace a slot in the Equipment with a new Item.
-     * @param type Item type / Equipment slot being replaced.
-     * @param item Item being set to equipment slot.
      */
     public void replaceItem(Enums.ItemType type, Item item) {
+
         slots.put(type.name(), item);
     }
 
     /**
      * Retrieve a specific item by ItemType from slots HashMap.
-     * @return Item.
      */
     public Item getItem(Enums.ItemType type) {
+
         return slots.get(type.name());
     }
 
     /**
      * Set an item at a specific slot to null.
-     * @param type ItemType to set to null.
      */
     public void destroyItem(Enums.ItemType type) {
         slots.put(type.name(), null);
     }
+
     public HashMap<String, Item> getSlots() {
         return slots;
     }

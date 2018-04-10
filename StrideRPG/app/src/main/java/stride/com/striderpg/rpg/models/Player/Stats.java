@@ -62,7 +62,6 @@ public class Stats {
     /**
      * Implementation of a Stats toString method to print out the
      * properties of a Stats object.
-     * @return Properties of the Stats object.
      */
     @Override
     public String toString() {

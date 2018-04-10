@@ -41,13 +41,13 @@ public class FirebaseDBUtil {
      * the players node on a successful push.
      */
     public void pushPlayer(Player player) {
+
         // Access specified player in the database by traversing the
         // Firebase Database (users -> uniqueId -> player).
         try {
             database.child(DBKeys.USERS_KEY)
                     .child(player.getUniqueId())
                     .setValue(player);
-            Log.d(TAG, "pushPlayer:success");
         } catch (Exception e) {
             Log.e(TAG, "pushPlayer:error", e);
         }

@@ -36,12 +36,9 @@ public class FitnessUtil {
 
     /**
      * FitnessUtil Constructor for setting the users GoogleSignInAccount.
-     * @param account GoogleSignInAccount reference used to
-     *                authenticate any calls to readData().
      */
     public FitnessUtil(GoogleSignInAccount account) {
         this.account = account;
-        Log.d(TAG, "FitnessUtil:success:account=" + account.getId());
     }
 
     /**
@@ -54,7 +51,7 @@ public class FitnessUtil {
                     .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
 
                     // Add a new OnSuccessListener to deal with updating the current
-                    // Players steps when the application reads new data from the Fitness api.
+                    // Players steps when the application reads new data from the Fitness Api.
                     .addOnSuccessListener(new OnSuccessListener<DataSet>() {
                                 @Override
                                 public void onSuccess(DataSet dataSet) {
@@ -62,13 +59,12 @@ public class FitnessUtil {
                                                     .get(0)
                                                     .getValue(Field.FIELD_STEPS)
                                                     .asInt();
-                                    Log.d(TAG, "readData:onSuccess:value=" + total);
                                     G.activePlayer.updateSteps(total);
                                 }
                             })
 
                     // Add a new OnFailureListener to dea, with any unexpected failures while
-                    // attempting to read data from the Fitness api.
+                    // attempting to read data from the Fitness Api.
                     .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {

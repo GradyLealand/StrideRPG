@@ -42,11 +42,6 @@ public class Item {
 
     /**
      * Constructor to set all Item properties.
-     * @param name Item name.
-     * @param description Item description.
-     * @param type Item Type Enumeration.
-     * @param rarity Item Rarity Enumeration.
-     * @param statBoost Item stat boost.
      */
     public Item(String name, String description, Integer icon, Enums.ItemType type, Enums.ItemRarity rarity, Integer statBoost) {
         this.name = name;
@@ -59,9 +54,6 @@ public class Item {
 
     /**
      * Compare this Item to another Item.
-     * @param item Item being compared to this.
-     * @return True or False if this Item's stat boost
-     * is less than the item passed as a parameter.
      */
     public boolean compare(Item item) {
         return this.statBoost > item.getStatBoost();

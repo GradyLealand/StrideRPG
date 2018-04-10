@@ -65,9 +65,6 @@ public class SplashActivity extends AppCompatActivity {
     /**
      * Override the onActivityResult callback to deal with the users
      * selection on permission request.
-     * @param requestCode Request code from permission request.
-     * @param resultCode Result of permission request.
-     * @param data Intent data coming from request.
      */
     @Override
     protected void onActivityResult(int requestCode,

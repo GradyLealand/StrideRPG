@@ -206,7 +206,6 @@ public class DashboardFragment extends Fragment {
     /**
      * Finish the ActiveEncounter with the specified Activity.
      * Either from defeating the Boss, or the Boss expiring.
-     * @param activity Activity to append to Dashboard Activities.
      */
     private void finishActiveEncounter(Activity activity) {
         activeEncounterCard.setVisibility(View.GONE);
@@ -216,7 +215,6 @@ public class DashboardFragment extends Fragment {
     /**
      * Insert a new generic Activity directly into the ActivityGenerator
      * ArrayList and notify the Adapter.
-     * @param activity Activity to append to the Dashboard Activities.
      */
     private void addDashboardActivity(Activity activity) {
         activityAdapter.add(activity);
@@ -247,7 +245,6 @@ public class DashboardFragment extends Fragment {
     /**
      * Update the Dashboards steps TextView with the passed
      * parameter with commas added.
-     * @param newValue New steps amount.
      */
     private void updateStepsTextView(Integer newValue) {
         stepsText.setText(String.format(G.locale, "%s", addCommasToInteger(newValue)));
@@ -255,7 +252,6 @@ public class DashboardFragment extends Fragment {
 
     /**
      * Update the Dashboards level TextView with the passed parameter.
-     * @param newValue New level amount.
      */
     private void updateLevelText(Integer newValue) {
         levelText.setText(String.format(G.locale, "%d", newValue));
@@ -263,7 +259,6 @@ public class DashboardFragment extends Fragment {
 
     /**
      * Update the Dashboard playerLevelProgressBarElement with the specified amount.
-     * @param amount New Player experience amount.
      */
     private void updateLevelProgressBar(Integer amount) {
         playerLevelProgressBar.setMax(
@@ -275,8 +270,6 @@ public class DashboardFragment extends Fragment {
 
     /**
      * Format a number into a String with the appropriate commas.
-     * @param number Number to format.
-     * @return Number with commas as a String.
      */
     private String addCommasToInteger(Integer number) {
         return NumberFormat.getIntegerInstance().format(number);
@@ -284,7 +277,6 @@ public class DashboardFragment extends Fragment {
 
     /**
      * Parse out a String representing the currentExp/expToLevel.
-     * @return  Helpful String to show user exp/exp needed.
      */
     private String parseExpAmount(Integer exp) {
         return LevelGenerator.getReadableExpString(exp, G.activePlayer.getLevel());
@@ -293,9 +285,6 @@ public class DashboardFragment extends Fragment {
     /**
      * Parse out a String representing a specific levels required
      * experience needed to level up.
-     * @param exp Experience passed used as current exp.
-     * @param level Level used to determined exp needed.
-     * @return String for exp/exp needed.
      */
     private String parseExpAmount(Integer exp, Integer level) {
         return LevelGenerator.getReadableExpString(exp, level);

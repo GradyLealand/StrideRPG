@@ -41,7 +41,6 @@ public class EquipmentGenerator {
 
     /**
      * Gets the items ArrayList.
-     * @return ArrayList items.
      */
     public ArrayList<Item> getItems() {
         return items;

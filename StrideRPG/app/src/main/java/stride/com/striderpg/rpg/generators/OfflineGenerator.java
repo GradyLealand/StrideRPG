@@ -31,6 +31,7 @@ public class OfflineGenerator {
      * take place for them in that time.
      */
     public static void calculateOfflineActivities() {
+
         Log.d(TAG, "calculateOfflineActivities:begin");
 
         // Create date objects to hold the old date and the new current date.
@@ -87,6 +88,7 @@ public class OfflineGenerator {
         // Loop for each offlineActivities integer. Use it to generate a new
         // Activity for each one.
         for (int i = 0; i < offlineActivities; i++) {
+
             // Generate a random date for this activity between the
             // old and now DateTime.
             long random = ThreadLocalRandom.current().nextLong(old.getMillis(), now.getMillis());

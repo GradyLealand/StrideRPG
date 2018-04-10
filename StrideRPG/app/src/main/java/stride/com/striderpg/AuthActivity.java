@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import stride.com.striderpg.database.DBKeys;
 import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.fit.FitnessUtil;
@@ -126,7 +128,6 @@ public class AuthActivity extends AppCompatActivity {
     /**
      * Override the onActivityResult function and check for a Google Sign In result using the
      * GOOGLE_SIGN_IN_REQUEST code.
-     * @param requestCode int representing the activity completed.
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -146,12 +147,12 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     /**
-     * Subscribe to the Fitness api's recording client. On a successful subscription,
+     * Subscribe to the Fitness Api recording client. On a successful subscription,
      * the global FitnessUtil instance is passed the Context and GoogleSignInAccount
      * for accessing the data and steps for the logged in user.
      */
     public void subscribe() {
-        Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
+        Fitness.getRecordingClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
                 .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
                 .addOnCompleteListener(
                         new OnCompleteListener<Void>() {
@@ -174,7 +175,6 @@ public class AuthActivity extends AppCompatActivity {
      * New up a FitnessUtil Instance as the Global fitnessUtil object using the
      * constructor method to set the Context and GoogleSignInAccount used to read
      * data from the api.
-     * @param account GoogleSignInAccount.
      */
     public void setupFitness(GoogleSignInAccount account) {
         // Create the global FitnessUtil instance for querying the Fitness api
@@ -185,8 +185,9 @@ public class AuthActivity extends AppCompatActivity {
     /**
      * Main Firebase authentication method. Showing a ProgressBar while the task is
      * taking place. A successful authentication will add the user to the Firebase console
-     * for this project. @ https://console.firebase.google.com/u/0/project/stride-rpg/
-     * @param account GoogleSignInAccount for current user.
+     * for this project.
+     *
+     * https://console.firebase.google.com/u/0/project/stride-rpg/
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         authTask.setText(R.string.auth_authenticate);
@@ -258,10 +259,10 @@ public class AuthActivity extends AppCompatActivity {
     /**
      * Check a FirebaseUser for a null object or not null. A non null user means the user
      * has been successfully authenticated. Otherwise attempt to sign in again.
-     * @param user FirebaseUser object.
      */
     private void checkUser(FirebaseUser user) {
         if (user != null) {
+
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
             // Create a reference to the DatabaseReference at the users parent node.
@@ -294,7 +295,7 @@ public class AuthActivity extends AppCompatActivity {
                         }
                     } else {
                         authTask.setText(R.string.auth_gen_new);
-                        G.activePlayer = new Player(mAuth.getCurrentUser());
+                        G.activePlayer = new Player(Objects.requireNonNull(mAuth.getCurrentUser()));
                         FirebaseDBUtil db = new FirebaseDBUtil();
 
                         // New Player for user created, push directly to database.
@@ -314,7 +315,6 @@ public class AuthActivity extends AppCompatActivity {
 
         // If user is null, attempt to sign the user in again through Google.
         } else {
-            // TODO: Add more functionality to Auth Activity for choosing to log into Google account.
             signIn();
         }
     }

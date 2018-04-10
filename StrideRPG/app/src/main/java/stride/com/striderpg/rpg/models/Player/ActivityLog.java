@@ -45,6 +45,7 @@ public class ActivityLog {
      */
     @Override
     public String toString() {
+
         return "ActivityLog{" +
                 "log=" + log +
                 '}';
@@ -53,15 +54,14 @@ public class ActivityLog {
     /**
      * Attach a new PropertyChangeListener to this classes
      * PropertyChangeSupport object.
-     * @param listener Listener implementation.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
+
         changes.addPropertyChangeListener(listener);
     }
 
     /**
      * Add a new Activity to the ActivityLog log.
-     * @param activity Activity being added to the log.
      */
     public void addActivity(Activity activity) {
         log.put(activity.getTimestamp(), activity);
@@ -70,9 +70,9 @@ public class ActivityLog {
     /**
      * Add a new Activity to the ActivityLog log.
      * Also fire a property changed event for dealing with ui.
-     * @param activity Activity being added to the log.
      */
     public void addOnlineActivity(Activity activity) {
+
         changes.firePropertyChange(Constants.PROPERTY_ONLINE_ACTIVITY, null, activity);
         log.put(activity.getTimestamp(), activity);
     }
@@ -82,6 +82,7 @@ public class ActivityLog {
      * then the threshold defined in the global constants class.
      */
     public void cleanHistory() {
+
         // Create a Date for the current time - hours constant.
         DateTime twelveHoursAgo =  TimeParser.getCurrentTimeMinusHours(Constants.ACTIVITY_CLEANUP_THRESHOLD_HOURS);
 
@@ -99,7 +100,6 @@ public class ActivityLog {
 
     /**
      * Retrieve the Players log HashMap.
-     * @return log HashMap.
      */
     public HashMap<String, Activity> getLog() {
         return log;

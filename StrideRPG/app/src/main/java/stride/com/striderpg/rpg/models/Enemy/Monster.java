@@ -19,11 +19,6 @@ public class Monster extends Enemy {
 
     /**
      * Construct an enemy with the passed parameters.
-     * @param name Monster name property.
-     * @param type Monster type property.
-     * @param health Monster health property.
-     * @param icon Path to enemy image asset.
-     * @param experienceReward Experience reward for defeating this enemy.
      */
     public Monster(String name, Enums.Enemies type, Integer level, Integer health,
                    Integer icon, Integer experienceReward) {

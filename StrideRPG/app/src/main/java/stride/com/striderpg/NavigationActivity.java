@@ -91,11 +91,11 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Set the current Players last signed in date as they leave the app.
         G.activePlayer.setLastSignedIn(TimeParser.makeTimestamp());
+
         // Create a database utility and push the active Player to the database.
         FirebaseDBUtil db = new FirebaseDBUtil();
-        db.pushPlayer(G.activePlayer);
 
-        Log.d(TAG, "onStop:success");
+        db.pushPlayer(G.activePlayer);
     }
 
     /**
@@ -107,7 +107,6 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
-        Log.d(TAG, "showDashboard:success");
     }
 
     /**
@@ -119,7 +118,6 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
-        Log.d(TAG, "showQuests:success");
     }
 
     /**
@@ -131,7 +129,6 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
-        Log.d(TAG, "showInventory:success");
     }
 
     /**
@@ -143,7 +140,6 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.leaderboardsFragment).commit();
-        Log.d(TAG, "showBestiary:success");
     }
 
     /**
@@ -155,7 +151,6 @@ public class NavigationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(generator.questsFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.bestiaryFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(generator.equipmentFragment).commit();
-        Log.d(TAG, "showLeaderboards:success");
     }
 
     /**
@@ -163,6 +158,7 @@ public class NavigationActivity extends AppCompatActivity {
      * for the DashboardFragment.
      */
     private void addFragments() {
+
         // Add the Dashboard to the fragmentContainer.
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, generator.dashboardFragment)
@@ -186,7 +182,5 @@ public class NavigationActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainer, generator.leaderboardsFragment)
                 .hide(generator.leaderboardsFragment)
                 .commit();
-
-        Log.d(TAG, "addFragments:success");
     }
 }

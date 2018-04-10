@@ -1,6 +1,7 @@
 package stride.com.striderpg.fragments.Leaderboards;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,14 +45,10 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
 
     /**
      * Method called on each PlayerViewHolder instantiated.
-     * @param viewGroup ViewGroup that will contain the children
-     *                  (Leaderboard elements) -> players.
-     * @param i Index of current player being inflated from players
-     *          ArrayList.
-     * @return New PlayerViewHolder with players.get(i)'s properties set.
      */
+    @NonNull
     @Override
-    public PlayerViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.fragment_leaderboards_item, viewGroup, false);
         return new PlayerViewHolder(v);
@@ -64,7 +61,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
      * @param i Index of current player being bound to PlayerViewHolder.
      */
     @Override
-    public void onBindViewHolder(PlayerViewHolder playerViewHolder, int i) {
+    public void onBindViewHolder(@NonNull PlayerViewHolder playerViewHolder, int i) {
         playerViewHolder.playerRank.setText(parsePlayerRank(i));
         playerViewHolder.playerUsername.setText(players.get(i).getUsername());
         playerViewHolder.playerLevel.setText(String.format(
@@ -83,8 +80,6 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
      * Parse out a Players rank based on their position in the sorted players
      * ArrayList, a Player in the top 10 will have their rank (0#).
      * Otherwise their rank is just their index + 1.
-     * @param i Players index in ArrayList.
-     * @return Player rank String.
      */
     private String parsePlayerRank(int i) {
         if (i < 10) {
@@ -96,7 +91,6 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
 
     /**
      * Returns the players ArrayList size.
-     * @return players ArrayList size.
      */
     @Override
     public int getItemCount() {
@@ -143,7 +137,6 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         /**
          * PlayerViewHolder constructor to set class properties
          * to elements contained in the itemView passed.
-         * @param itemView View this Player is inside of.
          */
         PlayerViewHolder(View itemView) {
             super(itemView);

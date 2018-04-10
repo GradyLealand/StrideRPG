@@ -40,10 +40,6 @@ public class Activity {
     /**
      * Custom constructor to build an Activity with the parameters
      * passed to constructor.
-     * @param timestamp Activity timestamp.
-     * @param activityType ActivityType enum.
-     * @param description Activity description.
-     * @param activityIconId Drawable activity icon id.
      */
     public Activity(String timestamp, Enums.ActivityType activityType, String description,
                     Integer activityIconId) {
@@ -56,7 +52,6 @@ public class Activity {
     /**
      * Implementation of an Activities toString method to print out
      * the properties of the Activity.
-     * @return Properties of the Activity object.
      */
     @Override
     public String toString() {

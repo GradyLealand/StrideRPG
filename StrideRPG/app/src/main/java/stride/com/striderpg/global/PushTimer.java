@@ -43,7 +43,6 @@ public class PushTimer {
         public void run() {
             try {
                 db.pushPlayer(G.activePlayer);
-                Log.d(TAG, "pushPlayer:success");
             } catch (Exception e) {
                 Log.e(TAG, "databasePusher:pushPlayer:error", e);
             }
@@ -58,7 +57,6 @@ public class PushTimer {
         public void run() {
             try {
                 G.fitnessUtil.readData();
-                Log.d(TAG, "readData:success");
             } catch (Exception e) {
                 Log.e(TAG, "fitnessPusher:readData:error", e);
             }

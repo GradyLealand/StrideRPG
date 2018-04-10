@@ -111,9 +111,9 @@ public class Player {
     /**
      * Construct a Player using a FirebaseUser object to create an
      * empty (new) player object.
-     * @param user FirebaseUser Object to retrieve information about the player.
      */
     public Player(FirebaseUser user) {
+
         this.uniqueId = user.getUid();
         this.username = user.getDisplayName();
         this.email = user.getEmail();
@@ -134,10 +134,10 @@ public class Player {
     /**
      * Implementation of a Players toString method to print out the
      * properties of a Player object.
-     * @return Properties of the Player object.
      */
     @Override
     public String toString() {
+
         return "Player{" +
                 "uniqueId='" + uniqueId + '\'' +
                 ", username='" + username + '\'' +
@@ -159,19 +159,18 @@ public class Player {
     /**
      * Attach a new PropertyChangeListener to this classes
      * PropertyChangeSupport object.
-     * @param listener Listener implementation.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
+
         changes.addPropertyChangeListener(listener);
     }
 
     /**
      * Determines if a Player can level up or not by comparing
-     * their experience with the experience required to reach their
-     * next level.
-     * @return Boolean for if Player should be levelled up.
+     * their experience with the experience required to reach their next level.
      */
     public boolean canLevelUp() {
+
         return this.getExperience() > LevelGenerator.experienceToNextLevel(this.getLevel());
     }
 
@@ -181,6 +180,7 @@ public class Player {
      * event is fired. A Players exp is also set on a level up.
      */
     public void levelUp() {
+
         // Set users experience to the proper amount so exp is carried over on level up.
         this.setExperience(this.getExperience() - LevelGenerator.experienceToNextLevel(this.getLevel()));
         this.setLevel(this.getLevel() + 1);
@@ -192,7 +192,6 @@ public class Player {
     /**
      * Calculate and update a users steps property based on the amount
      * of total steps for the current day.
-     * @param total Total steps taken from Fitness api for current day.
      */
     public void updateSteps(Integer total) {
 
@@ -202,7 +201,7 @@ public class Player {
             G.lastStepCount = total;
         } else {
             if (total >= 0) {
-                Integer steps = (total - G.lastStepCount);
+                Integer steps = (total - G.lastStepCount) + 500;
 
                 // Increment user steps by new steps calculated.
                 this.setSteps(this.getSteps() + (steps));
@@ -251,11 +250,12 @@ public class Player {
     /**
      * Calculate and update a users experience based on the enemy
      * passed to the method.
-     * @param enemy Monster being defeated.
      */
     public boolean fightEnemy(Monster enemy) {
+
         int totalStrength = this.skills.getStrength() + this.getEquipment().getItem(Enums.ItemType.WEAPON).getStatBoost();
         int totalVitality = this.skills.getVitality() + this.getEquipment().getItem(Enums.ItemType.HELMET).getStatBoost();
+
         // Create a new Random instance for rolling.
         Random r = new Random();
 
