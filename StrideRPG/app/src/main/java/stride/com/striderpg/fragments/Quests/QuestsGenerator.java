@@ -38,10 +38,6 @@ public class QuestsGenerator {
         quests.addAll(G.activePlayer.getQuestLog().getQuests().values());
     }
 
-    /**
-     * Gets the quests ArrayList.
-     * @return ArrayList quests.
-     */
     public ArrayList<Quest> getQuests() {
         return quests;
     }

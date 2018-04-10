@@ -70,6 +70,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
             case BOOTS: skillBoost = "Speed"; break;
             case HELMET: skillBoost = "Vitality"; break;
         }
+
         equipmentViewHolder.itemStatBoost.setText(
                 String.format(G.locale,
                         "+%d %s",
@@ -78,6 +79,9 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         );
     }
 
+    /**
+     * Get count of items ArrayList.
+     */
     @Override
     public int getItemCount() {
         return items.size();

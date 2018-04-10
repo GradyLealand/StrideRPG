@@ -32,7 +32,6 @@ public class ItemGenerator {
      * into the function.
      */
     public static Item generate(Player p) {
-
         // Generate a random ItemType Enumeration.
         Enums.ItemType type = Enums.random(Enums.ItemType.class);
 
@@ -56,7 +55,6 @@ public class ItemGenerator {
      * Generate a random item of a specific ItemType.
      */
     public static Item generate(Player p, Enums.ItemType type) {
-
         // Generate a random ItemRarity Enumeration based on percent/weights.
         Enums.ItemRarity rarity = Enums.ItemRarity.weightedRarity();
 
@@ -77,7 +75,6 @@ public class ItemGenerator {
      * Generate a random item of a specific ItemRarity.
      */
     public static Item generate(Player p, Enums.ItemRarity rarity) {
-
         // Generate a random ItemType Enumeration.
         Enums.ItemType type = Enums.random(Enums.ItemType.class);
 
@@ -98,7 +95,6 @@ public class ItemGenerator {
      * Generate a rookie Equipment with an Item of each type in it.
      */
     public static Equipment generateDefaultInventory(Player p) {
-
         // Create a new Equipment object to hold the Inventory.
         Equipment equipment = new Equipment();
 
@@ -114,11 +110,8 @@ public class ItemGenerator {
     /**
      * Parse out a new Items name by choosing a random adjective and appending the Items ItemType enum
      * to the end of the String after fixing the capitalization on the ItemType.
-     * @param type Item Type Enumeration.
-     * @return Random Item name taken from the list of random names possible +
      */
     private static String parseName(Enums.ItemType type) {
-
         return itemAdjectives[new Random().nextInt(itemAdjectives.length)] +
                 " " + type.getName();
     }
@@ -128,7 +121,6 @@ public class ItemGenerator {
      * the Item Rarity enumeration.
      */
     private static String parseDescription(Enums.ItemType type, Enums.ItemRarity rarity) {
-
         switch (type) {
             case WEAPON:
                 return String.format(G.locale, "A %s weapon used to increase your strength!", rarity.getName());

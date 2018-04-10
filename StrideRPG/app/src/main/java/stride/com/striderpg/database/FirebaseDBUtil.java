@@ -41,7 +41,6 @@ public class FirebaseDBUtil {
      * the players node on a successful push.
      */
     public void pushPlayer(Player player) {
-
         // Access specified player in the database by traversing the
         // Firebase Database (users -> uniqueId -> player).
         try {

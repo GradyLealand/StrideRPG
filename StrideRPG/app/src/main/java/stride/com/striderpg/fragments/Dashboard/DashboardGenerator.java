@@ -1,8 +1,6 @@
 package stride.com.striderpg.fragments.Dashboard;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,7 +38,6 @@ public class DashboardGenerator {
      * the Active Players ActivityLog object.
      */
     private void buildDashboard() {
-
         // Adds each Activity to the activities ArrayList.
         activities.addAll(G.activePlayer.getActivityLog().getLog().values());
 
@@ -60,10 +57,6 @@ public class DashboardGenerator {
         });
     }
 
-    /**
-     * Activity ArrayList getter.
-     * @return activities ArrayList.
-     */
     public ArrayList<Activity> getActivities() {
         return activities;
     }

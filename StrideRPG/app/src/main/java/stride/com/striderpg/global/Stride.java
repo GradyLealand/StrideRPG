@@ -18,7 +18,6 @@ public class Stride extends Application {
 
     /**
      * Retrieve this instance.
-     * @return Stride object.
      */
     public static Stride getInstance() {
         return instance;
@@ -26,7 +25,6 @@ public class Stride extends Application {
 
     /**
      * Retrieve the application context from the instance.
-     * @return Context for this instance.
      */
     public static Context getContext() {
         return instance.getApplicationContext();

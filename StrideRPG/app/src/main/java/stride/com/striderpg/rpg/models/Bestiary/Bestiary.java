@@ -32,7 +32,6 @@ public class Bestiary {
      * DataSnapshot.getValue(Bestiary.class).
      */
     public Bestiary() {
-
         // Loop through each enemy type available and put a default value of 0 into the HashMap
         // with the Enemies as the key.
         for (Enums.Enemies enemyType : Enums.Enemies.values()) {
@@ -54,7 +53,6 @@ public class Bestiary {
     /**
      * Attach a new PropertyChangeListener to this classes
      * PropertyChangeSupport object.
-     * @param listener PropertyChangeSupport object.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changes.addPropertyChangeListener(listener);
@@ -72,9 +70,6 @@ public class Bestiary {
         );
     }
 
-    /**
-     * Retrieve the Bestiaries enemies HashMap.
-     */
     public HashMap<String, Integer> getEnemies() {
         return enemies;
     }

@@ -298,6 +298,12 @@ public final class Constants {
     public static final String PROPERTY_BESTIARY_UPDATED = "BESTIARY_UPDATED";
 
     /**
+     * Constant for firing and accessing a PropertyChangeEvents
+     * for the quest log property on a Player.
+     */
+    public static final String PROPERTY_QUEST_LOG_UPDATED = "QUESTLOG UPDATED";
+
+    /**
      * Constant used to determine the amount of milliseconds
      * (long seconds) in between every active player database push.
      */
@@ -317,7 +323,7 @@ public final class Constants {
     /**
      * Constant for generic defeat enemies quest description.
      */
-    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies.";
+    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat Enemies.";
 
     /**
      * Constant for generic defeat bosses quest title.
@@ -327,7 +333,7 @@ public final class Constants {
     /**
      * Constant for generic defeat bosses quest description.
      */
-    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat bosses.";
+    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat Bosses.";
 
     /**
      * Constant for generic failed to defeat enemies quest title.
@@ -335,14 +341,19 @@ public final class Constants {
     public static final String QUEST_FAIL_DEFEAT_ENEMIES_TITLE = "Failed To Defeat Enemies";
 
     /**
+     * Constant for generic defeat enemies quest description.
+     */
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed To Defeat Enemies.";
+
+    /**
      * Constant for failed to defeat bosses in time quest title.
      */
-    public static final String QUEST_FAIL_DEFEAT_BOSSES_TITLE = "Failed to Defeat Bosses in time.";
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_TITLE = "Failed To Defeat Bosses.";
 
     /**
      * Constant for failed to defeat bosses in time description.
      */
-    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses.";
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to Defeat Bosses.";
 
     /**
      * Constant for generic loot items quest title.
@@ -353,11 +364,6 @@ public final class Constants {
      * Constant for generic loot items quest description.
      */
     public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items.";
-
-    /**
-     * Constant for generic defeat enemies quest description.
-     */
-    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to defeat enemies.";
 
     /**
      * Constant for generic take steps quest title.

@@ -36,7 +36,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
 
     /**
      * Constructor that sets the activities ArrayList.
-     * @param activities Activity ArrayList.
      */
     DashboardAdapter(ArrayList<Activity> activities) {
         this.activities = activities;
@@ -56,9 +55,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
     /**
      * Method called when the ActivityViewHolder is being bound to its
      * proper Activity located in the activities ArrayList.
-     * @param activityViewHolder Current ActivityViewHolder being bound.
-     * @param i Index of current enemy being bound to
-     *          ActivityViewHolder.
      */
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder activityViewHolder, int i) {
@@ -123,7 +119,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
         /**
          * ActivityViewHolder constructor to set class properties to
          * elements contained in the itemView passed.
-         * @param itemView View this Activity is inside of.
          */
         ActivityViewHolder(View itemView) {
             super(itemView);

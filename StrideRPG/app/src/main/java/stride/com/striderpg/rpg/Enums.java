@@ -7,7 +7,6 @@ import java.util.Random;
 
 import stride.com.striderpg.R;
 
-
 /**
  * Enums Class to store any Enumeration Types and the custom functionality
  * contained in each one. Many of these Enumerations are used to generate rpg
@@ -55,17 +54,6 @@ public class Enums {
         }
 
         /**
-         * Gets the name property.
-         */
-        public String getName() {
-            return name;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        /**
          * Get a random ItemRarity based on weighted percentages.
          * TODO : Move weights out into the Constants class.
          * COMMON = 65%
@@ -81,6 +69,13 @@ public class Enums {
             if ((d -= 15) < 0) return RARE;
             if ((d - 7) < 0) return EPIC;
             return LEGENDARY;
+        }
+
+        public String getName() {
+            return name;
+        }
+        public String getColor() {
+            return color;
         }
     }
 
@@ -104,9 +99,6 @@ public class Enums {
             this.name = name;
         }
 
-        /**
-         * Gets the name property.
-         */
         public String getName() {
             return name;
         }
@@ -173,23 +165,12 @@ public class Enums {
             return enemies.get(random.nextInt(enemies.size()));
         }
 
-        /**
-         * Gets the name property.
-         */
         public String getName() {
             return name;
         }
-
-        /**
-         * Gets the type property.
-         */
         public EnemyType getType() {
             return type;
         }
-
-        /**
-         * Gets the icon resource id.
-         */
         public Integer getEnemyIcon() {
             return enemyIcon;
         }
@@ -250,30 +231,15 @@ public class Enums {
             return tempTiers.get(0);
         }
 
-        /**
-         * Gets the number property.
-         */
         public Integer getNumber() {
             return number;
         }
-
-        /**
-         * Gets the numeral property.
-         */
         public String getNumeral() {
             return numeral;
         }
-
-        /**
-         * Gets the expires property.
-         */
         public Integer getExpires() {
             return expires;
         }
-
-        /**
-         * Gets the eligible property.
-         */
         public Integer getEligible() {
             return eligible;
         }
@@ -313,13 +279,6 @@ public class Enums {
         }
 
         /**
-         * Gets the name property.
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
          * Gets a random generic ActivityType.
          * A generic ActivityType includes the LOOT and ENEMY types.
          */
@@ -331,36 +290,22 @@ public class Enums {
             else
                 return ENEMY;
         }
+
+        public String getName() {
+            return name;
+        }
     }
 
     /**
      * QuestType enumeration to store the different quests inside of the game.
      */
     public enum QuestType {
-        DEFEAT_ENEMIES(
-                Constants.QUEST_DEFEAT_ENEMIES_TITLE,
-                Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION
-        ),
-        DEFEAT_BOSSES(
-                Constants.QUEST_DEFEAT_BOSSES_TITLE,
-                Constants.QUEST_DEFEAT_BOSSES_DESCRIPTION
-        ),
-        FAIL_DEFEAT_ENEMIES(
-                Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE,
-                Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION
-        ),
-        FAIL_DEFEAT_BOSSES(
-                Constants.QUEST_FAIL_DEFEAT_BOSSES_TITLE,
-                Constants.QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION
-        ),
-        LOOT_ITEMS(
-                Constants.QUEST_LOOT_ITEMS_TITLE,
-                Constants.QUEST_LOOT_ITEMS_DESCRIPTION
-        ),
-        TAKE_STEPS(
-                Constants.QUEST_TAKE_STEPS_TITLE,
-                Constants.QUEST_TAKE_STEPS_DESCRIPTION
-        );
+        DEFEAT_ENEMIES(Constants.QUEST_DEFEAT_ENEMIES_TITLE, Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION),
+        DEFEAT_BOSSES(Constants.QUEST_DEFEAT_BOSSES_TITLE, Constants.QUEST_DEFEAT_BOSSES_DESCRIPTION),
+        FAIL_DEFEAT_ENEMIES(Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE, Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION),
+        FAIL_DEFEAT_BOSSES(Constants.QUEST_FAIL_DEFEAT_BOSSES_TITLE, Constants.QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION),
+        LOOT_ITEMS(Constants.QUEST_LOOT_ITEMS_TITLE, Constants.QUEST_LOOT_ITEMS_DESCRIPTION),
+        TAKE_STEPS(Constants.QUEST_TAKE_STEPS_TITLE, Constants.QUEST_TAKE_STEPS_DESCRIPTION);
 
         /**
          * QuestType title.
@@ -380,16 +325,9 @@ public class Enums {
             this.description = description;
         }
 
-        /**
-         * Gets the title property.
-         */
         public String getTitle() {
             return title;
         }
-
-        /**
-         * Gets the description property.
-         */
         public String getDescription() {
             return description;
         }
@@ -442,16 +380,9 @@ public class Enums {
             return values[(this.ordinal() + 1) % values.length];
         }
 
-        /**
-         * Gets the numeral property.
-         */
         public String getNumeral() {
             return numeral;
         }
-
-        /**
-         * Gets the goal property.
-         */
         public Integer getGoal() { return goal; }
     }
 }

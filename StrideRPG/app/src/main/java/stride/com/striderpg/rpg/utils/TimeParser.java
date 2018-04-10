@@ -70,7 +70,6 @@ public class TimeParser {
      * Create a String Timestamp for the current DateTime.
      */
     public static String makeTimestamp() {
-
         DateTime now = new DateTime(DateTimeZone.UTC);
         return now.toString(dateTimeFormatter);
     }
@@ -86,7 +85,6 @@ public class TimeParser {
      * Gets the difference in long milliseconds between two DateTime objects.
      */
     public static long getDifferenceInMinutes(DateTime start, DateTime end) {
-
         long diff = end.getMillis() - start.getMillis();
         return (diff / 1000) / 60;
     }
@@ -99,7 +97,6 @@ public class TimeParser {
      * DateTime representation.
      */
     public static String toReadable(String timestamp) {
-
         DateTime now = DateTime.now(DateTimeZone.UTC);
         DateTime activity = parseTimestamp(timestamp);
 

@@ -37,7 +37,6 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
 
     /**
      * Constructor that sets the enemies ArrayList.
-     * @param enemies Enemy ArrayList.
      */
     BestiaryAdapter(ArrayList<EnemyDataHolder> enemies) {
         this.enemies = enemies;
@@ -57,8 +56,6 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
     /**
      * Method called when the EnemyViewHolder is being bound to its
      * proper Enemy located in the enemies ArrayList.
-     * @param enemyViewHolder Current EnemyViewHolder being bound.
-     * @param i Index of current enemy being bound to EnemyViewHolder.
      */
     @Override
     public void onBindViewHolder(@NonNull EnemyViewHolder enemyViewHolder, int i) {
@@ -68,8 +65,12 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
         enemyViewHolder.bestiaryImage.setImageResource(enemies.get(i).getEnemy().getIcon());
     }
 
+    /**
+     * Method used to update the Bestiary Adapter by searching through the
+     * ArrayList of EnemyDataHolders and when the correct one is found,
+     * updated the Amount property by 1.
+     */
     public void update(Enums.Enemies enemy) {
-
         // Loop through each EnemyDataHolder and check that current
         // enemy in iteration is equal to enemy being updated.
         for (EnemyDataHolder edh : enemies) {
@@ -91,15 +92,33 @@ public class BestiaryAdapter extends RecyclerView.Adapter<BestiaryAdapter.EnemyV
         return enemies.size();
     }
 
+    /**
+     * EnemyDataHolder Container used to store the Enemy and the Amount defeated
+     * for the ActivePlayer.
+     */
     static class EnemyDataHolder {
+
+        /**
+         * Enemy instance in container.
+         */
         private Enemy enemy;
+
+        /**
+         * Amount of specific enemy defeated.
+         */
         private Integer amount = 0;
 
+        /**
+         * EnemyDataHolder default Constructor.
+         */
         EnemyDataHolder(Enemy enemy, Integer initialAmount) {
             this.enemy = enemy;
             this.amount = initialAmount;
         }
 
+        /**
+         * Update the Amount variable by 1.
+         */
         void updateAmount() {
             this.amount += 1;
         }

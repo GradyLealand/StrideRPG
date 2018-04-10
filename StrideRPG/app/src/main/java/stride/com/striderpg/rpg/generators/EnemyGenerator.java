@@ -40,7 +40,6 @@ public class EnemyGenerator {
      * into the function.
      */
     public static Monster generate(Player p) {
-
         // TODO: Weighted enemy types based on current player level.
         // Choose random enemy type.
         Enums.Enemies enemyType = Enums.Enemies.getRandomEnemiesType(Enums.EnemyType.MONSTER);
@@ -62,7 +61,6 @@ public class EnemyGenerator {
      * Calculate the new enemies level based on the active Player objects current level.
      */
     private static int calculateEnemyLevel(Player p) {
-
         Integer diceRoll = r.nextInt(5);
         int monsterLevel  = (p.getLevel() + 2) - diceRoll;
 
@@ -77,7 +75,6 @@ public class EnemyGenerator {
      * Calculate a new Enemies experience reward based on the active Player objects current level.
      */
     private static int calculateEnemyExp(Player p, Integer l) {
-
         return p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER
                 + (r.nextInt(50) + (Constants.ENEMY_EXPERIENCE_MODIFIER ) * l);
     }
@@ -86,7 +83,6 @@ public class EnemyGenerator {
      * Parse out the new enemies icon asset and return the integer id.
      */
     private static int parseIcon(Enums.Enemies enemyType) {
-
         int iconId = 0;
         try {
             iconId = R.drawable.class.getField(enemyType.getName().toLowerCase()).getInt(null);
@@ -100,15 +96,14 @@ public class EnemyGenerator {
      * Generate a new Monster name using the Enemies and random adjective.
      */
     private static String parseName(Enums.Enemies enemyType) {
-
-        return enemyAdjectives[r.nextInt(enemyAdjectives.length)] + " " + enemyType.getName();
+        return enemyAdjectives[r.nextInt(enemyAdjectives.length)] +
+                " " + enemyType.getName();
     }
 
     /**
      * Calculate a new Enemies health.
      */
     private static int calculateEnemyHealth(Integer level) {
-
         return (level * Constants.ENEMY_HEALTH_MODIFIER) + r.nextInt(10);
     }
 }

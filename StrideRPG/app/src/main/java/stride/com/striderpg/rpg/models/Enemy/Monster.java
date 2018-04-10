@@ -9,6 +9,9 @@ import stride.com.striderpg.rpg.Enums;
  */
 public class Monster extends Enemy {
 
+    /**
+     * Monster level variable.
+     */
     private Integer level;
 
     /**
@@ -26,6 +29,9 @@ public class Monster extends Enemy {
         this.level = level;
     }
 
+    /**
+     * Monster Sub Constructor.
+     */
     public Monster(String name, Enums.Enemies type, Integer icon) {
         this.setName(name);
         this.setType(type);

@@ -15,15 +15,13 @@ public class Equipment {
 
     /**
      * PropertyChangeSupport object to deal with raising events
-     * when a Property on this object/bean
-     * is changed.
+     * when a Property on this object/bean is changed.
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * Map of type String, Item to store the different Items inside
-     * of a Players Equipment and use unique a String to identify
-     * them.
+     * of a Players Equipment and use unique a String to identify them.
      */
     private HashMap<String, Item> slots = new HashMap<>();
 
@@ -41,7 +39,6 @@ public class Equipment {
      */
     @Override
     public String toString() {
-
         return "Equipment{" +
                 "slots=" + slots +
                 '}';
@@ -52,7 +49,6 @@ public class Equipment {
      * PropertyChangeSupport object.
      */
     public void addPropertychangeListener(PropertyChangeListener listener) {
-
         changes.addPropertyChangeListener(listener);
     }
 
@@ -60,7 +56,6 @@ public class Equipment {
      * Replace a slot in the Equipment with a new Item.
      */
     public void replaceItem(Enums.ItemType type, Item item) {
-
         slots.put(type.name(), item);
     }
 
@@ -68,7 +63,6 @@ public class Equipment {
      * Retrieve a specific item by ItemType from slots HashMap.
      */
     public Item getItem(Enums.ItemType type) {
-
         return slots.get(type.name());
     }
 

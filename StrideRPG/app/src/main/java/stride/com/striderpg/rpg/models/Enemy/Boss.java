@@ -38,6 +38,9 @@ public class Boss extends Enemy {
      */
     public Boss() { }
 
+    /**
+     * Boss Constructor.
+     */
     public Boss(String name, Enums.Enemies type, Integer health, Integer icon, Integer experienceReward,
                 Enums.BossTier tier, String expiration, ArrayList<Item> rewards) {
         super(name, type, health, icon, experienceReward);
@@ -47,6 +50,9 @@ public class Boss extends Enemy {
         this.rewards = rewards;
     }
 
+    /**
+     * Boss Sub Constructor.
+     */
     public Boss(String name, Enums.Enemies type, Integer icon) {
         this.setName(name);
         this.setType(type);

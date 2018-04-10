@@ -35,7 +35,6 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
 
     /**
      * Constructor that sets the quests ArrayList.
-     * @param quests Quest ArrayList.
      */
     QuestsAdapter(ArrayList<Quest> quests) {
         this.quests = quests;
@@ -43,11 +42,6 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
 
     /**
      * Method called on each QuestViewHolder instantiated.
-     * @param viewGroup ViewGroup that will contain the children
-     *                  (Quest elements) -> quests.
-     * @param i Index of current quest being inflated from quests
-     *          ArrayList.
-     * @return New QuestViewHolder with quests.get(i)'s properties set.
      */
     @NonNull
     @Override
@@ -72,9 +66,14 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
     }
 
     /**
+     * Update the Adapter and Notify that the DataSet has Changed.
+     */
+    public void update() {
+        notifyDataSetChanged();
+    }
+
+    /**
      * Parse out a quests current tier number from it's Enumeration.
-     * @param i Integer representing Quest Tier.
-     * @return Readable string to represent Quest Tier.
      */
     private String parseTier(int i) {
         return String.format(
