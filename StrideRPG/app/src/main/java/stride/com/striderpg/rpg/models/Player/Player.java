@@ -113,7 +113,6 @@ public class Player {
      * empty (new) player object.
      */
     public Player(FirebaseUser user) {
-
         this.uniqueId = user.getUid();
         this.username = user.getDisplayName();
         this.email = user.getEmail();
@@ -137,7 +136,6 @@ public class Player {
      */
     @Override
     public String toString() {
-
         return "Player{" +
                 "uniqueId='" + uniqueId + '\'' +
                 ", username='" + username + '\'' +
@@ -161,7 +159,6 @@ public class Player {
      * PropertyChangeSupport object.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-
         changes.addPropertyChangeListener(listener);
     }
 
@@ -170,7 +167,6 @@ public class Player {
      * their experience with the experience required to reach their next level.
      */
     public boolean canLevelUp() {
-
         return this.getExperience() > LevelGenerator.experienceToNextLevel(this.getLevel());
     }
 
@@ -180,7 +176,6 @@ public class Player {
      * event is fired. A Players exp is also set on a level up.
      */
     public void levelUp() {
-
         // Set users experience to the proper amount so exp is carried over on level up.
         this.setExperience(this.getExperience() - LevelGenerator.experienceToNextLevel(this.getLevel()));
         this.setLevel(this.getLevel() + 1);
@@ -194,7 +189,6 @@ public class Player {
      * of total steps for the current day.
      */
     public void updateSteps(Integer total) {
-
         // Initial check for a null step count (first check on app start-up).
         // Secondary check for total being less than lastStepCount (midnight fitness reset).
         if (G.lastStepCount == null || total < G.lastStepCount) {
@@ -252,7 +246,6 @@ public class Player {
      * passed to the method.
      */
     public boolean fightEnemy(Monster enemy) {
-
         int totalStrength = this.skills.getStrength() + this.getEquipment().getItem(Enums.ItemType.WEAPON).getStatBoost();
         int totalVitality = this.skills.getVitality() + this.getEquipment().getItem(Enums.ItemType.HELMET).getStatBoost();
 

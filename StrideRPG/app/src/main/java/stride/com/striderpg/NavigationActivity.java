@@ -94,7 +94,6 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Create a database utility and push the active Player to the database.
         FirebaseDBUtil db = new FirebaseDBUtil();
-
         db.pushPlayer(G.activePlayer);
     }
 
@@ -158,7 +157,6 @@ public class NavigationActivity extends AppCompatActivity {
      * for the DashboardFragment.
      */
     private void addFragments() {
-
         // Add the Dashboard to the fragmentContainer.
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, generator.dashboardFragment)

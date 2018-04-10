@@ -175,7 +175,6 @@ public class DashboardFragment extends Fragment {
      * Update the ActiveEncounter's Health ProgressBar and TextView.
      */
     private void updateEncounterHealth() {
-
         // Update Boss Health ProgressBar with Bosses current health property.
         activeEncounterHealthProgress.setProgress(
                 G.activePlayer.getActiveEncounter().getBoss().getHealth()
@@ -193,7 +192,6 @@ public class DashboardFragment extends Fragment {
      * about the ActiveEncounter Boss.
      */
     private void buildActiveEncounterCard() {
-
         // Make the Encounter Card Visible.
         activeEncounterCard.setVisibility(View.VISIBLE);
 
@@ -319,7 +317,6 @@ public class DashboardFragment extends Fragment {
      * DashboardFragment UI Element.
      */
     private void buildPropertyChangeListeners() {
-
         // Add a new PropertyChangeListener implementation that controls
         // the ui elements being changed when their internal value changes.
         G.activePlayer.addPropertyChangeListener(new PropertyChangeListener() {

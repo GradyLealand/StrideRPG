@@ -262,7 +262,6 @@ public class AuthActivity extends AppCompatActivity {
      */
     private void checkUser(FirebaseUser user) {
         if (user != null) {
-
             // We now know that the user at least exists as part of the Firebase application.
             // Now check if they already have an entry in the Firebase database as a user.
             // Create a reference to the DatabaseReference at the users parent node.
@@ -312,7 +311,6 @@ public class AuthActivity extends AppCompatActivity {
                     Log.e(TAG, "checkUser:onCancelled:error:", databaseError.toException());
                 }
             });
-
         // If user is null, attempt to sign the user in again through Google.
         } else {
             signIn();

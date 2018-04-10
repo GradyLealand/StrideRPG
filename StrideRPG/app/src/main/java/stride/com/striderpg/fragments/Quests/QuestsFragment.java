@@ -10,7 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import stride.com.striderpg.R;
+import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Constants;
 
 /**
  * Quests Fragment that displays information about a players current
@@ -35,6 +40,12 @@ public class QuestsFragment extends Fragment {
     QuestsGenerator generator = new QuestsGenerator();
 
     /**
+     * QuestsAdapter for inflating and instantiating each
+     * CardView with Active Players current quest log.
+     */
+    QuestsAdapter adapter;
+
+    /**
      * Empty Public Constructor.
      */
     public QuestsFragment() { }
@@ -54,8 +65,30 @@ public class QuestsFragment extends Fragment {
         questsRecyclerView.setLayoutManager(llm);
 
         // Create the Adapter used to inflate each Quest CardView.
-        QuestsAdapter adapter = new QuestsAdapter(generator.getQuests());
+        adapter = new QuestsAdapter(generator.getQuests());
         questsRecyclerView.setAdapter(adapter);
+
+        // Build out PropertyChangeListener.
+        buildPropertyChangeListeners();
         return rootView;
+    }
+
+    /**
+     * Build out the PropertyChangeListener implementation
+     * for dealing with QuestLog updates.
+     */
+    private void buildPropertyChangeListeners() {
+        // Add a new PropertyChangeListener implementation that controls
+        // the ui elements being changed when their internal value changes.
+        G.activePlayer.getQuestLog().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                switch (propertyChangeEvent.getPropertyName()) {
+                    case Constants.PROPERTY_QUEST_LOG_UPDATED:
+                        adapter.update();
+                        break;
+                }
+            }
+        });
     }
 }

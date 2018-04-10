@@ -56,7 +56,6 @@ public class BestiaryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_bestiary, container, false);
 
@@ -77,11 +76,14 @@ public class BestiaryFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Build out the PropertyChangeListeners to update UI when Bestiary values
+     * are changed.
+     */
     private void buildPropertyChangeListeners() {
         G.activePlayer.getBestiary().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-
                 // Switch case over the propertyChangeEvent.
                 switch (propertyChangeEvent.getPropertyName()) {
                     case Constants.PROPERTY_BESTIARY_UPDATED:

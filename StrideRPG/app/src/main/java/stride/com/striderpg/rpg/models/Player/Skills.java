@@ -107,15 +107,12 @@ public class Skills {
     public Integer getVitality() {
         return vitality;
     }
-
     public Integer getStrength() {
         return strength;
     }
-
     public Integer getSpeed() {
         return speed;
     }
-
     public Integer getSkillPoints() {
         return skillPoints;
     }

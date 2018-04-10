@@ -63,6 +63,9 @@ public class Activity {
                 '}';
     }
 
+    /**
+     * Compare two Activity Timestamps, used when Sorting Activities in a List.
+     */
     public int compareTime(Activity anotherActivity) {
         DateTime thisTime = TimeParser.parseTimestamp(this.getTimestamp());
         DateTime otherTime = TimeParser.parseTimestamp(anotherActivity.getTimestamp());

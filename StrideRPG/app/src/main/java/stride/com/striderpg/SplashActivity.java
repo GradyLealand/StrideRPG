@@ -67,10 +67,7 @@ public class SplashActivity extends AppCompatActivity {
      * selection on permission request.
      */
     @Override
-    protected void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data) {
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check if permissions have been granted by the user.
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GOOGLE_FITNESS_PERMISSIONS_REQUEST) {

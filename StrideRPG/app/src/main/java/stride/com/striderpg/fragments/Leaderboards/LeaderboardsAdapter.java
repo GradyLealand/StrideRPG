@@ -37,7 +37,6 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
 
     /**
      * Constructor that sets the players ArrayList.
-     * @param players Player ArrayList.
      */
     LeaderboardsAdapter(ArrayList<Player> players) {
         this.players = players;
@@ -57,8 +56,6 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
     /**
      * Method called when the PlayerViewHolder is being bound to its
      * property Player located in the players ArrayList.
-     * @param playerViewHolder Current PlayerViewHolder being bound.
-     * @param i Index of current player being bound to PlayerViewHolder.
      */
     @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder playerViewHolder, int i) {

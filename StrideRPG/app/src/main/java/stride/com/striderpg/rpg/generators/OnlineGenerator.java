@@ -25,7 +25,6 @@ public class OnlineGenerator {
      * with the Players current online steps count.
      */
     public static void calculateOnlineActivity() {
-
         Random rnd = new Random();
 
         // Check for threshold reached so an online Activity will be generated.

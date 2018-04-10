@@ -113,7 +113,6 @@ public class Stats {
 
     /**
      * Increment a Stats totalExperience by a specified amount.
-     * @param experience Experience to add to total experience.
      */
     public void updateTotalExperience(Integer experience) {
         this.setTotalExperience(this.getTotalExperience() + experience);

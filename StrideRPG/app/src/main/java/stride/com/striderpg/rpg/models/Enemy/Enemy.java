@@ -33,6 +33,9 @@ public abstract class Enemy {
 
     public Enemy() { }
 
+    /**
+     * Enemy Constructor.
+     */
     public Enemy(String name, Enums.Enemies type, Integer health, Integer icon, Integer experienceReward) {
         this.name = name;
         this.type = type;

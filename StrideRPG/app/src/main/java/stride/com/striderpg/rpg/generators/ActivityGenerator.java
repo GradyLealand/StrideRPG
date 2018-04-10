@@ -20,8 +20,10 @@ public class ActivityGenerator {
      */
     private static final String TAG = "ActivityGenerator";
 
+    /**
+     * Generate a simple Loot Activity. Also updated the Players Stats/QuestLog.
+     */
     public static Activity generateLootActivity(Item item) {
-
         // Update the Players Stats total items looted property.
         G.activePlayer.getStats().updateItemsLooted();
 
@@ -42,7 +44,6 @@ public class ActivityGenerator {
      * wins against an Monster.
      */
     private static Activity generateEnemyWinActivity(Monster enemy) {
-
         // Update Players Bestiary after enemy defeat.
         G.activePlayer.getBestiary().update(enemy.getType());
 
@@ -66,7 +67,6 @@ public class ActivityGenerator {
      * loses to a Monster.
      */
     private static Activity generateEnemyLossActivity(Monster enemy) {
-
         // Update Active Players Quest log to reflect Monster loss.
         G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_ENEMIES, 1);
 
@@ -86,7 +86,6 @@ public class ActivityGenerator {
      * Generate the corresponding Activity in the Event a Players' ActiveEncounter expires.
      */
     private static Activity generateBossExpireActivity(Boss boss) {
-
         // Update Active Players Quest log to reflect Boss expiration.
         G.activePlayer.getQuestLog().update(Enums.QuestType.FAIL_DEFEAT_BOSSES, 1);
 
@@ -125,7 +124,6 @@ public class ActivityGenerator {
      * Generates an Activity of a given ActivityType Enumeration.
      */
     public static Activity generateActivityOfType(Enums.ActivityType type) {
-
         // Create new blank Activity.
         Activity activity = new Activity();
 
@@ -150,7 +148,6 @@ public class ActivityGenerator {
      * passed to the method.
      */
     public static Activity generateActiveEncounterActivity(Enums.ActivityType type, Boss boss) {
-
         // Create new blank Activity.
         Activity activity = new Activity();
 
@@ -170,7 +167,6 @@ public class ActivityGenerator {
      * Generate a String to represent this Loot Activities description.
      */
     private static String generateLootDescription(Item item) {
-
         switch (item.getType()) {
             case WEAPON:
                 return String.format(G.locale,
@@ -198,7 +194,6 @@ public class ActivityGenerator {
      * Generate a String to represent this Bosses expiration Activity description.
      */
     private static String generateBossExpireDescription(Boss boss) {
-
         return String.format(G.locale,
                 "The %s ran away with %d health left before you defeated it!\n" +
                         "You only gained %d experience during the battle",
@@ -212,7 +207,6 @@ public class ActivityGenerator {
      * Generate a String to represent this Bosses defeat Activity description.
      */
     private static String generateBossWinDescription(Boss boss) {
-
         return String.format(G.locale,
                 "You have defeated the %s!\nYou earned %d experience and found %d pieces of loot!",
                 boss.getName(),
@@ -225,7 +219,6 @@ public class ActivityGenerator {
      * Generate a String to represent this Monster Activities description.
      */
     private static String generateEnemyWinDescription(Monster enemy) {
-
         return String.format(G.locale,
                 "You encountered and defeated %s.\nYou earned %d experience points!",
                 parseEnemyNameToProperAOrAn(enemy.getName()),
@@ -237,7 +230,6 @@ public class ActivityGenerator {
      * Generate a String to represent the description of defeated by enemy Activity.
      */
     private static String generateEnemyLossDescription(Monster enemy) {
-
         return String.format(G.locale,
                 "You encountered and were defeated by %s.\nYou only earned %d experience points!",
                 parseEnemyNameToProperAOrAn(
@@ -251,7 +243,6 @@ public class ActivityGenerator {
      * result in a "an" return, otherwise return "a".
      */
     private static String parseEnemyNameToProperAOrAn(String enemyName) {
-
         String firstLetterLower = String.valueOf(enemyName.charAt(0)).toLowerCase();
         String[] vowels = {"a", "e", "i", "o", "u"};
 

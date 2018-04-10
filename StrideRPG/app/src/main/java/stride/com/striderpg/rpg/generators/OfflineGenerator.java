@@ -31,7 +31,6 @@ public class OfflineGenerator {
      * take place for them in that time.
      */
     public static void calculateOfflineActivities() {
-
         Log.d(TAG, "calculateOfflineActivities:begin");
 
         // Create date objects to hold the old date and the new current date.

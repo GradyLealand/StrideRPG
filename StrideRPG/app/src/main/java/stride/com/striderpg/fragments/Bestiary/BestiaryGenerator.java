@@ -39,9 +39,7 @@ public class BestiaryGenerator {
      * contained inside of the Enemies Enumeration.
      */
     private void buildBestiary() {
-
         for (Enums.Enemies enemy : Enums.Enemies.values()) {
-
             // Get the initial amount of this enemy defeated when building Bestiary.
             Integer initialAmount = G.activePlayer.getBestiary().getEnemies().get(enemy.name());
 
@@ -49,7 +47,6 @@ public class BestiaryGenerator {
             if (enemy.getType().equals(Enums.EnemyType.BOSS)) {
                 enemies.add(new BestiaryAdapter.EnemyDataHolder(
                         new Boss(enemy.getName(), enemy, enemy.getEnemyIcon()), initialAmount));
-
             // MONSTER Enemy Enum.
             } else if (enemy.getType().equals(Enums.EnemyType.MONSTER)) {
                 enemies.add(new BestiaryAdapter.EnemyDataHolder(
@@ -58,10 +55,6 @@ public class BestiaryGenerator {
         }
     }
 
-    /**
-     * Enemy ArrayList getter.
-     * @return enemies ArrayList.
-     */
     public ArrayList<BestiaryAdapter.EnemyDataHolder> getEnemies() {
         return enemies;
     }

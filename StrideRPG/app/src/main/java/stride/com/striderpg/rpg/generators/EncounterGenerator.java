@@ -35,7 +35,6 @@ public class EncounterGenerator {
      * Randomly decide if an Active Encounter is going to be generated for the Player.
      */
     public static void calculateActiveEncounter(Player p) {
-
         Random r = new Random();
 
         // Calculate a percent roll out fo 100 for determining if a Boss encounter
@@ -55,7 +54,6 @@ public class EncounterGenerator {
      * object passed into the method.
      */
     private static Boss generateBoss(Player p) {
-
         // Determine new Boss Type and Tier.
         Enums.Enemies bossType = Enums.Enemies.getRandomEnemiesType(Enums.EnemyType.BOSS);
         Enums.BossTier bossTier = Enums.BossTier.getEligibleTier(p.getLevel());
@@ -75,7 +73,6 @@ public class EncounterGenerator {
      * Calculate the bosses expiration date by retrieving a time from now + amount of hours.
      */
     private static String calculateBossExpiration(Enums.BossTier bossTier, Player p) {
-
         int totalVitality = p.getSkills().getSpeed() + p.getEquipment().getItem(Enums.ItemType.BOOTS).getStatBoost();
 
         // The vit needed for the monster to have normal expiration time
@@ -95,7 +92,6 @@ public class EncounterGenerator {
      * defined for multiplying a bosses health.
      */
     private static Integer calculateBossHealth(Enums.BossTier bossTier, Player p) {
-
         int totalStrength = p.getSkills().getStrength() + p.getEquipment().getItem(Enums.ItemType.WEAPON).getStatBoost();
 
         // The attack needed for the boss to have normal health
@@ -122,6 +118,7 @@ public class EncounterGenerator {
                 return Constants.BOSS_ENCOUNTER_TIER_TWO_VITALITY_FLOOR;
             case THREE:
                 return Constants.BOSS_ENCOUNTER_TIER_THREE_VITALITY_FLOOR;
+            // In the case that an invalid boss tier is selected, use bossTier 1 floor.
             default:
                 Log.e(TAG, "calculateBossBaseVitality:error:no bossTier was found: bossTier=[" + bossTier + "]");
                 Log.d(TAG, "calculateBossBaseVitality:defaulting to <BOSS_ENCOUNTER_TIER_ONE_VITALITY_FLOOR> for now...");
@@ -134,7 +131,6 @@ public class EncounterGenerator {
      * defined for dealing with Strength Skill mins/floors.
      */
     private static Integer calculateBossBaseStrength(Enums.BossTier bossTier) {
-
         switch (bossTier) {
             case ONE:
                 return Constants.BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR;
@@ -142,6 +138,7 @@ public class EncounterGenerator {
                 return Constants.BOSS_ENCOUNTER_TIER_TWO_STRENGTH_FLOOR;
             case THREE:
                 return Constants.BOSS_ENCOUNTER_TIER_THREE_STRENGTH_FLOOR;
+            // In the case that an invalid boss tier is selected, use bossTier 1 floor.
             default:
                 Log.e(TAG, "calculateBossBaseStrength:error:no bossTier was found: bossTier=[" + bossTier + "]");
                 Log.d(TAG, "calculateBossBaseStrength:using <BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR> for now...");
@@ -167,7 +164,6 @@ public class EncounterGenerator {
      * Calculate the amount of experience this Boss will be worth on defeat.
      */
     private static int calculateBossExp(Player p, Enums.BossTier tier) {
-
         Random r = new Random();
         return (tier.getNumber() * Constants.BOSS_EXPERIENCE_MODIFIER - p.getLevel())
                 + (r.nextInt((50) + (Constants.BOSS_EXPERIENCE_MODIFIER))
@@ -179,7 +175,6 @@ public class EncounterGenerator {
      * a Boss in the given time.
      */
     private static ArrayList<Item> calculateBossRewards(Player p, Enums.BossTier tier) {
-
         ArrayList<Item> rewards = new ArrayList<>();
         for (int i = 0; i < tier.getNumber(); i++) {
             rewards.add(ItemGenerator.generate(p));
@@ -192,7 +187,6 @@ public class EncounterGenerator {
      * BossType name property.
      */
     private static String parseName(Enums.Enemies bossType) {
-
         Random r = new Random();
         return bossAdjectives[r.nextInt(bossAdjectives.length)] + " " + bossType.getName();
     }

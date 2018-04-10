@@ -48,7 +48,6 @@ public class LeaderboardsGenerator {
      * and attaching a onDataChange callback to loop through results.
      */
     private void buildLeaderboards() {
-
         // Create reference to the users node in the Database.
         DatabaseReference usersRef = FirebaseDatabase.getInstance()
                 .getReference()
@@ -105,9 +104,6 @@ public class LeaderboardsGenerator {
         });
     }
 
-    /**
-     * Player ArrayList getter.
-     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
