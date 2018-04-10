@@ -301,7 +301,13 @@ public final class Constants {
      * Constant for firing and accessing a PropertyChangeEvents
      * for the quest log property on a Player.
      */
-    public static final String PROPERTY_QUEST_LOG_UPDATED = "QUESTLOG UPDATED";
+    public static final String PROPERTY_QUEST_LOG_UPDATED = "QUESTLOG_UPDATED";
+
+    /**
+     * Constant for firing and accessing a PropertyChangeEvents
+     * for the questlog property on a Player.
+     */
+    public static final String PROPERTY_EQUIPMENT_REPLACED = "EQUIPMENT_REPLACED";
 
     /**
      * Constant used to determine the amount of milliseconds

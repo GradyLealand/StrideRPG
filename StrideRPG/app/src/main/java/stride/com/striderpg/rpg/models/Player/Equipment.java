@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 
+import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Item.Item;
 
@@ -57,6 +58,7 @@ public class Equipment {
      */
     public void replaceItem(Enums.ItemType type, Item item) {
         slots.put(type.name(), item);
+        changes.firePropertyChange(Constants.PROPERTY_EQUIPMENT_REPLACED, null, item);
     }
 
     /**
@@ -71,6 +73,27 @@ public class Equipment {
      */
     public void destroyItem(Enums.ItemType type) {
         slots.put(type.name(), null);
+    }
+
+    /**
+     * Get the strength stat boost from the current WEAPON item.
+     */
+    public Integer getStrengthBoost() {
+        return slots.get(Enums.ItemType.WEAPON.name()).getStatBoost();
+    }
+
+    /**
+     * Get the vitality stat boost from the current WEAPON item.
+     */
+    public Integer getVitalityBoost() {
+        return slots.get(Enums.ItemType.HELMET.name()).getStatBoost();
+    }
+
+    /**
+     * Get the speed stat boost from the current WEAPON item.
+     */
+    public Integer getSpeedBoost() {
+        return slots.get(Enums.ItemType.BOOTS.name()).getStatBoost();
     }
 
     public HashMap<String, Item> getSlots() {

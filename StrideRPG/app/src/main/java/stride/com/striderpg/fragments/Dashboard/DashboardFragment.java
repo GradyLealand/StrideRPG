@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
+import java.util.Objects;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import stride.com.striderpg.R;
@@ -294,7 +295,7 @@ public class DashboardFragment extends Fragment {
      */
     private void getDashboardElements() {
         try {
-            playerProfileImage = getView().findViewById(R.id.playerProfileImage);
+            playerProfileImage = Objects.requireNonNull(getView()).findViewById(R.id.playerProfileImage);
             playerUsernameText = getView().findViewById(R.id.playerUsernameText);
             playerExpCount = getView().findViewById(R.id.playerExpCount);
             playerLevelProgressBar = getView().findViewById(R.id.playerLevelProgressBar);
