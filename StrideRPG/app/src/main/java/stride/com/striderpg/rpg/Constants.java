@@ -315,9 +315,19 @@ public final class Constants {
     public static final String QUEST_DEFEAT_ENEMIES_TITLE = "Defeat Enemies";
 
     /**
+     * Constant for generic defeat enemies quest description.
+     */
+    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies.";
+
+    /**
      * Constant for generic defeat bosses quest title.
      */
     public static final String QUEST_DEFEAT_BOSSES_TITLE = "Defeat Bosses";
+
+    /**
+     * Constant for generic defeat bosses quest description.
+     */
+    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat bosses.";
 
     /**
      * Constant for generic failed to defeat enemies quest title.
@@ -330,34 +340,24 @@ public final class Constants {
     public static final String QUEST_FAIL_DEFEAT_BOSSES_TITLE = "Failed to Defeat Bosses in time.";
 
     /**
+     * Constant for failed to defeat bosses in time description.
+     */
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses.";
+
+    /**
      * Constant for generic loot items quest title.
      */
     public static final String QUEST_LOOT_ITEMS_TITLE = "Loot Items";
 
     /**
-     * Constant for generic defeat enemies quest description.
-     */
-    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat enemies throughout your travels.";
-
-    /**
-     * Constant for failed to defeat bosses in time description.
-     */
-    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to defeat bosses throughout your travels.";
-
-    /**
-     * Constant for generic defeat bosses quest description.
-     */
-    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat bosses throughout your travels.";
-
-    /**
-     * Constant for generic defeat enemies quest description.
-     */
-    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to defeat enemies throughout your travels.";
-
-    /**
      * Constant for generic loot items quest description.
      */
-    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items throughout your travels.";
+    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items.";
+
+    /**
+     * Constant for generic defeat enemies quest description.
+     */
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed to defeat enemies.";
 
     /**
      * Constant for generic take steps quest title.
@@ -367,8 +367,7 @@ public final class Constants {
     /**
      * Constant for generic take steps quest description.
      */
-    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps throughout your travels.";
-
+    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps.";
 
     // TODO: These goals should be dependant on the Quest itself, some goals need higher thresholds, etc.
     /**
