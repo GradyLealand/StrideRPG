@@ -58,9 +58,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
      */
     @Override
     public void onBindViewHolder(@NonNull EquipmentViewHolder equipmentViewHolder, int i) {
-        equipmentViewHolder.itemImage.setBackgroundColor(
-                Color.parseColor(items.get(i).getRarity().getColor())
-        );
+        equipmentViewHolder.itemImage.setBackgroundColor(Color.parseColor(items.get(i).getRarity().getColor()));
         equipmentViewHolder.itemName.setText(items.get(i).getName());
         equipmentViewHolder.itemDescription.setText(items.get(i).getDescription());
 
@@ -71,11 +69,9 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
             case HELMET: skillBoost = "Vitality"; break;
         }
 
-        equipmentViewHolder.itemStatBoost.setText(
-                String.format(G.locale,
-                        "+%d %s",
-                        items.get(i).getStatBoost(),
-                        skillBoost)
+        equipmentViewHolder.itemStatBoost.setText(String.format(G.locale, "+%d %s",
+                items.get(i).getStatBoost(),
+                skillBoost)
         );
     }
 
