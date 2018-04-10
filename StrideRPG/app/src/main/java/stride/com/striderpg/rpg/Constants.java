@@ -120,6 +120,11 @@ public final class Constants {
     public static final int BOSS_ENCOUNTER_TIER_THREE_VITALITY_FLOOR = 105;
 
     /**
+     * Constant to define the experience modifier to calculate rewards when quests are completed.
+     */
+    public static final int QUEST_EXPERIENCE_MODIFIER = 50;
+
+    /**
      * Constant for generating SimpleDateFormats throughout the
      * application.
      */

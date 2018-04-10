@@ -1,7 +1,10 @@
 package stride.com.striderpg.rpg.models.Quest;
 
 
+import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Constants;
 import stride.com.striderpg.rpg.Enums;
+import stride.com.striderpg.rpg.generators.ActivityGenerator;
 
 /**
  * A Quest class to represent a single Quest in the game and the
@@ -86,6 +89,20 @@ public class Quest {
      * Level this quest up to the QuestLevel next to it in it's Enumeration.
      */
     public void levelUpQuest() {
+        // Reward Player with experience for finishing this Quest.
+        Integer reward = this.questLevel.getNumber() * Constants.QUEST_EXPERIENCE_MODIFIER;
+
+        // Add new Activity representing this Quest.
+        G.activePlayer.getActivityLog().addOnlineActivity(
+                ActivityGenerator.generateQuestCompletedActivity(this, reward)
+        );
+
+        // Add Experience to Player on Quest completion and check for level up.
+        G.activePlayer.setExperience(G.activePlayer.getExperience() + reward);
+        if (G.activePlayer.canLevelUp()) {
+            G.activePlayer.levelUp();
+        }
+
         // Use QuestLevel Enum next() method to return the next QuestLevel.
         Enums.QuestLevel newQuestLevel = this.getQuestLevel().next();
 
