@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import stride.com.striderpg.database.DBKeys;
-import stride.com.striderpg.database.FirebaseDBUtil;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Player.Player;
