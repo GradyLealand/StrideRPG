@@ -60,7 +60,7 @@ public class Quest {
         this.questStage = stage;
         if(name.equals("Take Steps"))
         {
-            this.progressGoal = Constants.STEP_QUEST_LEVEL_GOAL[0];
+            this.progressGoal = Constants.STEP_QUEST_LEVEL_GOAL[stage];
         }
         else
         {
@@ -123,9 +123,10 @@ public class Quest {
         // Set new information for Players quest.
         this.setQuestLevel(newQuestLevel);
         this.setProgress(0);
+        this.setQuestStage(this.getQuestStage() + 1);
         if(this.name.equals("Take Steps"))
         {
-            this.setProgressGoal(Constants.STEP_QUEST_LEVEL_GOAL[1]);
+            this.setProgressGoal(Constants.STEP_QUEST_LEVEL_GOAL[this.questStage]);
         }
         else
         {
@@ -163,5 +164,13 @@ public class Quest {
     }
     public void setProgressGoal(Integer progressGoal) {
         this.progressGoal = progressGoal;
+    }
+
+    public Integer getQuestStage() {
+        return questStage;
+    }
+
+    public void setQuestStage(Integer questStage) {
+        this.questStage = questStage;
     }
 }
