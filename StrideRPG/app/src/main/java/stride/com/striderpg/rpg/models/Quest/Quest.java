@@ -38,6 +38,11 @@ public class Quest {
     private Integer progressGoal;
 
     /**
+     * a numerical record of the quest level
+     */
+    private Integer questStage;
+
+    /**
      * Default Constructor required for calls to
      * dataSnapshot.getValue(Quest.class).
      */
@@ -47,11 +52,12 @@ public class Quest {
      * Constructor to set the Quest's name, description, questLevel, progress
      * and progressGoal properties.
      */
-    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer progressGoal) {
+    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer progressGoal, Integer stage) {
         this.name = name;
         this.description = description;
         this.questLevel = questLevel;
         this.progress = progress;
+        this.questStage = stage;
         if(name.equals("Take Steps"))
         {
             this.progressGoal = Constants.STEP_QUEST_LEVEL_GOAL[0];
