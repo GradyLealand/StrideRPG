@@ -80,6 +80,11 @@ public class Skills {
         changes.firePropertyChange(Constants.PROPERTY_SKILL_POINTS, null, this.getSkillPoints());
     }
 
+    public void removePoint() {
+        this.skillPoints -= 1;
+        changes.firePropertyChange(Constants.PROPERTY_SKILL_POINTS, null, this.getSkillPoints());
+    }
+
     /**
      * Level up a Players vitality property by one.
      */

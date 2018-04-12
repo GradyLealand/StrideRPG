@@ -21,7 +21,7 @@ public class EquipmentGenerator {
      * Item ArrayList to hold each Item that will be inside of
      * the Equipment RecyclerView.
      */
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<EquipmentAdapter.ItemDataHolder> items = new ArrayList<>();
 
     /**
      * Constructor that calls the buildEquipment() method to
@@ -36,13 +36,15 @@ public class EquipmentGenerator {
      * current Equipment slots values to the items ArrayList.
      */
     private void buildEquipment() {
-        items.addAll(G.activePlayer.getEquipment().getSlots().values());
+        for (Item item : G.activePlayer.getEquipment().getSlots().values()) {
+            items.add(new EquipmentAdapter.ItemDataHolder(item.getType(), item));
+        }
     }
 
     /**
      * Gets the items ArrayList.
      */
-    public ArrayList<Item> getItems() {
+    public ArrayList<EquipmentAdapter.ItemDataHolder> getItems() {
         return items;
     }
 }

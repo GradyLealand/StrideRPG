@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
+import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Item.Item;
 
 /**
@@ -32,12 +33,12 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
      * Item ArrayList used when inflating each Item as a new
      * EquipmentViewHolder.
      */
-    private ArrayList<Item> items;
+    private ArrayList<ItemDataHolder> items;
 
     /**
      * Constructor that sets the items ArrayList.
      */
-    EquipmentAdapter(ArrayList<Item> items) {
+    EquipmentAdapter(ArrayList<ItemDataHolder> items) {
         this.items = items;
     }
 
@@ -58,21 +59,35 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
      */
     @Override
     public void onBindViewHolder(@NonNull EquipmentViewHolder equipmentViewHolder, int i) {
-        equipmentViewHolder.itemImage.setBackgroundColor(Color.parseColor(items.get(i).getRarity().getColor()));
-        equipmentViewHolder.itemName.setText(items.get(i).getName());
-        equipmentViewHolder.itemDescription.setText(items.get(i).getDescription());
+        equipmentViewHolder.itemImage.setBackgroundColor(Color.parseColor(items.get(i).item.getRarity().getColor()));
+        equipmentViewHolder.itemName.setText(items.get(i).item.getName());
+        equipmentViewHolder.itemDescription.setText(items.get(i).item.getDescription());
 
         String skillBoost = null;
-        switch (items.get(i).getType()) {
+        switch (items.get(i).item.getType()) {
             case WEAPON: skillBoost = "Strength"; break;
             case BOOTS: skillBoost = "Speed"; break;
             case HELMET: skillBoost = "Vitality"; break;
         }
 
         equipmentViewHolder.itemStatBoost.setText(String.format(G.locale, "+%d %s",
-                items.get(i).getStatBoost(),
+                items.get(i).item.getStatBoost(),
                 skillBoost)
         );
+    }
+
+    public void update(Item newItem) {
+        // Loop through each ItemDataHolder and check that current
+        // item type in iteration is equal to the items that's been replaced.
+        for (ItemDataHolder idh : items) {
+            if (idh.type == newItem.getType()) {
+                idh.item = newItem;
+                break;
+            }
+        }
+
+        // NotifyDataSetChanged will simply update the UI to reflect this change.
+        notifyDataSetChanged();
     }
 
     /**
@@ -81,6 +96,16 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    static class ItemDataHolder {
+        private Enums.ItemType type;
+        private Item item;
+
+        ItemDataHolder(Enums.ItemType type, Item item) {
+            this.type = type;
+            this.item = item;
+        }
     }
 
     static class EquipmentViewHolder extends RecyclerView.ViewHolder {
