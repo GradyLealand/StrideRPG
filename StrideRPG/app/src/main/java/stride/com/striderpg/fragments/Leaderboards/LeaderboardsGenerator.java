@@ -65,7 +65,6 @@ public class LeaderboardsGenerator {
                         Log.e(TAG, "add:error:", e);
                     }
                 }
-
                 // After the players ArrayList is created and filled with all players from
                 // DataSnapshot. Sort the ArrayList.
                 sort(Enums.PlayerSort.LEVEL);
@@ -73,7 +72,7 @@ public class LeaderboardsGenerator {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "SingleValueEventListener:error:", databaseError.toException());
+                Log.e(TAG, "getAllPlayers:error", databaseError.toException());
             }
         });
     }

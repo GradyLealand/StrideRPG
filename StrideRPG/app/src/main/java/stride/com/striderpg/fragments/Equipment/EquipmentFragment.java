@@ -47,6 +47,12 @@ public class EquipmentFragment extends Fragment {
     EquipmentGenerator generator = new EquipmentGenerator();
 
     /**
+     * EquipmentAdapter for inflating and instantiating each CardView
+     * with Active Players current equipment information.
+     */
+    EquipmentAdapter adapter;
+
+    /**
      * Player profile image.
      */
     ImageView playerImage;
@@ -105,12 +111,6 @@ public class EquipmentFragment extends Fragment {
      * Player total speed points with gear bonus.
      */
     TextView speedTotalPoints;
-
-    /**
-     * EquipmentAdapter for inflating and instantiating each CardView
-     * with Active Players current equipment information.
-     */
-    EquipmentAdapter adapter;
 
     /**
      * Empty Public Constructor.
