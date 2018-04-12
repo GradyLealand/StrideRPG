@@ -339,16 +339,16 @@ public class Enums {
      * different QuestTypes can be at as a Player progresses in game.
      */
     public enum QuestLevel {
-        ONE(1, "I", Constants.QUEST_LEVEL_ONE_GOAL),
-        TWO(2, "II", Constants.QUEST_LEVEL_TWO_GOAL),
-        THREE(3, "III", Constants.QUEST_LEVEL_THREE_GOAL),
-        FOUR(4, "IV", Constants.QUEST_LEVEL_FOUR_GOAL),
-        FIVE(5, "V", Constants.QUEST_LEVEL_FIVE_GOAL),
-        SIX(6, "VI", Constants.QUEST_LEVEL_SIX_GOAL),
-        SEVEN(7, "VII", Constants.QUEST_LEVEL_SEVEN_GOAL),
-        EIGHT(8, "VIII", Constants.QUEST_LEVEL_EIGHT_GOAL),
-        NINE(9, "IX", Constants.QUEST_LEVEL_NINE_GOAL),
-        TEN(10, "X", Constants.QUEST_LEVEL_TEN_GOAL);
+        ONE(1, "I"),
+        TWO(2, "II"),
+        THREE(3, "III"),
+        FOUR(4, "IV"),
+        FIVE(5, "V"),
+        SIX(6, "VI"),
+        SEVEN(7, "VII"),
+        EIGHT(8, "VIII"),
+        NINE(9, "IX"),
+        TEN(10, "X");
 
         /**
          * QuestLevel number Integer.
@@ -360,10 +360,6 @@ public class Enums {
          */
         private final String numeral;
 
-        /**
-         * QuestLevel goal.
-         */
-        private final Integer goal;
 
         /**
          * Static copy of values used for retrieving next QuestLevel
@@ -374,10 +370,9 @@ public class Enums {
         /**
          * Constructor to set the numeral and goal properties.
          */
-        QuestLevel(Integer number, String numeral, Integer goal) {
+        QuestLevel(Integer number, String numeral) {
             this.number = number;
             this.numeral = numeral;
-            this.goal = goal;
         }
 
         /**
@@ -393,6 +388,5 @@ public class Enums {
         public String getNumeral() {
             return numeral;
         }
-        public Integer getGoal() { return goal; }
     }
 }

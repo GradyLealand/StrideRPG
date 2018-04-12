@@ -52,20 +52,13 @@ public class Quest {
      * Constructor to set the Quest's name, description, questLevel, progress
      * and progressGoal properties.
      */
-    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer progressGoal, Integer stage) {
+    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer stage) {
         this.name = name;
         this.description = description;
         this.questLevel = questLevel;
         this.progress = progress;
         this.questStage = stage;
-        if(name.equals("Take Steps"))
-        {
-            this.progressGoal = Constants.STEP_QUEST_LEVEL_GOAL[stage];
-        }
-        else
-        {
-            this.progressGoal = progressGoal;
-        }
+        this.progressGoal = setQuestProgress(this.description);
 
 }
 
@@ -130,7 +123,7 @@ public class Quest {
     public Integer setQuestProgress(String name)
     {
         switch(name){
-            case "Loot itmes":
+            case "Loot items":
                 return Constants.LOOT_QUEST_LEVEL_GOAL[this.getQuestStage()];
             case "Take steps":
                 return Constants.STEP_QUEST_LEVEL_GOAL[this.getQuestStage()];
