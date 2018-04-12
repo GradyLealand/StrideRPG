@@ -7,6 +7,7 @@ import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
 import stride.com.striderpg.rpg.models.Enemy.Boss;
 import stride.com.striderpg.rpg.models.Enemy.Monster;
+import stride.com.striderpg.rpg.models.Quest.Quest;
 import stride.com.striderpg.rpg.utils.TimeParser;
 import stride.com.striderpg.rpg.models.Item.Item;
 
@@ -141,6 +142,21 @@ public class ActivityGenerator {
                 break;
         }
         return activity;
+    }
+
+    public static Activity generateQuestCompletedActivity(Quest quest, Integer experiencedEarned) {
+        // Generate the Activity information.
+        String description = String.format(G.locale,
+                "You completed the quest: %s Tier %s, and you earned %d experience!",
+                quest.getName(), quest.getQuestLevel().getNumeral(), experiencedEarned
+        );
+
+        return new Activity(
+                TimeParser.makeTimestamp(),
+                Enums.ActivityType.QUEST_COMPLETE,
+                description,
+                R.drawable.ic_launcher_background
+        );
     }
 
     /**

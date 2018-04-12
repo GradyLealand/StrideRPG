@@ -29,7 +29,6 @@ public class OnlineGenerator {
 
         // Check for threshold reached so an online Activity will be generated.
         if (G.onlineActivitySteps > Constants.ONLINE_ACTIVITY_STEP_THRESHOLD) {
-
             // Roll a random int between 1-100
             int roll = rnd.nextInt(100) + 1;
 
@@ -41,8 +40,7 @@ public class OnlineGenerator {
             G.onlineActivitySteps = 0;
 
             // If the roll + speed modifier is greater then the encounter chance, trigger an encounter
-            if (roll + (totalSpeed / 2) > Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT)
-            {
+            if (roll + (totalSpeed / 2) > Constants.ONLINE_ACTIVE_ENCOUNTER_CHANCE_PERCENT) {
                 // Generate an Activity to represent a Player Encountering an Enemy.
                 Activity activity = ActivityGenerator.generateActivityOfType(Enums.ActivityType.ENEMY);
                 activity.setTimestamp(TimeParser.makeTimestamp());
