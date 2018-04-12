@@ -124,17 +124,28 @@ public class Quest {
         this.setQuestLevel(newQuestLevel);
         this.setProgress(0);
         this.setQuestStage(this.getQuestStage() + 1);
-        this.setProgressGoal(0);
+        this.setProgressGoal(this.setQuestProgress(this.getDescription()));
     }
 
-//    public Integer setQuestProgress(String name)
-//    {
-//        switch(name){
-//            case "Loot itmes":
-//                return
-//            
-//        }
-//    }
+    public Integer setQuestProgress(String name)
+    {
+        switch(name){
+            case "Loot itmes":
+                return Constants.LOOT_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Take steps":
+                return Constants.STEP_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Failed to Defeat Bosses":
+                return Constants.BOSS_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Failed To Defeat Enemies":
+                return Constants.ENEMIES_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Defeat Bosses":
+                return Constants.BOSS_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Defeat Enemies":
+                return Constants.ENEMIES_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            default:
+                return 0;
+        }
+    }
 
     public String getName() {
         return name;

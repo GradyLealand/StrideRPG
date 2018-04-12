@@ -334,7 +334,7 @@ public final class Constants {
     /**
      * Constant for generic defeat enemies quest description.
      */
-    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat Enemies.";
+    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat Enemies";
 
     /**
      * Constant for generic defeat bosses quest title.
@@ -344,7 +344,7 @@ public final class Constants {
     /**
      * Constant for generic defeat bosses quest description.
      */
-    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat Bosses.";
+    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat Bosses";
 
     /**
      * Constant for generic failed to defeat enemies quest title.
@@ -354,7 +354,7 @@ public final class Constants {
     /**
      * Constant for generic defeat enemies quest description.
      */
-    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed To Defeat Enemies.";
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed To Defeat Enemies";
 
     /**
      * Constant for failed to defeat bosses in time quest title.
@@ -364,7 +364,7 @@ public final class Constants {
     /**
      * Constant for failed to defeat bosses in time description.
      */
-    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to Defeat Bosses.";
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to Defeat Bosses";
 
     /**
      * Constant for generic loot items quest title.
@@ -374,7 +374,7 @@ public final class Constants {
     /**
      * Constant for generic loot items quest description.
      */
-    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items.";
+    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items";
 
     /**
      * Constant for generic take steps quest title.
@@ -384,7 +384,7 @@ public final class Constants {
     /**
      * Constant for generic take steps quest description.
      */
-    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps.";
+    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps";
 
     // TODO: These goals should be dependant on the Quest itself, some goals need higher thresholds, etc.
     /**
@@ -436,4 +436,12 @@ public final class Constants {
      * Quest Level Ten progress goal.
      */
     public static final Integer QUEST_LEVEL_TEN_GOAL = 50000;
+
+    public static final Integer[] ENEMIES_QUEST_LEVEL_GOAL = {5, 10, 20, 50, 150, 500, 100, 3000000, 10000000, 30000000 };
+    public static final Integer[] BOSS_QUEST_LEVEL_GOAL = {500, 10000, 20000, 50000, 150000, 500000, 1000000, 3000000, 10000000, 30000000 };
+    public static final Integer[] LOOT_QUEST_LEVEL_GOAL = {50, 10000, 20000, 50000, 150000, 500000, 1000000, 3000000, 10000000, 30000000 };
+    /**
+     * Step Quest Goals for all levels.
+     */
+    public static final Integer[] STEP_QUEST_LEVEL_GOAL = {5000, 10000, 20000, 50000, 150000, 500000, 1000000, 3000000, 10000000, 30000000 };
 }
