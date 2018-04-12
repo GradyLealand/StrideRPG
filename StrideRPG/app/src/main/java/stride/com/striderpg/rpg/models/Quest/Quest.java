@@ -124,16 +124,17 @@ public class Quest {
         this.setQuestLevel(newQuestLevel);
         this.setProgress(0);
         this.setQuestStage(this.getQuestStage() + 1);
-        if(this.name.equals("Take Steps"))
-        {
-            this.setProgressGoal(Constants.STEP_QUEST_LEVEL_GOAL[this.questStage]);
-        }
-        else
-        {
-            this.setProgressGoal(newQuestLevel.getGoal());
-        }
-
+        this.setProgressGoal(0);
     }
+
+//    public Integer setQuestProgress(String name)
+//    {
+//        switch(name){
+//            case "Loot itmes":
+//                return
+//            
+//        }
+//    }
 
     public String getName() {
         return name;
