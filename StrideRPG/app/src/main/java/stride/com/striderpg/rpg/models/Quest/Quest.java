@@ -52,8 +52,16 @@ public class Quest {
         this.description = description;
         this.questLevel = questLevel;
         this.progress = progress;
-        this.progressGoal = progressGoal;
-    }
+        if(name.equals("Take Steps"))
+        {
+            this.progressGoal = Constants.STEP_QUEST_LEVEL_GOAL[0];
+        }
+        else
+        {
+            this.progressGoal = progressGoal;
+        }
+
+}
 
     /**
      * Implementation of a Quests toString method to print out the
@@ -109,7 +117,15 @@ public class Quest {
         // Set new information for Players quest.
         this.setQuestLevel(newQuestLevel);
         this.setProgress(0);
-        this.setProgressGoal(newQuestLevel.getGoal());
+        if(this.name.equals("Take Steps"))
+        {
+            this.setProgressGoal(Constants.STEP_QUEST_LEVEL_GOAL[1]);
+        }
+        else
+        {
+            this.setProgressGoal(newQuestLevel.getGoal());
+        }
+
     }
 
     public String getName() {
