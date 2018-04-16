@@ -38,6 +38,11 @@ public class Quest {
     private Integer progressGoal;
 
     /**
+     * a numerical record of the quest level
+     */
+    private Integer questStage;
+
+    /**
      * Default Constructor required for calls to
      * dataSnapshot.getValue(Quest.class).
      */
@@ -47,13 +52,15 @@ public class Quest {
      * Constructor to set the Quest's name, description, questLevel, progress
      * and progressGoal properties.
      */
-    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer progressGoal) {
+    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer stage) {
         this.name = name;
         this.description = description;
         this.questLevel = questLevel;
         this.progress = progress;
-        this.progressGoal = progressGoal;
-    }
+        this.questStage = stage;
+        this.progressGoal = setQuestProgress(this.description);
+
+}
 
     /**
      * Implementation of a Quests toString method to print out the
@@ -109,7 +116,28 @@ public class Quest {
         // Set new information for Players quest.
         this.setQuestLevel(newQuestLevel);
         this.setProgress(0);
-        this.setProgressGoal(newQuestLevel.getGoal());
+        this.setQuestStage(this.getQuestStage() + 1);
+        this.setProgressGoal(this.setQuestProgress(this.getDescription()));
+    }
+
+    public Integer setQuestProgress(String name)
+    {
+        switch(name){
+            case "Loot items":
+                return Constants.LOOT_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Take steps":
+                return Constants.STEP_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Failed to Defeat Bosses":
+                return Constants.BOSS_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Failed To Defeat Enemies":
+                return Constants.ENEMIES_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Defeat Bosses":
+                return Constants.BOSS_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            case "Defeat Enemies":
+                return Constants.ENEMIES_QUEST_LEVEL_GOAL[this.getQuestStage()];
+            default:
+                return 0;
+        }
     }
 
     public String getName() {
@@ -141,5 +169,13 @@ public class Quest {
     }
     public void setProgressGoal(Integer progressGoal) {
         this.progressGoal = progressGoal;
+    }
+
+    public Integer getQuestStage() {
+        return questStage;
+    }
+
+    public void setQuestStage(Integer questStage) {
+        this.questStage = questStage;
     }
 }

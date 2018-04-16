@@ -39,7 +39,7 @@ public class QuestLog {
                     questType.getDescription(),
                     Enums.QuestLevel.ONE,
                     0,
-                    Enums.QuestLevel.ONE.getGoal()
+                    0
             ));
         }
     }

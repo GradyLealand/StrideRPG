@@ -334,7 +334,7 @@ public final class Constants {
     /**
      * Constant for generic defeat enemies quest description.
      */
-    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat Enemies.";
+    public static final String QUEST_DEFEAT_ENEMIES_DESCRIPTION = "Defeat Enemies";
 
     /**
      * Constant for generic defeat bosses quest title.
@@ -344,7 +344,7 @@ public final class Constants {
     /**
      * Constant for generic defeat bosses quest description.
      */
-    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat Bosses.";
+    public static final String QUEST_DEFEAT_BOSSES_DESCRIPTION = "Defeat Bosses";
 
     /**
      * Constant for generic failed to defeat enemies quest title.
@@ -354,7 +354,7 @@ public final class Constants {
     /**
      * Constant for generic defeat enemies quest description.
      */
-    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed To Defeat Enemies.";
+    public static final String QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION = "Failed To Defeat Enemies";
 
     /**
      * Constant for failed to defeat bosses in time quest title.
@@ -364,7 +364,7 @@ public final class Constants {
     /**
      * Constant for failed to defeat bosses in time description.
      */
-    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to Defeat Bosses.";
+    public static final String QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION = "Failed to Defeat Bosses";
 
     /**
      * Constant for generic loot items quest title.
@@ -374,7 +374,7 @@ public final class Constants {
     /**
      * Constant for generic loot items quest description.
      */
-    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items.";
+    public static final String QUEST_LOOT_ITEMS_DESCRIPTION = "Loot items";
 
     /**
      * Constant for generic take steps quest title.
@@ -384,56 +384,27 @@ public final class Constants {
     /**
      * Constant for generic take steps quest description.
      */
-    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps.";
+    public static final String QUEST_TAKE_STEPS_DESCRIPTION = "Take steps";
 
-    // TODO: These goals should be dependant on the Quest itself, some goals need higher thresholds, etc.
-    /**
-     * Quest Level One progress goal.
-     */
-    public static final Integer QUEST_LEVEL_ONE_GOAL = 25;
+    // TODO: Balance goals arrays base on play testing.
 
     /**
-     * Quest Level Two progress goal.
+     * Quest goals for enemy quests
      */
-    public static final Integer QUEST_LEVEL_TWO_GOAL = 50;
+    public static final Integer[] ENEMIES_QUEST_LEVEL_GOAL = {5, 10, 20, 50, 100, 200, 500, 1000, 3000, 10000 };
 
     /**
-     * Quest Level Three progress goal.
+     * Quest goals for boss quests
      */
-    public static final Integer QUEST_LEVEL_THREE_GOAL = 100;
+    public static final Integer[] BOSS_QUEST_LEVEL_GOAL = {2, 5, 15, 40, 80, 120, 200, 300, 500, 1000 };
 
     /**
-     * Quest Level Four progress goal.
+     * Quest goals for loot quest
      */
-    public static final Integer QUEST_LEVEL_FOUR_GOAL = 200;
+    public static final Integer[] LOOT_QUEST_LEVEL_GOAL = {1, 8, 20, 50, 100, 200, 400, 800, 1300, 2000 };
 
     /**
-     * Quest Level Five progress goal.
+     * Quest goals for steps quest
      */
-    public static final Integer QUEST_LEVEL_FIVE_GOAL = 500;
-
-    /**
-     * Quest Level Six progress goal.
-     */
-    public static final Integer QUEST_LEVEL_SIX_GOAL = 1000;
-
-    /**
-     * Quest Level Seven progress goal.
-     */
-    public static final Integer QUEST_LEVEL_SEVEN_GOAL = 2000;
-
-    /**
-     * Quest Level Eight progress goal.
-     */
-    public static final Integer QUEST_LEVEL_EIGHT_GOAL = 5000;
-
-    /**
-     * Quest Level Nine progress goal.
-     */
-    public static final Integer QUEST_LEVEL_NINE_GOAL = 10000;
-
-    /**
-     * Quest Level Ten progress goal.
-     */
-    public static final Integer QUEST_LEVEL_TEN_GOAL = 50000;
+    public static final Integer[] STEP_QUEST_LEVEL_GOAL = {5000, 10000, 20000, 50000, 150000, 500000, 1000000, 3000000, 10000000, 30000000 };
 }
