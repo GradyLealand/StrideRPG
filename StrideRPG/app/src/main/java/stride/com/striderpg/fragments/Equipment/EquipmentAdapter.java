@@ -60,6 +60,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
     @Override
     public void onBindViewHolder(@NonNull EquipmentViewHolder equipmentViewHolder, int i) {
         equipmentViewHolder.itemImage.setBackgroundColor(Color.parseColor(items.get(i).item.getRarity().getColor()));
+        equipmentViewHolder.itemImage.setImageResource(items.get(i).type.getIcon());
         equipmentViewHolder.itemName.setText(items.get(i).item.getName());
         equipmentViewHolder.itemDescription.setText(items.get(i).item.getDescription());
 

@@ -49,7 +49,7 @@ public class EnemyGenerator {
         int level = calculateEnemyLevel(p);
         int health = calculateEnemyHealth(level);
         int experience = calculateEnemyExp(p, level - p.getLevel());
-        int icon = parseIcon(enemyType);
+        int icon = enemyType.getEnemyIcon();
 
         Monster newEnemy = new Monster(name, enemyType, level, health, icon, experience);
 
@@ -77,19 +77,6 @@ public class EnemyGenerator {
     private static int calculateEnemyExp(Player p, Integer l) {
         return p.getLevel() * Constants.ENEMY_EXPERIENCE_MODIFIER
                 + (r.nextInt(50) + (Constants.ENEMY_EXPERIENCE_MODIFIER ) * l);
-    }
-
-    /**
-     * Parse out the new enemies icon asset and return the integer id.
-     */
-    private static int parseIcon(Enums.Enemies enemyType) {
-        int iconId = 0;
-        try {
-            iconId = R.drawable.class.getField(enemyType.getName().toLowerCase()).getInt(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e(TAG, "parseIcon:error:", e);
-        }
-        return iconId;
     }
 
     /**

@@ -23,6 +23,11 @@ public class Quest {
     private String description;
 
     /**
+     * Quest Type enumeration.
+     */
+    private Enums.QuestType questType;
+
+    /**
      * Quest QuestLevel enumeration.
      */
     private Enums.QuestLevel questLevel;
@@ -52,10 +57,11 @@ public class Quest {
      * Constructor to set the Quest's name, description, questLevel, progress
      * and progressGoal properties.
      */
-    public Quest(String name, String description, Enums.QuestLevel questLevel, Integer progress, Integer stage) {
+    public Quest(String name, String description, Enums.QuestLevel questLevel, Enums.QuestType questType, Integer progress, Integer stage) {
         this.name = name;
         this.description = description;
         this.questLevel = questLevel;
+        this.questType = questType;
         this.progress = progress;
         this.questStage = stage;
         this.progressGoal = setQuestProgress(this.description);
@@ -157,6 +163,12 @@ public class Quest {
     }
     public void setQuestLevel(Enums.QuestLevel questLevel) {
         this.questLevel = questLevel;
+    }
+    public Enums.QuestType getQuestType() {
+        return questType;
+    }
+    public void setQuestType(Enums.QuestType questType) {
+        this.questType = questType;
     }
     public Integer getProgress() {
         return progress;

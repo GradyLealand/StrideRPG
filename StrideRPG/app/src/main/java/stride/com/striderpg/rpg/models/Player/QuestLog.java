@@ -38,6 +38,7 @@ public class QuestLog {
                     questType.getTitle(),
                     questType.getDescription(),
                     Enums.QuestLevel.ONE,
+                    questType,
                     0,
                     0
             ));

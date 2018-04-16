@@ -42,7 +42,7 @@ public class ItemGenerator {
         Integer statBoost = buildItemStatBoost(rarity, p);
 
         // Generate the image icon used for the new Item.
-        Integer icon = R.drawable.ic_launcher_foreground;
+        Integer icon = type.getIcon();
 
         // Generate Item name and description.
         String name = parseName(type);

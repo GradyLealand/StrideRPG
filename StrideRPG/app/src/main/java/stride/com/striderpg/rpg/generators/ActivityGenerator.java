@@ -1,7 +1,6 @@
 package stride.com.striderpg.rpg.generators;
 
 
-import stride.com.striderpg.R;
 import stride.com.striderpg.global.G;
 import stride.com.striderpg.rpg.Enums;
 import stride.com.striderpg.rpg.models.Activity.Activity;
@@ -37,7 +36,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.LOOT,
                 generateLootDescription(item),
-                R.mipmap.ic_launcher);
+                item.getIcon());
     }
 
     /**
@@ -59,7 +58,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateEnemyWinDescription(enemy),
-                R.mipmap.ic_launcher
+                enemy.getIcon()
         );
     }
 
@@ -79,7 +78,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.ENEMY,
                 generateEnemyLossDescription(enemy),
-                R.mipmap.ic_launcher
+                enemy.getIcon()
         );
     }
 
@@ -98,7 +97,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.BOSS_EXPIRE,
                 generateBossExpireDescription(boss),
-                R.mipmap.ic_launcher
+                boss.getIcon()
         );
     }
 
@@ -117,7 +116,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.BOSS_DEFEAT,
                 generateBossWinDescription(boss),
-                R.mipmap.ic_launcher
+                boss.getIcon()
         );
     }
 
@@ -155,7 +154,7 @@ public class ActivityGenerator {
                 TimeParser.makeTimestamp(),
                 Enums.ActivityType.QUEST_COMPLETE,
                 description,
-                R.drawable.ic_launcher_background
+                quest.getQuestType().getIcon()
         );
     }
 

@@ -57,6 +57,7 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestViewH
      */
     @Override
     public void onBindViewHolder(@NonNull QuestViewHolder questViewHolder, int i) {
+        questViewHolder.questImage.setImageResource(quests.get(i).getQuestType().getIcon());
         questViewHolder.questTitle.setText(quests.get(i).getName());
         questViewHolder.questTier.setText(parseTier(i));
         questViewHolder.questDescription.setText(quests.get(i).getDescription());

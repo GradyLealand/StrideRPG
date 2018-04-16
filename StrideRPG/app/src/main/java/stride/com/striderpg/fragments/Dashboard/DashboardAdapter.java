@@ -62,9 +62,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Acti
         activityViewHolder.activityName.setText(activities.get(i).getActivityType().getName());
         activityViewHolder.activityDesc.setText(activities.get(i).getDescription());
         activityViewHolder.activityIcon.setImageResource(activities.get(i).getActivityIconId());
-        activityViewHolder.activityTimestamp.setText(TimeParser.toReadable(
-                activities.get(i).getTimestamp())
-        );
+        activityViewHolder.activityTimestamp.setText(TimeParser.toReadable(activities.get(i).getTimestamp()));
     }
 
     /**

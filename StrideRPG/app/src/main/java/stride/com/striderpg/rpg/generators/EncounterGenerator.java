@@ -64,7 +64,7 @@ public class EncounterGenerator {
         int health = calculateBossHealth(bossTier, p);
         int experience = calculateBossExp(p, bossTier);
         ArrayList<Item> rewards = calculateBossRewards(p, bossTier);
-        int icon = parseIcon(bossType);
+        int icon = bossType.getEnemyIcon();
 
         return new Boss(name, bossType, health, icon, experience, bossTier, expires, rewards);
     }
@@ -144,20 +144,6 @@ public class EncounterGenerator {
                 Log.d(TAG, "calculateBossBaseStrength:using <BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR> for now...");
                 return Constants.BOSS_ENCOUNTER_TIER_ONE_STRENGTH_FLOOR;
         }
-    }
-
-    /**
-     * Parse a Bosses Icon by looking for an drawable resource with the same name as
-     * the boss type name in all lowercase.
-     */
-    private static int parseIcon(Enums.Enemies bossType) {
-        int iconId = 0;
-        try {
-            iconId = R.drawable.class.getField(bossType.getName().toLowerCase()).getInt(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e(TAG, "parseIcon:error:", e);
-        }
-        return iconId;
     }
 
     /**

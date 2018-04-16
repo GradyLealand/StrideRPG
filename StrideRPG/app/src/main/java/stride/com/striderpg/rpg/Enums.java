@@ -83,9 +83,9 @@ public class Enums {
      * ItemType Enumeration to store each possible ItemType in the game.
      */
     public enum ItemType {
-        WEAPON("Weapon"),
-        HELMET("Helmet"),
-        BOOTS("Boots");
+        WEAPON("Weapon", R.drawable.ic_broadsword),
+        HELMET("Helmet", R.drawable.ic_visored_helm),
+        BOOTS("Boots", R.drawable.ic_leg_armor);
 
         /**
          * Item Type name property.
@@ -93,14 +93,23 @@ public class Enums {
         private final String name;
 
         /**
+         * Item Icon property.
+         */
+        private Integer icon;
+
+        /**
          * Constructor to set the name property.
          */
-        ItemType(String name) {
+        ItemType(String name, Integer icon) {
             this.name = name;
+            this.icon = icon;
         }
 
         public String getName() {
             return name;
+        }
+        public Integer getIcon() {
+            return icon;
         }
     }
 
@@ -117,14 +126,14 @@ public class Enums {
      * their image resource.
      */
     public enum Enemies {
-        TROLL("Troll", EnemyType.MONSTER, R.mipmap.ic_launcher),
-        GOBLIN("Goblin", EnemyType.MONSTER, R.mipmap.ic_launcher),
-        LIZARD("Lizard", EnemyType.MONSTER, R.mipmap.ic_launcher),
-        NECROMANCER("Necromancer", EnemyType.MONSTER, R.mipmap.ic_launcher),
+        ALIEN("Alien", EnemyType.MONSTER, R.drawable.ic_alien_bug),
+        BRUTE("Brute", EnemyType.MONSTER, R.drawable.ic_brute),
+        DINOSAUR("Dinosaur", EnemyType.MONSTER, R.drawable.ic_dinosaur_rex),
+        BOWMAN("Bowman", EnemyType.MONSTER, R.drawable.ic_bowman),
 
-        DRAGON("Dragon", EnemyType.BOSS, R.mipmap.ic_launcher),
-        DEMON("Demon", EnemyType.BOSS, R.mipmap.ic_launcher),
-        KRAKEN("Kraken", EnemyType.BOSS, R.mipmap.ic_launcher);
+        DRAGON("Dragon", EnemyType.BOSS, R.drawable.ic_double_dragon),
+        REAPER("Reaper", EnemyType.BOSS, R.drawable.ic_grim_reaper),
+        ANUBIS("Anubis", EnemyType.BOSS, R.drawable.ic_anubis);
 
         /**
          * Enemies name property.
@@ -301,12 +310,12 @@ public class Enums {
      * QuestType enumeration to store the different quests inside of the game.
      */
     public enum QuestType {
-        DEFEAT_ENEMIES(Constants.QUEST_DEFEAT_ENEMIES_TITLE, Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION),
-        DEFEAT_BOSSES(Constants.QUEST_DEFEAT_BOSSES_TITLE, Constants.QUEST_DEFEAT_BOSSES_DESCRIPTION),
-        FAIL_DEFEAT_ENEMIES(Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE, Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION),
-        FAIL_DEFEAT_BOSSES(Constants.QUEST_FAIL_DEFEAT_BOSSES_TITLE, Constants.QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION),
-        LOOT_ITEMS(Constants.QUEST_LOOT_ITEMS_TITLE, Constants.QUEST_LOOT_ITEMS_DESCRIPTION),
-        TAKE_STEPS(Constants.QUEST_TAKE_STEPS_TITLE, Constants.QUEST_TAKE_STEPS_DESCRIPTION);
+        DEFEAT_ENEMIES(Constants.QUEST_DEFEAT_ENEMIES_TITLE, Constants.QUEST_DEFEAT_ENEMIES_DESCRIPTION, R.drawable.ic_defeat_enemies),
+        DEFEAT_BOSSES(Constants.QUEST_DEFEAT_BOSSES_TITLE, Constants.QUEST_DEFEAT_BOSSES_DESCRIPTION, R.drawable.ic_defeat_bosses),
+        FAIL_DEFEAT_ENEMIES(Constants.QUEST_FAIL_DEFEAT_ENEMIES_TITLE, Constants.QUEST_FAIL_DEFEAT_ENEMIES_DESCRIPTION, R.drawable.ic_fail_enemies),
+        FAIL_DEFEAT_BOSSES(Constants.QUEST_FAIL_DEFEAT_BOSSES_TITLE, Constants.QUEST_FAIL_DEFEAT_BOSSES_DESCRIPTION, R.drawable.ic_fail_boss),
+        LOOT_ITEMS(Constants.QUEST_LOOT_ITEMS_TITLE, Constants.QUEST_LOOT_ITEMS_DESCRIPTION, R.drawable.ic_loot_items),
+        TAKE_STEPS(Constants.QUEST_TAKE_STEPS_TITLE, Constants.QUEST_TAKE_STEPS_DESCRIPTION, R.drawable.ic_steps);
 
         /**
          * QuestType title.
@@ -319,11 +328,17 @@ public class Enums {
         private final String description;
 
         /**
+         * QuestType icon.
+         */
+        private final Integer icon;
+
+        /**
          * Constructor to set the title and description properties.
          */
-        QuestType(String title, String description) {
+        QuestType(String title, String description, Integer icon) {
             this.title = title;
             this.description = description;
+            this.icon = icon;
         }
 
         public String getTitle() {
@@ -331,6 +346,9 @@ public class Enums {
         }
         public String getDescription() {
             return description;
+        }
+        public Integer getIcon() {
+            return icon;
         }
     }
 

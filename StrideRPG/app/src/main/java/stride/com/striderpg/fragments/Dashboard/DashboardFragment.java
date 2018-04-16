@@ -199,6 +199,7 @@ public class DashboardFragment extends Fragment {
         // Set the ActiveEncounter name TextView and health ProgressBar.
         activeEncounterName.setText(G.activePlayer.getActiveEncounter().getBoss().getName());
         activeEncounterHealthProgress.setMax(G.activePlayer.getActiveEncounter().getBoss().getMaxHealth());
+        activeEncounterImage.setImageResource(G.activePlayer.getActiveEncounter().getBoss().getIcon());
         updateEncounterHealth();
     }
 
@@ -229,7 +230,6 @@ public class DashboardFragment extends Fragment {
         stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
         levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
         enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
-        playerProfileImage.setImageResource(R.drawable.ic_bully_minion);
     }
 
     /**
