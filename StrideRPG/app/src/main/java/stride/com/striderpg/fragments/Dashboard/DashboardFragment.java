@@ -229,6 +229,7 @@ public class DashboardFragment extends Fragment {
         stepsText.setText(addCommasToInteger(G.activePlayer.getSteps()));
         levelText.setText(String.format(G.locale, "%d", G.activePlayer.getLevel()));
         enemiesText.setText(addCommasToInteger(G.activePlayer.getStats().getEnemiesDefeated()));
+        playerProfileImage.setImageResource(R.drawable.ic_bully_minion);
     }
 
     /**
